@@ -41,15 +41,15 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
 
   const categoryIcons: Record<string, string> = {
     'Hayvanlar': '🦁',
-    'Yiyecekler': '🍎',
-    'Renkler': '🎨',
+    'Yiyecek': '🍎',
+    'Bilim': '🧪',
+    'Ülkeler': '🌍',
     'Meslekler': '👨‍💼',
-    'Sporlar': '⚽',
-    'Müzik': '🎵',
-    'Teknoloji': '💻',
-    'Doğa': '🌲',
-    'Ulaşım': '🚗',
-    'Eğitim': '📚'
+    'Şehirler': '🏙️',
+    'Markalar': '🏷️',
+    'Spor Dalları': '⚽',
+    'Eşyalar': '🪑',
+    'Filmler': '🎬'
   };
 
   return (
