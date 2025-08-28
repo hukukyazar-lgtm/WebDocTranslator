@@ -283,7 +283,7 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
           totalTime={TOTAL_GAME_TIME}
         />
         
-        <main className="pt-16 sm:pt-20 pb-4 sm:pb-8 px-2 sm:px-4">
+        <main className="pt-24 sm:pt-28 pb-4 sm:pb-8 px-2 sm:px-4">
           <div className="max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8">
             <SpinningWheel 
               word={secretWord} 
