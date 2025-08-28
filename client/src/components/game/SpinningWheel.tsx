@@ -86,7 +86,7 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
             {letters.map((char, i) => {
               const angle = (i / letters.length) * 360;
               const transformSpin = `rotate(${angle}deg) translate(${radius}px) rotate(${-angle}deg)`;
-              const transformAlign = `translateX(${(i - (letters.length - 1) / 2) * 25}px) scale(1.5)`;
+              const transformAlign = `translateX(${(i - (letters.length - 1) / 2) * 35}px) scale(2)`;
               const dynamicScale = getLetterScale(timeLeft, isSpinning, i);
               const letterVisibility = getLetterVisibility(timeLeft, i, letters.length);
 
@@ -94,19 +94,22 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 <span 
                   key={i}
                   className={`absolute font-black uppercase letter-glow transition-all duration-1000 ${
-                    intensityLevel === 'final' ? 'text-5xl lg:text-6xl' : 'text-4xl lg:text-5xl'
+                    intensityLevel === 'final' ? 'text-6xl lg:text-7xl' : 'text-5xl lg:text-6xl'
                   }`}
                   style={{ 
-                    color: getDynamicLetterColor(i),
+                    color: isSpinning ? getDynamicLetterColor(i) : '#FFFFFF',
                     transform: isSpinning 
                       ? `${transformSpin} scale(${dynamicScale})` 
                       : `${transformAlign}`, 
-                    filter: `blur(${blurAmount}px) drop-shadow(0 0 8px currentColor)`,
-                    transition: 'transform 1s, filter 0.5s, opacity 0.3s',
-                    textShadow: intensityLevel === 'final'
-                      ? `0 0 30px currentColor, 0 0 60px currentColor, 0 0 90px currentColor`
-                      : `0 0 20px currentColor, 0 0 40px currentColor`,
-                    opacity: isSpinning ? letterVisibility : 1
+                    filter: `blur(${blurAmount}px) drop-shadow(0 0 12px ${isSpinning ? 'currentColor' : 'rgba(255,255,255,0.8)'})`,
+                    transition: 'transform 1s, filter 0.5s, opacity 0.3s, color 0.5s',
+                    textShadow: isSpinning 
+                      ? (intensityLevel === 'final'
+                        ? `0 0 30px currentColor, 0 0 60px currentColor, 0 0 90px currentColor`
+                        : `0 0 20px currentColor, 0 0 40px currentColor`)
+                      : `2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.4)`,
+                    opacity: isSpinning ? letterVisibility : 1,
+                    WebkitTextStroke: isSpinning ? 'none' : '1px rgba(0,0,0,0.5)'
                   }}
                   data-testid={`wheel-letter-${i}`}
                 >
