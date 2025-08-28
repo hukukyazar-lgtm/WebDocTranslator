@@ -314,7 +314,6 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
                   <p className="text-lg sm:text-xl lg:text-2xl font-bold text-accent animate-bounce-soft" data-testid="game-message">
                     {message}
                   </p>
-                  <p className="text-xs sm:text-sm text-muted-foreground">Kelimeyi tahmin etmeye çalış</p>
                 </div>
               </div>
             )}
