@@ -283,8 +283,8 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
           totalTime={TOTAL_GAME_TIME}
         />
         
-        <main className="pt-20 pb-8 px-4">
-          <div className="max-w-4xl mx-auto space-y-8">
+        <main className="pt-16 sm:pt-20 pb-4 sm:pb-8 px-2 sm:px-4">
+          <div className="max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8">
             <SpinningWheel 
               word={secretWord} 
               isSpinning={isSpinning} 
@@ -295,11 +295,11 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
             
             {message && (
               <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                <div className="text-center space-y-2">
-                  <p className="text-2xl font-bold text-accent animate-bounce-soft" data-testid="game-message">
+                <div className="text-center space-y-1 sm:space-y-2">
+                  <p className="text-lg sm:text-xl lg:text-2xl font-bold text-accent animate-bounce-soft" data-testid="game-message">
                     {message}
                   </p>
-                  <p className="text-muted-foreground">Kelimeyi tahmin etmeye çalış</p>
+                  <p className="text-xs sm:text-sm text-muted-foreground">Kelimeyi tahmin etmeye çalış</p>
                 </div>
               </div>
             )}
@@ -307,14 +307,14 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
             {!gameOver && (
               <>
                 <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                  <div className="backdrop-blur-xl rounded-3xl p-8 border border-white/20 w-full max-w-2xl shadow-2xl" style={{
+                  <div className="backdrop-blur-xl rounded-2xl sm:rounded-3xl p-3 sm:p-4 lg:p-8 border border-white/20 w-full shadow-2xl" style={{
                     background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
                   }}>
-                    <div className="text-center space-y-6">
+                    <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6">
                       <div className="relative">
                         <input 
                           type="text" 
-                          className="w-full px-8 py-6 text-3xl font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-2xl focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50"
+                          className="w-full px-3 py-3 sm:px-4 sm:py-4 lg:px-8 lg:py-6 text-lg sm:text-xl lg:text-2xl xl:text-3xl font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-xl sm:rounded-2xl focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50"
                           style={{ 
                             background: 'rgba(255,255,255,0.1)',
                             textShadow: '0 0 20px rgba(255,255,255,0.5)'
