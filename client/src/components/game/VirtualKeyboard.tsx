@@ -79,7 +79,7 @@ export const VirtualKeyboard = memo(({
             ))}
             <button
               onClick={onBackspace}
-              className="keyboard-key px-4 sm:px-6 lg:px-8 py-3 sm:py-4 lg:py-5 text-sm sm:text-lg lg:text-xl font-bold rounded-lg sm:rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-red-500/50 bg-red-500/20 text-white hover:bg-red-500/40 shadow-lg"
+              className="keyboard-key px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-red-500/50 bg-red-500/20 text-white hover:bg-red-500/40 shadow-lg"
               data-testid="key-backspace"
             >
               <span className="sm:hidden">🗑️</span>
@@ -99,7 +99,7 @@ export const VirtualKeyboard = memo(({
             </button>
             <button
               onClick={onSubmit}
-              className="keyboard-key px-6 sm:px-8 lg:px-12 py-3 sm:py-4 lg:py-5 text-sm sm:text-lg lg:text-xl font-bold rounded-lg sm:rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-green-500/50 text-white hover:bg-green-500/40 shadow-xl"
+              className="keyboard-key px-3 sm:px-4 lg:px-8 py-2 sm:py-3 text-xs sm:text-sm lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-green-500/50 text-white hover:bg-green-500/40 shadow-xl"
               style={{
                 background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.3))',
                 boxShadow: '0 0 15px rgba(34, 197, 94, 0.3)'
