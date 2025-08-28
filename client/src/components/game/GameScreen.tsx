@@ -3,7 +3,6 @@ import { GameHeader } from './GameHeader';
 import { SpinningWheel } from './SpinningWheel';
 import { VirtualKeyboard } from './VirtualKeyboard';
 import { GameStats } from './GameStats';
-import { GameResultModal } from './GameResultModal';
 import { getWordByDifficulty, wordLists } from '@/lib/wordLists';
 import { TOTAL_GAME_TIME, calculateScore, getSpinDuration, getThemeForCategory, formatTime } from '@/lib/gameUtils';
 import type { GameSettings } from './MenuScreen';
@@ -25,7 +24,6 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
   const [gameOver, setGameOver] = useState(false);
   const [elapsedTime, setElapsedTime] = useState(0);
   const [slowdownApplied, setSlowdownApplied] = useState(false);
-  const [showResultModal, setShowResultModal] = useState(false);
   const [gameSuccess, setGameSuccess] = useState(false);
   const [score, setScore] = useState(0);
   const [streak, setStreak] = useState(0);
@@ -116,7 +114,6 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
       setStreak(0);
     }
     
-    setTimeout(() => setShowResultModal(true), 5000);
   }, [gameOver, elapsedTime, difficulty]);
 
   const handleGuessSubmit = useCallback(() => {
@@ -161,7 +158,7 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
     setGameOver(false);
     setElapsedTime(0);
     setSlowdownApplied(false);
-    setShowResultModal(false);
+
     setGameSuccess(false);
     
     // Get new word (different from used ones) and reset timer
@@ -206,7 +203,7 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
     setGameOver(false);
     setElapsedTime(0);
     setSlowdownApplied(false);
-    setShowResultModal(false);
+
     setGameSuccess(false);
     setScore(0);
     
@@ -247,19 +244,6 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
 
   return (
     <>
-      <GameResultModal
-        isVisible={showResultModal}
-        isSuccess={gameSuccess}
-        title={gameSuccess ? "Tebrikler!" : "Oyun Bitti!"}
-        message={message}
-        scoreGained={score}
-        totalScore={totalScore}
-        onPlayAgain={handlePlayAgain}
-        onMainMenu={onGameOver}
-        onContinue={gameSuccess ? handleContinue : undefined}
-        category={category}
-        difficulty={difficulty}
-      />
       
       <div 
         className="min-h-screen relative overflow-hidden transition-all duration-1000 animate-gradient-shift animate-color-wave"
@@ -409,6 +393,120 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
                   </div>
                 </div>
               </>
+            )}
+
+            {/* Game Over Results */}
+            {gameOver && (
+              <div className="flex justify-center animate-scale-in">
+                <div className="backdrop-blur-xl rounded-2xl sm:rounded-3xl p-4 sm:p-6 lg:p-8 border border-white/20 w-full max-w-lg shadow-2xl" style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
+                }}>
+                  <div className="text-center space-y-4 sm:space-y-6">
+                    {/* Success/Failure Icon */}
+                    <div className="relative">
+                      <div 
+                        className="absolute inset-0 blur-3xl opacity-50 rounded-full"
+                        style={{
+                          background: `radial-gradient(circle, ${theme.primary}40, transparent)`
+                        }}
+                      />
+                      <div className="relative text-5xl sm:text-6xl lg:text-8xl animate-bounce-soft">
+                        {gameSuccess ? '🎉' : '💫'}
+                      </div>
+                    </div>
+                    
+                    {/* Title */}
+                    <h2 
+                      className="text-2xl sm:text-3xl lg:text-4xl font-black animate-pulse-glow"
+                      style={{
+                        background: `linear-gradient(45deg, ${theme.primary}, #ffffff, ${theme.secondary})`,
+                        backgroundClip: 'text',
+                        WebkitBackgroundClip: 'text',
+                        color: 'transparent',
+                        backgroundSize: '200% auto',
+                        animation: 'gradient 3s ease infinite'
+                      }}
+                    >
+                      {gameSuccess ? "Tebrikler!" : "Oyun Bitti!"}
+                    </h2>
+                    
+                    {/* Score Cards */}
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4">
+                      <div className="backdrop-blur-lg rounded-xl p-3 sm:p-4 border border-white/20" style={{
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+                      }}>
+                        <div className="text-2xl sm:text-3xl mb-1">{gameSuccess ? '💎' : '💔'}</div>
+                        <div 
+                          className="text-xl sm:text-2xl font-black mb-1"
+                          style={{
+                            background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
+                            backgroundClip: 'text',
+                            WebkitBackgroundClip: 'text',
+                            color: 'transparent'
+                          }}
+                        >
+                          {gameSuccess ? `+${score}` : '0'}
+                        </div>
+                        <div className="text-xs sm:text-sm font-bold text-white/60">
+                          {gameSuccess ? 'Kazanılan Puan' : 'Puan'}
+                        </div>
+                      </div>
+                      
+                      <div className="backdrop-blur-lg rounded-xl p-3 sm:p-4 border border-white/20" style={{
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+                      }}>
+                        <div className="text-2xl sm:text-3xl mb-1">🏆</div>
+                        <div 
+                          className="text-xl sm:text-2xl font-black mb-1"
+                          style={{
+                            background: `linear-gradient(45deg, ${theme.secondary}, ${theme.primary})`,
+                            backgroundClip: 'text',
+                            WebkitBackgroundClip: 'text',
+                            color: 'transparent'
+                          }}
+                        >
+                          {totalScore}
+                        </div>
+                        <div className="text-xs sm:text-sm font-bold text-white/60">Toplam Puan</div>
+                      </div>
+                    </div>
+                    
+                    {/* Action Buttons */}
+                    <div className="space-y-2 sm:space-y-3">
+                      {gameSuccess && (
+                        <button
+                          onClick={handleContinue}
+                          className="w-full py-3 sm:py-4 px-4 sm:px-6 text-sm sm:text-base font-black rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border text-white shadow-2xl"
+                          style={{
+                            background: `linear-gradient(135deg, ${theme.primary}50, ${theme.secondary}50)`,
+                            borderColor: `${theme.primary}80`,
+                            boxShadow: `0 0 20px ${theme.primary}40`
+                          }}
+                        >
+                          ⚡ Devam Et
+                        </button>
+                      )}
+                      <button
+                        onClick={handlePlayAgain}
+                        className="w-full py-3 sm:py-4 px-4 sm:px-6 text-sm sm:text-base font-black rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border text-white shadow-2xl"
+                        style={{
+                          background: `linear-gradient(135deg, ${theme.secondary}40, ${theme.primary}40)`,
+                          borderColor: `${theme.secondary}60`,
+                          boxShadow: `0 0 20px ${theme.secondary}30`
+                        }}
+                      >
+                        🚀 Tekrar Oyna
+                      </button>
+                      <button
+                        onClick={onGameOver}
+                        className="w-full py-3 sm:py-4 px-4 sm:px-6 text-sm sm:text-base font-black rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/30 bg-white/10 text-white/90 hover:bg-white/20 shadow-lg"
+                      >
+                        🏠 Ana Menü
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
             )}
             
             <GameStats
