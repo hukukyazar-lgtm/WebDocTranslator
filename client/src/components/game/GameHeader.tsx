@@ -80,25 +80,6 @@ export const GameHeader = memo(({ category, difficulty, timeLeft, totalTime }: G
           </div>
         </div>
         
-        <div className="flex items-center gap-4">
-          <div className="hidden sm:block backdrop-blur-lg rounded-2xl px-4 py-2 border border-white/20 bg-white/10">
-            <span className="text-white font-bold text-lg" data-testid="text-time-left">
-              ⏱️ {formatTime(timeLeft)}
-            </span>
-          </div>
-          <div className="w-32 h-3 backdrop-blur-lg rounded-full border border-white/20 bg-white/10 overflow-hidden">
-            <div 
-              className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
-              style={{ 
-                width: `${progressWidth}%`,
-                background: timeLeft > 10 
-                  ? 'linear-gradient(90deg, #10b981, #3b82f6)' 
-                  : 'linear-gradient(90deg, #f59e0b, #ef4444)'
-              }}
-              data-testid="progress-timer"
-            />
-          </div>
-        </div>
       </div>
     </header>
   );

@@ -6,7 +6,7 @@ import { GameStats } from './GameStats';
 import { CountdownOverlay } from './CountdownOverlay';
 import { GameResultModal } from './GameResultModal';
 import { getWordByDifficulty, wordLists } from '@/lib/wordLists';
-import { TOTAL_GAME_TIME, calculateScore, getSpinDuration, shouldShowCountdown, getThemeForCategory } from '@/lib/gameUtils';
+import { TOTAL_GAME_TIME, calculateScore, getSpinDuration, shouldShowCountdown, getThemeForCategory, formatTime } from '@/lib/gameUtils';
 import type { GameSettings } from './MenuScreen';
 
 interface GameScreenProps {
@@ -312,6 +312,28 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
                     background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
                   }}>
                     <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6">
+                      {/* Timer Display */}
+                      <div className="flex justify-center mb-4">
+                        <div className="backdrop-blur-lg rounded-2xl px-6 py-3 border border-white/20 bg-white/10 flex items-center gap-3 shadow-lg">
+                          <div className="text-2xl animate-pulse">⏱️</div>
+                          <div className="text-xl sm:text-2xl font-black text-white" data-testid="text-time-left">
+                            {formatTime(timeLeft)}
+                          </div>
+                          <div className="w-16 h-2 backdrop-blur-lg rounded-full border border-white/20 bg-white/10 overflow-hidden">
+                            <div 
+                              className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
+                              style={{ 
+                                width: `${((TOTAL_GAME_TIME - timeLeft) / TOTAL_GAME_TIME) * 100}%`,
+                                background: timeLeft > 10 
+                                  ? 'linear-gradient(90deg, #10b981, #3b82f6)' 
+                                  : 'linear-gradient(90deg, #f59e0b, #ef4444)'
+                              }}
+                              data-testid="progress-timer"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      
                       <div className="relative">
                         <input 
                           type="text" 
