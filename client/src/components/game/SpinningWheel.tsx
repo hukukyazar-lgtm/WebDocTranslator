@@ -18,6 +18,29 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
   const blurAmount = getBlurIntensity(difficulty, timeLeft, isSpinning);
   const intensityLevel = getIntensityLevel(timeLeft);
   const speedMultiplier = getWheelSpeedMultiplier(timeLeft);
+  
+  // Calculate dynamic spacing based on word length to prevent overflow
+  const maxSpacing = 35;
+  const minSpacing = 15;
+  const spacing = Math.max(minSpacing, Math.min(maxSpacing, 300 / letters.length));
+  
+  // Calculate font size based on word length
+  const getFontSize = (letterCount: number, isSpinning: boolean) => {
+    if (isSpinning) {
+      return intensityLevel === 'final' ? 'text-6xl lg:text-7xl' : 'text-5xl lg:text-6xl';
+    }
+    
+    if (letterCount <= 4) return 'text-6xl lg:text-7xl';
+    if (letterCount <= 6) return 'text-5xl lg:text-6xl';
+    if (letterCount <= 8) return 'text-4xl lg:text-5xl';
+    return 'text-3xl lg:text-4xl';
+  };
+  
+  // Store initial colors for each letter to keep them consistent
+  const letterColors = useMemo(() => {
+    const baseColors = [theme.primary, theme.secondary, ...rainbowColors];
+    return letters.map((_, index) => baseColors[index % baseColors.length]);
+  }, [letters.length, theme.primary, theme.secondary]);
 
   const wheelClass = useMemo(() => {
     if (!isSpinning) return '';
@@ -34,10 +57,6 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
     }
   }, [isSpinning, spinDuration, intensityLevel]);
 
-  const getDynamicLetterColor = useMemo(() => (index: number) => {
-    const baseColors = [theme.primary, theme.secondary, ...rainbowColors];
-    return baseColors[index % baseColors.length];
-  }, [theme]);
 
   return (
     <div className="flex justify-center">
@@ -54,13 +73,13 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                     intensityLevel === 'final' ? 'w-3 h-3' : 'w-2 h-2'
                   }`}
                   style={{
-                    background: getDynamicLetterColor(i),
+                    background: letterColors[i],
                     top: '50%',
                     left: '50%',
                     transform: `rotate(${i * (360 / (intensityLevel === 'final' ? 24 : 12))}deg) translateY(-180px) translateX(-50%)`,
                     animationDelay: `${i * 0.05}s`,
                     opacity: particleIntensity,
-                    boxShadow: intensityLevel === 'final' ? `0 0 15px ${getDynamicLetterColor(i)}` : 'none'
+                    boxShadow: intensityLevel === 'final' ? `0 0 15px ${letterColors[i]}` : 'none'
                   }}
                 />
               );
@@ -86,18 +105,17 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
             {letters.map((char, i) => {
               const angle = (i / letters.length) * 360;
               const transformSpin = `rotate(${angle}deg) translate(${radius}px) rotate(${-angle}deg)`;
-              const transformAlign = `translateX(${(i - (letters.length - 1) / 2) * 35}px) scale(2)`;
+              const transformAlign = `translateX(${(i - (letters.length - 1) / 2) * spacing}px) scale(2)`;
               const dynamicScale = getLetterScale(timeLeft, isSpinning, i);
               const letterVisibility = getLetterVisibility(timeLeft, i, letters.length);
+              const fontSize = getFontSize(letters.length, isSpinning);
 
               return (
                 <span 
                   key={i}
-                  className={`absolute font-black uppercase letter-glow transition-all duration-1000 ${
-                    intensityLevel === 'final' ? 'text-6xl lg:text-7xl' : 'text-5xl lg:text-6xl'
-                  }`}
+                  className={`absolute font-black uppercase letter-glow transition-all duration-1000 ${fontSize}`}
                   style={{ 
-                    color: isSpinning ? getDynamicLetterColor(i) : '#FFFFFF',
+                    color: isSpinning ? letterColors[i] : '#FFFFFF',
                     transform: isSpinning 
                       ? `${transformSpin} scale(${dynamicScale})` 
                       : `${transformAlign}`, 
