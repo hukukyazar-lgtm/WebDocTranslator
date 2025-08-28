@@ -83,29 +83,23 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               );
             })}
             
-            {/* Center logo/emblem */}
-            <div 
-              className="absolute w-16 h-16 rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow border-2"
-              style={{
-                background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
-                borderColor: theme.primary,
-                boxShadow: `0 0 20px ${theme.primary}60`
-              }}
-            >
-              <div className="text-2xl font-black text-white" style={{ textShadow: '0 0 10px rgba(0,0,0,0.8)' }}>
-                🇹🇷
+            {/* Center logo/emblem - only show when spinning */}
+            {isSpinning && (
+              <div 
+                className="absolute w-16 h-16 rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow border-2"
+                style={{
+                  background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
+                  borderColor: theme.primary,
+                  boxShadow: `0 0 20px ${theme.primary}60`
+                }}
+              >
+                <div className="text-2xl font-black text-white" style={{ textShadow: '0 0 10px rgba(0,0,0,0.8)' }}>
+                  🇹🇷
+                </div>
               </div>
-            </div>
+            )}
           </div>
           
-          <div className="absolute -bottom-6 left-1/2 transform -translate-x-1/2">
-            <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-full text-sm text-muted-foreground">
-              <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-              <span data-testid="wheel-status">
-                {isSpinning ? 'Döndürülüyor...' : 'Durdu'}
-              </span>
-            </div>
-          </div>
         </div>
       </div>
     </div>
