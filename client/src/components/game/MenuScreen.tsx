@@ -15,11 +15,20 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
   const [category, setCategory] = useState("Hayvanlar");
   const [difficulty, setDifficulty] = useState(3);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const [categoryDifficulties, setCategoryDifficulties] = useState<Record<string, number>>({});
   
   const theme = getThemeForCategory(hoveredCategory || category);
 
   const handleStartGame = () => {
-    onStartGame({ category, difficulty });
+    const selectedDifficulty = categoryDifficulties[category] || difficulty;
+    onStartGame({ category, difficulty: selectedDifficulty });
+  };
+
+  const handleCategoryDifficultyChange = (cat: string, diff: number) => {
+    setCategoryDifficulties(prev => ({
+      ...prev,
+      [cat]: diff
+    }));
   };
 
   const difficultyLabels = {
@@ -113,90 +122,78 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
             </div>
           </div>
 
-          {/* Game settings */}
-          <div className="grid lg:grid-cols-2 gap-8 mb-8">
-            {/* Category selection */}
-            <div 
-              className="backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl animate-slide-up"
-              style={{ 
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
-                animationDelay: '0.2s'
-              }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <div 
-                  className="w-4 h-4 rounded-full"
-                  style={{ background: theme.primary }}
-                />
-                Kategori Seçin
-              </h3>
-              <div className="grid grid-cols-2 gap-2">
-                {Object.keys(wordLists).map((cat, index) => {
-                  const catTheme = getThemeForCategory(cat);
-                  return (
-                    <button
-                      key={cat}
-                      onClick={() => setCategory(cat)}
-                      className={`group relative p-3 rounded-xl transition-all duration-300 ${
-                        category === cat 
-                          ? 'bg-white/20 border border-white/40' 
-                          : 'bg-white/5 border border-white/10 hover:bg-white/10'
-                      }`}
-                      data-testid="select-category"
-                    >
-                      {category === cat && (
-                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-400/20 to-purple-500/20"></div>
-                      )}
-                      <div className="relative">
-                        <div className="text-white font-medium text-sm text-center">
+          {/* Category selection with individual difficulty */}
+          <div 
+            className="backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl animate-slide-up mb-8"
+            style={{ 
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
+              animationDelay: '0.2s'
+            }}
+          >
+            <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
+              <div 
+                className="w-4 h-4 rounded-full"
+                style={{ background: theme.primary }}
+              />
+              Kategori ve Zorluk Seçin
+            </h3>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              {Object.keys(wordLists).map((cat, index) => {
+                const catTheme = getThemeForCategory(cat);
+                const currentDifficulty = categoryDifficulties[cat] || 3;
+                return (
+                  <div
+                    key={cat}
+                    className={`group relative p-4 rounded-2xl transition-all duration-300 border ${
+                      category === cat 
+                        ? 'bg-white/20 border-white/40' 
+                        : 'bg-white/5 border-white/10 hover:bg-white/10'
+                    }`}
+                  >
+                    {category === cat && (
+                      <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-400/20 to-purple-500/20"></div>
+                    )}
+                    <div className="relative space-y-3">
+                      {/* Category name */}
+                      <button
+                        onClick={() => setCategory(cat)}
+                        className="w-full text-center"
+                        data-testid="select-category"
+                      >
+                        <div className="text-white font-medium text-lg">
                           {cat}
                         </div>
+                      </button>
+                      
+                      {/* Difficulty selector for this category */}
+                      <div className="space-y-2">
+                        <div className="text-center">
+                          <div className="text-xs text-white/60 mb-1">Zorluk</div>
+                          <div className="text-sm font-medium text-white">
+                            {difficultyLabels[currentDifficulty as keyof typeof difficultyLabels]}
+                          </div>
+                        </div>
+                        <div className="flex justify-center gap-1">
+                          {[1, 2, 3, 4, 5].map((level) => (
+                            <button
+                              key={level}
+                              onClick={() => handleCategoryDifficultyChange(cat, level)}
+                              className={`w-6 h-6 text-xs rounded-full transition-all duration-300 ${
+                                currentDifficulty === level
+                                  ? 'bg-white text-black scale-110'
+                                  : 'bg-white/20 text-white/60 hover:bg-white/30'
+                              }`}
+                              data-testid="slider-difficulty"
+                            >
+                              {level}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Difficulty selection */}
-            <div 
-              className="backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl animate-slide-up"
-              style={{ 
-                background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
-                animationDelay: '0.4s'
-              }}
-            >
-              <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-                <div 
-                  className="w-4 h-4 rounded-full"
-                  style={{ background: theme.secondary }}
-                />
-                Zorluk Seviyesi
-              </h3>
-              <div className="space-y-4">
-                <div className="text-center mb-4">
-                  <div className="text-2xl font-bold text-white mb-1">
-                    {difficultyLabels[difficulty as keyof typeof difficultyLabels]}
+                    </div>
                   </div>
-                  <div className="text-sm text-white/60">Seviye {difficulty}</div>
-                </div>
-                <div className="flex justify-center gap-2">
-                  {[1, 2, 3, 4, 5].map((level) => (
-                    <button
-                      key={level}
-                      onClick={() => setDifficulty(level)}
-                      className={`w-8 h-8 rounded-full transition-all duration-300 ${
-                        difficulty === level
-                          ? 'bg-white text-black scale-110'
-                          : 'bg-white/20 text-white/60 hover:bg-white/30'
-                      }`}
-                      data-testid="slider-difficulty"
-                    >
-                      {level}
-                    </button>
-                  ))}
-                </div>
-              </div>
+                );
+              })}
             </div>
           </div>
 
