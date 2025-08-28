@@ -9,6 +9,7 @@ interface GameResultModalProps {
   totalScore: number;
   onPlayAgain: () => void;
   onMainMenu: () => void;
+  onContinue?: () => void;
 }
 
 export const GameResultModal = memo(({ 
@@ -19,7 +20,8 @@ export const GameResultModal = memo(({
   scoreGained, 
   totalScore, 
   onPlayAgain, 
-  onMainMenu 
+  onMainMenu,
+  onContinue 
 }: GameResultModalProps) => {
   if (!isVisible) return null;
 
@@ -135,6 +137,19 @@ export const GameResultModal = memo(({
           
           {/* Action Buttons */}
           <div className="space-y-4">
+            {isSuccess && onContinue && (
+              <button
+                onClick={onContinue}
+                className="w-full py-4 px-8 font-black rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-blue-500/50 text-white shadow-2xl"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.3))',
+                  boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)'
+                }}
+                data-testid="button-continue"
+              >
+                ⚡ Devam Et
+              </button>
+            )}
             <button
               onClick={onPlayAgain}
               className="w-full py-4 px-8 font-black rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-green-500/50 text-white shadow-2xl"

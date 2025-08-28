@@ -140,6 +140,29 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
     setGuess(prev => prev + ' ');
   }, []);
 
+  const handleContinue = useCallback(() => {
+    // Continue with new word without resetting score
+    setGuess('');
+    setIsSpinning(true);
+    setMessage('');
+    setGameOver(false);
+    setElapsedTime(0);
+    setSlowdownApplied(false);
+    setShowResultModal(false);
+    setGameSuccess(false);
+    
+    // Get new word and reset timer
+    const randomWord = getWordByDifficulty(category, difficulty);
+    setSecretWord(randomWord);
+    
+    const baseSpeed = getSpinDuration(difficulty, TOTAL_GAME_TIME);
+    setSpinDuration(baseSpeed);
+    
+    timerRef.current = setInterval(() => {
+      setElapsedTime(prevTime => prevTime + 1);
+    }, 1000);
+  }, [category, difficulty]);
+
   const handlePlayAgain = useCallback(() => {
     // Reset all game state
     setGuess('');
@@ -199,6 +222,7 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
         totalScore={totalScore}
         onPlayAgain={handlePlayAgain}
         onMainMenu={onGameOver}
+        onContinue={gameSuccess ? handleContinue : undefined}
       />
       
       <div 
