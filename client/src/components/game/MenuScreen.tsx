@@ -117,63 +117,60 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
             <h3 className="text-lg sm:text-xl lg:text-2xl font-bold text-white mb-6 text-center">
               Kategori Seç
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+            <div className="flex flex-wrap justify-center gap-6 mb-8">
               {Object.keys(wordLists).map((cat, index) => {
-                const currentDifficulty = categoryDifficulties[cat] || 3;
                 const icon = categoryIcons[cat] || '📝';
                 return (
-                  <div
+                  <button
                     key={cat}
-                    className="group relative"
+                    onClick={() => setCategory(cat)}
+                    className={`flex flex-col items-center space-y-2 p-3 rounded-2xl transition-all duration-300 ${
+                      category === cat 
+                        ? 'bg-white/20 scale-110' 
+                        : 'hover:bg-white/10 hover:scale-105'
+                    }`}
+                    data-testid="select-category"
                   >
-                    <button
-                      onClick={() => setCategory(cat)}
-                      className={`w-full aspect-square p-4 rounded-2xl transition-all duration-300 border-2 ${
-                        category === cat 
-                          ? 'bg-white/20 border-white/40 scale-105' 
-                          : 'bg-white/5 border-white/10 hover:bg-white/10 hover:scale-105'
-                      }`}
-                      data-testid="select-category"
-                    >
-                      {category === cat && (
-                        <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-blue-400/20 to-purple-500/20"></div>
-                      )}
-                      <div className="relative flex flex-col items-center justify-center h-full space-y-2">
-                        <div className="text-3xl sm:text-4xl">
-                          {icon}
-                        </div>
-                        <div className="text-xs font-medium text-white text-center">
-                          {cat}
-                        </div>
-                      </div>
-                    </button>
-                    
-                    {/* Difficulty selector below each category */}
-                    <div className="mt-2 space-y-1">
-                      <div className="text-center">
-                        <div className="text-xs text-white/60">Zorluk: {currentDifficulty}</div>
-                      </div>
-                      <div className="flex justify-center gap-1">
-                        {[1, 2, 3, 4, 5].map((level) => (
-                          <button
-                            key={level}
-                            onClick={() => handleCategoryDifficultyChange(cat, level)}
-                            className={`w-4 h-4 text-xs rounded-full transition-all duration-300 ${
-                              currentDifficulty === level
-                                ? 'bg-white text-black scale-110'
-                                : 'bg-white/20 text-white/60 hover:bg-white/30'
-                            }`}
-                            data-testid="slider-difficulty"
-                          >
-                            {level}
-                          </button>
-                        ))}
-                      </div>
+                    <div className="text-4xl sm:text-5xl">
+                      {icon}
                     </div>
-                  </div>
+                    <div className="text-xs font-medium text-white text-center">
+                      {cat}
+                    </div>
+                  </button>
                 );
               })}
             </div>
+            
+            {/* Difficulty selector for selected category */}
+            {category && (
+              <div className="text-center space-y-4 mb-6">
+                <h4 className="text-lg font-bold text-white">
+                  {category} - Zorluk Seviyesi
+                </h4>
+                <div className="flex justify-center items-center space-y-2">
+                  <div className="text-xl font-bold text-white mb-2">
+                    {difficultyLabels[(categoryDifficulties[category] || 3) as keyof typeof difficultyLabels]}
+                  </div>
+                </div>
+                <div className="flex justify-center gap-2">
+                  {[1, 2, 3, 4, 5].map((level) => (
+                    <button
+                      key={level}
+                      onClick={() => handleCategoryDifficultyChange(category, level)}
+                      className={`w-10 h-10 text-sm font-bold rounded-full transition-all duration-300 ${
+                        (categoryDifficulties[category] || 3) === level
+                          ? 'bg-white text-black scale-110'
+                          : 'bg-white/20 text-white/60 hover:bg-white/30'
+                      }`}
+                      data-testid="slider-difficulty"
+                    >
+                      {level}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Start button */}
