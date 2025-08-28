@@ -1,0 +1,266 @@
+import { memo, useState, useEffect, useRef, useCallback, useMemo } from 'react';
+import { GameHeader } from './GameHeader';
+import { SpinningWheel } from './SpinningWheel';
+import { VirtualKeyboard } from './VirtualKeyboard';
+import { GameStats } from './GameStats';
+import { CountdownOverlay } from './CountdownOverlay';
+import { GameResultModal } from './GameResultModal';
+import { getWordByDifficulty } from '@/lib/wordLists';
+import { TOTAL_GAME_TIME, calculateScore, getSpinDuration, shouldShowCountdown } from '@/lib/gameUtils';
+import type { GameSettings } from './MenuScreen';
+
+interface GameScreenProps {
+  settings: GameSettings;
+  onGameOver: () => void;
+}
+
+export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
+  const { category, difficulty } = settings;
+  
+  const [secretWord, setSecretWord] = useState('');
+  const [guess, setGuess] = useState('');
+  const [isSpinning, setIsSpinning] = useState(true);
+  const [spinDuration, setSpinDuration] = useState(3.0);
+  const [message, setMessage] = useState('');
+  const [gameOver, setGameOver] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const [slowdownApplied, setSlowdownApplied] = useState(false);
+  const [showResultModal, setShowResultModal] = useState(false);
+  const [gameSuccess, setGameSuccess] = useState(false);
+  const [score, setScore] = useState(0);
+  const [streak, setStreak] = useState(0);
+  const [correctGuesses, setCorrectGuesses] = useState(0);
+  const [averageTime, setAverageTime] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
+  
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const timeLeft = TOTAL_GAME_TIME - Math.floor(elapsedTime);
+  const showCountdown = shouldShowCountdown(timeLeft, gameOver);
+
+  // Get used keys from current guess
+  const usedKeys = useMemo(() => {
+    return guess.toUpperCase().split('').filter((char, index, arr) => 
+      arr.indexOf(char) === index && char !== ' '
+    );
+  }, [guess]);
+
+  // Initialize game
+  useEffect(() => {
+    const randomWord = getWordByDifficulty(category, difficulty);
+    setSecretWord(randomWord);
+    
+    const baseSpeed = getSpinDuration(difficulty, TOTAL_GAME_TIME);
+    setSpinDuration(baseSpeed);
+    
+    timerRef.current = setInterval(() => {
+      setElapsedTime(prevTime => prevTime + 1);
+    }, 1000);
+
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+    };
+  }, [category, difficulty]);
+  
+  // Handle time countdown effects
+  useEffect(() => {
+    if (timeLeft <= 10 && !gameOver && !slowdownApplied) {
+      setSpinDuration(prevDuration => prevDuration + 1.5);
+      setSlowdownApplied(true);
+    }
+
+    if (timeLeft <= 0 && !gameOver) {
+      endGame("Süre Doldu!", false);
+    }
+  }, [timeLeft, gameOver, slowdownApplied]);
+
+  const endGame = useCallback((endMessage: string, success: boolean) => {
+    if (gameOver) return;
+    
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+    
+    setMessage(endMessage);
+    setIsSpinning(false);
+    setGameOver(true);
+    setGameSuccess(success);
+    
+    if (success) {
+      const scoreGained = calculateScore(Math.floor(elapsedTime), difficulty);
+      setScore(scoreGained);
+      setTotalScore(prev => prev + scoreGained);
+      setStreak(prev => prev + 1);
+      setCorrectGuesses(prev => prev + 1);
+      setAverageTime(Math.floor(elapsedTime));
+    } else {
+      setStreak(0);
+    }
+    
+    setTimeout(() => setShowResultModal(true), 1000);
+  }, [gameOver, elapsedTime, difficulty]);
+
+  const handleGuessSubmit = useCallback(() => {
+    if (gameOver) return;
+    
+    if (guess.toUpperCase() === secretWord.toUpperCase()) {
+      endGame(`Tebrikler! ${Math.floor(elapsedTime)} saniyede bildin.`, true);
+    } else {
+      setMessage("Yanlış Tahmin!");
+      setGuess(''); 
+      setTimeout(() => setMessage(''), 1500);
+    }
+  }, [gameOver, guess, secretWord, elapsedTime, endGame]);
+
+  const handleKeyPress = useCallback((key: string) => {
+    setGuess(prev => prev + key);
+  }, []);
+
+  const handleBackspace = useCallback(() => {
+    setGuess(prev => prev.slice(0, -1));
+  }, []);
+
+  const handleSpace = useCallback(() => {
+    setGuess(prev => prev + ' ');
+  }, []);
+
+  const handlePlayAgain = useCallback(() => {
+    // Reset all game state
+    setGuess('');
+    setIsSpinning(true);
+    setMessage('');
+    setGameOver(false);
+    setElapsedTime(0);
+    setSlowdownApplied(false);
+    setShowResultModal(false);
+    setGameSuccess(false);
+    setScore(0);
+    
+    // Get new word and reset timer
+    const randomWord = getWordByDifficulty(category, difficulty);
+    setSecretWord(randomWord);
+    
+    const baseSpeed = getSpinDuration(difficulty, TOTAL_GAME_TIME);
+    setSpinDuration(baseSpeed);
+    
+    timerRef.current = setInterval(() => {
+      setElapsedTime(prevTime => prevTime + 1);
+    }, 1000);
+  }, [category, difficulty]);
+
+  // Handle keyboard events
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (gameOver) return;
+      
+      const key = event.key.toUpperCase();
+      
+      if (key === 'ENTER') {
+        handleGuessSubmit();
+      } else if (key === 'BACKSPACE') {
+        handleBackspace();
+      } else if (key === ' ') {
+        event.preventDefault();
+        handleSpace();
+      } else if (/^[A-ZÇĞIİÖŞÜ]$/.test(key)) {
+        handleKeyPress(key);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [gameOver, handleGuessSubmit, handleBackspace, handleSpace, handleKeyPress]);
+
+  return (
+    <>
+      <CountdownOverlay timeLeft={timeLeft} isVisible={showCountdown} />
+      <GameResultModal
+        isVisible={showResultModal}
+        isSuccess={gameSuccess}
+        title={gameSuccess ? "Tebrikler!" : "Oyun Bitti!"}
+        message={message}
+        scoreGained={score}
+        totalScore={totalScore}
+        onPlayAgain={handlePlayAgain}
+        onMainMenu={onGameOver}
+      />
+      
+      <div className="min-h-screen">
+        <GameHeader 
+          category={category} 
+          difficulty={difficulty} 
+          timeLeft={timeLeft}
+          totalTime={TOTAL_GAME_TIME}
+        />
+        
+        <main className="pt-20 pb-8 px-4">
+          <div className="max-w-4xl mx-auto space-y-8">
+            <SpinningWheel 
+              word={secretWord} 
+              isSpinning={isSpinning} 
+              spinDuration={spinDuration} 
+              difficulty={difficulty} 
+            />
+            
+            {message && (
+              <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.1s' }}>
+                <div className="text-center space-y-2">
+                  <p className="text-2xl font-bold text-accent animate-bounce-soft" data-testid="game-message">
+                    {message}
+                  </p>
+                  <p className="text-muted-foreground">Kelimeyi tahmin etmeye çalış</p>
+                </div>
+              </div>
+            )}
+            
+            {!gameOver && (
+              <>
+                <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
+                  <div className="game-card rounded-2xl p-6 w-full max-w-md shadow-xl">
+                    <div className="text-center space-y-4">
+                      <label className="block text-sm font-medium text-muted-foreground">
+                        Tahminini Yaz
+                      </label>
+                      <div className="relative">
+                        <input 
+                          type="text" 
+                          className="w-full px-6 py-4 text-2xl font-bold text-center bg-input border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
+                          placeholder="Kelimeyi yazın..."
+                          value={guess}
+                          onChange={(e) => setGuess(e.target.value.toUpperCase())}
+                          data-testid="input-guess"
+                        />
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                          <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <VirtualKeyboard
+                  onKeyPress={handleKeyPress}
+                  onBackspace={handleBackspace}
+                  onSpace={handleSpace}
+                  onSubmit={handleGuessSubmit}
+                  usedKeys={usedKeys}
+                />
+              </>
+            )}
+            
+            <GameStats
+              score={totalScore}
+              streak={streak}
+              correctGuesses={correctGuesses}
+              averageTime={averageTime}
+            />
+          </div>
+        </main>
+      </div>
+    </>
+  );
+});
+
+GameScreen.displayName = 'GameScreen';
