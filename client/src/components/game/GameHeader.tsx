@@ -17,10 +17,41 @@ export const GameHeader = memo(({ category, difficulty, timeLeft, totalTime }: G
     }}>
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <div className="flex items-center gap-6">
-          <h1 className="text-3xl lg:text-4xl font-black text-white animate-pulse-glow">
-            WordSpin
-            <span className="text-lg lg:text-xl ml-2 opacity-80">PRO</span>
-          </h1>
+          <div className="flex items-center gap-3">
+            <div 
+              className="w-12 h-12 rounded-xl flex items-center justify-center backdrop-blur-lg border border-white/30 shadow-lg"
+              style={{
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.1))'
+              }}
+            >
+              <span className="text-2xl animate-pulse">🌟</span>
+            </div>
+            <div>
+              <h1 className="text-2xl lg:text-3xl font-black text-white flex items-center gap-2">
+                <span 
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: 'linear-gradient(45deg, #3b82f6, #ffffff, #8b5cf6)',
+                    backgroundSize: '200% auto',
+                    animation: 'gradient 3s ease infinite'
+                  }}
+                >
+                  WORD
+                </span>
+                <span 
+                  className="bg-clip-text text-transparent"
+                  style={{
+                    backgroundImage: 'linear-gradient(45deg, #8b5cf6, #ffffff, #3b82f6)',
+                    backgroundSize: '200% auto',
+                    animation: 'gradient 3s ease infinite 0.3s'
+                  }}
+                >
+                  SPIN
+                </span>
+              </h1>
+              <div className="text-xs font-bold text-white/60">⚡ PRO EDITION</div>
+            </div>
+          </div>
           <div className="hidden sm:flex items-center gap-3">
             <div className="backdrop-blur-lg rounded-2xl px-4 py-2 border border-white/20 bg-white/10">
               <span className="text-white/80 text-sm font-medium" data-testid="text-category">

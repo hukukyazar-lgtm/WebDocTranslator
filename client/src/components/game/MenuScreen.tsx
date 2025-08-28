@@ -59,25 +59,119 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
         <div className="w-full max-w-4xl">
           {/* Hero section */}
           <div className="text-center mb-12 animate-slide-up">
-            <h1 
-              className="text-7xl sm:text-8xl lg:text-9xl font-black mb-6 animate-pulse-glow"
-              style={{
-                backgroundImage: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary}, ${theme.primary})`,
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                color: 'transparent',
-                backgroundSize: '200% auto',
-                animation: 'gradient 3s ease infinite'
-              }}
-            >
-              WordSpin
-              <span className="block text-4xl sm:text-5xl lg:text-6xl mt-2 opacity-80">
-                PRO 2026
-              </span>
-            </h1>
-            <p className="text-xl sm:text-2xl lg:text-3xl font-light mb-8 text-white/80">
-              🇹🇷 Modern Türkçe Kelime Oyunu
-            </p>
+            {/* Modern Logo Design */}
+            <div className="relative mb-8">
+              {/* Logo background glow */}
+              <div 
+                className="absolute inset-0 blur-3xl opacity-50 rounded-full"
+                style={{
+                  background: `radial-gradient(circle, ${theme.primary}40, ${theme.secondary}40, transparent)`
+                }}
+              />
+              
+              {/* Main logo container */}
+              <div className="relative flex flex-col items-center">
+                {/* Logo icon */}
+                <div className="mb-4 relative">
+                  <div 
+                    className="w-24 h-24 lg:w-32 lg:h-32 rounded-2xl flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/30 animate-pulse-glow"
+                    style={{
+                      background: `linear-gradient(135deg, ${theme.primary}20, ${theme.secondary}20)`,
+                      boxShadow: `0 0 40px ${theme.primary}40`
+                    }}
+                  >
+                    <div className="text-5xl lg:text-6xl font-black relative">
+                      <span 
+                        className="absolute inset-0 animate-spin-slow"
+                        style={{ 
+                          background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
+                          backgroundClip: 'text',
+                          WebkitBackgroundClip: 'text',
+                          color: 'transparent',
+                          filter: 'blur(1px)'
+                        }}
+                      >
+                        🌟
+                      </span>
+                      <span className="relative text-white">🌟</span>
+                    </div>
+                  </div>
+                  {/* Orbiting particles */}
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <div
+                      key={i}
+                      className="absolute w-3 h-3 rounded-full animate-pulse"
+                      style={{
+                        background: i % 2 === 0 ? theme.primary : theme.secondary,
+                        top: '50%',
+                        left: '50%',
+                        transform: `rotate(${i * 60}deg) translateY(-50px) translateX(-50%)`,
+                        animationDelay: `${i * 0.2}s`,
+                        boxShadow: `0 0 10px currentColor`
+                      }}
+                    />
+                  ))}
+                </div>
+                
+                {/* Logo text */}
+                <div className="text-center">
+                  <h1 className="text-6xl lg:text-8xl font-black mb-2 relative">
+                    <span 
+                      className="bg-clip-text text-transparent animate-pulse-glow"
+                      style={{
+                        backgroundImage: `linear-gradient(45deg, ${theme.primary}, #ffffff, ${theme.secondary}, ${theme.primary})`,
+                        backgroundSize: '300% auto',
+                        animation: 'gradient 4s ease infinite',
+                        textShadow: '0 0 30px rgba(255,255,255,0.5)'
+                      }}
+                    >
+                      WORD
+                    </span>
+                    <span 
+                      className="bg-clip-text text-transparent"
+                      style={{
+                        backgroundImage: `linear-gradient(45deg, ${theme.secondary}, #ffffff, ${theme.primary}, ${theme.secondary})`,
+                        backgroundSize: '300% auto',
+                        animation: 'gradient 4s ease infinite 0.5s'
+                      }}
+                    >
+                      SPIN
+                    </span>
+                  </h1>
+                  <div className="flex items-center justify-center gap-3 mb-4">
+                    <div 
+                      className="h-0.5 w-12 rounded-full"
+                      style={{ background: theme.primary }}
+                    />
+                    <span 
+                      className="text-2xl lg:text-3xl font-bold px-4 py-1 rounded-full backdrop-blur-lg border border-white/20"
+                      style={{
+                        background: 'rgba(255,255,255,0.1)',
+                        color: theme.secondary
+                      }}
+                    >
+                      ⚡ PRO ⚡
+                    </span>
+                    <div 
+                      className="h-0.5 w-12 rounded-full"
+                      style={{ background: theme.secondary }}
+                    />
+                  </div>
+                  <div className="text-lg lg:text-xl font-semibold text-white/60">
+                    2026 EDITION
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="backdrop-blur-lg rounded-2xl px-6 py-4 border border-white/20 mb-8" style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+            }}>
+              <p className="text-xl sm:text-2xl lg:text-3xl font-bold text-white flex items-center justify-center gap-3">
+                <span className="text-3xl animate-bounce-soft">🇹🇷</span>
+                <span>Modern Türkçe Kelime Oyunu</span>
+                <span className="text-3xl animate-bounce-soft">🎯</span>
+              </p>
+            </div>
             <div className="flex justify-center items-center gap-4 text-lg text-white/60">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-green-400 animate-pulse" />
