@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { getThemeForCategory } from '@/lib/gameUtils';
 
 interface GameResultModalProps {
   isVisible: boolean;
@@ -10,6 +11,8 @@ interface GameResultModalProps {
   onPlayAgain: () => void;
   onMainMenu: () => void;
   onContinue?: () => void;
+  category: string;
+  difficulty: number;
 }
 
 export const GameResultModal = memo(({ 
@@ -21,30 +24,36 @@ export const GameResultModal = memo(({
   totalScore, 
   onPlayAgain, 
   onMainMenu,
-  onContinue 
+  onContinue,
+  category,
+  difficulty 
 }: GameResultModalProps) => {
   if (!isVisible) return null;
 
+  const theme = getThemeForCategory(category);
+
   return (
-    <div className="fixed inset-0 backdrop-blur-2xl flex items-center justify-center z-50 animate-scale-in p-3 sm:p-4" style={{
-      background: 'linear-gradient(135deg, rgba(0,0,0,0.8), rgba(30,30,60,0.9))'
-    }}>
+    <div 
+      className="fixed inset-0 backdrop-blur-2xl flex items-center justify-center z-50 animate-scale-in p-3 sm:p-4 animate-gradient-shift animate-color-wave" 
+      style={{
+        backgroundImage: theme.background,
+        backgroundSize: '400% 400%'
+      }}
+    >
       {/* Animated background particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {Array.from({ length: 15 }).map((_, i) => (
           <div
             key={i}
-            className="absolute rounded-full opacity-30 animate-pulse"
+            className="absolute rounded-full opacity-20 animate-pulse"
             style={{
-              background: isSuccess 
-                ? `linear-gradient(45deg, #10b981, #3b82f6)` 
-                : `linear-gradient(45deg, #ef4444, #f59e0b)`,
-              width: Math.random() * 40 + 15,
-              height: Math.random() * 40 + 15,
+              background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
+              width: Math.random() * 80 + 30,
+              height: Math.random() * 80 + 30,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.2}s`,
-              animationDuration: `${3 + Math.random() * 2}s`
+              animationDelay: `${i * 0.3}s`,
+              animationDuration: `${4 + Math.random() * 3}s`
             }}
           />
         ))}
@@ -59,9 +68,7 @@ export const GameResultModal = memo(({
             <div 
               className="absolute inset-0 blur-3xl opacity-50 rounded-full"
               style={{
-                background: isSuccess 
-                  ? 'radial-gradient(circle, #10b98140, transparent)' 
-                  : 'radial-gradient(circle, #ef444440, transparent)'
+                background: `radial-gradient(circle, ${theme.primary}40, transparent)`
               }}
             />
             <div className="relative text-5xl sm:text-6xl lg:text-8xl animate-bounce-soft">
@@ -74,9 +81,7 @@ export const GameResultModal = memo(({
             <h2 
               className="text-2xl sm:text-3xl lg:text-4xl font-black animate-pulse-glow"
               style={{
-                background: isSuccess 
-                  ? 'linear-gradient(45deg, #10b981, #ffffff, #3b82f6)' 
-                  : 'linear-gradient(45deg, #ef4444, #ffffff, #f59e0b)',
+                background: `linear-gradient(45deg, ${theme.primary}, #ffffff, ${theme.secondary})`,
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 color: 'transparent',
@@ -101,7 +106,7 @@ export const GameResultModal = memo(({
               <div 
                 className="text-xl sm:text-2xl lg:text-3xl font-black mb-1"
                 style={{
-                  background: isSuccess ? 'linear-gradient(45deg, #10b981, #3b82f6)' : 'linear-gradient(45deg, #ef4444, #f59e0b)',
+                  background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   color: 'transparent'
@@ -122,7 +127,7 @@ export const GameResultModal = memo(({
               <div 
                 className="text-xl sm:text-2xl lg:text-3xl font-black mb-1"
                 style={{
-                  background: 'linear-gradient(45deg, #8b5cf6, #a855f7)',
+                  background: `linear-gradient(45deg, ${theme.secondary}, ${theme.primary})`,
                   backgroundClip: 'text',
                   WebkitBackgroundClip: 'text',
                   color: 'transparent'
@@ -140,10 +145,11 @@ export const GameResultModal = memo(({
             {isSuccess && onContinue && (
               <button
                 onClick={onContinue}
-                className="w-full py-3 sm:py-4 px-4 sm:px-6 lg:px-8 text-sm sm:text-base font-black rounded-xl sm:rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-blue-500/50 text-white shadow-2xl"
+                className="w-full py-3 sm:py-4 px-4 sm:px-6 lg:px-8 text-sm sm:text-base font-black rounded-xl sm:rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border text-white shadow-2xl"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.3))',
-                  boxShadow: '0 0 20px rgba(59, 130, 246, 0.3)'
+                  background: `linear-gradient(135deg, ${theme.primary}50, ${theme.secondary}50)`,
+                  borderColor: `${theme.primary}80`,
+                  boxShadow: `0 0 20px ${theme.primary}40`
                 }}
                 data-testid="button-continue"
               >
@@ -152,10 +158,11 @@ export const GameResultModal = memo(({
             )}
             <button
               onClick={onPlayAgain}
-              className="w-full py-3 sm:py-4 px-4 sm:px-6 lg:px-8 text-sm sm:text-base font-black rounded-xl sm:rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-green-500/50 text-white shadow-2xl"
+              className="w-full py-3 sm:py-4 px-4 sm:px-6 lg:px-8 text-sm sm:text-base font-black rounded-xl sm:rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border text-white shadow-2xl"
               style={{
-                background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.3))',
-                boxShadow: '0 0 20px rgba(34, 197, 94, 0.3)'
+                background: `linear-gradient(135deg, ${theme.secondary}40, ${theme.primary}40)`,
+                borderColor: `${theme.secondary}60`,
+                boxShadow: `0 0 20px ${theme.secondary}30`
               }}
               data-testid="button-play-again"
             >

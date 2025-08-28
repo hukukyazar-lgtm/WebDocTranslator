@@ -257,6 +257,8 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
         onPlayAgain={handlePlayAgain}
         onMainMenu={onGameOver}
         onContinue={gameSuccess ? handleContinue : undefined}
+        category={category}
+        difficulty={difficulty}
       />
       
       <div 
