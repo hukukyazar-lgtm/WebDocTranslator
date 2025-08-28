@@ -143,36 +143,30 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
           <div 
             className="absolute w-80 h-80 lg:w-96 lg:h-96 rounded-full"
             style={{
-              background: `linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.2))`,
+              background: `transparent`,
               transform: 'translateZ(-30px) rotateX(5deg)',
               filter: 'blur(8px)',
-              opacity: 0.7
+              opacity: 0
             }}
           />
           
           <div 
             className="absolute w-80 h-80 lg:w-96 lg:h-96 rounded-full"
             style={{
-              background: `linear-gradient(135deg, ${theme.primary}40, ${theme.secondary}40)`,
+              background: `transparent`,
               transform: 'translateZ(-20px) rotateX(3deg)',
               filter: 'blur(4px)',
-              opacity: 0.8
+              opacity: 0
             }}
           />
 
           <div 
-            className={`${wheelClass} relative w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center rounded-full shadow-2xl border-2`}
+            className={`${wheelClass} relative w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center rounded-full`}
             style={{ 
               animationDuration: `${spinDuration * speedMultiplier}s`,
-              background: intensityLevel === 'final' 
-                ? `conic-gradient(from 0deg, ${theme.primary}60, ${theme.secondary}60, ${theme.primary}60)`
-                : `conic-gradient(from 0deg, ${theme.primary}20, ${theme.secondary}20, ${theme.primary}20)`,
-              borderColor: theme.primary,
-              boxShadow: intensityLevel === 'final'
-                ? `0 0 80px ${theme.primary}80, inset 0 0 60px ${theme.secondary}40, 0 0 120px ${theme.primary}60, 0 30px 60px rgba(0,0,0,0.4)`
-                : intensityLevel === 'critical'
-                ? `0 0 60px ${theme.primary}60, inset 0 0 50px ${theme.secondary}30, 0 20px 40px rgba(0,0,0,0.3)`
-                : `0 0 40px ${theme.primary}40, inset 0 0 40px ${theme.secondary}20, 0 15px 30px rgba(0,0,0,0.25)`,
+              background: `transparent`,
+              border: 'none',
+              boxShadow: 'none',
               transformStyle: 'preserve-3d'
             }}
             data-testid="spinning-wheel"
