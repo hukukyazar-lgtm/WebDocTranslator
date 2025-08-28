@@ -22,10 +22,10 @@ export const VirtualKeyboard = memo(({
   }, [onKeyPress]);
 
   const getKeyStyle = useCallback((key: string) => {
-    const baseClasses = "keyboard-key px-4 py-4 text-lg font-black rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 focus:outline-none backdrop-blur-lg border border-white/30";
+    const baseClasses = "keyboard-key px-2 sm:px-3 py-2 sm:py-3 text-sm sm:text-base font-bold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-white/30";
     
     if (usedKeys.includes(key.toUpperCase())) {
-      return `${baseClasses} bg-white/30 text-white shadow-2xl border-white/50`;
+      return `${baseClasses} bg-white/30 text-white shadow-xl border-white/50`;
     }
     
     return `${baseClasses} bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 shadow-lg`;
@@ -33,12 +33,12 @@ export const VirtualKeyboard = memo(({
 
   return (
     <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
-      <div className="backdrop-blur-xl rounded-3xl p-8 border border-white/20 shadow-2xl" style={{
+      <div className="backdrop-blur-xl rounded-2xl p-3 sm:p-6 border border-white/20 shadow-2xl" style={{
         background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
       }}>
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           {/* First Row */}
-          <div className="flex justify-center gap-1 sm:gap-2">
+          <div className="flex justify-center gap-1">
             {turkishKeyboardLayout[0].map(key => (
               <button
                 key={key}
@@ -52,7 +52,7 @@ export const VirtualKeyboard = memo(({
           </div>
 
           {/* Second Row */}
-          <div className="flex justify-center gap-1 sm:gap-2">
+          <div className="flex justify-center gap-1">
             {turkishKeyboardLayout[1].map(key => (
               <button
                 key={key}
@@ -66,7 +66,7 @@ export const VirtualKeyboard = memo(({
           </div>
 
           {/* Third Row */}
-          <div className="flex justify-center gap-1 sm:gap-2">
+          <div className="flex justify-center gap-1">
             {turkishKeyboardLayout[2].map(key => (
               <button
                 key={key}
@@ -79,7 +79,7 @@ export const VirtualKeyboard = memo(({
             ))}
             <button
               onClick={onBackspace}
-              className="keyboard-key px-6 py-4 text-lg font-black rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 focus:outline-none backdrop-blur-lg border border-red-500/50 bg-red-500/20 text-white hover:bg-red-500/40 shadow-lg"
+              className="keyboard-key px-3 sm:px-4 py-2 sm:py-3 text-sm sm:text-base font-bold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-red-500/50 bg-red-500/20 text-white hover:bg-red-500/40 shadow-lg"
               data-testid="key-backspace"
             >
               🗑️ SİL
@@ -90,17 +90,17 @@ export const VirtualKeyboard = memo(({
           <div className="flex justify-center gap-2">
             <button
               onClick={onSpace}
-              className="keyboard-key flex-1 max-w-xs py-4 text-lg font-black rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 focus:outline-none backdrop-blur-lg border border-white/30 bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 shadow-lg"
+              className="keyboard-key flex-1 max-w-xs py-2 sm:py-3 text-sm sm:text-base font-bold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-white/30 bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 shadow-lg"
               data-testid="key-space"
             >
               ⌨️ BOŞLUK
             </button>
             <button
               onClick={onSubmit}
-              className="keyboard-key px-12 py-4 text-xl font-black rounded-xl transition-all duration-300 transform hover:scale-110 active:scale-95 focus:outline-none backdrop-blur-lg border border-green-500/50 text-white hover:bg-green-500/40 shadow-2xl"
+              className="keyboard-key px-4 sm:px-8 py-2 sm:py-3 text-sm sm:text-lg font-bold rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-green-500/50 text-white hover:bg-green-500/40 shadow-xl"
               style={{
                 background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.3))',
-                boxShadow: '0 0 20px rgba(34, 197, 94, 0.3)'
+                boxShadow: '0 0 15px rgba(34, 197, 94, 0.3)'
               }}
               data-testid="key-submit"
             >
