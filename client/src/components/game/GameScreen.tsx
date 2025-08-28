@@ -113,7 +113,7 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
       setStreak(0);
     }
     
-    setTimeout(() => setShowResultModal(true), 1000);
+    setTimeout(() => setShowResultModal(true), 3000);
   }, [gameOver, elapsedTime, difficulty]);
 
   const handleGuessSubmit = useCallback(() => {
