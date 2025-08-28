@@ -62,7 +62,7 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
             <h1 
               className="text-7xl sm:text-8xl lg:text-9xl font-black mb-6 animate-pulse-glow"
               style={{
-                background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary}, ${theme.primary})`,
+                backgroundImage: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary}, ${theme.primary})`,
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
                 color: 'transparent',

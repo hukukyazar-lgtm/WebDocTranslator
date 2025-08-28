@@ -202,12 +202,32 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
       />
       
       <div 
-        className="min-h-screen transition-all duration-1000"
+        className="min-h-screen relative overflow-hidden transition-all duration-1000"
         style={{ 
-          background: dynamicBackground,
-          backgroundAttachment: 'fixed'
+          backgroundImage: dynamicBackground,
+          backgroundAttachment: 'fixed',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
         }}
       >
+        {/* Animated background particles */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {Array.from({ length: 15 }).map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full opacity-20 animate-pulse"
+              style={{
+                background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
+                width: Math.random() * 80 + 30,
+                height: Math.random() * 80 + 30,
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animationDelay: `${i * 0.3}s`,
+                animationDuration: `${4 + Math.random() * 3}s`
+              }}
+            />
+          ))}
+        </div>
         <GameHeader 
           category={category} 
           difficulty={difficulty} 
@@ -239,22 +259,50 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
             {!gameOver && (
               <>
                 <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                  <div className="game-card rounded-2xl p-6 w-full max-w-md shadow-xl">
-                    <div className="text-center space-y-4">
-                      <label className="block text-sm font-medium text-muted-foreground">
-                        Tahminini Yaz
-                      </label>
+                  <div className="backdrop-blur-xl rounded-3xl p-8 border border-white/20 w-full max-w-2xl shadow-2xl" style={{
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
+                  }}>
+                    <div className="text-center space-y-6">
+                      <div className="flex items-center justify-center gap-3 mb-4">
+                        <div 
+                          className="w-3 h-3 rounded-full animate-pulse"
+                          style={{ background: theme.primary }}
+                        />
+                        <label className="text-xl font-bold text-white">
+                          💭 Tahminini Yaz
+                        </label>
+                        <div 
+                          className="w-3 h-3 rounded-full animate-pulse"
+                          style={{ background: theme.secondary }}
+                        />
+                      </div>
                       <div className="relative">
                         <input 
                           type="text" 
-                          className="w-full px-6 py-4 text-2xl font-bold text-center bg-input border border-border rounded-xl focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200"
-                          placeholder="Kelimeyi yazın..."
+                          className="w-full px-8 py-6 text-3xl font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-2xl focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50"
+                          style={{ 
+                            background: 'rgba(255,255,255,0.1)',
+                            textShadow: '0 0 20px rgba(255,255,255,0.5)'
+                          }}
+                          placeholder="KELİMEYİ YAZIN..."
                           value={guess}
                           onChange={(e) => setGuess(e.target.value.toUpperCase())}
                           data-testid="input-guess"
                         />
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-                          <div className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-6">
+                          <div 
+                            className="w-4 h-4 rounded-full animate-pulse shadow-lg"
+                            style={{ background: theme.primary, boxShadow: `0 0 10px ${theme.primary}` }}
+                          />
+                        </div>
+                        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
+                          <div 
+                            className="h-1 rounded-full transition-all duration-300"
+                            style={{ 
+                              width: `${Math.max(20, guess.length * 8)}px`,
+                              background: `linear-gradient(90deg, ${theme.primary}, ${theme.secondary})`
+                            }}
+                          />
                         </div>
                       </div>
                     </div>
