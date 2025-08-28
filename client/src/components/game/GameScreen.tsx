@@ -89,7 +89,7 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
     }
 
     if (timeLeft <= 0 && !gameOver) {
-      endGame("Süre Doldu!", false);
+      endGame("", false);
     }
   }, [timeLeft, gameOver, slowdownApplied]);
 
