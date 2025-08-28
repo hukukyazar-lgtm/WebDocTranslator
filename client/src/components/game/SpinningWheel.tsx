@@ -16,7 +16,7 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty 
 
   const wheelClass = useMemo(() => {
     if (!isSpinning) return '';
-    return spinDuration <= 3 ? 'wheel-spin-fast' : 'wheel-spin';
+    return spinDuration <= 3 ? 'animate-spin-fast' : 'animate-spin-slow';
   }, [isSpinning, spinDuration]);
 
   return (
