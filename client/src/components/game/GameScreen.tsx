@@ -303,60 +303,56 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
             {!gameOver && (
               <>
                 <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                  <div className="backdrop-blur-xl rounded-2xl sm:rounded-3xl p-3 sm:p-4 lg:p-8 border border-white/20 w-full shadow-2xl" style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
-                  }}>
-                    <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6">
-                      {/* Timer Display */}
-                      <div className="flex justify-center mb-4">
-                        <div className="backdrop-blur-lg rounded-2xl px-6 py-3 border border-white/20 bg-white/10 flex items-center gap-3 shadow-lg">
-                          <div className="text-2xl animate-pulse">⏱️</div>
-                          <div className="text-xl sm:text-2xl font-black text-white" data-testid="text-time-left">
-                            {formatTime(timeLeft)}
-                          </div>
-                          <div className="w-16 h-2 backdrop-blur-lg rounded-full border border-white/20 bg-white/10 overflow-hidden">
-                            <div 
-                              className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
-                              style={{ 
-                                width: `${((TOTAL_GAME_TIME - timeLeft) / TOTAL_GAME_TIME) * 100}%`,
-                                background: timeLeft > 10 
-                                  ? 'linear-gradient(90deg, #10b981, #3b82f6)' 
-                                  : 'linear-gradient(90deg, #f59e0b, #ef4444)'
-                              }}
-                              data-testid="progress-timer"
-                            />
-                          </div>
+                  <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6 w-full">
+                    {/* Timer Display */}
+                    <div className="flex justify-center mb-4">
+                      <div className="backdrop-blur-lg rounded-2xl px-6 py-3 border border-white/20 bg-white/10 flex items-center gap-3 shadow-lg">
+                        <div className="text-2xl animate-pulse">⏱️</div>
+                        <div className="text-xl sm:text-2xl font-black text-white" data-testid="text-time-left">
+                          {formatTime(timeLeft)}
+                        </div>
+                        <div className="w-16 h-2 backdrop-blur-lg rounded-full border border-white/20 bg-white/10 overflow-hidden">
+                          <div 
+                            className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
+                            style={{ 
+                              width: `${((TOTAL_GAME_TIME - timeLeft) / TOTAL_GAME_TIME) * 100}%`,
+                              background: timeLeft > 10 
+                                ? 'linear-gradient(90deg, #10b981, #3b82f6)' 
+                                : 'linear-gradient(90deg, #f59e0b, #ef4444)'
+                            }}
+                            data-testid="progress-timer"
+                          />
                         </div>
                       </div>
-                      
-                      <div className="relative">
-                        <input 
-                          type="text" 
-                          className="w-full px-3 py-3 sm:px-4 sm:py-4 lg:px-8 lg:py-6 text-lg sm:text-xl lg:text-2xl xl:text-3xl font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-xl sm:rounded-2xl focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50"
-                          style={{ 
-                            background: 'rgba(255,255,255,0.1)',
-                            textShadow: '0 0 20px rgba(255,255,255,0.5)'
-                          }}
-                          placeholder="KELİMEYİ YAZIN..."
-                          value={guess}
-                          onChange={(e) => setGuess(e.target.value.toUpperCase())}
-                          data-testid="input-guess"
+                    </div>
+                    
+                    <div className="relative max-w-2xl mx-auto">
+                      <input 
+                        type="text" 
+                        className="w-full px-3 py-3 sm:px-4 sm:py-4 lg:px-8 lg:py-6 text-lg sm:text-xl lg:text-2xl xl:text-3xl font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-xl sm:rounded-2xl focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50"
+                        style={{ 
+                          background: 'rgba(255,255,255,0.1)',
+                          textShadow: '0 0 20px rgba(255,255,255,0.5)'
+                        }}
+                        placeholder="KELİMEYİ YAZIN..."
+                        value={guess}
+                        onChange={(e) => setGuess(e.target.value.toUpperCase())}
+                        data-testid="input-guess"
+                      />
+                      <div className="absolute inset-y-0 right-0 flex items-center pr-6">
+                        <div 
+                          className="w-4 h-4 rounded-full animate-pulse shadow-lg"
+                          style={{ background: theme.primary, boxShadow: `0 0 10px ${theme.primary}` }}
                         />
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-6">
-                          <div 
-                            className="w-4 h-4 rounded-full animate-pulse shadow-lg"
-                            style={{ background: theme.primary, boxShadow: `0 0 10px ${theme.primary}` }}
-                          />
-                        </div>
-                        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                          <div 
-                            className="h-1 rounded-full transition-all duration-300"
-                            style={{ 
-                              width: `${Math.max(20, guess.length * 8)}px`,
-                              background: `linear-gradient(90deg, ${theme.primary}, ${theme.secondary})`
-                            }}
-                          />
-                        </div>
+                      </div>
+                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
+                        <div 
+                          className="h-1 rounded-full transition-all duration-300"
+                          style={{ 
+                            width: `${Math.max(20, guess.length * 8)}px`,
+                            background: `linear-gradient(90deg, ${theme.primary}, ${theme.secondary})`
+                          }}
+                        />
                       </div>
                     </div>
                   </div>
