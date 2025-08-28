@@ -240,7 +240,7 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                     transform: 'translateZ(5px)'
                   }}
                 >
-                  🇹🇷
+                  ✨
                 </div>
               </div>
             )}
