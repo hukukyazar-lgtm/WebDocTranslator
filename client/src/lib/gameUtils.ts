@@ -88,9 +88,17 @@ export const formatTime = (seconds: number): string => {
   return `${seconds}s`;
 };
 
-// Enhanced spin dynamics for more excitement
+// Enhanced spin dynamics based on difficulty
 export const getSpinDuration = (difficulty: number, timeLeft: number): number => {
-  const baseSpeed = 6.0 - (difficulty - 1) * 0.8; // Start faster
+  // Base speed depends on difficulty: Easy = slow, Hard = fast
+  let baseSpeed;
+  if (difficulty <= 2) {
+    baseSpeed = 8.0; // Easy: Very slow spinning
+  } else if (difficulty === 3) {
+    baseSpeed = 5.0; // Medium: Medium spinning  
+  } else {
+    baseSpeed = 3.0; // Hard: Fast spinning
+  }
   
   // Dynamic speed changes based on time pressure
   if (timeLeft <= 5) {
@@ -104,37 +112,56 @@ export const getSpinDuration = (difficulty: number, timeLeft: number): number =>
   return baseSpeed;
 };
 
-// Get blur intensity based on current game state
+// Get blur intensity based on difficulty and time
 export const getBlurIntensity = (difficulty: number, timeLeft: number, isSpinning: boolean): number => {
   if (!isSpinning) return 0;
   
-  const baseBlu = (difficulty - 1) * 1.2;
+  // Blur intensity based on difficulty: Easy = less blur, Hard = more blur
+  let baseBlur;
+  if (difficulty <= 2) {
+    baseBlur = 1.0; // Easy: Low blur, letters more visible
+  } else if (difficulty === 3) {
+    baseBlur = 2.5; // Medium: Medium blur
+  } else {
+    baseBlur = 4.0; // Hard: High blur, letters hard to see
+  }
   
   // Reduce blur as time runs out for dramatic reveal
   if (timeLeft <= 5) {
-    return baseBlu * 0.3; // Much clearer for final moments
+    return baseBlur * 0.3; // Much clearer for final moments
   } else if (timeLeft <= 10) {
-    return baseBlu * 0.6; // Getting clearer
+    return baseBlur * 0.6; // Getting clearer
   } else if (timeLeft <= 15) {
-    return baseBlu * 0.8; // Slightly clearer
+    return baseBlur * 0.8; // Slightly clearer
   }
   
-  return baseBlu;
+  return baseBlur;
 };
 
-// Calculate letter visibility progression
-export const getLetterVisibility = (timeLeft: number, letterIndex: number, totalLetters: number): number => {
+// Calculate letter visibility based on difficulty and time
+export const getLetterVisibility = (timeLeft: number, letterIndex: number, totalLetters: number, difficulty: number = 3): number => {
   const timeProgress = (30 - timeLeft) / 30; // 0 to 1 progression
   const letterProgress = letterIndex / totalLetters; // Position of this letter
   
-  // Letters become visible progressively
-  if (timeProgress > letterProgress + 0.2) {
-    return 1; // Fully visible
-  } else if (timeProgress > letterProgress) {
-    return (timeProgress - letterProgress) / 0.2; // Fading in
+  // Visibility timing based on difficulty
+  let visibilityThreshold;
+  if (difficulty <= 2) {
+    visibilityThreshold = 0.1; // Easy: Letters show early
+  } else if (difficulty === 3) {
+    visibilityThreshold = 0.2; // Medium: Normal timing
+  } else {
+    visibilityThreshold = 0.3; // Hard: Letters show later
   }
   
-  return 0.1; // Nearly invisible
+  // Letters become visible progressively
+  if (timeProgress > letterProgress + visibilityThreshold) {
+    return 1; // Fully visible
+  } else if (timeProgress > letterProgress) {
+    return (timeProgress - letterProgress) / visibilityThreshold; // Fading in
+  }
+  
+  // Base visibility also depends on difficulty
+  return difficulty <= 2 ? 0.3 : difficulty === 3 ? 0.1 : 0.05;
 };
 
 // Get dramatic scale effect for letters

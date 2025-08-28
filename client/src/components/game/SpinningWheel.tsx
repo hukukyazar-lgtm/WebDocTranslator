@@ -129,7 +129,7 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               const transformSpin = `rotate(${angle}deg) translate(${radius}px) rotate(${-angle}deg)`;
               const transformAlign = `translateX(${(i - (letters.length - 1) / 2) * spacing}px) scale(2)`;
               const dynamicScale = getLetterScale(timeLeft, isSpinning, i);
-              const letterVisibility = getLetterVisibility(timeLeft, i, letters.length);
+              const letterVisibility = getLetterVisibility(timeLeft, i, letters.length, difficulty);
               const fontSize = getFontSize(letters.length, isSpinning);
 
               return (
