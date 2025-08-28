@@ -279,8 +279,6 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
         <GameHeader 
           category={category} 
           difficulty={difficulty} 
-          timeLeft={timeLeft}
-          totalTime={TOTAL_GAME_TIME}
         />
         
         <main className="pt-24 sm:pt-28 pb-4 sm:pb-8 px-2 sm:px-4">

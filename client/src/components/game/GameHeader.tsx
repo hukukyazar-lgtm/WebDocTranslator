@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import { formatTime } from '@/lib/gameUtils';
 
 const categoryIcons: Record<string, string> = {
   'Hayvanlar': '🦁',
@@ -17,12 +16,9 @@ const categoryIcons: Record<string, string> = {
 interface GameHeaderProps {
   category: string;
   difficulty: number;
-  timeLeft: number;
-  totalTime: number;
 }
 
-export const GameHeader = memo(({ category, difficulty, timeLeft, totalTime }: GameHeaderProps) => {
-  const progressWidth = ((totalTime - timeLeft) / totalTime) * 100;
+export const GameHeader = memo(({ category, difficulty }: GameHeaderProps) => {
   const categoryIcon = categoryIcons[category] || '📂';
 
   return (
