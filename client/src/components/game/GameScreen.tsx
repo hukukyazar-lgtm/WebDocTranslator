@@ -263,19 +263,6 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
                     background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
                   }}>
                     <div className="text-center space-y-6">
-                      <div className="flex items-center justify-center gap-3 mb-4">
-                        <div 
-                          className="w-3 h-3 rounded-full animate-pulse"
-                          style={{ background: theme.primary }}
-                        />
-                        <label className="text-xl font-bold text-white">
-                          💭 Tahminini Yaz
-                        </label>
-                        <div 
-                          className="w-3 h-3 rounded-full animate-pulse"
-                          style={{ background: theme.secondary }}
-                        />
-                      </div>
                       <div className="relative">
                         <input 
                           type="text" 
