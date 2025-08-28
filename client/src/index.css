@@ -173,23 +173,23 @@
 
 @layer utilities {
   .animate-spin-slow {
-    animation: spin 4s linear infinite;
+    animation: spin-3d 4s linear infinite;
   }
 
   .animate-spin-fast {
-    animation: spin 2s linear infinite;
+    animation: spin-3d 2s linear infinite;
   }
 
   .animate-spin-medium {
-    animation: spin 3s linear infinite;
+    animation: spin-3d 3s linear infinite;
   }
 
   .animate-spin-very-slow {
-    animation: spin 6s linear infinite;
+    animation: spin-3d 6s linear infinite;
   }
 
   .animate-spin-ultra-slow {
-    animation: spin 10s linear infinite;
+    animation: spin-3d 10s linear infinite;
   }
 
   .animate-pulse-glow {
@@ -259,6 +259,33 @@
     }
     100% {
       background-position: 0% 50%;
+    }
+  }
+
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes spin-3d {
+    0% {
+      transform: translateZ(10px) rotateX(-2deg) rotateY(0deg);
+    }
+    25% {
+      transform: translateZ(15px) rotateX(-3deg) rotateY(90deg);
+    }
+    50% {
+      transform: translateZ(20px) rotateX(-2deg) rotateY(180deg);
+    }
+    75% {
+      transform: translateZ(15px) rotateX(-3deg) rotateY(270deg);
+    }
+    100% {
+      transform: translateZ(10px) rotateX(-2deg) rotateY(360deg);
     }
   }
 }

@@ -120,9 +120,7 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 : intensityLevel === 'critical'
                 ? `0 0 60px ${theme.primary}60, inset 0 0 50px ${theme.secondary}30, 0 20px 40px rgba(0,0,0,0.3)`
                 : `0 0 40px ${theme.primary}40, inset 0 0 40px ${theme.secondary}20, 0 15px 30px rgba(0,0,0,0.25)`,
-              transform: isSpinning ? 'translateZ(10px) rotateX(-2deg)' : 'translateZ(0px)',
-              transformStyle: 'preserve-3d',
-              transition: 'transform 0.5s ease'
+              transformStyle: 'preserve-3d'
             }}
             data-testid="spinning-wheel"
           >
