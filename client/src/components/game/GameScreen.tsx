@@ -291,6 +291,7 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
               spinDuration={spinDuration} 
               difficulty={difficulty}
               category={category}
+              timeLeft={timeLeft}
             />
             
             {message && (

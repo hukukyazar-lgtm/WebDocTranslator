@@ -88,12 +88,87 @@ export const formatTime = (seconds: number): string => {
   return `${seconds}s`;
 };
 
+// Enhanced spin dynamics for more excitement
 export const getSpinDuration = (difficulty: number, timeLeft: number): number => {
-  const baseSpeed = 4.5 - (difficulty - 1) * 0.75;
-  // Speed up when time is running out
-  return timeLeft <= 10 ? baseSpeed + 1.5 : baseSpeed;
+  const baseSpeed = 6.0 - (difficulty - 1) * 0.8; // Start faster
+  
+  // Dynamic speed changes based on time pressure
+  if (timeLeft <= 5) {
+    return baseSpeed * 2.5; // Very slow for dramatic effect
+  } else if (timeLeft <= 10) {
+    return baseSpeed * 1.8; // Slow down significantly
+  } else if (timeLeft <= 15) {
+    return baseSpeed * 1.2; // Slight slowdown
+  }
+  
+  return baseSpeed;
+};
+
+// Get blur intensity based on current game state
+export const getBlurIntensity = (difficulty: number, timeLeft: number, isSpinning: boolean): number => {
+  if (!isSpinning) return 0;
+  
+  const baseBlu = (difficulty - 1) * 1.2;
+  
+  // Reduce blur as time runs out for dramatic reveal
+  if (timeLeft <= 5) {
+    return baseBlu * 0.3; // Much clearer for final moments
+  } else if (timeLeft <= 10) {
+    return baseBlu * 0.6; // Getting clearer
+  } else if (timeLeft <= 15) {
+    return baseBlu * 0.8; // Slightly clearer
+  }
+  
+  return baseBlu;
+};
+
+// Calculate letter visibility progression
+export const getLetterVisibility = (timeLeft: number, letterIndex: number, totalLetters: number): number => {
+  const timeProgress = (30 - timeLeft) / 30; // 0 to 1 progression
+  const letterProgress = letterIndex / totalLetters; // Position of this letter
+  
+  // Letters become visible progressively
+  if (timeProgress > letterProgress + 0.2) {
+    return 1; // Fully visible
+  } else if (timeProgress > letterProgress) {
+    return (timeProgress - letterProgress) / 0.2; // Fading in
+  }
+  
+  return 0.1; // Nearly invisible
+};
+
+// Get dramatic scale effect for letters
+export const getLetterScale = (timeLeft: number, isSpinning: boolean, letterIndex: number): number => {
+  if (!isSpinning) return 1.5;
+  
+  const baseScale = 1 + Math.sin(Date.now() * 0.008 + letterIndex) * 0.15;
+  
+  // Dramatic pulsing when time is critical
+  if (timeLeft <= 5) {
+    return baseScale * (1 + Math.sin(Date.now() * 0.02) * 0.3);
+  } else if (timeLeft <= 10) {
+    return baseScale * (1 + Math.sin(Date.now() * 0.015) * 0.2);
+  }
+  
+  return baseScale;
 };
 
 export const shouldShowCountdown = (timeLeft: number, gameOver: boolean): boolean => {
   return timeLeft <= 10 && !gameOver && timeLeft > 0;
+};
+
+// Get intensity of background effects based on time pressure
+export const getIntensityLevel = (timeLeft: number): 'calm' | 'tense' | 'critical' | 'final' => {
+  if (timeLeft <= 3) return 'final';
+  if (timeLeft <= 7) return 'critical';
+  if (timeLeft <= 15) return 'tense';
+  return 'calm';
+};
+
+// Calculate wheel rotation speed multiplier
+export const getWheelSpeedMultiplier = (timeLeft: number): number => {
+  if (timeLeft <= 3) return 0.2; // Very slow for dramatic effect
+  if (timeLeft <= 7) return 0.4;
+  if (timeLeft <= 15) return 0.7;
+  return 1; // Normal speed
 };

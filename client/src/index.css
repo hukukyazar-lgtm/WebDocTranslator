@@ -180,6 +180,18 @@
     animation: spin 2s linear infinite;
   }
 
+  .animate-spin-medium {
+    animation: spin 3s linear infinite;
+  }
+
+  .animate-spin-very-slow {
+    animation: spin 6s linear infinite;
+  }
+
+  .animate-spin-ultra-slow {
+    animation: spin 10s linear infinite;
+  }
+
   .animate-pulse-glow {
     animation: pulse-glow 2s ease-in-out infinite;
   }
