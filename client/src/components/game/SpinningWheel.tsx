@@ -59,11 +59,11 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
 
 
   return (
-    <div className="flex justify-center">
-      <div className="game-card rounded-3xl p-8 shadow-2xl animate-slide-up">
-        <div className="relative flex items-center justify-center">
+    <div className="flex justify-center" style={{ perspective: '1000px' }}>
+      <div className="game-card rounded-3xl p-8 shadow-2xl animate-slide-up" style={{ transformStyle: 'preserve-3d' }}>
+        <div className="relative flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
           {/* Enhanced outer ring particles with dynamic intensity */}
-          <div className="absolute w-96 h-96 lg:w-[28rem] lg:h-[28rem] rounded-full">
+          <div className="absolute w-96 h-96 lg:w-[28rem] lg:h-[28rem] rounded-full" style={{ transformStyle: 'preserve-3d' }}>
             {Array.from({ length: intensityLevel === 'final' ? 24 : 12 }).map((_, i) => {
               const particleIntensity = intensityLevel === 'final' ? 1 : intensityLevel === 'critical' ? 0.8 : 0.6;
               return (
@@ -76,7 +76,7 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                     background: letterColors[i],
                     top: '50%',
                     left: '50%',
-                    transform: `rotate(${i * (360 / (intensityLevel === 'final' ? 24 : 12))}deg) translateY(-180px) translateX(-50%)`,
+                    transform: `rotate(${i * (360 / (intensityLevel === 'final' ? 24 : 12))}deg) translateY(-180px) translateX(-50%) translateZ(20px)`,
                     animationDelay: `${i * 0.05}s`,
                     opacity: particleIntensity,
                     boxShadow: intensityLevel === 'final' ? `0 0 15px ${letterColors[i]}` : 'none'
@@ -85,6 +85,27 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               );
             })}
           </div>
+
+          {/* 3D Wheel Base with depth layers */}
+          <div 
+            className="absolute w-80 h-80 lg:w-96 lg:h-96 rounded-full"
+            style={{
+              background: `linear-gradient(135deg, rgba(0,0,0,0.6), rgba(0,0,0,0.2))`,
+              transform: 'translateZ(-30px) rotateX(5deg)',
+              filter: 'blur(8px)',
+              opacity: 0.7
+            }}
+          />
+          
+          <div 
+            className="absolute w-80 h-80 lg:w-96 lg:h-96 rounded-full"
+            style={{
+              background: `linear-gradient(135deg, ${theme.primary}40, ${theme.secondary}40)`,
+              transform: 'translateZ(-20px) rotateX(3deg)',
+              filter: 'blur(4px)',
+              opacity: 0.8
+            }}
+          />
 
           <div 
             className={`${wheelClass} relative w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center rounded-full shadow-2xl border-2`}
@@ -95,10 +116,13 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 : `conic-gradient(from 0deg, ${theme.primary}20, ${theme.secondary}20, ${theme.primary}20)`,
               borderColor: theme.primary,
               boxShadow: intensityLevel === 'final'
-                ? `0 0 80px ${theme.primary}80, inset 0 0 60px ${theme.secondary}40, 0 0 120px ${theme.primary}60`
+                ? `0 0 80px ${theme.primary}80, inset 0 0 60px ${theme.secondary}40, 0 0 120px ${theme.primary}60, 0 30px 60px rgba(0,0,0,0.4)`
                 : intensityLevel === 'critical'
-                ? `0 0 60px ${theme.primary}60, inset 0 0 50px ${theme.secondary}30`
-                : `0 0 40px ${theme.primary}40, inset 0 0 40px ${theme.secondary}20`
+                ? `0 0 60px ${theme.primary}60, inset 0 0 50px ${theme.secondary}30, 0 20px 40px rgba(0,0,0,0.3)`
+                : `0 0 40px ${theme.primary}40, inset 0 0 40px ${theme.secondary}20, 0 15px 30px rgba(0,0,0,0.25)`,
+              transform: isSpinning ? 'translateZ(10px) rotateX(-2deg)' : 'translateZ(0px)',
+              transformStyle: 'preserve-3d',
+              transition: 'transform 0.5s ease'
             }}
             data-testid="spinning-wheel"
           >
@@ -117,17 +141,18 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                   style={{ 
                     color: letterColors[i],
                     transform: isSpinning 
-                      ? `${transformSpin} scale(${dynamicScale})` 
-                      : `${transformAlign}`, 
-                    filter: `blur(${blurAmount}px) drop-shadow(0 0 12px ${isSpinning ? 'currentColor' : 'rgba(255,255,255,0.8)'})`,
+                      ? `${transformSpin} scale(${dynamicScale}) translateZ(15px)` 
+                      : `${transformAlign} translateZ(5px)`, 
+                    filter: `blur(${blurAmount}px) drop-shadow(0 0 12px ${isSpinning ? 'currentColor' : 'rgba(255,255,255,0.8)'}) drop-shadow(0 5px 10px rgba(0,0,0,0.3))`,
                     transition: 'transform 1s, filter 0.5s, opacity 0.3s, color 0.5s',
                     textShadow: isSpinning 
                       ? (intensityLevel === 'final'
-                        ? `0 0 30px currentColor, 0 0 60px currentColor, 0 0 90px currentColor`
-                        : `0 0 20px currentColor, 0 0 40px currentColor`)
-                      : `2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.4)`,
+                        ? `0 0 30px currentColor, 0 0 60px currentColor, 0 0 90px currentColor, 0 5px 15px rgba(0,0,0,0.6)`
+                        : `0 0 20px currentColor, 0 0 40px currentColor, 0 3px 10px rgba(0,0,0,0.5)`)
+                      : `2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.4), 0 4px 12px rgba(0,0,0,0.7)`,
                     opacity: isSpinning ? letterVisibility : 1,
-                    WebkitTextStroke: isSpinning ? 'none' : '1px rgba(0,0,0,0.5)'
+                    WebkitTextStroke: isSpinning ? 'none' : '1px rgba(0,0,0,0.5)',
+                    transformStyle: 'preserve-3d'
                   }}
                   data-testid={`wheel-letter-${i}`}
                 >
@@ -136,7 +161,7 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               );
             })}
             
-            {/* Enhanced center emblem with dynamic effects */}
+            {/* Enhanced 3D center emblem with dynamic effects */}
             {isSpinning && (
               <div 
                 className={`absolute rounded-full flex items-center justify-center shadow-2xl animate-pulse-glow border-2 ${
@@ -148,16 +173,21 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                     : `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
                   borderColor: theme.primary,
                   boxShadow: intensityLevel === 'final'
-                    ? `0 0 40px ${theme.primary}80, 0 0 80px ${theme.secondary}60`
-                    : `0 0 20px ${theme.primary}60`,
-                  animation: intensityLevel === 'final' ? 'pulse 0.5s infinite' : 'pulse 2s infinite'
+                    ? `0 0 40px ${theme.primary}80, 0 0 80px ${theme.secondary}60, 0 10px 20px rgba(0,0,0,0.5), inset 0 2px 4px rgba(255,255,255,0.3)`
+                    : `0 0 20px ${theme.primary}60, 0 6px 12px rgba(0,0,0,0.4), inset 0 1px 3px rgba(255,255,255,0.2)`,
+                  animation: intensityLevel === 'final' ? 'pulse 0.5s infinite' : 'pulse 2s infinite',
+                  transform: 'translateZ(25px)',
+                  transformStyle: 'preserve-3d'
                 }}
               >
                 <div 
                   className={`font-black text-white ${
                     intensityLevel === 'final' ? 'text-3xl' : 'text-2xl'
                   }`}
-                  style={{ textShadow: '0 0 10px rgba(0,0,0,0.8)' }}
+                  style={{ 
+                    textShadow: '0 0 10px rgba(0,0,0,0.8), 0 2px 4px rgba(0,0,0,0.6)',
+                    transform: 'translateZ(5px)'
+                  }}
                 >
                   🇹🇷
                 </div>
