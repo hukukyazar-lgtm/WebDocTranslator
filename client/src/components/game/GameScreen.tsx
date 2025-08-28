@@ -6,7 +6,7 @@ import { GameStats } from './GameStats';
 import { CountdownOverlay } from './CountdownOverlay';
 import { GameResultModal } from './GameResultModal';
 import { getWordByDifficulty } from '@/lib/wordLists';
-import { TOTAL_GAME_TIME, calculateScore, getSpinDuration, shouldShowCountdown } from '@/lib/gameUtils';
+import { TOTAL_GAME_TIME, calculateScore, getSpinDuration, shouldShowCountdown, getThemeForCategory } from '@/lib/gameUtils';
 import type { GameSettings } from './MenuScreen';
 
 interface GameScreenProps {
@@ -16,6 +16,7 @@ interface GameScreenProps {
 
 export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
   const { category, difficulty } = settings;
+  const theme = getThemeForCategory(category);
   
   const [secretWord, setSecretWord] = useState('');
   const [guess, setGuess] = useState('');
@@ -37,6 +38,19 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
 
   const timeLeft = TOTAL_GAME_TIME - Math.floor(elapsedTime);
   const showCountdown = shouldShowCountdown(timeLeft, gameOver);
+
+  // Dynamic background based on time left
+  const dynamicBackground = useMemo(() => {
+    if (timeLeft > 20) {
+      return theme.background;
+    } else if (timeLeft > 10) {
+      // Transition to orange/yellow
+      return `linear-gradient(135deg, ${theme.background.match(/hsl\([^)]+\)/)?.[0] || 'hsl(25, 95%, 15%)'} 0%, hsl(45, 80%, 10%) 100%)`;
+    } else {
+      // Transition to red (danger)
+      return 'linear-gradient(135deg, hsl(0, 70%, 15%) 0%, hsl(15, 80%, 10%) 100%)';
+    }
+  }, [timeLeft, theme.background]);
 
   // Get used keys from current guess
   const usedKeys = useMemo(() => {
@@ -187,7 +201,13 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
         onMainMenu={onGameOver}
       />
       
-      <div className="min-h-screen">
+      <div 
+        className="min-h-screen transition-all duration-1000"
+        style={{ 
+          background: dynamicBackground,
+          backgroundAttachment: 'fixed'
+        }}
+      >
         <GameHeader 
           category={category} 
           difficulty={difficulty} 
@@ -201,7 +221,8 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
               word={secretWord} 
               isSpinning={isSpinning} 
               spinDuration={spinDuration} 
-              difficulty={difficulty} 
+              difficulty={difficulty}
+              category={category}
             />
             
             {message && (
