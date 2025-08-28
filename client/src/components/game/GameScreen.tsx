@@ -3,10 +3,9 @@ import { GameHeader } from './GameHeader';
 import { SpinningWheel } from './SpinningWheel';
 import { VirtualKeyboard } from './VirtualKeyboard';
 import { GameStats } from './GameStats';
-import { CountdownOverlay } from './CountdownOverlay';
 import { GameResultModal } from './GameResultModal';
 import { getWordByDifficulty, wordLists } from '@/lib/wordLists';
-import { TOTAL_GAME_TIME, calculateScore, getSpinDuration, shouldShowCountdown, getThemeForCategory, formatTime } from '@/lib/gameUtils';
+import { TOTAL_GAME_TIME, calculateScore, getSpinDuration, getThemeForCategory, formatTime } from '@/lib/gameUtils';
 import type { GameSettings } from './MenuScreen';
 
 interface GameScreenProps {
@@ -38,7 +37,6 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const timeLeft = TOTAL_GAME_TIME - Math.floor(elapsedTime);
-  const showCountdown = shouldShowCountdown(timeLeft, gameOver);
 
   // Dynamic background based on time left
   const dynamicBackground = useMemo(() => {
@@ -236,7 +234,6 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
 
   return (
     <>
-      <CountdownOverlay timeLeft={timeLeft} isVisible={showCountdown} />
       <GameResultModal
         isVisible={showResultModal}
         isSuccess={gameSuccess}
