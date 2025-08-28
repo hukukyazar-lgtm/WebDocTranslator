@@ -78,10 +78,9 @@ export const turkishKeyboardLayout = [
 ];
 
 export const calculateScore = (timeElapsed: number, difficulty: number): number => {
-  const baseScore = 100;
-  const difficultyBonus = difficulty * 50;
-  const timeBonus = Math.max(0, (TOTAL_GAME_TIME - timeElapsed) * 10);
-  return baseScore + difficultyBonus + timeBonus;
+  // Kalan saniye kadar puan ver
+  const remainingTime = TOTAL_GAME_TIME - timeElapsed;
+  return Math.max(0, remainingTime);
 };
 
 export const formatTime = (seconds: number): string => {
