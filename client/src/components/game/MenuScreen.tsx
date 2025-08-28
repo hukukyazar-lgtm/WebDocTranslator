@@ -59,106 +59,29 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
         <div className="w-full max-w-4xl">
           {/* Hero section */}
           <div className="text-center mb-12 animate-slide-up">
-            {/* Modern Logo Design */}
-            <div className="relative mb-8">
-              {/* Logo background glow */}
-              <div 
-                className="absolute inset-0 blur-3xl opacity-50 rounded-full"
-                style={{
-                  background: `radial-gradient(circle, ${theme.primary}40, ${theme.secondary}40, transparent)`
-                }}
-              />
-              
-              {/* Main logo container */}
-              <div className="relative flex flex-col items-center">
-                {/* Logo icon */}
-                <div className="mb-4 relative">
-                  <div 
-                    className="w-24 h-24 lg:w-32 lg:h-32 rounded-2xl flex items-center justify-center shadow-2xl backdrop-blur-xl border border-white/30 animate-pulse-glow"
-                    style={{
-                      background: `linear-gradient(135deg, ${theme.primary}20, ${theme.secondary}20)`,
-                      boxShadow: `0 0 40px ${theme.primary}40`
-                    }}
-                  >
-                    <div className="text-5xl lg:text-6xl font-black relative">
-                      <span 
-                        className="absolute inset-0 animate-spin-slow"
-                        style={{ 
-                          background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
-                          backgroundClip: 'text',
-                          WebkitBackgroundClip: 'text',
-                          color: 'transparent',
-                          filter: 'blur(1px)'
-                        }}
-                      >
-                        🌟
-                      </span>
-                      <span className="relative text-white">🌟</span>
-                    </div>
+            {/* Clean Modern Logo */}
+            <div className="relative mb-12">
+              {/* Minimalist logo container */}
+              <div className="flex flex-col items-center space-y-6">
+                {/* Simple geometric logo */}
+                <div className="relative">
+                  <div className="w-20 h-20 lg:w-24 lg:h-24 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center shadow-xl">
+                    <div className="text-4xl lg:text-5xl">🎯</div>
                   </div>
-                  {/* Orbiting particles */}
-                  {Array.from({ length: 6 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="absolute w-3 h-3 rounded-full animate-pulse"
-                      style={{
-                        background: i % 2 === 0 ? theme.primary : theme.secondary,
-                        top: '50%',
-                        left: '50%',
-                        transform: `rotate(${i * 60}deg) translateY(-50px) translateX(-50%)`,
-                        animationDelay: `${i * 0.2}s`,
-                        boxShadow: `0 0 10px currentColor`
-                      }}
-                    />
-                  ))}
+                  {/* Subtle accent dots */}
+                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
+                  <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-r from-green-400 to-blue-500 rounded-full animate-pulse delay-300"></div>
                 </div>
                 
-                {/* Logo text */}
-                <div className="text-center">
-                  <h1 className="text-6xl lg:text-8xl font-black mb-2 relative">
-                    <span 
-                      className="bg-clip-text text-transparent animate-pulse-glow"
-                      style={{
-                        backgroundImage: `linear-gradient(45deg, ${theme.primary}, #ffffff, ${theme.secondary}, ${theme.primary})`,
-                        backgroundSize: '300% auto',
-                        animation: 'gradient 4s ease infinite',
-                        textShadow: '0 0 30px rgba(255,255,255,0.5)'
-                      }}
-                    >
-                      WORD
-                    </span>
-                    <span 
-                      className="bg-clip-text text-transparent"
-                      style={{
-                        backgroundImage: `linear-gradient(45deg, ${theme.secondary}, #ffffff, ${theme.primary}, ${theme.secondary})`,
-                        backgroundSize: '300% auto',
-                        animation: 'gradient 4s ease infinite 0.5s'
-                      }}
-                    >
-                      SPIN
-                    </span>
+                {/* Clean typography */}
+                <div className="text-center space-y-2">
+                  <h1 className="text-5xl lg:text-7xl font-bold text-white">
+                    <span className="font-light">Word</span>
+                    <span className="font-black bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">Spin</span>
                   </h1>
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <div 
-                      className="h-0.5 w-12 rounded-full"
-                      style={{ background: theme.primary }}
-                    />
-                    <span 
-                      className="text-2xl lg:text-3xl font-bold px-4 py-1 rounded-full backdrop-blur-lg border border-white/20"
-                      style={{
-                        background: 'rgba(255,255,255,0.1)',
-                        color: theme.secondary
-                      }}
-                    >
-                      ⚡ PRO ⚡
-                    </span>
-                    <div 
-                      className="h-0.5 w-12 rounded-full"
-                      style={{ background: theme.secondary }}
-                    />
-                  </div>
-                  <div className="text-lg lg:text-xl font-semibold text-white/60">
-                    2026 EDITION
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20">
+                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                    <span className="text-sm font-medium text-white/90">PRO</span>
                   </div>
                 </div>
               </div>
@@ -207,30 +130,28 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
                 />
                 Kategori Seçin
               </h3>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-2">
                 {Object.keys(wordLists).map((cat, index) => {
                   const catTheme = getThemeForCategory(cat);
                   return (
                     <button
                       key={cat}
                       onClick={() => setCategory(cat)}
-                      onMouseEnter={() => setHoveredCategory(cat)}
-                      onMouseLeave={() => setHoveredCategory(null)}
-                      className={`p-4 rounded-xl border-2 transition-all duration-300 text-left group hover:scale-105 ${
+                      className={`group relative p-3 rounded-xl transition-all duration-300 ${
                         category === cat 
-                          ? 'border-white bg-white/20 shadow-2xl' 
-                          : 'border-white/20 hover:border-white/40 hover:bg-white/10'
+                          ? 'bg-white/20 border border-white/40' 
+                          : 'bg-white/5 border border-white/10 hover:bg-white/10'
                       }`}
                       data-testid="select-category"
-                      style={{ animationDelay: `${index * 0.1}s` }}
                     >
-                      <div className="text-white font-bold text-lg group-hover:scale-110 transition-transform">
-                        {cat}
+                      {category === cat && (
+                        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-blue-400/20 to-purple-500/20"></div>
+                      )}
+                      <div className="relative">
+                        <div className="text-white font-medium text-sm text-center">
+                          {cat}
+                        </div>
                       </div>
-                      <div 
-                        className="w-full h-1 rounded-full mt-2 opacity-60 group-hover:opacity-100 transition-opacity"
-                        style={{ background: catTheme.primary }}
-                      />
                     </button>
                   );
                 })}
@@ -253,38 +174,27 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
                 Zorluk Seviyesi
               </h3>
               <div className="space-y-4">
-                <div className="text-center mb-6">
-                  <div 
-                    className="text-4xl font-black mb-2 animate-bounce-soft"
-                    style={{ color: theme.primary }}
-                  >
-                    {difficulty}
-                  </div>
-                  <div className="text-xl text-white/80 font-semibold">
+                <div className="text-center mb-4">
+                  <div className="text-2xl font-bold text-white mb-1">
                     {difficultyLabels[difficulty as keyof typeof difficultyLabels]}
                   </div>
+                  <div className="text-sm text-white/60">Seviye {difficulty}</div>
                 </div>
-                <div className="relative">
-                  <input 
-                    id="difficulty" 
-                    type="range" 
-                    min="1" 
-                    max="5" 
-                    value={difficulty} 
-                    onChange={e => setDifficulty(parseInt(e.target.value, 10))}
-                    className="w-full h-3 appearance-none cursor-pointer rounded-lg"
-                    style={{
-                      background: `linear-gradient(90deg, ${theme.primary} 0%, ${theme.secondary} 100%)`
-                    }}
-                    data-testid="slider-difficulty"
-                  />
-                  <div className="flex justify-between text-sm text-white/60 mt-2">
-                    {Object.values(difficultyLabels).map((label, i) => (
-                      <span key={i} className={difficulty === i + 1 ? 'text-white font-bold' : ''}>
-                        {label}
-                      </span>
-                    ))}
-                  </div>
+                <div className="flex justify-center gap-2">
+                  {[1, 2, 3, 4, 5].map((level) => (
+                    <button
+                      key={level}
+                      onClick={() => setDifficulty(level)}
+                      className={`w-8 h-8 rounded-full transition-all duration-300 ${
+                        difficulty === level
+                          ? 'bg-white text-black scale-110'
+                          : 'bg-white/20 text-white/60 hover:bg-white/30'
+                      }`}
+                      data-testid="slider-difficulty"
+                    >
+                      {level}
+                    </button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -294,16 +204,12 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
           <div className="text-center animate-slide-up" style={{ animationDelay: '0.6s' }}>
             <button
               onClick={handleStartGame}
-              className="group relative px-12 py-6 text-2xl font-black text-white rounded-2xl transition-all duration-300 transform hover:scale-110 active:scale-95 shadow-2xl"
-              style={{
-                background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
-                boxShadow: `0 20px 40px ${theme.primary}40`
-              }}
+              className="group relative px-8 py-4 text-lg font-bold text-white rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-400 hover:to-purple-500 shadow-lg hover:shadow-xl"
               data-testid="button-start-game"
             >
-              <div className="absolute inset-0 rounded-2xl bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-              <span className="relative z-10 flex items-center gap-3">
-                🚀 OYUNA BAŞLA
+              <span className="flex items-center gap-2">
+                <span>▶</span>
+                OYUNA BAŞLA
               </span>
             </button>
           </div>
