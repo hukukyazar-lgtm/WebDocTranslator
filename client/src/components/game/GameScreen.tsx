@@ -296,13 +296,17 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
                   </div>
                 </div>
                 
-                <VirtualKeyboard
-                  onKeyPress={handleKeyPress}
-                  onBackspace={handleBackspace}
-                  onSpace={handleSpace}
-                  onSubmit={handleGuessSubmit}
-                  usedKeys={usedKeys}
-                />
+                <div className="flex justify-center">
+                  <div className="w-full max-w-2xl">
+                    <VirtualKeyboard
+                      onKeyPress={handleKeyPress}
+                      onBackspace={handleBackspace}
+                      onSpace={handleSpace}
+                      onSubmit={handleGuessSubmit}
+                      usedKeys={usedKeys}
+                    />
+                  </div>
+                </div>
               </>
             )}
             
