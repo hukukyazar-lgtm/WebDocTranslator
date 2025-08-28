@@ -24,50 +24,134 @@ export const GameResultModal = memo(({
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 bg-background/80 backdrop-blur-md flex items-center justify-center z-50 animate-scale-in">
-      <div className="game-card rounded-3xl p-8 max-w-md w-full mx-4 text-center shadow-2xl border-2 border-accent">
-        <div className="space-y-6">
-          <div className="text-6xl animate-bounce-soft">
-            {isSuccess ? '🎉' : '😔'}
+    <div className="fixed inset-0 backdrop-blur-2xl flex items-center justify-center z-50 animate-scale-in" style={{
+      background: 'linear-gradient(135deg, rgba(0,0,0,0.8), rgba(30,30,60,0.9))'
+    }}>
+      {/* Animated background particles */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 20 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute rounded-full opacity-30 animate-pulse"
+            style={{
+              background: isSuccess 
+                ? `linear-gradient(45deg, #10b981, #3b82f6)` 
+                : `linear-gradient(45deg, #ef4444, #f59e0b)`,
+              width: Math.random() * 60 + 20,
+              height: Math.random() * 60 + 20,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${i * 0.2}s`,
+              animationDuration: `${3 + Math.random() * 2}s`
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="relative backdrop-blur-xl rounded-3xl p-8 max-w-lg w-full mx-4 text-center shadow-2xl border border-white/20" style={{
+        background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
+      }}>
+        <div className="space-y-8">
+          {/* Success/Failure Icon with glow effect */}
+          <div className="relative">
+            <div 
+              className="absolute inset-0 blur-3xl opacity-50 rounded-full"
+              style={{
+                background: isSuccess 
+                  ? 'radial-gradient(circle, #10b98140, transparent)' 
+                  : 'radial-gradient(circle, #ef444440, transparent)'
+              }}
+            />
+            <div className="relative text-8xl animate-bounce-soft">
+              {isSuccess ? '🎉' : '💫'}
+            </div>
           </div>
-          <div className="space-y-2">
-            <h2 className="text-3xl font-bold text-accent" data-testid="result-title">
+          
+          {/* Title and Message */}
+          <div className="space-y-4">
+            <h2 
+              className="text-4xl font-black animate-pulse-glow"
+              style={{
+                background: isSuccess 
+                  ? 'linear-gradient(45deg, #10b981, #ffffff, #3b82f6)' 
+                  : 'linear-gradient(45deg, #ef4444, #ffffff, #f59e0b)',
+                backgroundClip: 'text',
+                WebkitBackgroundClip: 'text',
+                color: 'transparent',
+                backgroundSize: '200% auto',
+                animation: 'gradient 3s ease infinite'
+              }}
+              data-testid="result-title"
+            >
               {title}
             </h2>
-            <p className="text-muted-foreground" data-testid="result-message">
+            <p className="text-xl font-medium text-white/80" data-testid="result-message">
               {message}
             </p>
           </div>
-          <div className="grid grid-cols-2 gap-4 py-4">
-            <div className="text-center">
-              <div className="text-2xl font-bold text-primary" data-testid="score-gained">
+          
+          {/* Score Cards */}
+          <div className="grid grid-cols-2 gap-6">
+            <div className="backdrop-blur-lg rounded-2xl p-6 border border-white/20" style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+            }}>
+              <div className="text-4xl mb-2">{isSuccess ? '💎' : '💔'}</div>
+              <div 
+                className="text-3xl font-black mb-1"
+                style={{
+                  background: isSuccess ? 'linear-gradient(45deg, #10b981, #3b82f6)' : 'linear-gradient(45deg, #ef4444, #f59e0b)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  color: 'transparent'
+                }}
+                data-testid="score-gained"
+              >
                 {isSuccess ? `+${scoreGained}` : '0'}
               </div>
-              <div className="text-sm text-muted-foreground">
+              <div className="text-sm font-bold text-white/60">
                 {isSuccess ? 'Bonus Puan' : 'Puan'}
               </div>
             </div>
-            <div className="text-center">
-              <div className="text-2xl font-bold text-secondary" data-testid="total-score">
+            
+            <div className="backdrop-blur-lg rounded-2xl p-6 border border-white/20" style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+            }}>
+              <div className="text-4xl mb-2">🏆</div>
+              <div 
+                className="text-3xl font-black mb-1"
+                style={{
+                  background: 'linear-gradient(45deg, #8b5cf6, #a855f7)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  color: 'transparent'
+                }}
+                data-testid="total-score"
+              >
                 {totalScore}
               </div>
-              <div className="text-sm text-muted-foreground">Toplam Puan</div>
+              <div className="text-sm font-bold text-white/60">Toplam Puan</div>
             </div>
           </div>
-          <div className="space-y-3">
+          
+          {/* Action Buttons */}
+          <div className="space-y-4">
             <button
               onClick={onPlayAgain}
-              className="w-full py-3 px-6 bg-accent hover:bg-accent/80 text-accent-foreground font-bold rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95"
+              className="w-full py-4 px-8 font-black rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-green-500/50 text-white shadow-2xl"
+              style={{
+                background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.3))',
+                boxShadow: '0 0 20px rgba(34, 197, 94, 0.3)'
+              }}
               data-testid="button-play-again"
             >
-              Tekrar Oyna
+              🚀 Tekrar Oyna
             </button>
             <button
               onClick={onMainMenu}
-              className="w-full py-3 px-6 bg-muted hover:bg-muted/80 text-muted-foreground font-bold rounded-xl transition-all duration-200 transform hover:scale-105 active:scale-95"
+              className="w-full py-4 px-8 font-black rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/30 bg-white/10 text-white/90 hover:bg-white/20 shadow-lg"
               data-testid="button-main-menu"
             >
-              Ana Menü
+              🏠 Ana Menü
             </button>
           </div>
         </div>
