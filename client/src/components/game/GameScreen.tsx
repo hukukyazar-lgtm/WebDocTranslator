@@ -33,6 +33,9 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
   const [averageTime, setAverageTime] = useState(0);
   const [totalScore, setTotalScore] = useState(0);
   const [usedWords, setUsedWords] = useState<string[]>([]);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [shakeInput, setShakeInput] = useState(false);
+  const [sparkleText, setSparkleText] = useState(false);
   
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -120,8 +123,15 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
     if (gameOver) return;
     
     if (guess.toUpperCase() === secretWord.toUpperCase()) {
+      // Trigger confetti celebration
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 2000);
       endGame(`Tebrikler! ${Math.floor(elapsedTime)} saniyede bildin.`, true);
     } else {
+      // Trigger shake animation for wrong answer
+      setShakeInput(true);
+      setTimeout(() => setShakeInput(false), 500);
+      
       setMessage("Yanlış Tahmin!");
       setGuess(''); 
       setTimeout(() => setMessage(''), 1500);
@@ -130,6 +140,9 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
 
   const handleKeyPress = useCallback((key: string) => {
     setGuess(prev => prev + key);
+    // Trigger sparkle effect when typing
+    setSparkleText(true);
+    setTimeout(() => setSparkleText(false), 1000);
   }, []);
 
   const handleBackspace = useCallback(() => {
@@ -247,11 +260,11 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
       />
       
       <div 
-        className="min-h-screen relative overflow-hidden transition-all duration-1000"
+        className="min-h-screen relative overflow-hidden transition-all duration-1000 animate-gradient-shift animate-color-wave"
         style={{ 
           backgroundImage: dynamicBackground,
           backgroundAttachment: 'fixed',
-          backgroundSize: 'cover',
+          backgroundSize: '400% 400%',
           backgroundPosition: 'center'
         }}
       >
@@ -277,6 +290,26 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
           category={category} 
           difficulty={difficulty} 
         />
+
+        {/* Confetti Celebration */}
+        {showConfetti && (
+          <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+            {Array.from({ length: 20 }).map((_, i) => (
+              <div
+                key={`confetti-${i}`}
+                className="absolute animate-confetti-burst"
+                style={{
+                  left: `${20 + Math.random() * 60}%`,
+                  top: `${30 + Math.random() * 40}%`,
+                  animationDelay: `${Math.random() * 0.5}s`,
+                  fontSize: `${20 + Math.random() * 15}px`
+                }}
+              >
+                {['🎉', '🎊', '✨', '🌟', '💫', '🎈'][Math.floor(Math.random() * 6)]}
+              </div>
+            ))}
+          </div>
+        )}
         
         <main className="pt-24 sm:pt-28 pb-4 sm:pb-8 px-2 sm:px-4">
           <div className="max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto space-y-4 sm:space-y-6 lg:space-y-8">
@@ -309,7 +342,7 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
                     <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6">
                       {/* Timer Display */}
                       <div className="flex justify-center mb-4">
-                        <div className="backdrop-blur-lg rounded-2xl px-6 py-3 border border-white/20 bg-white/10 flex items-center gap-3 shadow-lg">
+                        <div className={`backdrop-blur-lg rounded-2xl px-6 py-3 border border-white/20 bg-white/10 flex items-center gap-3 shadow-lg ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
                           <div className="text-2xl animate-pulse">⏱️</div>
                           <div className="text-xl sm:text-2xl font-black text-white" data-testid="text-time-left">
                             {formatTime(timeLeft)}
@@ -329,10 +362,10 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
                         </div>
                       </div>
                       
-                      <div className="relative">
+                      <div className={`relative ${shakeInput ? 'animate-shake-error' : ''}`}>
                         <input 
                           type="text" 
-                          className="w-full px-3 py-3 sm:px-4 sm:py-4 lg:px-8 lg:py-6 text-lg sm:text-xl lg:text-2xl xl:text-3xl font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-xl sm:rounded-2xl focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50"
+                          className={`w-full px-3 py-3 sm:px-4 sm:py-4 lg:px-8 lg:py-6 text-lg sm:text-xl lg:text-2xl xl:text-3xl font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-xl sm:rounded-2xl focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50 ${sparkleText ? 'animate-typing-sparkle' : ''}`}
                           style={{ 
                             background: 'rgba(255,255,255,0.1)',
                             textShadow: '0 0 20px rgba(255,255,255,0.5)'

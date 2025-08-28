@@ -86,6 +86,59 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
             })}
           </div>
 
+          {/* Floating sparkle particles */}
+          <div className="absolute w-[30rem] h-[30rem] lg:w-[35rem] lg:h-[35rem] rounded-full pointer-events-none">
+            {Array.from({ length: 8 }).map((_, i) => (
+              <div
+                key={`sparkle-${i}`}
+                className="absolute animate-float-sparkle"
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  transform: `rotate(${i * 45}deg) translateY(-250px) translateX(-50%)`,
+                  animationDelay: `${i * 0.3}s`,
+                  animationDuration: '4s'
+                }}
+              >
+                <div 
+                  className="text-2xl opacity-70"
+                  style={{
+                    filter: `drop-shadow(0 0 8px ${theme.primary})`,
+                    animation: `sparkle-twinkle 2s ease-in-out infinite ${i * 0.2}s`
+                  }}
+                >
+                  ✨
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Orbiting light particles */}
+          <div className="absolute w-[32rem] h-[32rem] lg:w-[38rem] lg:h-[38rem] rounded-full pointer-events-none">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <div
+                key={`orbit-${i}`}
+                className="absolute animate-orbit-slow"
+                style={{
+                  top: '50%',
+                  left: '50%',
+                  transform: `rotate(${i * 60}deg) translateY(-270px) translateX(-50%)`,
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: `${8 + i}s`
+                }}
+              >
+                <div 
+                  className="w-2 h-2 rounded-full"
+                  style={{
+                    background: `radial-gradient(circle, ${theme.secondary}, transparent)`,
+                    boxShadow: `0 0 12px ${theme.secondary}, 0 0 24px ${theme.secondary}40`,
+                    opacity: 0.8
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+
           {/* 3D Wheel Base with depth layers */}
           <div 
             className="absolute w-80 h-80 lg:w-96 lg:h-96 rounded-full"
