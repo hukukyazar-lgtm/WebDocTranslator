@@ -1,6 +1,19 @@
 import { memo } from 'react';
 import { formatTime } from '@/lib/gameUtils';
 
+const categoryIcons: Record<string, string> = {
+  'Hayvanlar': '🦁',
+  'Yiyecek': '🍎',
+  'Bilim': '🧪',
+  'Ülkeler': '🌍',
+  'Meslekler': '👨‍💼',
+  'Şehirler': '🏙️',
+  'Markalar': '🏷️',
+  'Spor Dalları': '⚽',
+  'Eşyalar': '🪑',
+  'Filmler': '🎬'
+};
+
 interface GameHeaderProps {
   category: string;
   difficulty: number;
@@ -10,6 +23,7 @@ interface GameHeaderProps {
 
 export const GameHeader = memo(({ category, difficulty, timeLeft, totalTime }: GameHeaderProps) => {
   const progressWidth = ((totalTime - timeLeft) / totalTime) * 100;
+  const categoryIcon = categoryIcons[category] || '📂';
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 p-4 backdrop-blur-xl border-b border-white/20" style={{
@@ -52,15 +66,15 @@ export const GameHeader = memo(({ category, difficulty, timeLeft, totalTime }: G
               <div className="text-xs font-bold text-white/60">⚡ PRO EDITION</div>
             </div>
           </div>
-          <div className="hidden sm:flex items-center gap-3">
-            <div className="backdrop-blur-lg rounded-2xl px-4 py-2 border border-white/20 bg-white/10">
-              <span className="text-white/80 text-sm font-medium" data-testid="text-category">
-                📂 {category}
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="backdrop-blur-lg rounded-xl sm:rounded-2xl px-2 py-1 sm:px-4 sm:py-2 border border-white/20 bg-white/10">
+              <span className="text-white text-xs sm:text-sm font-bold" data-testid="text-category">
+                {categoryIcon} {category}
               </span>
             </div>
-            <div className="backdrop-blur-lg rounded-2xl px-4 py-2 border border-white/20 bg-white/10">
-              <span className="text-white/80 text-sm font-medium" data-testid="text-difficulty">
-                ⭐ Seviye {difficulty}
+            <div className="backdrop-blur-lg rounded-xl sm:rounded-2xl px-2 py-1 sm:px-4 sm:py-2 border border-white/20 bg-white/10">
+              <span className="text-white text-xs sm:text-sm font-bold" data-testid="text-difficulty">
+                ⭐ {difficulty}
               </span>
             </div>
           </div>
