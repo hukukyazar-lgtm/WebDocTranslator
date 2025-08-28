@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WordSpin Ver3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #1a202c; color: #e2e8f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        .wheel-container { animation: spin linear infinite; animation-duration: var(--spin-duration, 4s); }
+        .keyboard-key { user-select: none; }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.9; }
+        }
+        .countdown-timer {
+            animation: pulse 1s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <div id="overlay-root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+        const { createPortal } = ReactDOM;
+
+        const wordLists = {
+            Hayvanlar: {
+                easy: ["ASLAN", "KEDİ", "YILAN", "İNEK", "KOYUN"],
+                medium: ["PENGUEN", "KANGURU", "ZÜRAFA", "MAYMUN"],
+                hard: ["KAPLUMBAĞA", "TAVUSKUŞU", "TİMSAH"]
+            },
+            Yiyecek: {
+                easy: ["ELMA", "EKMEK", "ÇİLEK", "PİZZA", "KEK"],
+                medium: ["KARPUZ", "MAKARNA", "SALATA", "DONDURMA"],
+                hard: ["ÇİKOLATA", "SALATALIK", "PATLICAN"]
+            },
+            Bilim: {
+                easy: ["ATOM", "GÜNEŞ", "IŞIK", "ENERJİ"],
+                medium: ["GALAKSİ", "MOLEKÜL", "GEZEGEN"],
+                hard: ["TELESKOP", "GRAVİTASYON", "FOTOSENTEZ"]
+            },
+            Ülkeler: {
+                easy: ["İTALYA", "MISIR", "KANADA", "İRAN"],
+                medium: ["JAPONYA", "BREZİLYA", "TÜRKİYE"],
+                hard: ["ARJANTİN", "ENDONEZYA", "AVUSTRALYA"]
+            },
+            Meslekler: {
+                easy: ["AVUKAT", "HAKİM", "AŞÇI", "PİLOT"],
+                medium: ["ÖĞRETMEN", "MÜHENDİS", "İTFAİYECİ"],
+                hard: ["ASTRONOT", "ARKEOLOG", "MİMAR"]
+            },
+            Şehirler: {
+                easy: ["RİZE", "VAN", "KARS", "SİVAS"],
+                medium: ["ANKARA", "İZMİR", "ANTALYA", "TRABZEN"],
+                hard: ["İSTANBUL", "DİYARBAKIR", "ERZURUM"]
+            },
+            Markalar: {
+                easy: ["GOOGLE", "APPLE", "FORD", "LCW"],
+                medium: ["MERCEDES", "SAMSUNG", "ADIDAS"],
+                hard: ["ARÇELİK", "THY", "VESTEL"]
+            },
+            "Spor Dalları": {
+                easy: ["FUTBOL", "TENİS", "YÜZME", "GOLF"],
+                medium: ["BASKETBOL", "VOLEYBOL", "HENTBOL"],
+                hard: ["BİNİCİLİK", "ESKRİM", "CİRİT"]
+            },
+            Eşyalar: {
+                easy: ["MASA", "SAAT", "GÖZLÜK"],
+                medium: ["SANDALYE", "BİLGİSAYAR", "TELEFON"],
+                hard: ["TELEVİZYON", "BUZDOLABI", "ÇAMAŞIR MAKİNESİ"]
+            },
+            Filmler: {
+                easy: ["AVATAR", "TITANIC", "INCEPTION"],
+                medium: ["OYUNCAK HİKAYESİ", "KARAYİP KORSANLARI"],
+                hard: ["YÜZÜKLERİN EFENDİSİ", "ESARETİN BEDELİ"]
+            }
+        };
+        
+        const Wheel = ({ word = "", isSpinning, spinDuration, difficulty }) => {
+            const letters = word.split('');
+            const radius = 100;
+            const rainbowColors = ['#ef4444', '#f97316', '#eab308', '#84cc16', '#22c55e', '#06b6d4', '#8b5cf6'];
+            
+            const blurAmount = isSpinning ? (difficulty - 1) * 0.75 : 0;
+
+            return (
+                <div className={`relative w-64 h-64 sm:w-80 sm:h-80 flex items-center justify-center rounded-full bg-white shadow-2xl ${isSpinning ? 'wheel-container' : ''}`} style={{ '--spin-duration': `${spinDuration}s` }}>
+                    {letters.map((char, i) => {
+                        const angle = (i / letters.length) * 360;
+                        const transformSpin = `rotate(${angle}deg) translate(${radius}px) rotate(${-angle}deg)`;
+                        const transformAlign = `translateX(${(i - (letters.length - 1) / 2) * 25}px) scale(1.5)`;
+
+                        return <span key={i} className="absolute text-2xl sm:text-3xl font-extrabold uppercase transition-all duration-1000" style={{ 
+                            color: rainbowColors[i % rainbowColors.length], 
+                            textShadow: '1px 1px 2px rgba(0,0,0,0.5)', 
+                            transform: isSpinning ? transformSpin : transformAlign, 
+                            filter: `blur(${blurAmount}px)`,
+                            transition: 'transform 1s, filter 0.5s'
+                        }}>{char}</span>;
+                    })}
+                </div>
+            );
+        };
+
+        const Keyboard = ({ onKeyPress, onBackspace, onEnter }) => {
+            const turkishLayout = [['Q','W','E','R','T','Y','U','I','O','P','Ğ','Ü'],['A','S','D','F','G','H','J','K','L','Ş','İ'],['Z','X','C','V','B','N','M','Ö','Ç']];
+            return (
+                <div className="flex flex-col items-center gap-2 p-2 sm:p-4 bg-gray-900 rounded-lg shadow-lg">
+                    <div className="flex items-center gap-1 sm:gap-2">{turkishLayout[0].map(key => <button key={key} onClick={() => onKeyPress(key)} className="keyboard-key px-2 sm:px-4 py-3 text-sm sm:text-base font-bold text-white uppercase transition-transform transform bg-gray-700 rounded-md shadow-md hover:bg-gray-600 active:scale-95">{key}</button>)}</div>
+                    <div className="flex items-center gap-1 sm:gap-2">{turkishLayout[1].map(key => <button key={key} onClick={() => onKeyPress(key)} className="keyboard-key px-2 sm:px-4 py-3 text-sm sm:text-base font-bold text-white uppercase transition-transform transform bg-gray-700 rounded-md shadow-md hover:bg-gray-600 active:scale-95">{key}</button>)}</div>
+                    <div className="flex items-center gap-1 sm:gap-2">
+                        {turkishLayout[2].map(key => <button key={key} onClick={() => onKeyPress(key)} className="keyboard-key px-2 sm:px-4 py-3 text-sm sm:text-base font-bold text-white uppercase transition-transform transform bg-gray-700 rounded-md shadow-md hover:bg-gray-600 active:scale-95">{key}</button>)}
+                        <button onClick={onBackspace} className="keyboard-key px-4 py-3 text-sm font-bold text-white bg-red-700 rounded-md shadow-md hover:bg-red-600 active:scale-95">SİL</button>
+                    </div>
+                    <div className="flex w-full justify-center gap-2 mt-2">
+                         <button onClick={() => onKeyPress(' ')} className="keyboard-key flex-grow py-3 font-bold text-white bg-gray-600 rounded-md shadow-md hover:bg-gray-500 active:scale-95">BOŞLUK</button>
+                        <button onClick={onEnter} className="keyboard-key px-8 sm:px-12 py-3 font-bold text-white bg-green-700 rounded-md shadow-md hover:bg-green-600 active:scale-95">GÖNDER</button>
+                    </div>
+                </div>
+            );
+        };
+        
+        const CountdownPortal = ({ timeLeft }) => {
+            const portalRoot = document.getElementById('overlay-root');
+            if (!portalRoot) return null;
+            const countdownUI = (
+                <div className="fixed inset-0 flex items-center justify-center z-50 pointer-events-none">
+                    <span className="countdown-timer text-8xl font-extrabold text-red-600 text-opacity-70" style={{ textShadow: '2px 2px 10px rgba(0,0,0,0.5)' }}>
+                        {timeLeft}
+                    </span>
+                </div>
+            );
+            return createPortal(countdownUI, portalRoot);
+        };
+        
+        const GameScreen = ({ settings, onGameOver }) => {
+            const TOTAL_TIME = 30;
+            const { category, difficulty } = settings;
+            
+            const [secretWord, setSecretWord] = useState('');
+            const [guess, setGuess] = useState('');
+            const [isSpinning, setIsSpinning] = useState(true);
+            const [spinDuration, setSpinDuration] = useState(3.0);
+            const [message, setMessage] = useState('');
+            const [gameOver, setGameOver] = useState(false);
+            const [elapsedTime, setElapsedTime] = useState(0);
+            const [slowdownApplied, setSlowdownApplied] = useState(false);
+            const timerRef = useRef(null);
+
+            const timeLeft = TOTAL_TIME - Math.floor(elapsedTime);
+            const showCountdown = timeLeft <= 10 && !gameOver && timeLeft > 0;
+
+            useEffect(() => {
+                let wordPool;
+                const categoryWords = wordLists[category];
+                if (difficulty <= 2) {
+                    wordPool = categoryWords.easy;
+                } else if (difficulty === 3) {
+                    wordPool = categoryWords.medium;
+                } else {
+                    wordPool = categoryWords.hard;
+                }
+                const randomWord = wordPool[Math.floor(Math.random() * wordPool.length)];
+                setSecretWord(randomWord);
+                
+                const baseSpeed = 4.5 - (difficulty - 1) * 0.75;
+                setSpinDuration(baseSpeed);
+                
+                timerRef.current = setInterval(() => {
+                    setElapsedTime(prevTime => prevTime + 1);
+                }, 1000);
+
+                return () => clearInterval(timerRef.current);
+            }, [category, difficulty]);
+            
+            useEffect(() => {
+                if (timeLeft <= 10 && !gameOver && !slowdownApplied) {
+                    setSpinDuration(prevDuration => prevDuration + 1.5);
+                    setSlowdownApplied(true);
+                }
+
+                if (timeLeft <= 0 && !gameOver) {
+                    endGame("Süre Doldu!");
+                }
+            }, [timeLeft, gameOver, slowdownApplied]);
+
+            const endGame = (endMessage) => {
+                if (gameOver) return;
+                clearInterval(timerRef.current);
+                setMessage(endMessage);
+                setIsSpinning(false);
+                setGameOver(true);
+            }
+
+            const handleGuessSubmit = () => {
+                if(gameOver) return;
+                if(guess.toUpperCase() === secretWord.toUpperCase()) {
+                    endGame(`Tebrikler! ${Math.floor(elapsedTime)} saniyede bildin.`);
+                } else {
+                    setMessage("Yanlış Tahmin!");
+                    setGuess(''); 
+                    setTimeout(() => setMessage(''), 1500);
+                }
+            };
+            
+            return (
+                <>
+                    {showCountdown && <CountdownPortal timeLeft={timeLeft} />}
+                    <div className="flex flex-col items-center justify-center min-h-screen p-4 text-center">
+                        <div className="absolute top-4 text-center">
+                            <h1 className="text-xl sm:text-2xl font-bold text-cyan-400">Kategori: {category} | Zorluk: {difficulty}</h1>
+                        </div>
+                        <div className="my-10">
+                            <Wheel word={secretWord} isSpinning={isSpinning} spinDuration={spinDuration} difficulty={difficulty} />
+                        </div>
+                        {message && <p className="my-4 text-2xl font-bold text-yellow-400">{message}</p>}
+                        
+                        {!gameOver && (
+                            <>
+                                <div className="p-3 mb-4 text-xl text-center text-white bg-gray-800 rounded-md w-64 sm:w-80 min-h-[52px] flex items-center justify-center">
+                                    {guess || <span className="text-gray-500">Tahminini yaz...</span>}
+                                </div>
+                                <Keyboard onKeyPress={(key) => setGuess(g => g + key)} onBackspace={() => setGuess(g => g.slice(0, -1))} onEnter={handleGuessSubmit} />
+                            </>
+                        )}
+                        
+                        {gameOver && (
+                            <button onClick={onGameOver} className="px-6 py-3 mt-8 text-lg font-bold text-black bg-yellow-400 rounded-md shadow-lg hover:bg-yellow-300">
+                                Yeni Oyun
+                            </button>
+                        )}
+                    </div>
+                </>
+            );
+        };
+        
+        const App = () => {
+            const [gameSettings, setGameSettings] = useState(null);
+            
+            const backToMenu = () => {
+                setGameSettings(null);
+            };
+
+            if (gameSettings) {
+                return <GameScreen settings={gameSettings} onGameOver={backToMenu} />;
+            }
+            
+            return (
+                <div className="flex flex-col items-center gap-6 p-6 text-center bg-gray-800 rounded-lg shadow-2xl">
+                    <h1 className="text-5xl sm:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-600">
+                        WordSpin
+                    </h1>
+                    <p className="text-lg sm:text-xl text-gray-400">Kelimeyi 30 saniyede yakala!</p>
+                    <Menu onStartGame={(settings) => setGameSettings(settings)} />
+                </div>
+            );
+        };
+
+        const Menu = ({ onStartGame }) => {
+            const [category, setCategory] = useState("Hayvanlar");
+            const [difficulty, setDifficulty] = useState(3);
+            
+            return (
+                 <div className="w-full">
+                    <div className="w-full p-4 mt-4 bg-gray-900 rounded-lg">
+                        <h3 className="mb-4 text-2xl font-bold text-white">Oyun Ayarları</h3>
+                        <div className="flex flex-col gap-4">
+                            <div className="flex-1">
+                                <label htmlFor="category" className="block mb-2 font-medium text-gray-300">Kategori</label>
+                                <select id="category" value={category} onChange={e => setCategory(e.target.value)} className="w-full p-2 text-white bg-gray-700 border border-gray-600 rounded-md">
+                                    {Object.keys(wordLists).map(cat => <option key={cat} value={cat}>{cat}</option>)}
+                                </select>
+                            </div>
+                            <div className="flex-1">
+                                <label htmlFor="difficulty" className="block mb-2 font-medium text-gray-300">Zorluk: <span className="font-bold text-yellow-400">{difficulty}</span></label>
+                                <input 
+                                    id="difficulty" 
+                                    type="range" 
+                                    min="1" 
+                                    max="5" 
+                                    value={difficulty} 
+                                    onChange={e => setDifficulty(parseInt(e.target.value, 10))}
+                                    className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    <button
+                        onClick={() => onStartGame({ category, difficulty })}
+                        className="w-full px-8 py-4 mt-6 text-lg font-bold text-white transition-transform transform bg-indigo-600 rounded-lg shadow-xl hover:bg-indigo-500 hover:scale-105"
+                    >
+                        Oyuna Başla
+                    </button>
+                </div>
+            )
+        };
+
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(<App />);
+    </script>
+</body>
+</html>
