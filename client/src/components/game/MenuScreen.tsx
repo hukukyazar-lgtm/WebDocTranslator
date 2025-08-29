@@ -67,7 +67,10 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
             <div className="relative mb-8">
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative animate-float">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl glass-card glow-effect flex items-center justify-center">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl glass-card glow-effect flex items-center justify-center" style={{
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.2), rgba(255,255,255,0.05))',
+                    boxShadow: '0 25px 50px -12px rgba(124, 58, 237, 0.5), 0 0 50px rgba(124, 58, 237, 0.3)'
+                  }}>
                     <div className="text-4xl sm:text-5xl">🎯</div>
                   </div>
                   <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
