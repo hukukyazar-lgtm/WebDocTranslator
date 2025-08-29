@@ -17,7 +17,7 @@ export default function Home() {
     return (
       <div 
         style={{
-          background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #e94560 100%)',
+          background: 'linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%)',
           minHeight: '100vh'
         }}
       >
@@ -29,7 +29,7 @@ export default function Home() {
   return (
     <div 
       style={{
-        background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #e94560 100%)',
+        background: 'linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%)',
         minHeight: '100vh'
       }}
     >

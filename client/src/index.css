@@ -10,14 +10,14 @@
   --card-foreground: hsl(210, 40%, 98%);
   --popover: hsl(222, 84%, 8%);
   --popover-foreground: hsl(210, 40%, 98%);
-  --primary: hsl(217, 91%, 60%);
-  --primary-foreground: hsl(222, 84%, 5%);
-  --secondary: hsl(262, 83%, 65%);
-  --secondary-foreground: hsl(210, 40%, 98%);
-  --muted: hsl(217, 32%, 17%);
-  --muted-foreground: hsl(215, 20%, 65%);
-  --accent: hsl(160, 84%, 39%);
-  --accent-foreground: hsl(222, 84%, 5%);
+  --primary: hsl(178, 100%, 43%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(340, 82%, 52%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --muted: hsl(340, 20%, 80%);
+  --muted-foreground: hsl(340, 10%, 40%);
+  --accent: hsl(178, 100%, 43%);
+  --accent-foreground: hsl(0, 0%, 100%);
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(210, 40%, 98%);
   --border: hsl(217, 32%, 17%);
@@ -59,14 +59,14 @@
   --card-foreground: hsl(210, 40%, 98%);
   --popover: hsl(222, 84%, 8%);
   --popover-foreground: hsl(210, 40%, 98%);
-  --primary: hsl(217, 91%, 60%);
-  --primary-foreground: hsl(222, 84%, 5%);
-  --secondary: hsl(262, 83%, 65%);
-  --secondary-foreground: hsl(210, 40%, 98%);
-  --muted: hsl(217, 32%, 17%);
-  --muted-foreground: hsl(215, 20%, 65%);
-  --accent: hsl(160, 84%, 39%);
-  --accent-foreground: hsl(222, 84%, 5%);
+  --primary: hsl(178, 100%, 43%);
+  --primary-foreground: hsl(0, 0%, 100%);
+  --secondary: hsl(340, 82%, 52%);
+  --secondary-foreground: hsl(0, 0%, 100%);
+  --muted: hsl(340, 20%, 80%);
+  --muted-foreground: hsl(340, 10%, 40%);
+  --accent: hsl(178, 100%, 43%);
+  --accent-foreground: hsl(0, 0%, 100%);
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(210, 40%, 98%);
   --border: hsl(217, 32%, 17%);
@@ -96,14 +96,14 @@
   html {
     scroll-behavior: smooth;
     touch-action: manipulation;
-    background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #7C3AED 100%) !important;
+    background: linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%) !important;
     min-height: 100vh;
     min-height: 100dvh;
   }
 
   body {
     @apply font-sans antialiased text-foreground;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #e94560 100%) !important;
+    background: linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%) !important;
     min-height: 100vh;
     min-height: 100dvh;
     overscroll-behavior: none;
