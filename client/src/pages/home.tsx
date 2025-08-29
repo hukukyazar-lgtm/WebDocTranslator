@@ -1,18 +1,26 @@
 import { useState } from 'react';
 import { LanguageScreen, type Language } from '@/components/game/LanguageScreen';
+import { LoginScreen } from '@/components/game/LoginScreen';
 import { MenuScreen, type GameSettings } from '@/components/game/MenuScreen';
 import { GameScreen } from '@/components/game/GameScreen';
+import { useAuth } from '@/hooks/useAuth';
 
-type AppState = 'language' | 'menu' | 'game';
+type AppState = 'language' | 'login' | 'menu' | 'game';
 
 export default function Home() {
   const [appState, setAppState] = useState<AppState>('language');
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
   const [gameSettings, setGameSettings] = useState<GameSettings | null>(null);
+  const { isAuthenticated, isLoading } = useAuth();
   
   const handleLanguageSelect = (language: Language) => {
     setSelectedLanguage(language);
-    setAppState('menu');
+    // Check if user is already authenticated
+    if (isAuthenticated) {
+      setAppState('menu');
+    } else {
+      setAppState('login');
+    }
   };
 
   const handleStartGame = (settings: GameSettings) => {
@@ -38,13 +46,24 @@ export default function Home() {
     );
   }
 
+  if (appState === 'login') {
+    return (
+      <div style={backgroundStyle}>
+        <LoginScreen 
+          selectedLanguage={selectedLanguage!} 
+          onBack={() => setAppState('language')}
+        />
+      </div>
+    );
+  }
+
   if (appState === 'menu') {
     return (
       <div style={backgroundStyle}>
         <MenuScreen 
           selectedLanguage={selectedLanguage!} 
           onStartGame={handleStartGame} 
-          onBack={() => setAppState('language')}
+          onBack={() => setAppState(isAuthenticated ? 'login' : 'language')}
         />
       </div>
     );
