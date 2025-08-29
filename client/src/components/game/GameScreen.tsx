@@ -550,20 +550,32 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
           </div>
         </main>
         
-        {/* Günlük Hedefler - Köşede göster */}
-        <div className="fixed bottom-4 left-4 z-40">
-          <button
-            onClick={() => setShowDailyGoals(!showDailyGoals)}
-            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105"
-          >
-            📅 {gameStats.dailyGoals.filter(g => g.completed).length}/{gameStats.dailyGoals.length}
-          </button>
-          
-          {showDailyGoals && (
-            <div className="absolute bottom-full left-0 mb-2 w-72">
-              <DailyGoals goals={gameStats.dailyGoals} />
-            </div>
-          )}
+        {/* Günlük Hedefler - Üst sağda daha büyük ve güzel */}
+        <div className="fixed top-4 right-4 z-40">
+          <div className="relative">
+            <button
+              onClick={() => setShowDailyGoals(!showDailyGoals)}
+              className="bg-gradient-to-r from-emerald-500 to-blue-600 hover:from-emerald-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-2xl shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center gap-3 backdrop-blur-xl border border-white/20"
+              style={{
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(59, 130, 246, 0.9))',
+                boxShadow: '0 10px 25px rgba(16, 185, 129, 0.3)'
+              }}
+            >
+              <div className="text-2xl">📅</div>
+              <div className="text-left">
+                <div className="text-sm font-bold">Günlük Hedefler</div>
+                <div className="text-xs opacity-90">
+                  {gameStats.dailyGoals.filter(g => g.completed).length}/{gameStats.dailyGoals.length} tamamlandı
+                </div>
+              </div>
+            </button>
+            
+            {showDailyGoals && (
+              <div className="absolute top-full right-0 mt-3 w-80">
+                <DailyGoals goals={gameStats.dailyGoals} />
+              </div>
+            )}
+          </div>
         </div>
         
         {/* Başarım Bildirimi */}
