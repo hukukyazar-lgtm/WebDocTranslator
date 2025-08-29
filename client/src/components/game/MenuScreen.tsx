@@ -88,6 +88,18 @@ export const MenuScreen = memo(({ selectedLanguage, onStartGame, onBack, isGuest
               )}
             </div>
             
+            {/* Logout button for authenticated users */}
+            {!isGuestMode && (
+              <div className="text-right">
+                <a
+                  href="/api/logout"
+                  className="text-xs text-white/60 hover:text-white underline transition-colors"
+                >
+                  Çıkış Yap
+                </a>
+              </div>
+            )}
+            
             <div className="w-20"></div> {/* Spacer for center alignment */}
           </div>
 
