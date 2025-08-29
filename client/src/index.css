@@ -45,12 +45,8 @@
 
   body {
     @apply font-sans antialiased text-foreground;
-    /* 🎨 YENİ PREMIUM BACKGROUND */
-    background: 
-      radial-gradient(circle at 20% 50%, rgba(156, 39, 176, 0.6), transparent 50%),
-      radial-gradient(circle at 80% 20%, rgba(233, 30, 99, 0.6), transparent 50%),
-      radial-gradient(circle at 40% 80%, rgba(63, 81, 181, 0.6), transparent 50%),
-      linear-gradient(135deg, #000000 0%, #1a0033 30%, #330066 70%, #6600cc 100%) !important;
+    /* 🎨 YENİ PREMIUM BACKGROUND - REPLİT UYGULAMASI İÇİN */
+    background: #ff0066 !important;
     min-height: 100vh;
     min-height: 100dvh;
     overscroll-behavior: none;
