@@ -67,7 +67,7 @@ export const getThemeForCategory = (category: string) => {
   return categoryThemes[category as keyof typeof categoryThemes] || {
     primary: 'hsl(217, 91%, 60%)',
     secondary: 'hsl(262, 83%, 65%)',
-    background: 'linear-gradient(135deg, hsl(222, 84%, 5%) 0%, hsl(217, 32%, 17%) 100%)'
+    background: 'linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #7C3AED 100%)'
   };
 };
 
