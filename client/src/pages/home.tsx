@@ -25,6 +25,7 @@ export default function Home() {
   };
 
   const handleGuestMode = () => {
+    console.log('Misafir modu aktif edildi!');
     setIsGuestMode(true);
     setAppState('menu');
   };
