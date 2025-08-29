@@ -66,8 +66,8 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
             {/* Logo */}
             <div className="relative mb-8">
               <div className="flex flex-col items-center space-y-4">
-                <div className="relative">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center shadow-xl">
+                <div className="relative animate-float">
+                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl glass-card glow-effect flex items-center justify-center">
                     <div className="text-4xl sm:text-5xl">🎯</div>
                   </div>
                   <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
@@ -75,11 +75,11 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
                 </div>
                 
                 <div className="text-center">
-                  <h1 className="text-4xl sm:text-6xl font-bold text-white">
+                  <h1 className="text-4xl sm:text-6xl font-bold hero-text">
                     <span className="font-light">Word</span>
                     <span className="font-black bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">Spin</span>
                   </h1>
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mt-2">
+                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card mt-2">
                     <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                     <span className="text-sm font-medium text-white/90">PRO</span>
                   </div>
@@ -90,9 +90,8 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
 
           {/* Category selection with individual difficulty */}
           <div 
-            className="backdrop-blur-xl rounded-2xl sm:rounded-3xl p-3 sm:p-4 lg:p-8 border border-white/20 shadow-2xl animate-slide-up mb-4 sm:mb-6 lg:mb-8"
+            className="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-4 lg:p-8 animate-slide-up mb-4 sm:mb-6 lg:mb-8"
             style={{ 
-              background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))',
               animationDelay: '0.2s'
             }}
           >
@@ -108,7 +107,7 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
                     onClick={() => setCategory(cat)}
                     className={`flex flex-col items-center space-y-2 p-3 rounded-2xl transition-all duration-300 ${
                       category === cat 
-                        ? 'bg-white/20 scale-110' 
+                        ? 'glass-card scale-110 glow-effect' 
                         : 'hover:bg-white/10 hover:scale-105'
                     }`}
                     data-testid="select-category"
@@ -142,7 +141,7 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
                       onClick={() => handleCategoryDifficultyChange(category, level)}
                       className={`w-10 h-10 text-sm font-bold rounded-full transition-all duration-300 ${
                         (categoryDifficulties[category] || 3) === level
-                          ? 'bg-white text-black scale-110'
+                          ? 'premium-button text-white scale-110'
                           : 'bg-white/20 text-white/60 hover:bg-white/30'
                       }`}
                       data-testid="slider-difficulty"
@@ -159,7 +158,7 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
           <div className="text-center animate-slide-up pb-4 sm:pb-6" style={{ animationDelay: '0.6s' }}>
             <button
               onClick={handleStartGame}
-              className="group relative px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-bold text-white rounded-xl sm:rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-400 hover:to-purple-500 shadow-lg hover:shadow-xl w-full max-w-xs sm:max-w-sm"
+              className="group relative px-6 py-3 sm:px-8 sm:py-4 text-base sm:text-lg font-bold text-white rounded-xl sm:rounded-2xl premium-button active:scale-95 w-full max-w-xs sm:max-w-sm"
               data-testid="button-start-game"
             >
               <span className="flex items-center justify-center gap-2">

@@ -354,18 +354,16 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
             {!gameOver && (
               <>
                 <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                  <div className="backdrop-blur-xl rounded-2xl sm:rounded-3xl p-3 sm:p-4 lg:p-8 border border-white/20 w-full shadow-2xl" style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
-                  }}>
+                  <div className="glass-card rounded-2xl sm:rounded-3xl p-3 sm:p-4 lg:p-8 w-full">
                     <div className="text-center space-y-3 sm:space-y-4 lg:space-y-6">
                       {/* Timer Display */}
                       <div className="flex justify-center mb-4">
-                        <div className={`backdrop-blur-lg rounded-2xl px-6 py-3 border border-white/20 bg-white/10 flex items-center gap-3 shadow-lg ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
+                        <div className={`glass-card rounded-2xl px-6 py-3 flex items-center gap-3 glow-effect ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
                           <div className="text-2xl animate-pulse">⏱️</div>
                           <div className="text-xl sm:text-2xl font-black text-white" data-testid="text-time-left">
                             {formatTime(timeLeft)}
                           </div>
-                          <div className="w-16 h-2 backdrop-blur-lg rounded-full border border-white/20 bg-white/10 overflow-hidden">
+                          <div className="w-16 h-2 glass-card rounded-full overflow-hidden">
                             <div 
                               className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
                               style={{ 
@@ -383,9 +381,8 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
                       <div className={`relative ${shakeInput ? 'animate-shake-error' : ''}`}>
                         <input 
                           type="text" 
-                          className={`w-full px-3 py-3 sm:px-4 sm:py-4 lg:px-8 lg:py-6 text-lg sm:text-xl lg:text-2xl xl:text-3xl font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-xl sm:rounded-2xl focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50 ${sparkleText ? 'animate-typing-sparkle' : ''}`}
+                          className={`w-full px-3 py-3 sm:px-4 sm:py-4 lg:px-8 lg:py-6 text-lg sm:text-xl lg:text-2xl xl:text-3xl font-black text-center text-white glass-card border-2 border-white/30 rounded-xl sm:rounded-2xl focus:outline-none focus:border-white/60 focus:glow-effect transition-all duration-300 placeholder:text-white/50 ${sparkleText ? 'animate-typing-sparkle' : ''}`}
                           style={{ 
-                            background: 'rgba(255,255,255,0.1)',
                             textShadow: '0 0 20px rgba(255,255,255,0.5)'
                           }}
                           placeholder="KELİMEYİ YAZIN..."
@@ -555,10 +552,9 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
           <div className="relative">
             <button
               onClick={() => setShowDailyGoals(!showDailyGoals)}
-              className="bg-gradient-to-r from-emerald-500 to-blue-600 hover:from-emerald-600 hover:to-blue-700 text-white font-bold py-3 px-6 rounded-2xl shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center gap-3 backdrop-blur-xl border border-white/20"
+              className="premium-button text-white font-bold py-3 px-6 rounded-2xl flex items-center gap-3"
               style={{
-                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(59, 130, 246, 0.9))',
-                boxShadow: '0 10px 25px rgba(16, 185, 129, 0.3)'
+                background: 'linear-gradient(135deg, rgba(16, 185, 129, 0.9), rgba(59, 130, 246, 0.9))'
               }}
             >
               <div className="text-2xl">📅</div>
