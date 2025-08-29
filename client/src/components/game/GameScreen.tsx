@@ -185,7 +185,7 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
       setShakeInput(true);
       setTimeout(() => setShakeInput(false), 500);
       
-      setMessage("Yanlış Tahmin!");
+      setMessage("");
       setGuess(''); 
       setTimeout(() => setMessage(''), 1500);
     }
@@ -550,8 +550,8 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
           </div>
         </main>
         
-        {/* Günlük Hedefler - Üst sağda daha büyük ve güzel */}
-        <div className="fixed top-4 right-4 z-40">
+        {/* Günlük Hedefler - Alt sağda logo ile çakışmayacak şekilde */}
+        <div className="fixed bottom-6 right-4 z-40">
           <div className="relative">
             <button
               onClick={() => setShowDailyGoals(!showDailyGoals)}
@@ -571,7 +571,7 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
             </button>
             
             {showDailyGoals && (
-              <div className="absolute top-full right-0 mt-3 w-80">
+              <div className="absolute bottom-full right-0 mb-3 w-80">
                 <DailyGoals goals={gameStats.dailyGoals} />
               </div>
             )}
