@@ -2,16 +2,21 @@ import { memo, useState, useEffect } from 'react';
 import { wordLists } from '@/lib/wordLists';
 import { getThemeForCategory } from '@/lib/gameUtils';
 
+import type { Language } from './LanguageScreen';
+
 export interface GameSettings {
   category: string;
   difficulty: number;
+  language: Language;
 }
 
 interface MenuScreenProps {
+  selectedLanguage: Language;
   onStartGame: (settings: GameSettings) => void;
+  onBack: () => void;
 }
 
-export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
+export const MenuScreen = memo(({ selectedLanguage, onStartGame, onBack }: MenuScreenProps) => {
   const [category, setCategory] = useState("Hayvanlar");
   const [difficulty, setDifficulty] = useState(3);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
@@ -21,7 +26,7 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
 
   const handleStartGame = () => {
     const selectedDifficulty = categoryDifficulties[category] || difficulty;
-    onStartGame({ category, difficulty: selectedDifficulty });
+    onStartGame({ category, difficulty: selectedDifficulty, language: selectedLanguage });
   };
 
   const handleCategoryDifficultyChange = (cat: string, diff: number) => {
@@ -61,31 +66,21 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
       {/* Main content */}
       <div className="relative z-10 min-h-screen flex items-start justify-center p-3 sm:p-4 pt-4 sm:pt-8">
         <div className="w-full max-w-md sm:max-w-2xl lg:max-w-4xl">
-          {/* Hero section */}
-          <div className="text-center mb-6 sm:mb-8 lg:mb-12 animate-slide-up">
-            {/* Logo */}
-            <div className="relative mb-8">
-              <div className="flex flex-col items-center space-y-4">
-                <div className="relative">
-                  <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-white/10 backdrop-blur-xl border border-white/20 flex items-center justify-center shadow-xl">
-                    <div className="text-4xl sm:text-5xl">🎯</div>
-                  </div>
-                  <div className="absolute -top-2 -right-2 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
-                  <div className="absolute -bottom-2 -left-2 w-3 h-3 bg-gradient-to-r from-green-400 to-blue-500 rounded-full animate-pulse delay-300"></div>
-                </div>
-                
-                <div className="text-center">
-                  <h1 className="text-4xl sm:text-6xl font-bold text-white">
-                    <span className="font-light">Word</span>
-                    <span className="font-black bg-gradient-to-r from-teal-400 via-cyan-500 to-pink-500 bg-clip-text text-transparent">Spin</span>
-                  </h1>
-                  <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mt-2">
-                    <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                    <span className="text-sm font-medium text-white/90">PRO</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          {/* Header with back button */}
+          <div className="flex items-center justify-between mb-8 animate-slide-up">
+            <button 
+              onClick={onBack}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+            >
+              <span>←</span>
+              <span>Geri</span>
+            </button>
+            
+            <h1 className="text-2xl sm:text-3xl font-bold text-white text-center">
+              🎯 <span className="font-black bg-gradient-to-r from-teal-400 via-cyan-500 to-pink-500 bg-clip-text text-transparent">WordSpin</span>
+            </h1>
+            
+            <div className="w-20"></div> {/* Spacer for center alignment */}
           </div>
 
           {/* Modern Category Grid */}
