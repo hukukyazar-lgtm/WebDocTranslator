@@ -27,7 +27,7 @@ interface GameScreenProps {
 }
 
 export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
-  const { category, difficulty } = settings;
+  const { category, difficulty, language } = settings;
   const theme = getThemeForCategory(category);
   
   const [secretWord, setSecretWord] = useState('');
