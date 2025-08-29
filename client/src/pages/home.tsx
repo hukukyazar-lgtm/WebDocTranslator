@@ -14,8 +14,26 @@ export default function Home() {
   };
 
   if (gameSettings) {
-    return <GameScreen settings={gameSettings} onGameOver={handleGameOver} />;
+    return (
+      <div 
+        style={{
+          background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #e94560 100%)',
+          minHeight: '100vh'
+        }}
+      >
+        <GameScreen settings={gameSettings} onGameOver={handleGameOver} />
+      </div>
+    );
   }
   
-  return <MenuScreen onStartGame={handleStartGame} />;
+  return (
+    <div 
+      style={{
+        background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #e94560 100%)',
+        minHeight: '100vh'
+      }}
+    >
+      <MenuScreen onStartGame={handleStartGame} />
+    </div>
+  );
 }
