@@ -55,7 +55,6 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
   return (
     <div 
       className="min-h-screen relative overflow-hidden transition-all duration-1000"
-      style={{ background: theme.background }}
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden">

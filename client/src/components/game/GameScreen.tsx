@@ -304,7 +304,6 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
       <div 
         className="min-h-screen relative overflow-hidden transition-all duration-1000 animate-gradient-shift animate-color-wave"
         style={{ 
-          backgroundImage: dynamicBackground,
           backgroundAttachment: 'fixed',
           backgroundSize: '400% 400%',
           backgroundPosition: 'center'
