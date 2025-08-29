@@ -103,7 +103,7 @@
 
   body {
     @apply font-sans antialiased text-foreground;
-    background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #7C3AED 100%) !important;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #e94560 100%) !important;
     min-height: 100vh;
     min-height: 100dvh;
     overscroll-behavior: none;
