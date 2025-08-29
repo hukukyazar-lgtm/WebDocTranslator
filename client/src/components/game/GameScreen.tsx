@@ -302,31 +302,9 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
     <>
       
       <div 
-        className="min-h-screen relative overflow-hidden transition-all duration-1000 animate-gradient-shift animate-color-wave"
-        style={{ 
-          backgroundAttachment: 'fixed',
-          backgroundSize: '400% 400%',
-          backgroundPosition: 'center'
-        }}
+        className="min-h-screen relative overflow-hidden"
       >
-        {/* Animated background particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full opacity-20 animate-pulse"
-              style={{
-                background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
-                width: Math.random() * 80 + 30,
-                height: Math.random() * 80 + 30,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${i * 0.3}s`,
-                animationDuration: `${4 + Math.random() * 3}s`
-              }}
-            />
-          ))}
-        </div>
+        {/* Statik arka plan - animasyon yok */}
         <GameHeader 
           category={category} 
           difficulty={difficulty} 

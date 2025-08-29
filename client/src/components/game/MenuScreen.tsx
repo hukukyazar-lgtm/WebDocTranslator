@@ -56,24 +56,7 @@ export const MenuScreen = memo(({ onStartGame }: MenuScreenProps) => {
     <div 
       className="min-h-screen relative overflow-hidden transition-all duration-1000"
     >
-      {/* Animated background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full opacity-20 animate-pulse"
-            style={{
-              background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
-              width: Math.random() * 100 + 50,
-              height: Math.random() * 100 + 50,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${i * 0.2}s`,
-              animationDuration: `${3 + Math.random() * 2}s`
-            }}
-          />
-        ))}
-      </div>
+      {/* Statik arka plan - animasyon yok */}
 
       {/* Main content */}
       <div className="relative z-10 min-h-screen flex items-start justify-center p-3 sm:p-4 pt-4 sm:pt-8">
