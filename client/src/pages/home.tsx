@@ -11,6 +11,7 @@ export default function Home() {
   const [appState, setAppState] = useState<AppState>('language');
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
   const [gameSettings, setGameSettings] = useState<GameSettings | null>(null);
+  const [isGuestMode, setIsGuestMode] = useState(false);
   const { isAuthenticated, isLoading } = useAuth();
   
   const handleLanguageSelect = (language: Language) => {
@@ -21,6 +22,11 @@ export default function Home() {
     } else {
       setAppState('login');
     }
+  };
+
+  const handleGuestMode = () => {
+    setIsGuestMode(true);
+    setAppState('menu');
   };
 
   const handleStartGame = (settings: GameSettings) => {
@@ -52,6 +58,7 @@ export default function Home() {
         <LoginScreen 
           selectedLanguage={selectedLanguage!} 
           onBack={() => setAppState('language')}
+          onGuestMode={handleGuestMode}
         />
       </div>
     );
@@ -63,7 +70,8 @@ export default function Home() {
         <MenuScreen 
           selectedLanguage={selectedLanguage!} 
           onStartGame={handleStartGame} 
-          onBack={() => setAppState(isAuthenticated ? 'login' : 'language')}
+          onBack={() => setAppState(isGuestMode ? 'language' : (isAuthenticated ? 'login' : 'language'))}
+          isGuestMode={isGuestMode}
         />
       </div>
     );
@@ -72,7 +80,7 @@ export default function Home() {
   if (appState === 'game') {
     return (
       <div style={backgroundStyle}>
-        <GameScreen settings={gameSettings!} onGameOver={handleGameOver} />
+        <GameScreen settings={gameSettings!} onGameOver={handleGameOver} isGuestMode={isGuestMode} />
       </div>
     );
   }

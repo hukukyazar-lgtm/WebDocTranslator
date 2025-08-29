@@ -4,6 +4,7 @@ import type { Language } from './LanguageScreen';
 export interface LoginScreenProps {
   selectedLanguage: Language;
   onBack: () => void;
+  onGuestMode: () => void;
 }
 
 const languageNames = {
@@ -24,7 +25,7 @@ const languageFlags = {
   'de': '🇩🇪'
 };
 
-export const LoginScreen = memo<LoginScreenProps>(({ selectedLanguage, onBack }) => {
+export const LoginScreen = memo<LoginScreenProps>(({ selectedLanguage, onBack, onGuestMode }) => {
   const handleLogin = () => {
     // Replit Auth login
     window.location.href = '/api/login';
@@ -153,15 +154,22 @@ export const LoginScreen = memo<LoginScreenProps>(({ selectedLanguage, onBack })
           
           {/* Guest option */}
           <div className="text-center animate-slide-up" style={{ animationDelay: '0.4s' }}>
-            <p className="text-xs text-white/40 mb-2">
+            <p className="text-xs text-white/40 mb-4">
               veya
             </p>
             <button 
-              className="text-sm text-white/60 hover:text-white underline transition-colors"
-              onClick={() => {/* TODO: Implement guest mode */}}
+              onClick={onGuestMode}
+              className="px-6 py-3 text-sm font-medium text-white/80 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
+              data-testid="button-guest-mode"
             >
-              Misafir olarak devam et (ilerleme kaydedilmeyecek)
+              <span className="flex items-center justify-center gap-2">
+                <span>👤</span>
+                <span>Misafir olarak devam et</span>
+              </span>
             </button>
+            <p className="text-xs text-white/40 mt-2">
+              * İlerleme ve skorlar kaydedilmeyecek
+            </p>
           </div>
         </div>
       </div>

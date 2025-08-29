@@ -14,9 +14,10 @@ interface MenuScreenProps {
   selectedLanguage: Language;
   onStartGame: (settings: GameSettings) => void;
   onBack: () => void;
+  isGuestMode?: boolean;
 }
 
-export const MenuScreen = memo(({ selectedLanguage, onStartGame, onBack }: MenuScreenProps) => {
+export const MenuScreen = memo(({ selectedLanguage, onStartGame, onBack, isGuestMode = false }: MenuScreenProps) => {
   const [category, setCategory] = useState("Hayvanlar");
   const [difficulty, setDifficulty] = useState(3);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
@@ -76,9 +77,16 @@ export const MenuScreen = memo(({ selectedLanguage, onStartGame, onBack }: MenuS
               <span>Geri</span>
             </button>
             
-            <h1 className="text-2xl sm:text-3xl font-bold text-white text-center">
-              🎯 <span className="font-black bg-gradient-to-r from-teal-400 via-cyan-500 to-pink-500 bg-clip-text text-transparent">WordSpin</span>
-            </h1>
+            <div className="text-center">
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">
+                🎯 <span className="font-black bg-gradient-to-r from-teal-400 via-cyan-500 to-pink-500 bg-clip-text text-transparent">WordSpin</span>
+              </h1>
+              {isGuestMode && (
+                <p className="text-sm text-white/60 mt-1">
+                  👤 Misafir Modu - İlerleme kaydedilmiyor
+                </p>
+              )}
+            </div>
             
             <div className="w-20"></div> {/* Spacer for center alignment */}
           </div>
