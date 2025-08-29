@@ -96,6 +96,9 @@
   html {
     scroll-behavior: smooth;
     touch-action: manipulation;
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 50%, #7C3AED 100%) !important;
+    min-height: 100vh;
+    min-height: 100dvh;
   }
 
   body {
