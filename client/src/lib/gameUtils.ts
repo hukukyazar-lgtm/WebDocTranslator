@@ -77,10 +77,247 @@ export const turkishKeyboardLayout = [
   ['Z','X','C','V','B','N','M','Ö','Ç']
 ];
 
+// Achievement and motivation system
+export interface Achievement {
+  id: string;
+  name: string;
+  description: string;
+  emoji: string;
+  category?: string;
+  unlocked: boolean;
+  unlockedAt?: Date;
+}
+
+export interface DailyGoal {
+  id: string;
+  target: number;
+  current: number;
+  completed: boolean;
+  emoji: string;
+  name: string;
+}
+
+export interface GameStats {
+  totalGamesPlayed: number;
+  totalCorrectGuesses: number;
+  currentStreak: number;
+  bestStreak: number;
+  totalScore: number;
+  averageGuessTime: number;
+  categoryExpertise: { [category: string]: number };
+  achievements: Achievement[];
+  dailyGoals: DailyGoal[];
+  lastPlayedDate: string;
+}
+
 export const calculateScore = (timeElapsed: number, difficulty: number): number => {
   // Kalan saniye kadar puan ver
   const remainingTime = TOTAL_GAME_TIME - timeElapsed;
-  return Math.max(0, remainingTime);
+  let baseScore = Math.max(0, remainingTime);
+  
+  // Hız bonusu: 5 saniyede bilirse +5 puan
+  if (timeElapsed <= 5) {
+    baseScore += 5;
+  }
+  
+  return baseScore;
+};
+
+// Perfect streak kontrolü ve çarpan hesaplama
+export const calculateStreakMultiplier = (currentStreak: number): number => {
+  if (currentStreak >= 5) {
+    return 2; // 5 ardışık doğru = 2x puan
+  }
+  return 1;
+};
+
+// Günlük hedefler
+export const getDefaultDailyGoals = (): DailyGoal[] => [
+  {
+    id: 'daily-words',
+    name: '10 Kelime Bil',
+    target: 10,
+    current: 0,
+    completed: false,
+    emoji: '🎯'
+  },
+  {
+    id: 'daily-streak',
+    name: '5 Streak Yap',
+    target: 5,
+    current: 0,
+    completed: false,
+    emoji: '🔥'
+  }
+];
+
+// Başarım sistemi
+export const getDefaultAchievements = (): Achievement[] => [
+  {
+    id: 'first-win',
+    name: 'İlk Zafer',
+    description: 'İlk kelimeyi doğru tahmin et',
+    emoji: '🎉',
+    unlocked: false
+  },
+  {
+    id: 'speed-demon',
+    name: 'Hız Şeytanı',
+    description: '5 saniyede bir kelime bil',
+    emoji: '⚡',
+    unlocked: false
+  },
+  {
+    id: 'streak-master',
+    name: 'Seri Ustası',
+    description: '10 ardışık doğru cevap',
+    emoji: '🔥',
+    unlocked: false
+  },
+  {
+    id: 'animal-expert',
+    name: 'Hayvan Uzmanı',
+    description: 'Hayvanlar kategorisinde 20 doğru',
+    emoji: '🐾',
+    category: 'Hayvanlar',
+    unlocked: false
+  },
+  {
+    id: 'food-expert',
+    name: 'Yemek Uzmanı',
+    description: 'Yiyecek kategorisinde 20 doğru',
+    emoji: '🍽️',
+    category: 'Yiyecek',
+    unlocked: false
+  },
+  {
+    id: 'century-club',
+    name: 'Yüzler Kulübü',
+    description: '100 kelime doğru tahmin et',
+    emoji: '💯',
+    unlocked: false
+  }
+];
+
+// Başarım kontrolü
+export const checkAchievements = (stats: GameStats, currentCategory: string, guessTime: number): Achievement[] => {
+  const newAchievements: Achievement[] = [];
+  
+  stats.achievements.forEach(achievement => {
+    if (achievement.unlocked) return;
+    
+    switch (achievement.id) {
+      case 'first-win':
+        if (stats.totalCorrectGuesses >= 1) {
+          achievement.unlocked = true;
+          achievement.unlockedAt = new Date();
+          newAchievements.push(achievement);
+        }
+        break;
+        
+      case 'speed-demon':
+        if (guessTime <= 5) {
+          achievement.unlocked = true;
+          achievement.unlockedAt = new Date();
+          newAchievements.push(achievement);
+        }
+        break;
+        
+      case 'streak-master':
+        if (stats.currentStreak >= 10) {
+          achievement.unlocked = true;
+          achievement.unlockedAt = new Date();
+          newAchievements.push(achievement);
+        }
+        break;
+        
+      case 'animal-expert':
+        if (stats.categoryExpertise['Hayvanlar'] >= 20) {
+          achievement.unlocked = true;
+          achievement.unlockedAt = new Date();
+          newAchievements.push(achievement);
+        }
+        break;
+        
+      case 'food-expert':
+        if (stats.categoryExpertise['Yiyecek'] >= 20) {
+          achievement.unlocked = true;
+          achievement.unlockedAt = new Date();
+          newAchievements.push(achievement);
+        }
+        break;
+        
+      case 'century-club':
+        if (stats.totalCorrectGuesses >= 100) {
+          achievement.unlocked = true;
+          achievement.unlockedAt = new Date();
+          newAchievements.push(achievement);
+        }
+        break;
+    }
+  });
+  
+  return newAchievements;
+};
+
+// Günlük hedef güncelleme
+export const updateDailyGoals = (stats: GameStats, isCorrect: boolean): DailyGoal[] => {
+  const today = new Date().toDateString();
+  
+  // Yeni gün kontrolü
+  if (stats.lastPlayedDate !== today) {
+    stats.dailyGoals = getDefaultDailyGoals();
+  }
+  
+  if (isCorrect) {
+    stats.dailyGoals.forEach(goal => {
+      if (goal.id === 'daily-words' && !goal.completed) {
+        goal.current = Math.min(goal.current + 1, goal.target);
+        goal.completed = goal.current >= goal.target;
+      }
+      if (goal.id === 'daily-streak' && !goal.completed) {
+        goal.current = Math.max(goal.current, stats.currentStreak);
+        goal.completed = goal.current >= goal.target;
+      }
+    });
+  }
+  
+  return stats.dailyGoals;
+};
+
+// Oyun istatistiklerini güncelle
+export const updateGameStats = (stats: GameStats, isCorrect: boolean, category: string, guessTime: number): GameStats => {
+  const today = new Date().toDateString();
+  
+  stats.totalGamesPlayed++;
+  stats.lastPlayedDate = today;
+  
+  if (isCorrect) {
+    stats.totalCorrectGuesses++;
+    stats.currentStreak++;
+    stats.bestStreak = Math.max(stats.bestStreak, stats.currentStreak);
+    
+    // Kategori uzmanlığı
+    stats.categoryExpertise[category] = (stats.categoryExpertise[category] || 0) + 1;
+    
+    // Puan hesapla
+    const baseScore = calculateScore(guessTime, 3);
+    const multiplier = calculateStreakMultiplier(stats.currentStreak);
+    stats.totalScore += baseScore * multiplier;
+    
+    // Ortalama tahmin süresi
+    stats.averageGuessTime = ((stats.averageGuessTime * (stats.totalCorrectGuesses - 1)) + guessTime) / stats.totalCorrectGuesses;
+  } else {
+    stats.currentStreak = 0;
+  }
+  
+  // Günlük hedefleri güncelle
+  stats.dailyGoals = updateDailyGoals(stats, isCorrect);
+  
+  // Başarımları kontrol et
+  const newAchievements = checkAchievements(stats, category, guessTime);
+  
+  return stats;
 };
 
 export const formatTime = (seconds: number): string => {

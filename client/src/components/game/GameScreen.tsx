@@ -3,8 +3,22 @@ import { GameHeader } from './GameHeader';
 import { SpinningWheel } from './SpinningWheel';
 import { VirtualKeyboard } from './VirtualKeyboard';
 import { GameStats } from './GameStats';
+import { AchievementNotification } from './AchievementNotification';
+import { DailyGoals } from './DailyGoals';
 import { getWordByDifficulty, wordLists } from '@/lib/wordLists';
-import { TOTAL_GAME_TIME, calculateScore, getSpinDuration, getThemeForCategory, formatTime } from '@/lib/gameUtils';
+import { 
+  TOTAL_GAME_TIME, 
+  calculateScore, 
+  calculateStreakMultiplier,
+  getSpinDuration, 
+  getThemeForCategory, 
+  formatTime,
+  updateGameStats,
+  type GameStats as GameStatsType,
+  type Achievement,
+  getDefaultAchievements,
+  getDefaultDailyGoals
+} from '@/lib/gameUtils';
 import type { GameSettings } from './MenuScreen';
 
 interface GameScreenProps {
@@ -34,6 +48,20 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [shakeInput, setShakeInput] = useState(false);
   const [sparkleText, setSparkleText] = useState(false);
+  const [gameStats, setGameStats] = useState<GameStatsType>(() => ({
+    totalGamesPlayed: 0,
+    totalCorrectGuesses: 0,
+    currentStreak: 0,
+    bestStreak: 0,
+    totalScore: 0,
+    averageGuessTime: 0,
+    categoryExpertise: {},
+    achievements: getDefaultAchievements(),
+    dailyGoals: getDefaultDailyGoals(),
+    lastPlayedDate: new Date().toDateString()
+  }));
+  const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
+  const [showDailyGoals, setShowDailyGoals] = useState(false);
   
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -104,13 +132,34 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
     setGameSuccess(success);
     
     if (success) {
-      const scoreGained = calculateScore(Math.floor(elapsedTime), difficulty);
-      setScore(scoreGained);
-      setTotalScore(prev => prev + scoreGained);
-      setStreak(prev => prev + 1);
-      setCorrectGuesses(prev => prev + 1);
-      setAverageTime(Math.floor(elapsedTime));
+      // Oyun istatistiklerini güncelle ve başarımları kontrol et
+      const updatedStats = updateGameStats(gameStats, true, category, Math.floor(elapsedTime));
+      setGameStats(updatedStats);
+      
+      // Güncellenen değerleri UI için set et
+      const baseScore = calculateScore(Math.floor(elapsedTime), difficulty);
+      const multiplier = calculateStreakMultiplier(updatedStats.currentStreak);
+      const finalScore = baseScore * multiplier;
+      
+      setScore(finalScore);
+      setStreak(updatedStats.currentStreak);
+      setCorrectGuesses(updatedStats.totalCorrectGuesses);
+      setAverageTime(updatedStats.averageGuessTime);
+      setTotalScore(updatedStats.totalScore);
+      
+      // Yeni başarım kontrol et
+      const newAchievements = updatedStats.achievements.filter(a => 
+        a.unlocked && a.unlockedAt && 
+        new Date(a.unlockedAt).getTime() > Date.now() - 1000
+      );
+      
+      if (newAchievements.length > 0) {
+        setCurrentAchievement(newAchievements[0]);
+      }
     } else {
+      // Yanlış cevap durumunda
+      const updatedStats = updateGameStats(gameStats, false, category, Math.floor(elapsedTime));
+      setGameStats(updatedStats);
       setStreak(0);
     }
     
@@ -123,7 +172,14 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
       // Trigger confetti celebration
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 2000);
-      endGame(`Tebrikler! ${Math.floor(elapsedTime)} saniyede bildin.`, true);
+      
+      // Hız bonusu mesajı
+      const guessTime = Math.floor(elapsedTime);
+      let bonusMessage = '';
+      if (guessTime <= 5) {
+        bonusMessage = ' 🚀 Hız Bonusu +5!';
+      }
+      endGame(`Tebrikler! ${Math.floor(elapsedTime)} saniyede bildin.${bonusMessage}`, true);
     } else {
       // Trigger shake animation for wrong answer
       setShakeInput(true);
@@ -516,6 +572,28 @@ export const GameScreen = memo(({ settings, onGameOver }: GameScreenProps) => {
             />
           </div>
         </main>
+        
+        {/* Günlük Hedefler - Köşede göster */}
+        <div className="fixed bottom-4 left-4 z-40">
+          <button
+            onClick={() => setShowDailyGoals(!showDailyGoals)}
+            className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-2 px-4 rounded-full shadow-lg transition-all duration-300 transform hover:scale-105"
+          >
+            📅 {gameStats.dailyGoals.filter(g => g.completed).length}/{gameStats.dailyGoals.length}
+          </button>
+          
+          {showDailyGoals && (
+            <div className="absolute bottom-full left-0 mb-2 w-72">
+              <DailyGoals goals={gameStats.dailyGoals} />
+            </div>
+          )}
+        </div>
+        
+        {/* Başarım Bildirimi */}
+        <AchievementNotification 
+          achievement={currentAchievement}
+          onClose={() => setCurrentAchievement(null)}
+        />
       </div>
     </>
   );
