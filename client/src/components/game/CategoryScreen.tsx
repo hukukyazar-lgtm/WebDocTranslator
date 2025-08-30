@@ -177,7 +177,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
   const theme = getThemeForCategory(hoveredCategory || 'Hayvanlar');
   
   const getCategoryName = (turkishName: string): string => {
-    return categoryT[turkishName] || turkishName;
+    return (categoryT as Record<string, string>)[turkishName] || turkishName;
   };
 
   const categoryIcons: Record<string, string> = {

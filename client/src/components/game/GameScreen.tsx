@@ -247,7 +247,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   const categoryT = categoryTranslations[language as Language];
   
   const getCategoryName = (turkishName: string): string => {
-    return categoryT[turkishName] || turkishName;
+    return (categoryT as Record<string, string>)[turkishName] || turkishName;
   };
   
   const [secretWord, setSecretWord] = useState('');
@@ -526,6 +526,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         <GameHeader 
           category={category} 
           difficulty={difficulty} 
+          language={language as Language}
         />
 
         {/* Confetti Celebration */}
@@ -637,6 +638,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                       onKeyPress={handleKeyPress}
                       onBackspace={handleBackspace}
                       onSpace={handleSpace}
+                      language={language as Language}
                       onSubmit={handleGuessSubmit}
                       usedKeys={usedKeys}
                     />

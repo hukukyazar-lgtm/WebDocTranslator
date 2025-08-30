@@ -1,5 +1,40 @@
 import { memo, useCallback } from 'react';
 import { turkishKeyboardLayout } from '@/lib/gameUtils';
+import type { Language } from './LanguageScreen';
+
+// Keyboard translations
+const keyboardTranslations = {
+  tr: {
+    delete: 'SİL',
+    space: 'BOŞLUK',
+    submit: 'GÖNDER'
+  },
+  en: {
+    delete: 'DELETE',
+    space: 'SPACE',
+    submit: 'SUBMIT'
+  },
+  es: {
+    delete: 'BORRAR',
+    space: 'ESPACIO',
+    submit: 'ENVIAR'
+  },
+  it: {
+    delete: 'CANCELLA',
+    space: 'SPAZIO',
+    submit: 'INVIA'
+  },
+  fr: {
+    delete: 'EFFACER',
+    space: 'ESPACE',
+    submit: 'ENVOYER'
+  },
+  de: {
+    delete: 'LÖSCHEN',
+    space: 'LEER',
+    submit: 'SENDEN'
+  }
+};
 
 interface VirtualKeyboardProps {
   onKeyPress: (key: string) => void;
@@ -7,6 +42,7 @@ interface VirtualKeyboardProps {
   onSpace: () => void;
   onSubmit: () => void;
   usedKeys?: string[];
+  language?: Language;
 }
 
 export const VirtualKeyboard = memo(({ 
@@ -14,8 +50,10 @@ export const VirtualKeyboard = memo(({
   onBackspace, 
   onSpace, 
   onSubmit,
-  usedKeys = []
+  usedKeys = [],
+  language = 'tr'
 }: VirtualKeyboardProps) => {
+  const t = keyboardTranslations[language];
   
   const handleKeyPress = useCallback((key: string) => {
     onKeyPress(key);
@@ -83,7 +121,7 @@ export const VirtualKeyboard = memo(({
               data-testid="key-backspace"
             >
               <span className="sm:hidden">🗑️</span>
-              <span className="hidden sm:inline">🗑️ SİL</span>
+              <span className="hidden sm:inline">🗑️ {t.delete}</span>
             </button>
           </div>
 
@@ -95,7 +133,7 @@ export const VirtualKeyboard = memo(({
               data-testid="key-space"
             >
               <span className="sm:hidden">⌨️</span>
-              <span className="hidden sm:inline">⌨️ BOŞLUK</span>
+              <span className="hidden sm:inline">⌨️ {t.space}</span>
             </button>
             <button
               onClick={onSubmit}
@@ -107,7 +145,7 @@ export const VirtualKeyboard = memo(({
               data-testid="key-submit"
             >
               <span className="sm:hidden">🚀</span>
-              <span className="hidden sm:inline">🚀 GÖNDER</span>
+              <span className="hidden sm:inline">🚀 {t.submit}</span>
             </button>
           </div>
         </div>

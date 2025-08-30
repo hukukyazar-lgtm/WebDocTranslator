@@ -1,4 +1,109 @@
 import { memo } from 'react';
+import type { Language } from './LanguageScreen';
+
+// Header translations
+const headerTranslations = {
+  tr: {
+    level: 'Seviye'
+  },
+  en: {
+    level: 'Level'
+  },
+  es: {
+    level: 'Nivel'
+  },
+  it: {
+    level: 'Livello'
+  },
+  fr: {
+    level: 'Niveau'
+  },
+  de: {
+    level: 'Stufe'
+  }
+};
+
+// Category translations
+const categoryTranslations = {
+  tr: {
+    'Hayvanlar': 'Hayvanlar',
+    'Yiyecek': 'Yiyecek',
+    'Bilim': 'Bilim',
+    'Ülkeler': 'Ülkeler',
+    'Meslekler': 'Meslekler',
+    'Şehirler': 'Şehirler',
+    'Markalar': 'Markalar',
+    'Spor Dalları': 'Spor Dalları',
+    'Eşyalar': 'Eşyalar',
+    'Filmler': 'Filmler',
+    'Karışık': 'Karışık'
+  },
+  en: {
+    'Hayvanlar': 'Animals',
+    'Yiyecek': 'Food',
+    'Bilim': 'Science',
+    'Ülkeler': 'Countries',
+    'Meslekler': 'Professions',
+    'Şehirler': 'Cities',
+    'Markalar': 'Brands',
+    'Spor Dalları': 'Sports',
+    'Eşyalar': 'Objects',
+    'Filmler': 'Movies',
+    'Karışık': 'Mixed'
+  },
+  es: {
+    'Hayvanlar': 'Animales',
+    'Yiyecek': 'Comida',
+    'Bilim': 'Ciencia',
+    'Ülkeler': 'Países',
+    'Meslekler': 'Profesiones',
+    'Şehirler': 'Ciudades',
+    'Markalar': 'Marcas',
+    'Spor Dalları': 'Deportes',
+    'Eşyalar': 'Objetos',
+    'Filmler': 'Películas',
+    'Karışık': 'Mixto'
+  },
+  it: {
+    'Hayvanlar': 'Animali',
+    'Yiyecek': 'Cibo',
+    'Bilim': 'Scienza',
+    'Ülkeler': 'Paesi',
+    'Meslekler': 'Professioni',
+    'Şehirler': 'Città',
+    'Markalar': 'Marchi',
+    'Spor Dalları': 'Sport',
+    'Eşyalar': 'Oggetti',
+    'Filmler': 'Film',
+    'Karışık': 'Misto'
+  },
+  fr: {
+    'Hayvanlar': 'Animaux',
+    'Yiyecek': 'Nourriture',
+    'Bilim': 'Science',
+    'Ülkeler': 'Pays',
+    'Meslekler': 'Professions',
+    'Şehirler': 'Villes',
+    'Markalar': 'Marques',
+    'Spor Dalları': 'Sports',
+    'Eşyalar': 'Objets',
+    'Filmler': 'Films',
+    'Karışık': 'Mélangé'
+  },
+  de: {
+    'Hayvanlar': 'Tiere',
+    'Yiyecek': 'Essen',
+    'Bilim': 'Wissenschaft',
+    'Ülkeler': 'Länder',
+    'Meslekler': 'Berufe',
+    'Şehirler': 'Städte',
+    'Markalar': 'Marken',
+    'Spor Dalları': 'Sport',
+    'Eşyalar': 'Objekte',
+    'Filmler': 'Filme',
+    'Karışık': 'Gemischt'
+  }
+};
 
 const categoryIcons: Record<string, string> = {
   'Hayvanlar': '🦁',
@@ -10,16 +115,24 @@ const categoryIcons: Record<string, string> = {
   'Markalar': '🏷️',
   'Spor Dalları': '⚽',
   'Eşyalar': '🪑',
-  'Filmler': '🎬'
+  'Filmler': '🎬',
+  'Karışık': '🎆'
 };
 
 interface GameHeaderProps {
   category: string;
   difficulty: number;
+  language?: Language;
 }
 
-export const GameHeader = memo(({ category, difficulty }: GameHeaderProps) => {
+export const GameHeader = memo(({ category, difficulty, language = 'tr' }: GameHeaderProps) => {
   const categoryIcon = categoryIcons[category] || '📂';
+  const t = headerTranslations[language];
+  const categoryT = categoryTranslations[language];
+  
+  const getCategoryName = (turkishName: string): string => {
+    return (categoryT as Record<string, string>)[turkishName] || turkishName;
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 z-40 p-4 backdrop-blur-xl border-b border-white/20" style={{
@@ -65,12 +178,12 @@ export const GameHeader = memo(({ category, difficulty }: GameHeaderProps) => {
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="backdrop-blur-lg rounded-xl sm:rounded-2xl px-2 py-1 sm:px-4 sm:py-2 border border-white/20 bg-white/10">
               <span className="text-white text-xs sm:text-sm font-bold" data-testid="text-category">
-                {categoryIcon} {category}
+                {categoryIcon} {getCategoryName(category)}
               </span>
             </div>
             <div className="backdrop-blur-lg rounded-xl sm:rounded-2xl px-2 py-1 sm:px-4 sm:py-2 border border-white/20 bg-white/10">
               <span className="text-white text-xs sm:text-sm font-bold" data-testid="text-difficulty">
-                ⭐ {difficulty}
+                ⭐ {t.level} {difficulty}
               </span>
             </div>
           </div>
