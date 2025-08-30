@@ -226,17 +226,17 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
   };
 
   const categoryIcons: Record<string, string> = {
-    'Hayvanlar': '🦁',
-    'Yiyecek': '🍎',
-    'Bilim': '🧪',
+    'Hayvanlar': '🐾',
+    'Yiyecek': '🍕',
+    'Bilim': '🔬',
     'Ülkeler': '🌍',
-    'Meslekler': '👨‍💼',
+    'Meslekler': '👔',
     'Şehirler': '🏙️',
-    'Markalar': '🏷️',
-    'Spor Dalları': '⚽',
-    'Eşyalar': '🏠',
-    'Filmler': '🌬️',
-    'Karışık': '🎆'
+    'Markalar': '🏪',
+    'Spor Dalları': '🏃‍♂️',
+    'Eşyalar': '📦',
+    'Filmler': '🎬',
+    'Karışık': '🎲'
   };
 
   const backgroundStyle = {
