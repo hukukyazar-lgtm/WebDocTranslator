@@ -410,8 +410,9 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onG
                         wordCount === 0 ? 'opacity-50 cursor-not-allowed' : ''
                       }`}
                       style={{
-                        background: `linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05))`,
-                        animationDelay: `${index * 0.1}s`
+                        background: `linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1))`,
+                        animationDelay: `${index * 0.1}s`,
+                        border: '2px solid rgba(255, 255, 255, 0.4)'
                       }}
                       data-testid={`button-difficulty-${diff.key}`}
                     >
