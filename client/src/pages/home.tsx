@@ -2,7 +2,9 @@ import { useState, useEffect } from 'react';
 import { type Language } from '@/components/game/LanguageScreen';
 import { LogoScreen } from '@/components/game/LogoScreen';
 import { CategoryScreen } from '@/components/game/CategoryScreen';
+import { DifficultyScreen } from '@/components/game/DifficultyScreen';
 import { GameScreen } from '@/components/game/GameScreen';
+import { SettingsScreen } from '@/components/game/SettingsScreen';
 import { useAuth } from '@/hooks/useAuth';
 
 // Auto-detect system language or fallback to English
@@ -34,7 +36,7 @@ const setStoredLanguage = (lang: Language): void => {
   }
 };
 
-type AppState = 'logo' | 'category' | 'game' | 'settings';
+type AppState = 'logo' | 'category' | 'difficulty' | 'game' | 'settings';
 
 export default function Home() {
   const [appState, setAppState] = useState<AppState>('logo');
@@ -60,8 +62,12 @@ export default function Home() {
     setAppState('category'); // Skip language screen, go directly to category
   };
 
-  const handleGameStart = (category: string, difficulty: number) => {
+  const handleCategorySelect = (category: string) => {
     setSelectedCategory(category);
+    setAppState('difficulty');
+  };
+
+  const handleDifficultySelect = (difficulty: number) => {
     setSelectedDifficulty(difficulty);
     setAppState('game');
   };
@@ -90,16 +96,40 @@ export default function Home() {
     );
   }
   
-  // Ayarlar - şimdilik yok (dil değiştirme CategoryScreen'de mevcut)
+  // Ayarlar sayfası
+  if (appState === 'settings') {
+    return (
+      <div style={backgroundStyle}>
+        <SettingsScreen 
+          selectedLanguage={selectedLanguage}
+          onLanguageChange={handleLanguageChange}
+          onBack={handleSettingsClose}
+        />
+      </div>
+    );
+  }
 
   // Kategori seçimi  
   if (appState === 'category') {
     return (
       <CategoryScreen 
         selectedLanguage={selectedLanguage}
-        onGameStart={handleGameStart}
+        onCategorySelect={handleCategorySelect}
         onBack={() => setAppState('logo')}
         onSettingsOpen={handleSettingsOpen}
+        isGuestMode={isGuestMode}
+      />
+    );
+  }
+
+  // Zorluk seçimi
+  if (appState === 'difficulty') {
+    return (
+      <DifficultyScreen 
+        selectedLanguage={selectedLanguage}
+        selectedCategory={selectedCategory}
+        onDifficultySelect={handleDifficultySelect}
+        onBack={() => setAppState('category')}
         isGuestMode={isGuestMode}
       />
     );
