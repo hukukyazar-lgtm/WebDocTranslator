@@ -311,12 +311,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     }
   }, [timeLeft, theme.background]);
 
-  // Get used keys from current guess
-  const usedKeys = useMemo(() => {
-    return guess.toUpperCase().split('').filter((char, index, arr) => 
-      arr.indexOf(char) === index && char !== ' '
-    );
-  }, [guess]);
 
   // Initialize game
   useEffect(() => {
@@ -509,16 +503,16 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     const handleKeyDown = (event: KeyboardEvent) => {
       if (gameOver) return;
       
-      const key = event.key.toUpperCase();
+      const key = event.key;
       
-      if (key === 'ENTER') {
+      if (key === 'Enter') {
         handleGuessSubmit();
-      } else if (key === 'BACKSPACE') {
+      } else if (key === 'Backspace') {
         handleBackspace();
       } else if (key === ' ') {
         event.preventDefault();
         handleSpace();
-      } else if (/^[A-ZÇĞIİÖŞÜ]$/.test(key)) {
+      } else if (/^[a-zA-ZçğıiİöşüÇĞÖŞÜ]$/.test(key)) {
         handleKeyPress(key);
       }
     };
@@ -620,7 +614,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                           }}
                           placeholder={t.enterGuess}
                           value={guess}
-                          onChange={(e) => setGuess(e.target.value.toUpperCase())}
+                          onChange={(e) => setGuess(e.target.value)}
                           data-testid="input-guess"
                         />
                         <div className="absolute inset-y-0 right-0 flex items-center pr-6">
