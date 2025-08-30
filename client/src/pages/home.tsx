@@ -1,43 +1,43 @@
 import { useState } from 'react';
 import { LanguageScreen, type Language } from '@/components/game/LanguageScreen';
-import { LoginScreen } from '@/components/game/LoginScreen';
-import { MenuScreen, type GameSettings } from '@/components/game/MenuScreen';
+import { LogoScreen } from '@/components/game/LogoScreen';
+import { CategoryScreen } from '@/components/game/CategoryScreen';
+import { DifficultyScreen } from '@/components/game/DifficultyScreen';
 import { GameScreen } from '@/components/game/GameScreen';
 import { useAuth } from '@/hooks/useAuth';
 
-type AppState = 'language' | 'login' | 'menu' | 'game';
+type AppState = 'logo' | 'language' | 'category' | 'difficulty' | 'game';
 
 export default function Home() {
-  const [appState, setAppState] = useState<AppState>('language');
+  const [appState, setAppState] = useState<AppState>('logo');
   const [selectedLanguage, setSelectedLanguage] = useState<Language | null>(null);
-  const [gameSettings, setGameSettings] = useState<GameSettings | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
+  const [selectedDifficulty, setSelectedDifficulty] = useState<number>(3);
   const [isGuestMode, setIsGuestMode] = useState(false);
   const { isAuthenticated, isLoading } = useAuth();
   
   const handleLanguageSelect = (language: Language) => {
     setSelectedLanguage(language);
-    // Check if user is already authenticated
-    if (isAuthenticated) {
-      setAppState('menu');
-    } else {
-      setAppState('login');
-    }
+    setAppState('category');
   };
 
-  const handleGuestMode = () => {
-    console.log('Misafir modu aktif edildi!');
-    setIsGuestMode(true);
-    setAppState('menu');
+  const handleAuthChoice = (isGuest: boolean) => {
+    setIsGuestMode(isGuest);
+    setAppState('language');
   };
 
-  const handleStartGame = (settings: GameSettings) => {
-    setGameSettings(settings);
+  const handleCategorySelect = (category: string) => {
+    setSelectedCategory(category);
+    setAppState('difficulty');
+  };
+
+  const handleDifficultySelect = (difficulty: number) => {
+    setSelectedDifficulty(difficulty);
     setAppState('game');
   };
 
   const handleGameOver = () => {
-    setGameSettings(null);
-    setAppState('menu');
+    setAppState('category');
   };
 
   const backgroundStyle = {
@@ -45,6 +45,14 @@ export default function Home() {
     minHeight: '100vh'
   };
 
+  // Logo ve giriş sayfası
+  if (appState === 'logo') {
+    return (
+      <LogoScreen onAuthChoice={handleAuthChoice} />
+    );
+  }
+
+  // Dil seçimi
   if (appState === 'language') {
     return (
       <div style={backgroundStyle}>
@@ -53,35 +61,46 @@ export default function Home() {
     );
   }
 
-  if (appState === 'login') {
+  // Kategori seçimi  
+  if (appState === 'category') {
     return (
-      <div style={backgroundStyle}>
-        <LoginScreen 
-          selectedLanguage={selectedLanguage!} 
-          onBack={() => setAppState('language')}
-          onGuestMode={handleGuestMode}
-        />
-      </div>
+      <CategoryScreen 
+        selectedLanguage={selectedLanguage!}
+        onCategorySelect={handleCategorySelect}
+        onBack={() => setAppState('language')}
+        isGuestMode={isGuestMode}
+      />
     );
   }
 
-  if (appState === 'menu') {
+  // Zorluk seçimi
+  if (appState === 'difficulty') {
     return (
-      <div style={backgroundStyle}>
-        <MenuScreen 
-          selectedLanguage={selectedLanguage!} 
-          onStartGame={handleStartGame} 
-          onBack={() => setAppState(isGuestMode ? 'language' : (isAuthenticated ? 'login' : 'language'))}
-          isGuestMode={isGuestMode}
-        />
-      </div>
+      <DifficultyScreen 
+        selectedLanguage={selectedLanguage!}
+        selectedCategory={selectedCategory}
+        onDifficultySelect={handleDifficultySelect}
+        onBack={() => setAppState('category')}
+        isGuestMode={isGuestMode}
+      />
     );
   }
 
+  // Oyun
   if (appState === 'game') {
+    const gameSettings = {
+      category: selectedCategory,
+      difficulty: selectedDifficulty,
+      language: selectedLanguage!
+    };
+    
     return (
       <div style={backgroundStyle}>
-        <GameScreen settings={gameSettings!} onGameOver={handleGameOver} isGuestMode={isGuestMode} />
+        <GameScreen 
+          settings={gameSettings} 
+          onGameOver={handleGameOver} 
+          isGuestMode={isGuestMode} 
+        />
       </div>
     );
   }
