@@ -7,6 +7,7 @@ export interface CategoryScreenProps {
   selectedLanguage: Language;
   onCategorySelect: (category: string) => void;
   onBack: () => void;
+  onSettingsOpen?: () => void;
   isGuestMode?: boolean;
 }
 
@@ -28,8 +29,61 @@ const languageFlags = {
   'de': '🇩🇪'
 };
 
-export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onCategorySelect, onBack, isGuestMode = false }) => {
+// Translations for CategoryScreen
+const translations = {
+  tr: {
+    back: 'Geri',
+    settings: 'Ayarlar',
+    guestMode: 'Misafir Modu - İlerleme kaydedilmiyor',
+    chooseCategory: 'Kategori Seçin',
+    subtitle: 'Hangi konuda kelime tahmin etmek istiyorsunuz?',
+    currentLang: 'Dil'
+  },
+  en: {
+    back: 'Back',
+    settings: 'Settings',
+    guestMode: 'Guest Mode - Progress not saved',
+    chooseCategory: 'Choose Category',
+    subtitle: 'Which topic would you like to guess words about?',
+    currentLang: 'Language'
+  },
+  es: {
+    back: 'Atrás',
+    settings: 'Configuración',
+    guestMode: 'Modo Invitado - Progreso no guardado',
+    chooseCategory: 'Elegir Categoría',
+    subtitle: '¿Sobre qué tema te gustaría adivinar palabras?',
+    currentLang: 'Idioma'
+  },
+  it: {
+    back: 'Indietro',
+    settings: 'Impostazioni',
+    guestMode: 'Modalità Ospite - Progresso non salvato',
+    chooseCategory: 'Scegli Categoria',
+    subtitle: 'Su quale argomento vorresti indovinare le parole?',
+    currentLang: 'Lingua'
+  },
+  fr: {
+    back: 'Retour',
+    settings: 'Paramètres',
+    guestMode: 'Mode Invité - Progression non sauvegardée',
+    chooseCategory: 'Choisir une Catégorie',
+    subtitle: 'Sur quel sujet aimeriez-vous deviner des mots?',
+    currentLang: 'Langue'
+  },
+  de: {
+    back: 'Zurück',
+    settings: 'Einstellungen',
+    guestMode: 'Gastmodus - Fortschritt nicht gespeichert',
+    chooseCategory: 'Kategorie Auswählen',
+    subtitle: 'Zu welchem Thema möchten Sie Wörter erraten?',
+    currentLang: 'Sprache'
+  }
+};
+
+export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onCategorySelect, onBack, onSettingsOpen, isGuestMode = false }) => {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const t = translations[selectedLanguage];
   
   const theme = getThemeForCategory(hoveredCategory || 'Hayvanlar');
 
@@ -62,7 +116,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
               data-testid="button-back"
             >
               <span>←</span>
-              <span>Geri</span>
+              <span>{t.back}</span>
             </button>
             
             <div className="text-center">
@@ -71,12 +125,23 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
               </h1>
               {isGuestMode && (
                 <p className="text-sm text-white/60 mt-1">
-                  👤 Misafir Modu - İlerleme kaydedilmiyor
+                  👤 {t.guestMode}
                 </p>
               )}
             </div>
             
             <div className="flex items-center gap-3">
+              {/* Settings Button */}
+              {onSettingsOpen && (
+                <button 
+                  onClick={onSettingsOpen}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+                  data-testid="button-settings"
+                >
+                  <span>⚙️</span>
+                  <span className="hidden sm:inline">{t.settings}</span>
+                </button>
+              )}
               <span className="text-2xl">{languageFlags[selectedLanguage]}</span>
               <span className="text-white font-medium text-sm">{languageNames[selectedLanguage]}</span>
             </div>
@@ -85,7 +150,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
           {/* Kategori seçimi */}
           <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
-              Kategori Seçin
+              {t.chooseCategory}
             </h3>
             
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
@@ -114,7 +179,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                       {cat}
                     </div>
                     <div className="text-xs sm:text-sm text-white/60 mt-1">
-                      {Object.keys(wordLists[cat]).length} zorluk
+                      {Object.keys(wordLists[cat]).length} {selectedLanguage === 'tr' ? 'zorluk' : selectedLanguage === 'en' ? 'levels' : selectedLanguage === 'es' ? 'niveles' : selectedLanguage === 'it' ? 'livelli' : selectedLanguage === 'fr' ? 'niveaux' : 'stufen'}
                     </div>
                   </div>
                 </button>

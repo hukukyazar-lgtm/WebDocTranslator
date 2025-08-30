@@ -29,17 +29,85 @@ const languageFlags = {
   'de': '🇩🇪'
 };
 
+// Translations for DifficultyScreen
+const translations = {
+  tr: {
+    back: 'Geri',
+    chooseDifficulty: 'Zorluk Seviyesi Seçin',
+    guestMode: 'Misafir Modu - İlerleme kaydedilmiyor',
+    beginner: 'Başlangıç',
+    easy: 'Kolay',
+    medium: 'Orta',
+    hard: 'Zor',
+    expert: 'Uzman'
+  },
+  en: {
+    back: 'Back',
+    chooseDifficulty: 'Choose Difficulty Level',
+    guestMode: 'Guest Mode - Progress not saved',
+    beginner: 'Beginner',
+    easy: 'Easy',
+    medium: 'Medium',
+    hard: 'Hard',
+    expert: 'Expert'
+  },
+  es: {
+    back: 'Atrás',
+    chooseDifficulty: 'Elegir Nivel de Dificultad',
+    guestMode: 'Modo Invitado - Progreso no guardado',
+    beginner: 'Principiante',
+    easy: 'Fácil',
+    medium: 'Medio',
+    hard: 'Difícil',
+    expert: 'Experto'
+  },
+  it: {
+    back: 'Indietro',
+    chooseDifficulty: 'Scegli Livello di Difficoltà',
+    guestMode: 'Modalità Ospite - Progresso non salvato',
+    beginner: 'Principiante',
+    easy: 'Facile',
+    medium: 'Medio',
+    hard: 'Difficile',
+    expert: 'Esperto'
+  },
+  fr: {
+    back: 'Retour',
+    chooseDifficulty: 'Choisir Niveau de Difficulté',
+    guestMode: 'Mode Invité - Progression non sauvegardée',
+    beginner: 'Débutant',
+    easy: 'Facile',
+    medium: 'Moyen',
+    hard: 'Difficile',
+    expert: 'Expert'
+  },
+  de: {
+    back: 'Zurück',
+    chooseDifficulty: 'Schwierigkeitsstufe Auswählen',
+    guestMode: 'Gastmodus - Fortschritt nicht gespeichert',
+    beginner: 'Anfänger',
+    easy: 'Einfach',
+    medium: 'Mittel',
+    hard: 'Schwer',
+    expert: 'Experte'
+  }
+};
+
 export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage, selectedCategory, onDifficultySelect, onBack, isGuestMode = false }) => {
   const [hoveredDifficulty, setHoveredDifficulty] = useState<number | null>(null);
+  const t = translations[selectedLanguage];
   
   const theme = getThemeForCategory(selectedCategory);
 
-  const difficultyLabels: Record<number, string> = {
-    1: "Başlangıç",
-    2: "Kolay", 
-    3: "Orta",
-    4: "Zor",
-    5: "Uzman"
+  const getDifficultyLabel = (level: number): string => {
+    const labels: Record<number, keyof typeof translations.tr> = {
+      1: 'beginner',
+      2: 'easy', 
+      3: 'medium',
+      4: 'hard',
+      5: 'expert'
+    };
+    return t[labels[level]] || `Level ${level}`;
   };
 
   const difficultyColors: Record<number, string> = {
@@ -84,7 +152,7 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
               data-testid="button-back"
             >
               <span>←</span>
-              <span>Geri</span>
+              <span>{t.back}</span>
             </button>
             
             <div className="text-center">
@@ -93,7 +161,7 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
               </h1>
               {isGuestMode && (
                 <p className="text-sm text-white/60 mt-1">
-                  👤 Misafir Modu - İlerleme kaydedilmiyor
+                  👤 {t.guestMode}
                 </p>
               )}
             </div>
@@ -115,7 +183,7 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
           {/* Zorluk seçimi */}
           <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
-              Zorluk Seviyesi Seçin
+              {t.chooseDifficulty}
             </h3>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
@@ -141,7 +209,7 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
                       {diff === 1 ? '🌱' : diff === 2 ? '⭐' : diff === 3 ? '🔥' : diff === 4 ? '💎' : '👑'}
                     </div>
                     <div className="font-bold text-white text-lg sm:text-xl mb-2">
-                      {difficultyLabels[diff]}
+                      {getDifficultyLabel(diff)}
                     </div>
                     <div className="text-sm text-white/60">
                       {(wordLists[selectedCategory] as any)?.[diff]?.length || 0} kelime
