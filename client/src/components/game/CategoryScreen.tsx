@@ -312,7 +312,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                   data-testid={`button-category-${cat}`}
                 >
                   {/* Zorluk Seçici */}
-                  <div className="absolute top-2 left-2 flex gap-1 backdrop-blur-sm bg-black/30 rounded-full px-2 py-1 z-10">
+                  <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 flex gap-1 backdrop-blur-sm bg-black/40 rounded-full px-2 py-1 z-10">
                     {[1, 2, 3, 4, 5].map((level) => {
                       const isSelected = (categoryDifficulties[cat] || 1) === level;
                       return (
