@@ -271,6 +271,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onG
 
   const handleCategorySelect = (category: string) => {
     console.log('Category selected:', category);
+    console.log('Setting showDifficulties to true');
     setSelectedCategory(category);
     setShowDifficulties(true);
   };
@@ -335,6 +336,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onG
             </div>
           </div>
 
+          {/* Debug: {showDifficulties ? 'SHOWING DIFFICULTIES' : 'SHOWING CATEGORIES'} */}
           {!showDifficulties ? (
             /* Category Selection */
             <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
