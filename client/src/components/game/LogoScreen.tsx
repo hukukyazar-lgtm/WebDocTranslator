@@ -46,7 +46,7 @@ export const LogoScreen = memo<LogoScreenProps>(({ onAuthChoice }) => {
               </span>
             </h1>
             <p className="text-xl text-white/80 font-medium">
-              Türkçe Kelime Tahmin Oyunu
+              PRO EDITION
             </p>
           </div>
 
