@@ -90,7 +90,10 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
 
   // Initialize game
   useEffect(() => {
-    const randomWord = getWordByDifficulty(category, difficulty);
+    const categoryWords = wordLists[category];
+    const wordPool = (categoryWords as any)?.[difficulty] || [];
+    const randomWord = wordPool[Math.floor(Math.random() * wordPool.length)];
+    
     setSecretWord(randomWord);
     setUsedWords([randomWord]);
     
@@ -218,8 +221,22 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
 
     setGameSuccess(false);
     
-    // Get new word using the updated getWordByDifficulty function
-    const newWord = getWordByDifficulty(category, difficulty);
+    // Get new word (different from used ones)
+    const categoryWords = wordLists[category];
+    const wordPool = (categoryWords as any)?.[difficulty] || [];
+    
+    // Filter out already used words
+    const availableWords = wordPool.filter((word: string) => !usedWords.includes(word));
+    
+    let newWord: string;
+    if (availableWords.length === 0) {
+      // If all words are used, reset and use all words again
+      setUsedWords([]);
+      newWord = wordPool[Math.floor(Math.random() * wordPool.length)];
+    } else {
+      newWord = availableWords[Math.floor(Math.random() * availableWords.length)];
+    }
+    
     if (newWord) {
       setSecretWord(newWord);
       setUsedWords(prev => [...prev, newWord]);
