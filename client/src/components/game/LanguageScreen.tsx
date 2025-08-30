@@ -22,7 +22,7 @@ export const LanguageScreen = memo<LanguageScreenProps>(({ onLanguageSelect, onB
       {/* Statik arka plan - animasyon yok */}
       
       {/* Main content */}
-      <div className="relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4">
+      <div className="relative z-10 min-h-screen flex items-start justify-center p-3 sm:p-4 pt-4 sm:pt-8">
         <div className="w-full max-w-md sm:max-w-lg lg:max-w-2xl">
           {/* Geri butonu */}
           {onBack && (
