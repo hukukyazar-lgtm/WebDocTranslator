@@ -1,6 +1,6 @@
 import { memo, useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import logoImage from '@assets/generated_images/Rounded_Perception_Word_logo_233b3ec9.png';
+import logoImage from '@assets/generated_images/Transparent_Perception_Word_logo_1c7cb258.png';
 
 export interface LogoScreenProps {
   onAuthChoice: (isGuest: boolean) => void;

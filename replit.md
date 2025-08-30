@@ -1,8 +1,8 @@
-# WordSpin Pro
+# Perception: Word
 
 ## Overview
 
-WordSpin Pro is a Turkish word guessing game where players must correctly guess a spinning word within 30 seconds. The application features a modern React frontend with a sleek dark theme, animated spinning wheel mechanics, and multiple difficulty levels across various categories. Players interact with a virtual Turkish keyboard to input their guesses while the word spins and gradually slows down, creating an engaging time-pressure gaming experience.
+Perception: Word is a Turkish word guessing game where players must correctly guess a spinning word within 30 seconds. The application features a modern React frontend with a sleek dark theme, animated spinning wheel mechanics, and multiple difficulty levels across various categories. Players interact with a virtual Turkish keyboard to input their guesses while the word spins and gradually slows down, creating an engaging time-pressure gaming experience.
 
 **Latest Stable Version Features (January 2025):**
 - **Unified Game Experience**: Integrated game over results directly into the game screen, eliminating separate modal popups for seamless gameplay flow
