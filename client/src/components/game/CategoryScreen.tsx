@@ -270,6 +270,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onG
   };
 
   const handleCategorySelect = (category: string) => {
+    console.log('Category selected:', category);
     setSelectedCategory(category);
     setShowDifficulties(true);
   };
