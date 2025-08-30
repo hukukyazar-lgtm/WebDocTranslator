@@ -76,6 +76,21 @@ export const LogoScreen = memo<LogoScreenProps>(({ onAuthChoice }) => {
                 </span>
               </button>
 
+              {/* Logout seçeneği (giriş yapmış kullanıcılar için) */}
+              {isAuthenticated && (
+                <div className="text-center">
+                  <p className="text-xs text-white/40 mb-4">veya</p>
+                  <a
+                    href="/api/logout"
+                    className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white/80 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
+                    data-testid="button-logout"
+                  >
+                    <span>🚪</span>
+                    <span>Çıkış Yap</span>
+                  </a>
+                </div>
+              )}
+
               <div className="text-center">
                 <p className="text-xs text-white/40 mb-4">veya</p>
                 
