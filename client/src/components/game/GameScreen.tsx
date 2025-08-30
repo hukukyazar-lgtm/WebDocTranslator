@@ -44,7 +44,8 @@ const gameTranslations = {
     submit: 'Gönder',
     giveUp: 'Pes Et',
     seconds: 'saniye',
-    guestMode: 'Misafir Modu'
+    guestMode: 'Misafir Modu',
+    mainMenu: 'Ana Menü'
   },
   en: {
     congratulations: 'Congratulations!',
@@ -66,7 +67,8 @@ const gameTranslations = {
     submit: 'Submit',
     giveUp: 'Give Up',
     seconds: 'seconds',
-    guestMode: 'Guest Mode'
+    guestMode: 'Guest Mode',
+    mainMenu: 'Main Menu'
   },
   es: {
     congratulations: '¡Felicidades!',
@@ -88,7 +90,8 @@ const gameTranslations = {
     submit: 'Enviar',
     giveUp: 'Rendirse',
     seconds: 'segundos',
-    guestMode: 'Modo Invitado'
+    guestMode: 'Modo Invitado',
+    mainMenu: 'Menú Principal'
   },
   it: {
     congratulations: 'Congratulazioni!',
@@ -110,7 +113,8 @@ const gameTranslations = {
     submit: 'Invia',
     giveUp: 'Arrendersi',
     seconds: 'secondi',
-    guestMode: 'Modalità Ospite'
+    guestMode: 'Modalità Ospite',
+    mainMenu: 'Menu Principale'
   },
   fr: {
     congratulations: 'Félicitations!',
@@ -132,7 +136,8 @@ const gameTranslations = {
     submit: 'Envoyer',
     giveUp: 'Abandonner',
     seconds: 'secondes',
-    guestMode: 'Mode Invité'
+    guestMode: 'Mode Invité',
+    mainMenu: 'Menu Principal'
   },
   de: {
     congratulations: 'Glückwunsch!',
@@ -154,7 +159,8 @@ const gameTranslations = {
     submit: 'Senden',
     giveUp: 'Aufgeben',
     seconds: 'sekunden',
-    guestMode: 'Gastmodus'
+    guestMode: 'Gastmodus',
+    mainMenu: 'Hauptmenü'
   }
 };
 
@@ -759,7 +765,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                         onClick={onGameOver}
                         className="w-full py-3 sm:py-4 px-4 sm:px-6 text-sm sm:text-base font-black rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/30 bg-white/10 text-white/90 hover:bg-white/20 shadow-lg"
                       >
-                        🏠 Ana Menü
+                        🏠 {t.mainMenu}
                       </button>
                     </div>
                   </div>
