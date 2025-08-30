@@ -99,7 +99,8 @@ const categoryTranslations = {
     'Markalar': 'Markalar',
     'Spor Dalları': 'Spor Dalları',
     'Eşyalar': 'Eşyalar',
-    'Filmler': 'Filmler'
+    'Filmler': 'Filmler',
+    'Karışık': 'Karışık'
   },
   en: {
     'Hayvanlar': 'Animals',
@@ -111,7 +112,8 @@ const categoryTranslations = {
     'Markalar': 'Brands',
     'Spor Dalları': 'Sports',
     'Eşyalar': 'Objects',
-    'Filmler': 'Movies'
+    'Filmler': 'Movies',
+    'Karışık': 'Mixed'
   },
   es: {
     'Hayvanlar': 'Animales',
@@ -123,7 +125,8 @@ const categoryTranslations = {
     'Markalar': 'Marcas',
     'Spor Dalları': 'Deportes',
     'Eşyalar': 'Objetos',
-    'Filmler': 'Películas'
+    'Filmler': 'Películas',
+    'Karışık': 'Mixto'
   },
   it: {
     'Hayvanlar': 'Animali',
@@ -135,7 +138,8 @@ const categoryTranslations = {
     'Markalar': 'Marchi',
     'Spor Dalları': 'Sport',
     'Eşyalar': 'Oggetti',
-    'Filmler': 'Film'
+    'Filmler': 'Film',
+    'Karışık': 'Misto'
   },
   fr: {
     'Hayvanlar': 'Animaux',
@@ -147,7 +151,8 @@ const categoryTranslations = {
     'Markalar': 'Marques',
     'Spor Dalları': 'Sports',
     'Eşyalar': 'Objets',
-    'Filmler': 'Films'
+    'Filmler': 'Films',
+    'Karışık': 'Mélangé'
   },
   de: {
     'Hayvanlar': 'Tiere',
@@ -159,7 +164,8 @@ const categoryTranslations = {
     'Markalar': 'Marken',
     'Spor Dalları': 'Sport',
     'Eşyalar': 'Objekte',
-    'Filmler': 'Filme'
+    'Filmler': 'Filme',
+    'Karışık': 'Gemischt'
   }
 };
 
@@ -183,7 +189,9 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
     'Şehirler': '🏙️',
     'Markalar': '🏷️',
     'Spor Dalları': '⚽',
-    'Eşyalar': '🏠'
+    'Eşyalar': '🏠',
+    'Filmler': '🌬️',
+    'Karışık': '🎆'
   };
 
   const backgroundStyle = {
