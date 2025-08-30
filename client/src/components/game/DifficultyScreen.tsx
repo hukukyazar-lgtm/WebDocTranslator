@@ -66,7 +66,10 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
     minHeight: '100vh'
   };
 
-  const availableDifficulties = Object.keys(wordLists[selectedCategory] || {}).map(Number).sort();
+  const availableDifficulties = Object.keys(wordLists[selectedCategory] || {})
+    .map(Number)
+    .filter(n => !isNaN(n))
+    .sort();
 
   return (
     <div style={backgroundStyle}>
