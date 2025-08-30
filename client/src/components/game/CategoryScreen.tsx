@@ -336,7 +336,9 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onG
             </div>
           </div>
 
-          {/* Debug: {showDifficulties ? 'SHOWING DIFFICULTIES' : 'SHOWING CATEGORIES'} */}
+          <div className="text-center text-white mb-4">
+            Debug: {showDifficulties ? 'SHOWING DIFFICULTIES' : 'SHOWING CATEGORIES'}
+          </div>
           {!showDifficulties ? (
             /* Category Selection */
             <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
