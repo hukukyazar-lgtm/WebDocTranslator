@@ -215,6 +215,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
   
   const setDifficulty = (category: string, difficulty: number, e: React.MouseEvent) => {
     e.stopPropagation();
+    e.preventDefault();
     setCategoryDifficulties(prev => ({ ...prev, [category]: difficulty }));
   };
   
@@ -311,7 +312,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                   data-testid={`button-category-${cat}`}
                 >
                   {/* Zorluk Seçici */}
-                  <div className="absolute top-3 right-3 flex gap-1.5 backdrop-blur-sm bg-black/20 rounded-full px-2 py-1">
+                  <div className="absolute top-3 right-3 flex gap-1.5 backdrop-blur-sm bg-black/20 rounded-full px-2 py-1 z-10">
                     {[1, 2, 3, 4, 5].map((level) => {
                       const isSelected = (categoryDifficulties[cat] || 1) === level;
                       return (
