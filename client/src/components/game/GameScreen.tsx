@@ -43,7 +43,8 @@ const gameTranslations = {
     enterGuess: 'Tahmininizi girin...',
     submit: 'Gönder',
     giveUp: 'Pes Et',
-    seconds: 'saniye'
+    seconds: 'saniye',
+    guestMode: 'Misafir Modu'
   },
   en: {
     congratulations: 'Congratulations!',
@@ -64,7 +65,8 @@ const gameTranslations = {
     enterGuess: 'Enter your guess...',
     submit: 'Submit',
     giveUp: 'Give Up',
-    seconds: 'seconds'
+    seconds: 'seconds',
+    guestMode: 'Guest Mode'
   },
   es: {
     congratulations: '¡Felicidades!',
@@ -85,7 +87,8 @@ const gameTranslations = {
     enterGuess: 'Ingresa tu respuesta...',
     submit: 'Enviar',
     giveUp: 'Rendirse',
-    seconds: 'segundos'
+    seconds: 'segundos',
+    guestMode: 'Modo Invitado'
   },
   it: {
     congratulations: 'Congratulazioni!',
@@ -106,7 +109,8 @@ const gameTranslations = {
     enterGuess: 'Inserisci la tua risposta...',
     submit: 'Invia',
     giveUp: 'Arrendersi',
-    seconds: 'secondi'
+    seconds: 'secondi',
+    guestMode: 'Modalità Ospite'
   },
   fr: {
     congratulations: 'Félicitations!',
@@ -127,7 +131,8 @@ const gameTranslations = {
     enterGuess: 'Entrez votre réponse...',
     submit: 'Envoyer',
     giveUp: 'Abandonner',
-    seconds: 'secondes'
+    seconds: 'secondes',
+    guestMode: 'Mode Invité'
   },
   de: {
     congratulations: 'Glückwunsch!',
@@ -148,7 +153,8 @@ const gameTranslations = {
     enterGuess: 'Geben Sie Ihre Antwort ein...',
     submit: 'Senden',
     giveUp: 'Aufgeben',
-    seconds: 'sekunden'
+    seconds: 'sekunden',
+    guestMode: 'Gastmodus'
   }
 };
 
@@ -803,7 +809,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
             <div className="px-4 py-2 bg-black/40 backdrop-blur-sm rounded-lg border border-white/10">
               <span className="text-white/70 text-sm flex items-center gap-2">
                 <span>👤</span>
-                <span>Misafir Modu</span>
+                <span>{t.guestMode}</span>
               </span>
             </div>
           </div>
