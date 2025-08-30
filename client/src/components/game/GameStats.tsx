@@ -1,16 +1,16 @@
 import { memo } from 'react';
-import { formatTime } from '@/lib/gameUtils';
-import { getTranslations } from '@/lib/gameUtils';
+import { formatTime, gameTranslations } from '@/lib/gameUtils';
 
 interface GameStatsProps {
   score: number;
   streak: number;
   correctGuesses: number;
   averageTime: number;
+  language?: string;
 }
 
-export const GameStats = memo(({ score, streak, correctGuesses, averageTime }: GameStatsProps) => {
-  const t = getTranslations();
+export const GameStats = memo(({ score, streak, correctGuesses, averageTime, language = 'tr' }: GameStatsProps) => {
+  const t = gameTranslations[language as keyof typeof gameTranslations];
   const stats = [
     { 
       value: score, 

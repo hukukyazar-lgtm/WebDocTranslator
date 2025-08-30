@@ -772,6 +772,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               streak={streak}
               correctGuesses={correctGuesses}
               averageTime={averageTime}
+              language={language}
             />
           </div>
         </main>
