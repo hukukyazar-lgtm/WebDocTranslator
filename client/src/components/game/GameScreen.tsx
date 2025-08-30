@@ -551,29 +551,26 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         </main>
         
-        {/* Günlük Hedefler - Üst sağda daha büyük ve güzel (sadece giriş yapan kullanıcılar için) */}
+        {/* Günlük Hedefler - Küçük ve kompakt (sadece giriş yapan kullanıcılar için) */}
         {!isGuestMode && (
           <div className="fixed top-4 right-4 z-40">
             <div className="relative">
               <button
                 onClick={() => setShowDailyGoals(!showDailyGoals)}
-                className="text-white font-bold py-3 px-6 rounded-2xl shadow-2xl transition-all duration-300 transform hover:scale-105 flex items-center gap-3 backdrop-blur-xl border border-white/20"
+                className="text-white font-medium py-2 px-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2 backdrop-blur-md border border-white/20"
                 style={{
-                  background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.9), rgba(233, 30, 99, 0.9))',
-                  boxShadow: '0 10px 25px rgba(0, 220, 205, 0.3)'
+                  background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.8), rgba(233, 30, 99, 0.8))',
+                  boxShadow: '0 4px 15px rgba(0, 220, 205, 0.2)'
                 }}
               >
-                <div className="text-2xl">📅</div>
-                <div className="text-left">
-                  <div className="text-sm font-bold">Günlük Hedefler</div>
-                  <div className="text-xs opacity-90">
-                    {gameStats.dailyGoals.filter(g => g.completed).length}/{gameStats.dailyGoals.length} tamamlandı
-                  </div>
+                <div className="text-lg">📅</div>
+                <div className="text-xs">
+                  {gameStats.dailyGoals.filter(g => g.completed).length}/{gameStats.dailyGoals.length}
                 </div>
               </button>
               
               {showDailyGoals && (
-                <div className="absolute top-full right-0 mt-3 w-80">
+                <div className="absolute top-full right-0 mt-2 w-64">
                   <DailyGoals goals={gameStats.dailyGoals} />
                 </div>
               )}
