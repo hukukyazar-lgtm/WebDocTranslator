@@ -571,11 +571,11 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         )}
         
-        {/* Başarım Bildirimi */}
-        <AchievementNotification 
+        {/* Başarım Bildirimi - Devre Dışı */}
+        {false && <AchievementNotification 
           achievement={currentAchievement}
           onClose={() => setCurrentAchievement(null)}
-        />
+        />}
       </div>
     </>
   );
