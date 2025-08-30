@@ -38,10 +38,9 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
     'Yiyecek': '🍎',
     'Bilim': '🧪',
     'Ülkeler': '🌍',
-    'Spor': '⚽',
-    'Teknoloji': '💻',
-    'Müzik': '🎵',
-    'Sanat': '🎨'
+    'Meslekler': '👨‍💼',
+    'Şehirler': '🏙️',
+    'Markalar': '🏷️'
   };
 
   const backgroundStyle = {

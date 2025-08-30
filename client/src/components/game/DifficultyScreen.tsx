@@ -55,10 +55,9 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
     'Yiyecek': '🍎',
     'Bilim': '🧪',
     'Ülkeler': '🌍',
-    'Spor': '⚽',
-    'Teknoloji': '💻',
-    'Müzik': '🎵',
-    'Sanat': '🎨'
+    'Meslekler': '👨‍💼',
+    'Şehirler': '🏙️',
+    'Markalar': '🏷️'
   };
 
   const backgroundStyle = {
