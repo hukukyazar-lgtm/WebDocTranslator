@@ -186,6 +186,10 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               const dynamicScale = getLetterScale(timeLeft, isSpinning, i);
               const letterVisibility = getLetterVisibility(timeLeft, i, letters.length, difficulty);
               const fontSize = getFontSize(letters.length, isSpinning);
+              // Debug: log font size for long words
+              if (i === 0 && letters.length > 10) {
+                console.log(`Word: ${word}, Length: ${letters.length}, FontSize: ${fontSize}, IsSpinning: ${isSpinning}`);
+              }
 
               return (
                 <span 
