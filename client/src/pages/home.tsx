@@ -56,7 +56,10 @@ export default function Home() {
   if (appState === 'language') {
     return (
       <div style={backgroundStyle}>
-        <LanguageScreen onLanguageSelect={handleLanguageSelect} />
+        <LanguageScreen 
+          onLanguageSelect={handleLanguageSelect} 
+          onBack={() => setAppState('logo')}
+        />
       </div>
     );
   }

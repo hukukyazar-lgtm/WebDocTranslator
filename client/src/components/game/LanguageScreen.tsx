@@ -4,6 +4,7 @@ export type Language = 'tr' | 'en' | 'es' | 'it' | 'fr' | 'de';
 
 export interface LanguageScreenProps {
   onLanguageSelect: (language: Language) => void;
+  onBack?: () => void;
 }
 
 const languages = [
@@ -15,7 +16,7 @@ const languages = [
   { code: 'de' as Language, name: 'Deutsch', flag: '🇩🇪' }
 ];
 
-export const LanguageScreen = memo<LanguageScreenProps>(({ onLanguageSelect }) => {
+export const LanguageScreen = memo<LanguageScreenProps>(({ onLanguageSelect, onBack }) => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       {/* Statik arka plan - animasyon yok */}
@@ -23,6 +24,19 @@ export const LanguageScreen = memo<LanguageScreenProps>(({ onLanguageSelect }) =
       {/* Main content */}
       <div className="relative z-10 min-h-screen flex items-center justify-center p-3 sm:p-4">
         <div className="w-full max-w-md sm:max-w-lg lg:max-w-2xl">
+          {/* Geri butonu */}
+          {onBack && (
+            <div className="flex justify-start mb-6 animate-slide-up">
+              <button 
+                onClick={onBack}
+                className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
+                data-testid="button-back"
+              >
+                <span>←</span>
+                <span>Geri</span>
+              </button>
+            </div>
+          )}
           {/* Logo section */}
           <div className="text-center mb-12 animate-slide-up">
             <div className="relative mb-8">
