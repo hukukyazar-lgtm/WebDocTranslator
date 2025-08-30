@@ -21,27 +21,29 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
   
   // Calculate dynamic spacing based on word length to prevent overflow
   const maxSpacing = 35;
-  const minSpacing = letters.length > 15 ? 8 : letters.length > 12 ? 12 : 15;
-  const baseWidth = letters.length > 15 ? 450 : letters.length > 12 ? 400 : 300;
+  const minSpacing = letters.length > 15 ? 6 : letters.length > 12 ? 10 : 15;
+  const baseWidth = letters.length > 15 ? 600 : letters.length > 12 ? 500 : 300;
   const spacing = Math.max(minSpacing, Math.min(maxSpacing, baseWidth / letters.length));
   
-  // Calculate font size based on word length - more aggressive scaling for long words
+  // Calculate font size based on word length - extremely aggressive scaling for long words
   const getFontSize = (letterCount: number, isSpinning: boolean) => {
     if (isSpinning) {
       // Spinning state - smaller for longer words
-      if (letterCount > 12) return 'text-3xl lg:text-4xl';
-      if (letterCount > 8) return 'text-4xl lg:text-5xl';
+      if (letterCount > 15) return 'text-xl lg:text-2xl';
+      if (letterCount > 12) return 'text-2xl lg:text-3xl';
+      if (letterCount > 8) return 'text-3xl lg:text-4xl';
       return intensityLevel === 'final' ? 'text-6xl lg:text-7xl' : 'text-5xl lg:text-6xl';
     }
     
-    // Revealed state - much more aggressive scaling
-    if (letterCount <= 3) return 'text-6xl lg:text-7xl';
-    if (letterCount <= 5) return 'text-5xl lg:text-6xl';
-    if (letterCount <= 7) return 'text-4xl lg:text-5xl';
-    if (letterCount <= 10) return 'text-3xl lg:text-4xl';
-    if (letterCount <= 13) return 'text-2xl lg:text-3xl';
-    if (letterCount <= 16) return 'text-xl lg:text-2xl';
-    return 'text-lg lg:text-xl';
+    // Revealed state - extremely aggressive scaling
+    if (letterCount <= 3) return 'text-5xl lg:text-6xl';
+    if (letterCount <= 5) return 'text-4xl lg:text-5xl';
+    if (letterCount <= 7) return 'text-3xl lg:text-4xl';
+    if (letterCount <= 9) return 'text-2xl lg:text-3xl';
+    if (letterCount <= 12) return 'text-xl lg:text-2xl';
+    if (letterCount <= 15) return 'text-lg lg:text-xl';
+    if (letterCount <= 18) return 'text-base lg:text-lg';
+    return 'text-sm lg:text-base';
   };
   
   // Store initial colors for each letter to keep them consistent
@@ -182,7 +184,9 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
             {letters.map((char, i) => {
               const angle = (i / letters.length) * 360;
               const transformSpin = `rotate(${angle}deg) translate(${radius}px) rotate(${-angle}deg)`;
-              const transformAlign = `translateX(${(i - (letters.length - 1) / 2) * spacing}px) scale(2)`;
+              // Reduce scale factor for long words to prevent overlap
+              const scaleFactor = letters.length > 15 ? 1.2 : letters.length > 12 ? 1.5 : 2;
+              const transformAlign = `translateX(${(i - (letters.length - 1) / 2) * spacing}px) scale(${scaleFactor})`;
               const dynamicScale = getLetterScale(timeLeft, isSpinning, i);
               const letterVisibility = getLetterVisibility(timeLeft, i, letters.length, difficulty);
               const fontSize = getFontSize(letters.length, isSpinning);
