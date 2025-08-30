@@ -1,7 +1,6 @@
 import { memo, useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { GameHeader } from './GameHeader';
 import { SpinningWheel } from './SpinningWheel';
-import { VirtualKeyboard } from './VirtualKeyboard';
 import { GameStats } from './GameStats';
 import { AchievementNotification } from './AchievementNotification';
 import { DailyGoals } from './DailyGoals';
@@ -644,18 +643,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                   </div>
                 </div>
                 
-                <div className="flex justify-center">
-                  <div className="w-full max-w-2xl">
-                    <VirtualKeyboard
-                      onKeyPress={handleKeyPress}
-                      onBackspace={handleBackspace}
-                      onSpace={handleSpace}
-                      language={language as Language}
-                      onSubmit={handleGuessSubmit}
-                      usedKeys={usedKeys}
-                    />
-                  </div>
-                </div>
               </>
             )}
 
