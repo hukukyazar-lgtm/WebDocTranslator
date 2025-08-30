@@ -1,5 +1,67 @@
 export const TOTAL_GAME_TIME = 30;
 
+// Language detection function
+export const getSystemLanguage = (): string => {
+  const browserLang = navigator.language || 'tr';
+  const langCode = browserLang.split('-')[0];
+  const supportedLanguages = ['tr', 'en', 'es', 'it', 'fr', 'de'];
+  return supportedLanguages.includes(langCode) ? langCode : 'tr';
+};
+
+// Get current language from localStorage or system default
+export const getCurrentLanguage = (): string => {
+  if (typeof window === 'undefined') return 'tr';
+  return localStorage.getItem('game-language') || getSystemLanguage();
+};
+
+// Translation definitions
+type Language = 'tr' | 'en' | 'es' | 'it' | 'fr' | 'de';
+
+const gameTranslations = {
+  tr: {
+    totalScore: 'Toplam Puan',
+    streak: 'Seri',
+    correctGuesses: 'Doğru Tahmin',
+    averageTime: 'Ortalama Süre'
+  },
+  en: {
+    totalScore: 'Total Score',
+    streak: 'Streak',
+    correctGuesses: 'Correct Guesses',
+    averageTime: 'Average Time'
+  },
+  es: {
+    totalScore: 'Puntuación Total',
+    streak: 'Racha',
+    correctGuesses: 'Aciertos',
+    averageTime: 'Tiempo Promedio'
+  },
+  it: {
+    totalScore: 'Punteggio Totale',
+    streak: 'Serie',
+    correctGuesses: 'Risposte Corrette',
+    averageTime: 'Tempo Medio'
+  },
+  fr: {
+    totalScore: 'Score Total',
+    streak: 'Série',
+    correctGuesses: 'Bonnes Réponses',
+    averageTime: 'Temps Moyen'
+  },
+  de: {
+    totalScore: 'Gesamtpunkte',
+    streak: 'Serie',
+    correctGuesses: 'Richtige Antworten',
+    averageTime: 'Durchschnittszeit'
+  }
+};
+
+// Get translations for current language
+export const getTranslations = () => {
+  const language = getCurrentLanguage() as Language;
+  return gameTranslations[language];
+};
+
 export const rainbowColors = [
   'hsl(217, 91%, 60%)', // primary blue
   'hsl(262, 83%, 65%)', // secondary purple
@@ -435,3 +497,6 @@ export const getWheelSpeedMultiplier = (timeLeft: number): number => {
   if (timeLeft <= 15) return 0.7;
   return 1; // Normal speed
 };
+
+// Export game translations for compatibility
+export { gameTranslations };

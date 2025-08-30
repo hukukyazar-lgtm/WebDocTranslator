@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import { formatTime } from '@/lib/gameUtils';
+import { getTranslations } from '@/lib/gameUtils';
 
 interface GameStatsProps {
   score: number;
@@ -9,31 +10,32 @@ interface GameStatsProps {
 }
 
 export const GameStats = memo(({ score, streak, correctGuesses, averageTime }: GameStatsProps) => {
+  const t = getTranslations();
   const stats = [
     { 
       value: score, 
-      label: "💎 Toplam Puan", 
+      label: `💎 ${t.totalScore}`, 
       color: "linear-gradient(45deg, #3b82f6, #8b5cf6)",
       icon: "💎",
       testId: "stat-score"
     },
     { 
       value: streak, 
-      label: "🔥 Seri", 
+      label: `🔥 ${t.streak}`, 
       color: "linear-gradient(45deg, #f59e0b, #ef4444)",
       icon: "🔥",
       testId: "stat-streak"
     },
     { 
       value: correctGuesses, 
-      label: "✅ Doğru", 
+      label: `✅ ${t.correctGuesses}`, 
       color: "linear-gradient(45deg, #10b981, #059669)",
       icon: "✅",
       testId: "stat-correct"
     },
     { 
       value: formatTime(averageTime), 
-      label: "⚡ Ortalama", 
+      label: `⚡ ${t.averageTime}`, 
       color: "linear-gradient(45deg, #8b5cf6, #a855f7)",
       icon: "⚡",
       testId: "stat-avg-time"
