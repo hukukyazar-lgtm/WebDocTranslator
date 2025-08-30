@@ -156,7 +156,7 @@ export const getDefaultAchievements = (): Achievement[] => [
   {
     id: 'first-win',
     name: 'İlk Zafer',
-    description: 'İlk kelimeyi doğru tahmin et',
+    description: '',
     emoji: '🎉',
     unlocked: false
   },
