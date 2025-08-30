@@ -36,7 +36,7 @@ const translations = {
     settings: 'Ayarlar',
     guestMode: 'Misafir Modu - İlerleme kaydedilmiyor',
     chooseCategory: 'Kategori Seçin',
-    subtitle: 'Hangi konuda kelime tahmin etmek istiyorsunuz?',
+    subtitle: 'Hangi konuda oynamak istiyorsunuz?',
     currentLang: 'Dil',
     levels: 'zorluk'
   },
@@ -45,7 +45,7 @@ const translations = {
     settings: 'Settings',
     guestMode: 'Guest Mode - Progress not saved',
     chooseCategory: 'Choose Category',
-    subtitle: 'Which topic would you like to guess words about?',
+    subtitle: 'Which topic would you like to play?',
     currentLang: 'Language',
     levels: 'levels'
   },
@@ -54,7 +54,7 @@ const translations = {
     settings: 'Configuración',
     guestMode: 'Modo Invitado - Progreso no guardado',
     chooseCategory: 'Elegir Categoría',
-    subtitle: '¿Sobre qué tema te gustaría adivinar palabras?',
+    subtitle: '¿Sobre qué tema te gustaría jugar?',
     currentLang: 'Idioma',
     levels: 'niveles'
   },
@@ -63,7 +63,7 @@ const translations = {
     settings: 'Impostazioni',
     guestMode: 'Modalità Ospite - Progresso non salvato',
     chooseCategory: 'Scegli Categoria',
-    subtitle: 'Su quale argomento vorresti indovinare le parole?',
+    subtitle: 'Su quale argomento vorresti giocare?',
     currentLang: 'Lingua',
     levels: 'livelli'
   },
@@ -72,7 +72,7 @@ const translations = {
     settings: 'Paramètres',
     guestMode: 'Mode Invité - Progression non sauvegardée',
     chooseCategory: 'Choisir une Catégorie',
-    subtitle: 'Sur quel sujet aimeriez-vous deviner des mots?',
+    subtitle: 'Sur quel sujet aimeriez-vous jouer?',
     currentLang: 'Langue',
     levels: 'niveaux'
   },
@@ -81,7 +81,7 @@ const translations = {
     settings: 'Einstellungen',
     guestMode: 'Gastmodus - Fortschritt nicht gespeichert',
     chooseCategory: 'Kategorie Auswählen',
-    subtitle: 'Zu welchem Thema möchten Sie Wörter erraten?',
+    subtitle: 'Zu welchem Thema möchten Sie spielen?',
     currentLang: 'Sprache',
     levels: 'stufen'
   }
