@@ -400,6 +400,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onG
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
                 {difficultyConfig.map((diff, index) => {
                   const wordCount = selectedCategory ? (wordLists[selectedCategory as keyof typeof wordLists]?.[diff.key as keyof typeof wordLists[keyof typeof wordLists]]?.length || 0) : 0;
+                  console.log(`Difficulty ${diff.key} for ${selectedCategory}:`, wordCount);
                   return (
                     <button
                       key={diff.key}
