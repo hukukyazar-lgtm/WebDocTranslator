@@ -218,31 +218,12 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
 
     setGameSuccess(false);
     
-    // Get new word (different from used ones) and reset timer
-    const categoryWords = wordLists[category];
-    let wordPool: string[];
-    if (difficulty <= 2) {
-      wordPool = categoryWords.easy;
-    } else if (difficulty === 3) {
-      wordPool = categoryWords.medium;
-    } else {
-      wordPool = categoryWords.hard;
+    // Get new word using the updated getWordByDifficulty function
+    const newWord = getWordByDifficulty(category, difficulty);
+    if (newWord) {
+      setSecretWord(newWord);
+      setUsedWords(prev => [...prev, newWord]);
     }
-    
-    // Filter out already used words
-    const availableWords = wordPool.filter(word => !usedWords.includes(word));
-    
-    let newWord: string;
-    if (availableWords.length === 0) {
-      // If all words are used, reset and use all words again
-      setUsedWords([]);
-      newWord = wordPool[Math.floor(Math.random() * wordPool.length)];
-    } else {
-      newWord = availableWords[Math.floor(Math.random() * availableWords.length)];
-    }
-    
-    setSecretWord(newWord);
-    setUsedWords(prev => [...prev, newWord]);
     
     const baseSpeed = getSpinDuration(difficulty, TOTAL_GAME_TIME);
     setSpinDuration(baseSpeed);
