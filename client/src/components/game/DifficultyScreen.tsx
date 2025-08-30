@@ -39,7 +39,8 @@ const translations = {
     easy: 'Kolay',
     medium: 'Orta',
     hard: 'Zor',
-    expert: 'Uzman'
+    expert: 'Uzman',
+    words: 'kelime'
   },
   en: {
     back: 'Back',
@@ -49,7 +50,8 @@ const translations = {
     easy: 'Easy',
     medium: 'Medium',
     hard: 'Hard',
-    expert: 'Expert'
+    expert: 'Expert',
+    words: 'words'
   },
   es: {
     back: 'Atrás',
@@ -59,7 +61,8 @@ const translations = {
     easy: 'Fácil',
     medium: 'Medio',
     hard: 'Difícil',
-    expert: 'Experto'
+    expert: 'Experto',
+    words: 'palabras'
   },
   it: {
     back: 'Indietro',
@@ -69,7 +72,8 @@ const translations = {
     easy: 'Facile',
     medium: 'Medio',
     hard: 'Difficile',
-    expert: 'Esperto'
+    expert: 'Esperto',
+    words: 'parole'
   },
   fr: {
     back: 'Retour',
@@ -79,7 +83,8 @@ const translations = {
     easy: 'Facile',
     medium: 'Moyen',
     hard: 'Difficile',
-    expert: 'Expert'
+    expert: 'Expert',
+    words: 'mots'
   },
   de: {
     back: 'Zurück',
@@ -89,15 +94,97 @@ const translations = {
     easy: 'Einfach',
     medium: 'Mittel',
     hard: 'Schwer',
-    expert: 'Experte'
+    expert: 'Experte',
+    words: 'wörter'
+  }
+};
+
+// Category translations
+const categoryTranslations = {
+  tr: {
+    'Hayvanlar': 'Hayvanlar',
+    'Yiyecek': 'Yiyecek',
+    'Bilim': 'Bilim',
+    'Ülkeler': 'Ülkeler',
+    'Meslekler': 'Meslekler',
+    'Şehirler': 'Şehirler',
+    'Markalar': 'Markalar',
+    'Spor Dalları': 'Spor Dalları',
+    'Eşyalar': 'Eşyalar',
+    'Filmler': 'Filmler'
+  },
+  en: {
+    'Hayvanlar': 'Animals',
+    'Yiyecek': 'Food',
+    'Bilim': 'Science',
+    'Ülkeler': 'Countries',
+    'Meslekler': 'Professions',
+    'Şehirler': 'Cities',
+    'Markalar': 'Brands',
+    'Spor Dalları': 'Sports',
+    'Eşyalar': 'Objects',
+    'Filmler': 'Movies'
+  },
+  es: {
+    'Hayvanlar': 'Animales',
+    'Yiyecek': 'Comida',
+    'Bilim': 'Ciencia',
+    'Ülkeler': 'Países',
+    'Meslekler': 'Profesiones',
+    'Şehirler': 'Ciudades',
+    'Markalar': 'Marcas',
+    'Spor Dalları': 'Deportes',
+    'Eşyalar': 'Objetos',
+    'Filmler': 'Películas'
+  },
+  it: {
+    'Hayvanlar': 'Animali',
+    'Yiyecek': 'Cibo',
+    'Bilim': 'Scienza',
+    'Ülkeler': 'Paesi',
+    'Meslekler': 'Professioni',
+    'Şehirler': 'Città',
+    'Markalar': 'Marchi',
+    'Spor Dalları': 'Sport',
+    'Eşyalar': 'Oggetti',
+    'Filmler': 'Film'
+  },
+  fr: {
+    'Hayvanlar': 'Animaux',
+    'Yiyecek': 'Nourriture',
+    'Bilim': 'Science',
+    'Ülkeler': 'Pays',
+    'Meslekler': 'Professions',
+    'Şehirler': 'Villes',
+    'Markalar': 'Marques',
+    'Spor Dalları': 'Sports',
+    'Eşyalar': 'Objets',
+    'Filmler': 'Films'
+  },
+  de: {
+    'Hayvanlar': 'Tiere',
+    'Yiyecek': 'Essen',
+    'Bilim': 'Wissenschaft',
+    'Ülkeler': 'Länder',
+    'Meslekler': 'Berufe',
+    'Şehirler': 'Städte',
+    'Markalar': 'Marken',
+    'Spor Dalları': 'Sport',
+    'Eşyalar': 'Objekte',
+    'Filmler': 'Filme'
   }
 };
 
 export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage, selectedCategory, onDifficultySelect, onBack, isGuestMode = false }) => {
   const [hoveredDifficulty, setHoveredDifficulty] = useState<number | null>(null);
   const t = translations[selectedLanguage];
+  const categoryT = categoryTranslations[selectedLanguage];
   
   const theme = getThemeForCategory(selectedCategory);
+  
+  const getCategoryName = (turkishName: string): string => {
+    return categoryT[turkishName] || turkishName;
+  };
 
   const getDifficultyLabel = (level: number): string => {
     const labels: Record<number, keyof typeof translations.tr> = {
@@ -176,7 +263,7 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
           <div className="text-center mb-8 animate-slide-up" style={{ animationDelay: '0.1s' }}>
             <div className="inline-flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20">
               <span className="text-3xl">{categoryIcons[selectedCategory]}</span>
-              <span className="text-xl font-bold text-white">{selectedCategory}</span>
+              <span className="text-xl font-bold text-white">{getCategoryName(selectedCategory)}</span>
             </div>
           </div>
 
@@ -212,7 +299,7 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
                       {getDifficultyLabel(diff)}
                     </div>
                     <div className="text-sm text-white/60">
-                      {(wordLists[selectedCategory] as any)?.[diff]?.length || 0} kelime
+                      {(wordLists[selectedCategory] as any)?.[diff]?.length || 0} {t.words}
                     </div>
                   </div>
                 </button>

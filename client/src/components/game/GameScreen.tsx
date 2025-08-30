@@ -20,6 +20,213 @@ import {
   getDefaultDailyGoals
 } from '@/lib/gameUtils';
 import type { GameSettings } from './MenuScreen';
+import type { Language } from './LanguageScreen';
+
+// Game translations
+const gameTranslations = {
+  tr: {
+    congratulations: 'Tebrikler!',
+    gameOver: 'Oyun Bitti!',
+    timeUp: 'Süre doldu!',
+    wrongAnswer: 'Yanlış cevap!',
+    correct: 'Doğru!',
+    score: 'Puan',
+    streak: 'Seri',
+    totalScore: 'Toplam Puan',
+    averageTime: 'Ortalama Süre',
+    correctGuesses: 'Doğru Tahmin',
+    newGame: 'Yeni Oyun',
+    continue: 'Devam Et',
+    category: 'Kategori',
+    difficulty: 'Zorluk',
+    timeLeft: 'Kalan Süre',
+    enterGuess: 'Tahmininizi girin...',
+    submit: 'Gönder',
+    giveUp: 'Pes Et',
+    seconds: 'saniye'
+  },
+  en: {
+    congratulations: 'Congratulations!',
+    gameOver: 'Game Over!',
+    timeUp: 'Time\'s up!',
+    wrongAnswer: 'Wrong answer!',
+    correct: 'Correct!',
+    score: 'Score',
+    streak: 'Streak',
+    totalScore: 'Total Score',
+    averageTime: 'Average Time',
+    correctGuesses: 'Correct Guesses',
+    newGame: 'New Game',
+    continue: 'Continue',
+    category: 'Category',
+    difficulty: 'Difficulty',
+    timeLeft: 'Time Left',
+    enterGuess: 'Enter your guess...',
+    submit: 'Submit',
+    giveUp: 'Give Up',
+    seconds: 'seconds'
+  },
+  es: {
+    congratulations: '¡Felicidades!',
+    gameOver: '¡Juego Terminado!',
+    timeUp: '¡Se acabó el tiempo!',
+    wrongAnswer: '¡Respuesta incorrecta!',
+    correct: '¡Correcto!',
+    score: 'Puntuación',
+    streak: 'Racha',
+    totalScore: 'Puntuación Total',
+    averageTime: 'Tiempo Promedio',
+    correctGuesses: 'Aciertos',
+    newGame: 'Nuevo Juego',
+    continue: 'Continuar',
+    category: 'Categoría',
+    difficulty: 'Dificultad',
+    timeLeft: 'Tiempo Restante',
+    enterGuess: 'Ingresa tu respuesta...',
+    submit: 'Enviar',
+    giveUp: 'Rendirse',
+    seconds: 'segundos'
+  },
+  it: {
+    congratulations: 'Congratulazioni!',
+    gameOver: 'Gioco Finito!',
+    timeUp: 'Tempo scaduto!',
+    wrongAnswer: 'Risposta sbagliata!',
+    correct: 'Corretto!',
+    score: 'Punteggio',
+    streak: 'Serie',
+    totalScore: 'Punteggio Totale',
+    averageTime: 'Tempo Medio',
+    correctGuesses: 'Risposte Corrette',
+    newGame: 'Nuovo Gioco',
+    continue: 'Continua',
+    category: 'Categoria',
+    difficulty: 'Difficoltà',
+    timeLeft: 'Tempo Rimasto',
+    enterGuess: 'Inserisci la tua risposta...',
+    submit: 'Invia',
+    giveUp: 'Arrendersi',
+    seconds: 'secondi'
+  },
+  fr: {
+    congratulations: 'Félicitations!',
+    gameOver: 'Jeu Terminé!',
+    timeUp: 'Temps écoulé!',
+    wrongAnswer: 'Mauvaise réponse!',
+    correct: 'Correct!',
+    score: 'Score',
+    streak: 'Série',
+    totalScore: 'Score Total',
+    averageTime: 'Temps Moyen',
+    correctGuesses: 'Bonnes Réponses',
+    newGame: 'Nouveau Jeu',
+    continue: 'Continuer',
+    category: 'Catégorie',
+    difficulty: 'Difficulté',
+    timeLeft: 'Temps Restant',
+    enterGuess: 'Entrez votre réponse...',
+    submit: 'Envoyer',
+    giveUp: 'Abandonner',
+    seconds: 'secondes'
+  },
+  de: {
+    congratulations: 'Glückwunsch!',
+    gameOver: 'Spiel Beendet!',
+    timeUp: 'Zeit ist um!',
+    wrongAnswer: 'Falsche Antwort!',
+    correct: 'Richtig!',
+    score: 'Punkte',
+    streak: 'Serie',
+    totalScore: 'Gesamtpunkte',
+    averageTime: 'Durchschnittszeit',
+    correctGuesses: 'Richtige Antworten',
+    newGame: 'Neues Spiel',
+    continue: 'Weiter',
+    category: 'Kategorie',
+    difficulty: 'Schwierigkeit',
+    timeLeft: 'Verbleibende Zeit',
+    enterGuess: 'Geben Sie Ihre Antwort ein...',
+    submit: 'Senden',
+    giveUp: 'Aufgeben',
+    seconds: 'sekunden'
+  }
+};
+
+// Category translations
+const categoryTranslations = {
+  tr: {
+    'Hayvanlar': 'Hayvanlar',
+    'Yiyecek': 'Yiyecek',
+    'Bilim': 'Bilim',
+    'Ülkeler': 'Ülkeler',
+    'Meslekler': 'Meslekler',
+    'Şehirler': 'Şehirler',
+    'Markalar': 'Markalar',
+    'Spor Dalları': 'Spor Dalları',
+    'Eşyalar': 'Eşyalar',
+    'Filmler': 'Filmler'
+  },
+  en: {
+    'Hayvanlar': 'Animals',
+    'Yiyecek': 'Food',
+    'Bilim': 'Science',
+    'Ülkeler': 'Countries',
+    'Meslekler': 'Professions',
+    'Şehirler': 'Cities',
+    'Markalar': 'Brands',
+    'Spor Dalları': 'Sports',
+    'Eşyalar': 'Objects',
+    'Filmler': 'Movies'
+  },
+  es: {
+    'Hayvanlar': 'Animales',
+    'Yiyecek': 'Comida',
+    'Bilim': 'Ciencia',
+    'Ülkeler': 'Países',
+    'Meslekler': 'Profesiones',
+    'Şehirler': 'Ciudades',
+    'Markalar': 'Marcas',
+    'Spor Dalları': 'Deportes',
+    'Eşyalar': 'Objetos',
+    'Filmler': 'Películas'
+  },
+  it: {
+    'Hayvanlar': 'Animali',
+    'Yiyecek': 'Cibo',
+    'Bilim': 'Scienza',
+    'Ülkeler': 'Paesi',
+    'Meslekler': 'Professioni',
+    'Şehirler': 'Città',
+    'Markalar': 'Marchi',
+    'Spor Dalları': 'Sport',
+    'Eşyalar': 'Oggetti',
+    'Filmler': 'Film'
+  },
+  fr: {
+    'Hayvanlar': 'Animaux',
+    'Yiyecek': 'Nourriture',
+    'Bilim': 'Science',
+    'Ülkeler': 'Pays',
+    'Meslekler': 'Professions',
+    'Şehirler': 'Villes',
+    'Markalar': 'Marques',
+    'Spor Dalları': 'Sports',
+    'Eşyalar': 'Objets',
+    'Filmler': 'Films'
+  },
+  de: {
+    'Hayvanlar': 'Tiere',
+    'Yiyecek': 'Essen',
+    'Bilim': 'Wissenschaft',
+    'Ülkeler': 'Länder',
+    'Meslekler': 'Berufe',
+    'Şehirler': 'Städte',
+    'Markalar': 'Marken',
+    'Spor Dalları': 'Sport',
+    'Eşyalar': 'Objekte',
+    'Filmler': 'Filme'
+  }
+};
 
 interface GameScreenProps {
   settings: GameSettings;
@@ -30,6 +237,12 @@ interface GameScreenProps {
 export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: GameScreenProps) => {
   const { category, difficulty, language } = settings;
   const theme = getThemeForCategory(category);
+  const t = gameTranslations[language as Language];
+  const categoryT = categoryTranslations[language as Language];
+  
+  const getCategoryName = (turkishName: string): string => {
+    return categoryT[turkishName] || turkishName;
+  };
   
   const [secretWord, setSecretWord] = useState('');
   const [guess, setGuess] = useState('');
@@ -183,7 +396,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       if (guessTime <= 5) {
         bonusMessage = ' 🚀 Hız Bonusu +5!';
       }
-      endGame(`Tebrikler! ${Math.floor(elapsedTime)} saniyede bildin.${bonusMessage}`, true);
+      endGame(`${t.congratulations} ${Math.floor(elapsedTime)} ${t.seconds}`, true);
     } else {
       // Trigger shake animation for wrong answer
       setShakeInput(true);
@@ -458,7 +671,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                         animation: 'gradient 3s ease infinite'
                       }}
                     >
-                      {gameSuccess ? "Tebrikler!" : "Oyun Bitti!"}
+                      {gameSuccess ? t.congratulations : t.gameOver}
                     </h2>
                     
                     {/* Score Cards */}
@@ -479,7 +692,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                           {gameSuccess ? `+${score}` : '0'}
                         </div>
                         <div className="text-xs sm:text-sm font-bold text-white/60">
-                          {gameSuccess ? 'Kazanılan Puan' : 'Puan'}
+                          {t.score}
                         </div>
                       </div>
                       
@@ -498,7 +711,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                         >
                           {totalScore}
                         </div>
-                        <div className="text-xs sm:text-sm font-bold text-white/60">Toplam Puan</div>
+                        <div className="text-xs sm:text-sm font-bold text-white/60">{t.totalScore}</div>
                       </div>
                     </div>
                     
@@ -514,7 +727,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                             boxShadow: `0 0 20px ${theme.primary}40`
                           }}
                         >
-                          ⚡ Devam Et
+                          ⚡ {t.continue}
                         </button>
                       )}
                       <button
@@ -526,7 +739,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                           boxShadow: `0 0 20px ${theme.secondary}30`
                         }}
                       >
-                        🚀 Tekrar Oyna
+                        🚀 {t.newGame}
                       </button>
                       <button
                         onClick={onGameOver}

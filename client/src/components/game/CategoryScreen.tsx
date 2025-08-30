@@ -37,7 +37,8 @@ const translations = {
     guestMode: 'Misafir Modu - İlerleme kaydedilmiyor',
     chooseCategory: 'Kategori Seçin',
     subtitle: 'Hangi konuda kelime tahmin etmek istiyorsunuz?',
-    currentLang: 'Dil'
+    currentLang: 'Dil',
+    levels: 'zorluk'
   },
   en: {
     back: 'Back',
@@ -45,7 +46,8 @@ const translations = {
     guestMode: 'Guest Mode - Progress not saved',
     chooseCategory: 'Choose Category',
     subtitle: 'Which topic would you like to guess words about?',
-    currentLang: 'Language'
+    currentLang: 'Language',
+    levels: 'levels'
   },
   es: {
     back: 'Atrás',
@@ -53,7 +55,8 @@ const translations = {
     guestMode: 'Modo Invitado - Progreso no guardado',
     chooseCategory: 'Elegir Categoría',
     subtitle: '¿Sobre qué tema te gustaría adivinar palabras?',
-    currentLang: 'Idioma'
+    currentLang: 'Idioma',
+    levels: 'niveles'
   },
   it: {
     back: 'Indietro',
@@ -61,7 +64,8 @@ const translations = {
     guestMode: 'Modalità Ospite - Progresso non salvato',
     chooseCategory: 'Scegli Categoria',
     subtitle: 'Su quale argomento vorresti indovinare le parole?',
-    currentLang: 'Lingua'
+    currentLang: 'Lingua',
+    levels: 'livelli'
   },
   fr: {
     back: 'Retour',
@@ -69,7 +73,8 @@ const translations = {
     guestMode: 'Mode Invité - Progression non sauvegardée',
     chooseCategory: 'Choisir une Catégorie',
     subtitle: 'Sur quel sujet aimeriez-vous deviner des mots?',
-    currentLang: 'Langue'
+    currentLang: 'Langue',
+    levels: 'niveaux'
   },
   de: {
     back: 'Zurück',
@@ -77,15 +82,97 @@ const translations = {
     guestMode: 'Gastmodus - Fortschritt nicht gespeichert',
     chooseCategory: 'Kategorie Auswählen',
     subtitle: 'Zu welchem Thema möchten Sie Wörter erraten?',
-    currentLang: 'Sprache'
+    currentLang: 'Sprache',
+    levels: 'stufen'
+  }
+};
+
+// Category translations
+const categoryTranslations = {
+  tr: {
+    'Hayvanlar': 'Hayvanlar',
+    'Yiyecek': 'Yiyecek',
+    'Bilim': 'Bilim',
+    'Ülkeler': 'Ülkeler',
+    'Meslekler': 'Meslekler',
+    'Şehirler': 'Şehirler',
+    'Markalar': 'Markalar',
+    'Spor Dalları': 'Spor Dalları',
+    'Eşyalar': 'Eşyalar',
+    'Filmler': 'Filmler'
+  },
+  en: {
+    'Hayvanlar': 'Animals',
+    'Yiyecek': 'Food',
+    'Bilim': 'Science',
+    'Ülkeler': 'Countries',
+    'Meslekler': 'Professions',
+    'Şehirler': 'Cities',
+    'Markalar': 'Brands',
+    'Spor Dalları': 'Sports',
+    'Eşyalar': 'Objects',
+    'Filmler': 'Movies'
+  },
+  es: {
+    'Hayvanlar': 'Animales',
+    'Yiyecek': 'Comida',
+    'Bilim': 'Ciencia',
+    'Ülkeler': 'Países',
+    'Meslekler': 'Profesiones',
+    'Şehirler': 'Ciudades',
+    'Markalar': 'Marcas',
+    'Spor Dalları': 'Deportes',
+    'Eşyalar': 'Objetos',
+    'Filmler': 'Películas'
+  },
+  it: {
+    'Hayvanlar': 'Animali',
+    'Yiyecek': 'Cibo',
+    'Bilim': 'Scienza',
+    'Ülkeler': 'Paesi',
+    'Meslekler': 'Professioni',
+    'Şehirler': 'Città',
+    'Markalar': 'Marchi',
+    'Spor Dalları': 'Sport',
+    'Eşyalar': 'Oggetti',
+    'Filmler': 'Film'
+  },
+  fr: {
+    'Hayvanlar': 'Animaux',
+    'Yiyecek': 'Nourriture',
+    'Bilim': 'Science',
+    'Ülkeler': 'Pays',
+    'Meslekler': 'Professions',
+    'Şehirler': 'Villes',
+    'Markalar': 'Marques',
+    'Spor Dalları': 'Sports',
+    'Eşyalar': 'Objets',
+    'Filmler': 'Films'
+  },
+  de: {
+    'Hayvanlar': 'Tiere',
+    'Yiyecek': 'Essen',
+    'Bilim': 'Wissenschaft',
+    'Ülkeler': 'Länder',
+    'Meslekler': 'Berufe',
+    'Şehirler': 'Städte',
+    'Markalar': 'Marken',
+    'Spor Dalları': 'Sport',
+    'Eşyalar': 'Objekte',
+    'Filmler': 'Filme'
   }
 };
 
 export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onCategorySelect, onBack, onSettingsOpen, isGuestMode = false }) => {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const t = translations[selectedLanguage];
+  const categoryT = categoryTranslations[selectedLanguage];
   
   const theme = getThemeForCategory(hoveredCategory || 'Hayvanlar');
+  
+  const getCategoryName = (turkishName: string): string => {
+    return categoryT[turkishName] || turkishName;
+  };
 
   const categoryIcons: Record<string, string> = {
     'Hayvanlar': '🦁',
@@ -176,10 +263,10 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                       {categoryIcons[cat]}
                     </div>
                     <div className="font-bold text-white text-sm sm:text-base lg:text-lg">
-                      {cat}
+                      {getCategoryName(cat)}
                     </div>
                     <div className="text-xs sm:text-sm text-white/60 mt-1">
-                      {Object.keys(wordLists[cat]).length} {selectedLanguage === 'tr' ? 'zorluk' : selectedLanguage === 'en' ? 'levels' : selectedLanguage === 'es' ? 'niveles' : selectedLanguage === 'it' ? 'livelli' : selectedLanguage === 'fr' ? 'niveaux' : 'stufen'}
+                      {Object.keys(wordLists[cat]).length} {t.levels}
                     </div>
                   </div>
                 </button>
