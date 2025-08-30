@@ -312,14 +312,14 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                   data-testid={`button-category-${cat}`}
                 >
                   {/* Zorluk Seçici */}
-                  <div className="absolute top-3 right-3 flex gap-1.5 backdrop-blur-sm bg-black/20 rounded-full px-2 py-1 z-10">
+                  <div className="absolute top-2 left-2 flex gap-1 backdrop-blur-sm bg-black/30 rounded-full px-2 py-1 z-10">
                     {[1, 2, 3, 4, 5].map((level) => {
                       const isSelected = (categoryDifficulties[cat] || 1) === level;
                       return (
                         <div
                           key={level}
                           onClick={(e) => setDifficulty(cat, level, e)}
-                          className={`w-4 h-4 rounded-full border-2 transition-all duration-300 cursor-pointer hover:scale-125 ${
+                          className={`w-3 h-3 rounded-full border-2 transition-all duration-300 cursor-pointer hover:scale-125 ${
                             isSelected 
                               ? 'opacity-100 scale-110 shadow-lg' 
                               : 'opacity-70 hover:opacity-90'
