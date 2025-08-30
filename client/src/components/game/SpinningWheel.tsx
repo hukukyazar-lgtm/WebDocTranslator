@@ -19,11 +19,17 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
   const intensityLevel = getIntensityLevel(timeLeft);
   const speedMultiplier = getWheelSpeedMultiplier(timeLeft);
   
-  // Calculate dynamic spacing based on word length to prevent overflow
-  const maxSpacing = 35;
-  const minSpacing = letters.length > 15 ? 6 : letters.length > 12 ? 10 : 15;
-  const baseWidth = letters.length > 15 ? 600 : letters.length > 12 ? 500 : 300;
-  const spacing = Math.max(minSpacing, Math.min(maxSpacing, baseWidth / letters.length));
+  // Calculate dynamic spacing based on word length to prevent overlap
+  const getSpacing = () => {
+    if (letters.length <= 4) return 35;
+    if (letters.length <= 6) return 30;
+    if (letters.length <= 8) return 25;
+    if (letters.length <= 10) return 20;
+    if (letters.length <= 12) return 15;
+    if (letters.length <= 15) return 12;
+    return 8; // For very long words
+  };
+  const spacing = getSpacing();
   
   // Calculate font size based on word length - extremely aggressive scaling for long words
   const getFontSize = (letterCount: number, isSpinning: boolean) => {
@@ -184,16 +190,21 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
             {letters.map((char, i) => {
               const angle = (i / letters.length) * 360;
               const transformSpin = `rotate(${angle}deg) translate(${radius}px) rotate(${-angle}deg)`;
-              // Reduce scale factor for long words to prevent overlap
-              const scaleFactor = letters.length > 15 ? 1.2 : letters.length > 12 ? 1.5 : 2;
+              // Much more aggressive scale reduction for long words
+              const getScaleFactor = () => {
+                if (letters.length <= 4) return 2;
+                if (letters.length <= 6) return 1.8;
+                if (letters.length <= 8) return 1.5;
+                if (letters.length <= 10) return 1.2;
+                if (letters.length <= 12) return 1;
+                if (letters.length <= 15) return 0.8;
+                return 0.6; // Very small for long words
+              };
+              const scaleFactor = getScaleFactor();
               const transformAlign = `translateX(${(i - (letters.length - 1) / 2) * spacing}px) scale(${scaleFactor})`;
               const dynamicScale = getLetterScale(timeLeft, isSpinning, i);
               const letterVisibility = getLetterVisibility(timeLeft, i, letters.length, difficulty);
               const fontSize = getFontSize(letters.length, isSpinning);
-              // Debug: log font size for long words
-              if (i === 0 && letters.length > 10) {
-                console.log(`Word: ${word}, Length: ${letters.length}, FontSize: ${fontSize}, IsSpinning: ${isSpinning}`);
-              }
 
               return (
                 <span 
