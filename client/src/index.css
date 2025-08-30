@@ -99,7 +99,7 @@
     background: linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%) !important;
     height: 100vh;
     height: 100dvh;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
   body {
@@ -107,7 +107,7 @@
     background: linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%) !important;
     height: 100vh;
     height: 100dvh;
-    overflow: hidden;
+    overflow-x: hidden;
     overscroll-behavior: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
