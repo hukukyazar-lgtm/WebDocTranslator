@@ -607,7 +607,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                             background: 'rgba(255,255,255,0.1)',
                             textShadow: '0 0 20px rgba(255,255,255,0.5)'
                           }}
-                          placeholder="KELİMEYİ YAZIN..."
+                          placeholder={t.enterGuess}
                           value={guess}
                           onChange={(e) => setGuess(e.target.value.toUpperCase())}
                           data-testid="input-guess"
