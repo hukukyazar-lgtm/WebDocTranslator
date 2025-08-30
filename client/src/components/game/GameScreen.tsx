@@ -525,7 +525,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     <>
       
       <div 
-        className="min-h-screen relative overflow-hidden"
+        className="h-screen relative overflow-hidden flex flex-col"
       >
         {/* Statik arka plan - animasyon yok */}
         <GameHeader 
@@ -554,8 +554,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         )}
         
-        <main className="pt-16 sm:pt-24 md:pt-28 pb-2 sm:pb-4 md:pb-8 px-3 sm:px-4 md:px-6">
-          <div className="max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto space-y-3 sm:space-y-4 md:space-y-6 lg:space-y-8">
+        <main className="flex-1 flex flex-col justify-center px-3 sm:px-4 md:px-6 py-4 sm:py-6 overflow-y-auto">
+          <div className="max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto space-y-2 sm:space-y-3 md:space-y-4 w-full">
             <SpinningWheel 
               word={secretWord} 
               isSpinning={isSpinning} 
@@ -754,13 +754,15 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               </div>
             )}
             
-            <GameStats
-              score={totalScore}
-              streak={streak}
-              correctGuesses={correctGuesses}
-              averageTime={averageTime}
-              language={language}
-            />
+            {!gameOver && (
+              <GameStats
+                score={totalScore}
+                streak={streak}
+                correctGuesses={correctGuesses}
+                averageTime={averageTime}
+                language={language}
+              />
+            )}
           </div>
         </main>
         

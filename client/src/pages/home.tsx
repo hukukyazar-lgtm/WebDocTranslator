@@ -87,7 +87,8 @@ export default function Home() {
 
   const backgroundStyle = {
     background: 'linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%)',
-    minHeight: '100vh'
+    height: '100vh',
+    overflow: 'hidden'
   };
 
   // Logo ve giriş sayfası

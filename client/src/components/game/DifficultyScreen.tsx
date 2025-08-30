@@ -219,7 +219,8 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
 
   const backgroundStyle = {
     background: `linear-gradient(135deg, ${theme.primary}20, ${theme.secondary}40, ${theme.primary}60)`,
-    minHeight: '100vh'
+    height: '100vh',
+    overflow: 'hidden'
   };
 
   const availableDifficulties = Object.keys(wordLists[selectedCategory] || {})
@@ -229,7 +230,7 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
 
   return (
     <div style={backgroundStyle}>
-      <div className="relative z-10 min-h-screen flex items-start justify-center p-3 sm:p-4 pt-4 sm:pt-8">
+      <div className="relative z-10 h-screen flex flex-col justify-center p-3 sm:p-4 overflow-y-auto">
         <div className="w-full max-w-md sm:max-w-2xl lg:max-w-4xl">
           {/* Header */}
           <div className="flex items-center justify-between mb-8 animate-slide-up">

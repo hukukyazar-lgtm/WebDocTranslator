@@ -28,12 +28,13 @@ export const LogoScreen = memo<LogoScreenProps>(({ onAuthChoice }) => {
 
   const backgroundStyle = {
     background: 'linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%)',
-    minHeight: '100vh'
+    height: '100vh',
+    overflow: 'hidden'
   };
 
   return (
     <div style={backgroundStyle}>
-      <div className="min-h-screen flex items-center justify-center p-6">
+      <div className="h-full flex items-center justify-center p-6">
         <div className="text-center max-w-md w-full">
           {/* Logo ve başlık */}
           <div className="mb-12 animate-slide-up">
