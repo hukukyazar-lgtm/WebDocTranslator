@@ -261,7 +261,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
             
             <div className="text-center">
               <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                👁️ <span className="font-black bg-gradient-to-r from-teal-400 via-cyan-500 to-pink-500 bg-clip-text text-transparent">Perception</span>
+                🎯 <span className="font-black bg-gradient-to-r from-teal-400 via-cyan-500 to-pink-500 bg-clip-text text-transparent">WordSpin</span>
               </h1>
               {isGuestMode && (
                 <p className="text-sm text-white/60 mt-1">

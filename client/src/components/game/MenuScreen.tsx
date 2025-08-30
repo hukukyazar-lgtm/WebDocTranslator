@@ -79,7 +79,7 @@ export const MenuScreen = memo(({ selectedLanguage, onStartGame, onBack, isGuest
             
             <div className="text-center">
               <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                👁️ <span className="font-black bg-gradient-to-r from-teal-400 via-cyan-500 to-pink-500 bg-clip-text text-transparent">Perception</span>
+                🎯 <span className="font-black bg-gradient-to-r from-teal-400 via-cyan-500 to-pink-500 bg-clip-text text-transparent">WordSpin</span>
               </h1>
               {isGuestMode && (
                 <p className="text-sm text-white/60 mt-1">
@@ -106,7 +106,7 @@ export const MenuScreen = memo(({ selectedLanguage, onStartGame, onBack, isGuest
           {/* Modern Category Grid */}
           <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
             <h3 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
-              👁️ Kategori Seç
+              🎯 Kategori Seç
             </h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 mb-8">
               {Object.keys(wordLists).map((cat, index) => {
@@ -238,7 +238,7 @@ export const MenuScreen = memo(({ selectedLanguage, onStartGame, onBack, isGuest
               data-testid="button-start-game"
             >
               <span className="flex items-center justify-center gap-3">
-                <span className="text-2xl">👁️</span>
+                <span className="text-2xl">🎯</span>
                 <span>OYUNA BAŞLA</span>
                 <span className="text-xl">→</span>
               </span>

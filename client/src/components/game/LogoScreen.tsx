@@ -1,6 +1,5 @@
 import { memo, useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import logoImage from '@assets/generated_images/Pure_gradient_transparent_logo_12db5595.png';
 
 export interface LogoScreenProps {
   onAuthChoice: (isGuest: boolean) => void;
@@ -38,13 +37,17 @@ export const LogoScreen = memo<LogoScreenProps>(({ onAuthChoice }) => {
         <div className="text-center max-w-md w-full">
           {/* Logo ve başlık */}
           <div className="mb-12 animate-slide-up">
-            <div className="flex justify-center mb-6">
-              <img 
-                src={logoImage}
-                alt="Perception Word Logo" 
-                className="w-80 h-auto max-w-full opacity-95 hover:opacity-100 transition-opacity duration-300"
-              />
+            <div className="text-6xl mb-6 animate-bounce">
+              🎯
             </div>
+            <h1 className="text-5xl sm:text-6xl font-black mb-4">
+              <span className="bg-gradient-to-r from-teal-400 via-cyan-500 to-pink-500 bg-clip-text text-transparent">
+                WordSpin
+              </span>
+            </h1>
+            <p className="text-xl text-white/80 font-medium">
+              PRO EDITION
+            </p>
           </div>
 
           {/* Auth seçenekleri */}
