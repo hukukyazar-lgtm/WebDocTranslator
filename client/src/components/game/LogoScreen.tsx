@@ -15,12 +15,8 @@ export const LogoScreen = memo<LogoScreenProps>(({ onAuthChoice }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  useEffect(() => {
-    // Eğer kullanıcı zaten giriş yapmışsa, dil seçimine geç
-    if (!isLoading && isAuthenticated) {
-      onAuthChoice(false);
-    }
-  }, [isAuthenticated, isLoading, onAuthChoice]);
+  // Not: Otomatik dil seçimine geçiş devre dışı bırakıldı
+  // Kullanıcı manuel olarak seçim yapmalı
 
   const handleLogin = () => {
     window.location.href = '/api/login';

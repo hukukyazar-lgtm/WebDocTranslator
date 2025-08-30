@@ -58,10 +58,7 @@ export default function Home() {
       <div style={backgroundStyle}>
         <LanguageScreen 
           onLanguageSelect={handleLanguageSelect} 
-          onBack={() => {
-            console.log('Dil sayfasından geri dönülüyor...');
-            setAppState('logo');
-          }}
+          onBack={() => setAppState('logo')}
         />
       </div>
     );

@@ -46,11 +46,6 @@ export const categoryThemes = {
     secondary: 'hsl(330, 70%, 55%)', // pink-magenta
     background: 'linear-gradient(135deg, hsl(300, 70%, 15%) 0%, hsl(330, 60%, 10%) 100%)'
   },
-  'Spor Dalları': {
-    primary: 'hsl(60, 90%, 50%)', // bright yellow
-    secondary: 'hsl(90, 70%, 50%)', // yellow-green
-    background: 'linear-gradient(135deg, hsl(60, 90%, 15%) 0%, hsl(90, 60%, 10%) 100%)'
-  },
   'Eşyalar': {
     primary: 'hsl(40, 80%, 50%)', // gold
     secondary: 'hsl(20, 70%, 55%)', // orange-brown
@@ -60,6 +55,11 @@ export const categoryThemes = {
     primary: 'hsl(350, 80%, 60%)', // red-pink
     secondary: 'hsl(280, 70%, 65%)', // purple
     background: 'linear-gradient(135deg, hsl(350, 80%, 15%) 0%, hsl(280, 60%, 10%) 100%)'
+  },
+  'Spor Dalları': {
+    primary: 'hsl(60, 90%, 50%)', // bright yellow
+    secondary: 'hsl(90, 70%, 50%)', // yellow-green
+    background: 'linear-gradient(135deg, hsl(60, 90%, 15%) 0%, hsl(90, 60%, 10%) 100%)'
   }
 };
 

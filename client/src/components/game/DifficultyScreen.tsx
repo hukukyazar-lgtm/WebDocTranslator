@@ -57,7 +57,9 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
     'Ülkeler': '🌍',
     'Meslekler': '👨‍💼',
     'Şehirler': '🏙️',
-    'Markalar': '🏷️'
+    'Markalar': '🏷️',
+    'Spor Dalları': '⚽',
+    'Eşyalar': '🏠'
   };
 
   const backgroundStyle = {
@@ -65,9 +67,15 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
     minHeight: '100vh'
   };
 
+  const difficultyMapping: Record<string, number> = {
+    'easy': 1,
+    'medium': 2, 
+    'hard': 3
+  };
+  
   const availableDifficulties = Object.keys(wordLists[selectedCategory] || {})
-    .map(Number)
-    .filter(n => !isNaN(n))
+    .map(key => difficultyMapping[key])
+    .filter(n => n !== undefined)
     .sort();
 
   return (
@@ -142,7 +150,10 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
                       {difficultyLabels[diff]}
                     </div>
                     <div className="text-sm text-white/60">
-                      {(wordLists[selectedCategory] as any)?.[diff]?.length || 0} kelime
+                      {(() => {
+                        const difficultyKey = diff === 1 ? 'easy' : diff === 2 ? 'medium' : 'hard';
+                        return (wordLists[selectedCategory] as any)?.[difficultyKey]?.length || 0;
+                      })()} kelime
                     </div>
                   </div>
                 </button>
