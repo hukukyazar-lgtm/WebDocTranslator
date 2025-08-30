@@ -209,8 +209,9 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               return (
                 <span 
                   key={i}
-                  className={`absolute font-black uppercase letter-glow transition-all duration-1000 ${fontSize}`}
+                  className={`absolute font-sans font-semibold uppercase letter-glow transition-all duration-1000 ${fontSize}`}
                   style={{ 
+                    letterSpacing: letters.length > 10 ? '-0.05em' : letters.length > 8 ? '-0.02em' : '0',
                     color: letterColors[i],
                     transform: isSpinning 
                       ? `${transformSpin} scale(${dynamicScale}) translateZ(15px)` 
