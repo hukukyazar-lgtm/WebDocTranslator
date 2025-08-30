@@ -62,9 +62,10 @@ export default function Home() {
     setAppState('category'); // Skip language screen, go directly to category
   };
 
-  const handleCategorySelect = (category: string) => {
+  const handleCategorySelect = (category: string, difficulty: number) => {
     setSelectedCategory(category);
-    setAppState('difficulty');
+    setSelectedDifficulty(difficulty);
+    setAppState('game'); // Artık direkt oyuna geç
   };
 
   const handleDifficultySelect = (difficulty: number) => {

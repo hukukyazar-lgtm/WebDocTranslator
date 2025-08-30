@@ -5,7 +5,7 @@ import type { Language } from './LanguageScreen';
 
 export interface CategoryScreenProps {
   selectedLanguage: Language;
-  onCategorySelect: (category: string) => void;
+  onCategorySelect: (category: string, difficulty: number) => void;
   onBack: () => void;
   onSettingsOpen?: () => void;
   isGuestMode?: boolean;
@@ -38,7 +38,12 @@ const translations = {
     chooseCategory: 'Kategori Seçin',
     subtitle: 'Hangi konuda oynamak istiyorsunuz?',
     currentLang: 'Dil',
-    levels: 'zorluk'
+    levels: 'zorluk',
+    easy: 'Kolay',
+    medium: 'Orta',
+    hard: 'Zor',
+    veryHard: 'Çok Zor',
+    extreme: 'Ekstrem'
   },
   en: {
     back: 'Back',
@@ -47,7 +52,12 @@ const translations = {
     chooseCategory: 'Choose Category',
     subtitle: 'Which topic would you like to play?',
     currentLang: 'Language',
-    levels: 'levels'
+    levels: 'levels',
+    easy: 'Easy',
+    medium: 'Medium',
+    hard: 'Hard',
+    veryHard: 'Very Hard',
+    extreme: 'Extreme'
   },
   es: {
     back: 'Atrás',
@@ -56,7 +66,12 @@ const translations = {
     chooseCategory: 'Elegir Categoría',
     subtitle: '¿Sobre qué tema te gustaría jugar?',
     currentLang: 'Idioma',
-    levels: 'niveles'
+    levels: 'niveles',
+    easy: 'Fácil',
+    medium: 'Medio',
+    hard: 'Difícil',
+    veryHard: 'Muy Difícil',
+    extreme: 'Extremo'
   },
   it: {
     back: 'Indietro',
@@ -65,7 +80,12 @@ const translations = {
     chooseCategory: 'Scegli Categoria',
     subtitle: 'Su quale argomento vorresti giocare?',
     currentLang: 'Lingua',
-    levels: 'livelli'
+    levels: 'livelli',
+    easy: 'Facile',
+    medium: 'Medio',
+    hard: 'Difficile',
+    veryHard: 'Molto Difficile',
+    extreme: 'Estremo'
   },
   fr: {
     back: 'Retour',
@@ -74,7 +94,12 @@ const translations = {
     chooseCategory: 'Choisir une Catégorie',
     subtitle: 'Sur quel sujet aimeriez-vous jouer?',
     currentLang: 'Langue',
-    levels: 'niveaux'
+    levels: 'niveaux',
+    easy: 'Facile',
+    medium: 'Moyen',
+    hard: 'Difficile',
+    veryHard: 'Très Difficile',
+    extreme: 'Extrême'
   },
   de: {
     back: 'Zurück',
@@ -83,7 +108,12 @@ const translations = {
     chooseCategory: 'Kategorie Auswählen',
     subtitle: 'Zu welchem Thema möchten Sie spielen?',
     currentLang: 'Sprache',
-    levels: 'stufen'
+    levels: 'stufen',
+    easy: 'Einfach',
+    medium: 'Mittel',
+    hard: 'Schwer',
+    veryHard: 'Sehr Schwer',
+    extreme: 'Extrem'
   }
 };
 
@@ -171,8 +201,22 @@ const categoryTranslations = {
 
 export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onCategorySelect, onBack, onSettingsOpen, isGuestMode = false }) => {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const [categoryDifficulties, setCategoryDifficulties] = useState<Record<string, number>>({});
   const t = translations[selectedLanguage];
   const categoryT = categoryTranslations[selectedLanguage];
+  
+  const difficultyLabels = [t.easy, t.medium, t.hard, t.veryHard, t.extreme];
+  const difficultyColors = ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#dc2626'];
+  
+  const handleCategorySelect = (category: string) => {
+    const difficulty = categoryDifficulties[category] || 1;
+    onCategorySelect(category, difficulty);
+  };
+  
+  const setDifficulty = (category: string, difficulty: number, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setCategoryDifficulties(prev => ({ ...prev, [category]: difficulty }));
+  };
   
   const theme = getThemeForCategory(hoveredCategory || 'Hayvanlar');
   
@@ -252,7 +296,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
               {Object.keys(wordLists).map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => onCategorySelect(cat)}
+                  onClick={() => handleCategorySelect(cat)}
                   onMouseEnter={() => setHoveredCategory(cat)}
                   onMouseLeave={() => setHoveredCategory(null)}
                   className="group relative p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl transition-all duration-500 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl"
@@ -266,6 +310,31 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                   }}
                   data-testid={`button-category-${cat}`}
                 >
+                  {/* Zorluk Seçici */}
+                  <div className="absolute top-3 right-3 flex gap-1.5 backdrop-blur-sm bg-black/20 rounded-full px-2 py-1">
+                    {[1, 2, 3, 4, 5].map((level) => {
+                      const isSelected = (categoryDifficulties[cat] || 1) === level;
+                      return (
+                        <div
+                          key={level}
+                          onClick={(e) => setDifficulty(cat, level, e)}
+                          className={`w-4 h-4 rounded-full border-2 transition-all duration-300 cursor-pointer hover:scale-125 ${
+                            isSelected 
+                              ? 'opacity-100 scale-110 shadow-lg' 
+                              : 'opacity-70 hover:opacity-90'
+                          }`}
+                          style={{
+                            backgroundColor: isSelected ? difficultyColors[level - 1] : 'transparent',
+                            borderColor: difficultyColors[level - 1],
+                            boxShadow: isSelected ? `0 0 8px ${difficultyColors[level - 1]}50` : 'none'
+                          }}
+                          title={difficultyLabels[level - 1]}
+                          data-testid={`difficulty-${cat}-${level}`}
+                        />
+                      );
+                    })}
+                  </div>
+                  
                   <div className="text-center">
                     <div className="text-3xl sm:text-4xl lg:text-5xl mb-2 sm:mb-3 lg:mb-4 transition-transform duration-300 group-hover:scale-110">
                       {categoryIcons[cat]}
@@ -275,6 +344,11 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                     </div>
                     <div className="text-xs sm:text-sm text-white/60 mt-1">
                       {Object.keys(wordLists[cat]).length} {t.levels}
+                    </div>
+                    
+                    {/* Seçili Zorluk Göstergesi */}
+                    <div className="mt-2 text-xs font-semibold" style={{ color: difficultyColors[(categoryDifficulties[cat] || 1) - 1] }}>
+                      {difficultyLabels[(categoryDifficulties[cat] || 1) - 1]}
                     </div>
                   </div>
                 </button>
