@@ -183,7 +183,7 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
   const theme = getThemeForCategory(selectedCategory);
   
   const getCategoryName = (turkishName: string): string => {
-    return categoryT[turkishName] || turkishName;
+    return (categoryT as Record<string, string>)[turkishName] || turkishName;
   };
 
   const getDifficultyLabel = (level: number): string => {
@@ -230,8 +230,8 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
 
   return (
     <div style={backgroundStyle}>
-      <div className="relative z-10 h-screen flex flex-col justify-center p-3 sm:p-4 overflow-y-auto">
-        <div className="w-full max-w-md sm:max-w-2xl lg:max-w-4xl">
+      <div className="relative z-10 h-screen flex flex-col p-3 sm:p-4 overflow-y-auto">
+        <div className="w-full max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto my-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-8 animate-slide-up">
             <button 

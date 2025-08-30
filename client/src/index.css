@@ -97,18 +97,22 @@
     scroll-behavior: smooth;
     touch-action: manipulation;
     background: linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%) !important;
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
   }
 
   body {
     @apply font-sans antialiased text-foreground;
     background: linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%) !important;
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
     overscroll-behavior: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    padding: 0;
   }
 
   /* Mobile viewport units fix */

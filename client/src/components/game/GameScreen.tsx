@@ -525,7 +525,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     <>
       
       <div 
-        className="h-screen relative overflow-hidden flex flex-col"
+        className="h-screen relative overflow-hidden flex flex-col w-full"
       >
         {/* Statik arka plan - animasyon yok */}
         <GameHeader 
@@ -554,7 +554,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         )}
         
-        <main className="flex-1 flex flex-col justify-center px-3 sm:px-4 md:px-6 py-4 sm:py-6 overflow-y-auto">
+        <main className="flex-1 flex flex-col justify-center px-3 sm:px-4 md:px-6 py-4 sm:py-6 overflow-x-hidden overflow-y-auto">
           <div className="max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto space-y-2 sm:space-y-3 md:space-y-4 w-full">
             <SpinningWheel 
               word={secretWord} 
@@ -768,7 +768,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         
         {/* Günlük Hedefler - Küçük ve kompakt (sadece giriş yapan kullanıcılar için) */}
         {!isGuestMode && (
-          <div className="fixed top-4 right-4 z-40">
+          <div className="fixed top-20 right-2 z-30">
             <div className="relative">
               <button
                 onClick={() => setShowDailyGoals(!showDailyGoals)}
@@ -795,7 +795,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         
         {/* Misafir modu göstergesi */}
         {isGuestMode && (
-          <div className="fixed top-4 right-4 z-40">
+          <div className="fixed top-20 right-2 z-30">
             <div className="px-4 py-2 bg-black/40 backdrop-blur-sm rounded-lg border border-white/10">
               <span className="text-white/70 text-sm flex items-center gap-2">
                 <span>👤</span>

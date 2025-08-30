@@ -247,8 +247,8 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
 
   return (
     <div style={backgroundStyle}>
-      <div className="relative z-10 h-screen flex flex-col justify-center p-3 sm:p-4 overflow-y-auto">
-        <div className="w-full max-w-md sm:max-w-2xl lg:max-w-4xl">
+      <div className="relative z-10 h-screen flex flex-col p-3 sm:p-4 overflow-y-auto">
+        <div className="w-full max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto my-auto">
           {/* Header */}
           <div className="flex items-center justify-between mb-8 animate-slide-up">
             <button 

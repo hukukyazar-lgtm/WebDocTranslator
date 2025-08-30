@@ -96,8 +96,8 @@ export const SettingsScreen = memo<SettingsScreenProps>(({ selectedLanguage, onL
   return (
     <div className="h-screen relative overflow-hidden">
       {/* Main content */}
-      <div className="relative z-10 h-screen flex flex-col justify-center p-3 sm:p-4 overflow-y-auto">
-        <div className="w-full max-w-md sm:max-w-lg lg:max-w-2xl">
+      <div className="relative z-10 h-screen flex flex-col p-3 sm:p-4 overflow-y-auto">
+        <div className="w-full max-w-md sm:max-w-lg lg:max-w-2xl mx-auto my-auto">
           {/* Geri butonu */}
           <div className="flex justify-start mb-6 animate-slide-up">
             <button 
