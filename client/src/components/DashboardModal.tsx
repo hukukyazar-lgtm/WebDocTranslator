@@ -4,15 +4,19 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Crown, Users, Trophy, Settings, Zap, Play, X } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Crown, Users, Trophy, Settings, Zap, Play, X, Globe } from 'lucide-react';
 import { GameStats } from '@/components/game/GameStats';
+import { type Language } from '@/components/game/LanguageScreen';
 
 interface DashboardModalProps {
   isOpen: boolean;
   onClose: () => void;
+  selectedLanguage?: Language;
+  onLanguageChange?: (language: Language) => void;
 }
 
-export function DashboardModal({ isOpen, onClose }: DashboardModalProps) {
+export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLanguageChange }: DashboardModalProps) {
   const [selectedMode, setSelectedMode] = useState('single');
   const [showSettings, setShowSettings] = useState(false);
 
@@ -212,10 +216,46 @@ export function DashboardModal({ isOpen, onClose }: DashboardModalProps) {
               LUMINA - Ayarlar
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 text-white">
-            <div className="text-center py-4">
-              <p className="text-white/80">Ayarlar yakında eklenecek...</p>
+          <div className="space-y-6 text-white">
+            {/* Language Selection */}
+            <div className="space-y-3">
+              <div className="flex items-center gap-2">
+                <Globe className="h-5 w-5 text-cyan-400" />
+                <h3 className="text-lg font-bold text-white">Dil Seçimi</h3>
+              </div>
+              <Select 
+                value={selectedLanguage} 
+                onValueChange={(value: Language) => onLanguageChange?.(value)}
+              >
+                <SelectTrigger className="w-full backdrop-blur-lg border border-white/30 text-white bg-white/10">
+                  <SelectValue placeholder="Dil seçin" />
+                </SelectTrigger>
+                <SelectContent className="backdrop-blur-xl border border-white/20" style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
+                }}>
+                  <SelectItem value="tr" className="text-white hover:bg-white/10">🇹🇷 Türkçe</SelectItem>
+                  <SelectItem value="en" className="text-white hover:bg-white/10">🇺🇸 English</SelectItem>
+                  <SelectItem value="es" className="text-white hover:bg-white/10">🇪🇸 Español</SelectItem>
+                  <SelectItem value="fr" className="text-white hover:bg-white/10">🇫🇷 Français</SelectItem>
+                  <SelectItem value="de" className="text-white hover:bg-white/10">🇩🇪 Deutsch</SelectItem>
+                  <SelectItem value="it" className="text-white hover:bg-white/10">🇮🇹 Italiano</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
+
+            {/* Game Settings */}
+            <div className="space-y-3">
+              <h3 className="text-lg font-bold text-white flex items-center gap-2">
+                <Settings className="h-5 w-5 text-cyan-400" />
+                Oyun Ayarları
+              </h3>
+              <div className="p-4 rounded-lg backdrop-blur-lg border border-white/20" style={{
+                background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+              }}>
+                <p className="text-white/80 text-sm">Ses efektleri, müzik ve diğer oyun ayarları yakında eklenecek.</p>
+              </div>
+            </div>
+
             <Button 
               onClick={() => setShowSettings(false)}
               className="w-full backdrop-blur-lg border border-cyan-400/50"
@@ -223,7 +263,7 @@ export function DashboardModal({ isOpen, onClose }: DashboardModalProps) {
                 background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.4), rgba(184, 187, 217, 0.3))'
               }}
             >
-              Kapat
+              Değişiklikleri Kaydet
             </Button>
           </div>
         </DialogContent>

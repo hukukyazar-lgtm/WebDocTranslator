@@ -138,7 +138,9 @@ export default function Home() {
         />
         <DashboardModal 
           isOpen={showDashboard} 
-          onClose={() => setShowDashboard(false)} 
+          onClose={() => setShowDashboard(false)}
+          selectedLanguage={selectedLanguage}
+          onLanguageChange={handleLanguageChange}
         />
       </div>
     );
@@ -154,7 +156,9 @@ export default function Home() {
         />
         <DashboardModal 
           isOpen={showDashboard} 
-          onClose={() => setShowDashboard(false)} 
+          onClose={() => setShowDashboard(false)}
+          selectedLanguage={selectedLanguage}
+          onLanguageChange={handleLanguageChange}
         />
       </div>
     );
@@ -186,7 +190,9 @@ export default function Home() {
         />
         <DashboardModal 
           isOpen={showDashboard} 
-          onClose={() => setShowDashboard(false)} 
+          onClose={() => setShowDashboard(false)}
+          selectedLanguage={selectedLanguage}
+          onLanguageChange={handleLanguageChange}
         />
       </div>
     );
@@ -222,7 +228,9 @@ export default function Home() {
         />
         <DashboardModal 
           isOpen={showDashboard} 
-          onClose={() => setShowDashboard(false)} 
+          onClose={() => setShowDashboard(false)}
+          selectedLanguage={selectedLanguage}
+          onLanguageChange={handleLanguageChange}
         />
       </div>
     );
