@@ -39,28 +39,32 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
   // Bir tahminin harflerinin durumunu hesapla
   const getGuessStates = (guess: string): LetterState[] => {
     const targetWord = word.toUpperCase();
-    const guessWord = guess.toUpperCase().padEnd(wordLength, ' ');
+    const guessWord = guess.toUpperCase();
     const result: LetterState[] = [];
 
     // İlk önce exact matches'ı bul
     const targetLetters = targetWord.split('');
     const usedTargetIndices = new Set<number>();
 
+    // Kelime uzunluğu kadar döngü - sadece kelime uzunluğu kadar kutu
     for (let i = 0; i < wordLength; i++) {
-      if (guessWord[i] === targetLetters[i]) {
-        result[i] = { letter: guessWord[i], state: 'correct' };
+      const guessLetter = i < guessWord.length ? guessWord[i] : '';
+      const targetLetter = targetLetters[i];
+
+      if (guessLetter === targetLetter && guessLetter !== '') {
+        result[i] = { letter: guessLetter, state: 'correct' };
         usedTargetIndices.add(i);
       } else {
-        result[i] = { letter: guessWord[i], state: 'absent' };
+        result[i] = { letter: guessLetter, state: guessLetter === '' ? 'empty' : 'absent' };
       }
     }
 
     // Sonra present letters'ı bul
     for (let i = 0; i < wordLength; i++) {
-      if (result[i].state === 'absent' && guessWord[i] !== ' ') {
+      if (result[i].state === 'absent' && result[i].letter !== '') {
         // Bu harfin target word'de başka bir yerde olup olmadığını kontrol et
         for (let j = 0; j < targetLetters.length; j++) {
-          if (!usedTargetIndices.has(j) && targetLetters[j] === guessWord[i]) {
+          if (!usedTargetIndices.has(j) && targetLetters[j] === result[i].letter) {
             result[i].state = 'present';
             usedTargetIndices.add(j);
             break;
@@ -84,11 +88,11 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
     // Mevcut tahmin (eğer oyun devam ediyorsa)
     if (!isGameOver && currentGuess !== undefined && guesses.length < maxGuesses) {
       const currentGuessStates: LetterState[] = [];
-      const paddedCurrentGuess = currentGuess.toUpperCase().padEnd(wordLength, ' ');
+      const currentGuessUpper = currentGuess.toUpperCase();
       
       for (let i = 0; i < wordLength; i++) {
         currentGuessStates.push({
-          letter: paddedCurrentGuess[i] === ' ' ? '' : paddedCurrentGuess[i],
+          letter: i < currentGuessUpper.length ? currentGuessUpper[i] : '',
           state: 'empty'
         });
       }
