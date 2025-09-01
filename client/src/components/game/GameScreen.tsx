@@ -40,7 +40,6 @@ const gameTranslations = {
     category: 'Kategori',
     difficulty: 'Zorluk',
     timeLeft: 'Kalan Süre',
-    enterGuess: 'Tahmininizi girin...',
     submit: 'Gönder',
     giveUp: 'Pes Et',
     seconds: 'saniye',
@@ -63,7 +62,6 @@ const gameTranslations = {
     category: 'Category',
     difficulty: 'Difficulty',
     timeLeft: 'Time Left',
-    enterGuess: 'Enter your guess...',
     submit: 'Submit',
     giveUp: 'Give Up',
     seconds: 'seconds',
@@ -748,22 +746,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                     </div>
                   </div>
                   
-                  {/* Input - Kompakt */}
-                  <div className={`relative ${shakeInput ? 'animate-shake-error' : ''}`}>
-                    <input 
-                      type="text" 
-                      inputMode="none"
-                      className={`w-full px-3 py-2 text-lg font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-lg focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50 ${sparkleText ? 'animate-typing-sparkle' : ''}`}
-                      style={{ 
-                        background: 'rgba(255,255,255,0.1)',
-                        textShadow: '0 0 20px rgba(255,255,255,0.5)'
-                      }}
-                      placeholder={t.enterGuess}
-                      value={guess}
-                      onChange={(e) => setGuess(e.target.value)}
-                      data-testid="input-guess"
-                    />
-                  </div>
                 </div>
                 
                 {/* Virtual Keyboard - Görünür */}
