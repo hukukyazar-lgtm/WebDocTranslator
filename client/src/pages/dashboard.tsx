@@ -72,17 +72,17 @@ export function Dashboard() {
         </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-6xl mx-auto px-3 sm:px-4 space-y-4 sm:space-y-6 py-4 sm:py-6">
-        {/* Game Stats - Mobil optimize */}
+      <div className="flex-1 overflow-y-auto max-h-0">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 space-y-3 sm:space-y-4 py-3 sm:py-4">
+        {/* Game Stats - Kompakt */}
         <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
-          <CardHeader className="pb-3 sm:pb-6">
-            <CardTitle className="text-white flex items-center gap-2 text-sm sm:text-base">
-              <Zap className="h-4 w-4 sm:h-5 sm:w-5" />
+          <CardHeader className="pb-2 sm:pb-3">
+            <CardTitle className="text-white flex items-center gap-2 text-sm">
+              <Zap className="h-4 w-4" />
               İstatistikleriniz
             </CardTitle>
           </CardHeader>
-          <CardContent className="pt-0">
+          <CardContent className="pt-0 pb-3 sm:pb-4">
             <GameStats
               score={stats.totalScore}
               streak={stats.currentStreak}
@@ -93,18 +93,15 @@ export function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Game Modes - Mobil responsive */}
+        {/* Game Modes - Kompakt */}
         <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
-          <CardHeader className="pb-3 sm:pb-6">
-            <CardTitle className="text-white flex items-center gap-2 text-sm sm:text-base">
-              <Play className="h-4 w-4 sm:h-5 sm:w-5" />
+          <CardHeader className="pb-2">
+            <CardTitle className="text-white flex items-center gap-2 text-sm">
+              <Play className="h-4 w-4" />
               Oyun Modları
             </CardTitle>
-            <CardDescription className="text-white/60 text-xs sm:text-sm">
-              Oyun deneyiminizi seçin
-            </CardDescription>
           </CardHeader>
-          <CardContent className="pt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+          <CardContent className="pt-0 pb-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
             {gameModes.map((mode) => (
               <Card 
                 key={mode.id}
@@ -142,15 +139,15 @@ export function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Recent Achievements - Mobil responsive */}
+        {/* Recent Achievements - Kompakt */}
         <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
-          <CardHeader className="pb-3 sm:pb-6">
-            <CardTitle className="text-white flex items-center gap-2 text-sm sm:text-base">
-              <Trophy className="h-4 w-4 sm:h-5 sm:w-5" />
+          <CardHeader className="pb-2">
+            <CardTitle className="text-white flex items-center gap-2 text-sm">
+              <Trophy className="h-4 w-4" />
               Son Başarımlar
             </CardTitle>
           </CardHeader>
-          <CardContent className="pt-0">
+          <CardContent className="pt-0 pb-3">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {stats.achievements
                 .filter((achievement: Achievement) => achievement.unlocked)
