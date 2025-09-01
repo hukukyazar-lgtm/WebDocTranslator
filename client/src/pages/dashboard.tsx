@@ -9,10 +9,14 @@ import { Crown, Users, Zap, Trophy, Play, Settings } from 'lucide-react';
 
 export const Dashboard = memo(() => {
   const [selectedMode, setSelectedMode] = useState<string | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
   
   const handleSettingsClick = () => {
-    // Basit ayarlar alert'i - gelecekte modal eklenebilir
-    alert('Ayarlar menüsü yakında eklenecek! 🛠️\n\nŞu an mevcut özellikler:\n- Koyu tema\n- Türkçe dil desteği\n- Performans optimizasyonu');
+    setShowSettings(true);
+  };
+  
+  const handleCloseSettings = () => {
+    setShowSettings(false);
   };
   
   // Prevent body scrolling on dashboard
@@ -204,6 +208,107 @@ export const Dashboard = memo(() => {
           </CardContent>
         </Card>
       </div>
+
+      {/* Settings Modal */}
+      {showSettings && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in" onClick={handleCloseSettings}></div>
+          
+          {/* Modal Content */}
+          <div className="relative w-full max-w-md animate-scale-in">
+            <div className="backdrop-blur-xl rounded-2xl p-6 border border-white/20 shadow-2xl" style={{
+              background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
+            }}>
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="text-2xl">👁️</div>
+                  <div>
+                    <h2 className="text-xl font-bold text-white">LUMINA Ayarları</h2>
+                    <p className="text-sm text-white/60">WordSpin Pro</p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleCloseSettings}
+                  className="p-2 hover:bg-white/10 rounded-lg transition-colors text-white/60 hover:text-white"
+                >
+                  ✕
+                </button>
+              </div>
+
+              {/* Settings Content */}
+              <div className="space-y-4">
+                {/* Tema */}
+                <div className="backdrop-blur-lg rounded-xl p-4 border border-white/20" style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+                }}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="text-lg">🎨</div>
+                      <div>
+                        <h3 className="font-semibold text-white">Koyu Tema</h3>
+                        <p className="text-xs text-white/60">Göz dostu karanlık mod</p>
+                      </div>
+                    </div>
+                    <div className="px-3 py-1 bg-green-500/20 text-green-400 text-xs font-bold rounded-full border border-green-500/30">
+                      Aktif
+                    </div>
+                  </div>
+                </div>
+
+                {/* Dil */}
+                <div className="backdrop-blur-lg rounded-xl p-4 border border-white/20" style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+                }}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="text-lg">🇹🇷</div>
+                      <div>
+                        <h3 className="font-semibold text-white">Türkçe</h3>
+                        <p className="text-xs text-white/60">Varsayılan oyun dili</p>
+                      </div>
+                    </div>
+                    <div className="px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-bold rounded-full border border-blue-500/30">
+                      Seçili
+                    </div>
+                  </div>
+                </div>
+
+                {/* Performans */}
+                <div className="backdrop-blur-lg rounded-xl p-4 border border-white/20" style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+                }}>
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="text-lg">⚡</div>
+                      <div>
+                        <h3 className="font-semibold text-white">Yüksek Performans</h3>
+                        <p className="text-xs text-white/60">Optimize edilmiş animasyonlar</p>
+                      </div>
+                    </div>
+                    <div className="px-3 py-1 bg-yellow-500/20 text-yellow-400 text-xs font-bold rounded-full border border-yellow-500/30">
+                      Açık
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="mt-6 pt-4 border-t border-white/10">
+                <div className="text-center">
+                  <p className="text-xs text-white/60">
+                    LUMINA WordSpin Pro v2025.1
+                  </p>
+                  <p className="text-xs text-white/40 mt-1">
+                    💎 Premium Türkçe Kelime Oyunu
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 });
