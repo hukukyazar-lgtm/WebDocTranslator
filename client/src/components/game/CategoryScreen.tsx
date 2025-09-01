@@ -330,39 +330,38 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
               {selectedLanguage === 'tr' ? 'Kategori seçin, zorluk seviyesi modal\'da belirlenecek' : 'Choose category, difficulty will be selected in modal'}
             </p>
             
-            {/* Modern Kategori Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+            {/* Modern Kategori Grid - Kompakt Tasarım */}
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
               {Object.keys(wordLists).map((cat) => (
                 <button
                   key={cat}
                   onClick={() => handleCategoryClick(cat)}
                   onMouseEnter={() => setHoveredCategory(cat)}
                   onMouseLeave={() => setHoveredCategory(null)}
-                  className="group relative p-6 sm:p-8 rounded-2xl sm:rounded-3xl transition-all duration-500 transform hover:scale-110 active:scale-95 backdrop-blur-lg border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl"
+                  className="group relative p-3 sm:p-4 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95"
                   style={{
                     background: hoveredCategory === cat 
                       ? `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}60)`
-                      : 'linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.12))',
+                      : `linear-gradient(135deg, ${getThemeForCategory(cat).primary}20, ${getThemeForCategory(cat).secondary}20)`,
+                    backdropFilter: 'blur(20px)',
+                    border: `2px solid ${getThemeForCategory(cat).primary}${hoveredCategory === cat ? '80' : '40'}`,
                     boxShadow: hoveredCategory === cat 
-                      ? `0 20px 40px ${getThemeForCategory(cat).primary}30`
-                      : '0 8px 20px rgba(0, 0, 0, 0.3)'
+                      ? `0 15px 30px ${getThemeForCategory(cat).primary}40`
+                      : `0 8px 20px ${getThemeForCategory(cat).primary}20`
                   }}
                   data-testid={`button-category-${cat}`}
                 >
                   <div className="text-center">
-                    <div className="text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4 transition-transform duration-300 group-hover:scale-110">
+                    <div className="text-2xl sm:text-3xl mb-2 transition-transform duration-300 group-hover:scale-110">
                       {categoryIcons[cat]}
                     </div>
-                    <div className="font-bold text-white text-base sm:text-lg lg:text-xl mb-2">
+                    <div className="font-bold text-white text-xs sm:text-sm mb-1">
                       {getCategoryName(cat)}
                     </div>
-                    <div className="text-sm text-white/60">
-                      {Object.keys(wordLists[cat]).length} seviye
+                    <div className="text-xs text-white/60">
+                      {Object.keys(wordLists[cat]).length}
                     </div>
                   </div>
-                  
-                  {/* Hover efekti */}
-                  <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
                 </button>
               ))}
             </div>
