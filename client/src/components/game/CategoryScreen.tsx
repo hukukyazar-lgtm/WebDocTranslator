@@ -319,11 +319,13 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
             </div>
           </div>
 
-          {/* Modal Stil Ana Container */}
-          <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
+          {/* Kategori Seçimi Modal */}
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in"></div>
             
-            {/* Modal Benzeri Container - Tablet Uyumlu */}
-            <div className="w-full max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto">
+            {/* Modal Content */}
+            <div className="relative w-full max-w-lg md:max-w-2xl lg:max-w-3xl animate-scale-in">
               <div className="rounded-2xl p-4 sm:p-6 md:p-8"
                    style={{
                      background: `linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.10))`,
@@ -331,53 +333,54 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                      border: `2px solid rgba(255, 255, 255, 0.20)`,
                      boxShadow: `0 30px 60px rgba(0, 0, 0, 0.3)`
                    }}>
-            
-            {/* Ana Başlık - Tablet Uyumlu */}
-            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 md:mb-2 text-center">
-              {t.chooseCategory}
-            </h2>
-            <p className="text-center text-white/70 text-sm md:text-base mb-3 md:mb-6">
-              {selectedLanguage === 'tr' ? 'Kategori seçin, zorluk seviyesi modal\'da belirlenecek' : 'Choose category, difficulty will be selected in modal'}
-            </p>
-            
-            {/* Tablet Grid Layout */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
-              {Object.keys(wordLists).map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => handleCategoryClick(cat)}
-                  onMouseEnter={() => setHoveredCategory(cat)}
-                  onMouseLeave={() => setHoveredCategory(null)}
-                  className="w-full p-4 md:p-5 lg:p-6 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 text-left touch-manipulation"
-                  style={{
-                    background: `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}30)`,
-                    backdropFilter: 'blur(20px)',
-                    border: `2px solid ${getThemeForCategory(cat).primary}80`,
-                    boxShadow: `0 15px 30px ${getThemeForCategory(cat).primary}40`
-                  }}
-                  data-testid={`button-category-${cat}`}
-                >
-                  <div className="flex items-center gap-4 md:gap-5">
-                    <div className="text-3xl md:text-4xl" style={{ filter: 'drop-shadow(0 0 8px currentColor)' }}>
-                      {categoryIcons[cat]}
-                    </div>
-                    <div className="flex-1">
-                      <h4 className="font-bold text-white text-lg md:text-xl lg:text-2xl mb-1">
-                        {getCategoryName(cat)}
-                      </h4>
-                      <div className="text-white/80 text-sm md:text-base">
-                        {Object.keys(wordLists[cat]).length} seviye
+                
+                {/* Modal Header */}
+                <div className="text-center mb-4 md:mb-6">
+                  <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
+                    {t.chooseCategory}
+                  </h2>
+                  <p className="text-white/70 text-sm md:text-base mb-3">
+                    {selectedLanguage === 'tr' ? 'Kategori seçin, zorluk seviyesi sonra belirlenecek' : 'Choose category, difficulty will be selected next'}
+                  </p>
+                </div>
+                
+                {/* Kategori Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4 max-h-96 overflow-y-auto">
+                  {Object.keys(wordLists).map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => handleCategoryClick(cat)}
+                      onMouseEnter={() => setHoveredCategory(cat)}
+                      onMouseLeave={() => setHoveredCategory(null)}
+                      className="w-full p-4 md:p-5 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 text-left touch-manipulation"
+                      style={{
+                        background: `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}30)`,
+                        backdropFilter: 'blur(20px)',
+                        border: `2px solid ${getThemeForCategory(cat).primary}80`,
+                        boxShadow: `0 15px 30px ${getThemeForCategory(cat).primary}40`
+                      }}
+                      data-testid={`button-category-${cat}`}
+                    >
+                      <div className="flex items-center gap-3 md:gap-4">
+                        <div className="text-2xl md:text-3xl" style={{ filter: 'drop-shadow(0 0 8px currentColor)' }}>
+                          {categoryIcons[cat]}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-bold text-white text-base md:text-lg mb-0.5">
+                            {getCategoryName(cat)}
+                          </h4>
+                          <div className="text-white/80 text-xs md:text-sm">
+                            {Object.keys(wordLists[cat]).length} seviye
+                          </div>
+                        </div>
+                        <div className="text-xl md:text-2xl text-white/60">→</div>
                       </div>
-                    </div>
-                    <div className="text-2xl md:text-3xl text-white/60">→</div>
-                  </div>
-                </button>
-              ))}
-            </div>
-              
+                    </button>
+                  ))}
+                </div>
+                
               </div>
             </div>
-            
           </div>
         </div>
       </div>

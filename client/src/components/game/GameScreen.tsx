@@ -777,12 +777,17 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               </div>
             )}
 
-            {/* Game Over Results - Tablet Uyumlu */}
+            {/* Game Over Modal */}
             {gameOver && (
-              <div className="flex justify-center animate-scale-in">
-                <div className="backdrop-blur-xl rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 border border-white/20 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl shadow-2xl" style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
-                }}>
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+                {/* Backdrop */}
+                <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in"></div>
+                
+                {/* Modal Content */}
+                <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl animate-scale-in">
+                  <div className="backdrop-blur-xl rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 border border-white/20 shadow-2xl" style={{
+                    background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
+                  }}>
                   <div className="text-center space-y-3 sm:space-y-4 md:space-y-6">
                     {/* Success/Failure Icon */}
                     <div className="relative">
@@ -886,6 +891,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                         🏠 {t.mainMenu}
                       </button>
                     </div>
+                  </div>
                   </div>
                 </div>
               </div>
