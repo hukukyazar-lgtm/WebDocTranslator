@@ -14,10 +14,13 @@ export const LoginScreen = memo<LoginScreenProps>(({ onAuthChoice, onDashboard }
   };
 
   const handleGuestMode = () => {
-    onAuthChoice(true);
     if (onDashboard) {
       onDashboard();
     }
+    // Delay the auth choice to let dashboard open first
+    setTimeout(() => {
+      onAuthChoice(true);
+    }, 100);
   };
 
   const backgroundStyle = {

@@ -88,8 +88,13 @@ export default function Home() {
 
   const handleAuthChoice = (isGuest: boolean) => {
     setIsGuestMode(isGuest);
-    // Hem login hem misafir girişi dashboard'a yönlendir
-    window.location.href = '/dashboard';
+    if (!isGuest) {
+      // Sadece login için dashboard'a yönlendir, guest mode'da modal açık kalsın
+      window.location.href = '/dashboard';
+    } else {
+      // Guest mode'da category'ye geç ama modal açık kalmasını sağla
+      setAppState('category');
+    }
   };
 
   const handleCategorySelect = (category: string, difficulty: number) => {
@@ -170,13 +175,19 @@ export default function Home() {
   // Kategori seçimi  
   if (appState === 'category') {
     return (
-      <CategoryScreen 
-        selectedLanguage={selectedLanguage}
-        onCategorySelect={handleCategorySelect}
-        onBack={() => window.location.href = '/dashboard'}
-        onSettingsOpen={handleSettingsOpen}
-        isGuestMode={isGuestMode}
-      />
+      <div>
+        <CategoryScreen 
+          selectedLanguage={selectedLanguage}
+          onCategorySelect={handleCategorySelect}
+          onBack={() => window.location.href = '/dashboard'}
+          onSettingsOpen={handleSettingsOpen}
+          isGuestMode={isGuestMode}
+        />
+        <DashboardModal 
+          isOpen={showDashboard} 
+          onClose={() => setShowDashboard(false)} 
+        />
+      </div>
     );
   }
 
