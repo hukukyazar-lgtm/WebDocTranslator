@@ -55,32 +55,33 @@ export function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
-      {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-3">
-          <div className="text-3xl">👁️</div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-x-hidden">
+      {/* Header - Mobil uyumlu */}
+      <div className="flex items-center justify-between p-3 sm:p-4 mb-4 sm:mb-6">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className="text-2xl sm:text-3xl">👁️</div>
           <div>
-            <h1 className="text-2xl font-bold text-white">LUMINA</h1>
-            <p className="text-sm text-white/60">WordSpin Pro</p>
+            <h1 className="text-lg sm:text-2xl font-bold text-white">LUMINA</h1>
+            <p className="text-xs sm:text-sm text-white/60">WordSpin Pro</p>
           </div>
         </div>
-        <Button variant="outline" size="sm" className="text-white border-white/20">
-          <Settings className="h-4 w-4 mr-2" />
-          Ayarlar
+        <Button variant="outline" size="sm" className="text-white border-white/20 text-xs sm:text-sm">
+          <Settings className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
+          <span className="hidden sm:inline">Ayarlar</span>
+          <span className="sm:hidden">⚙️</span>
         </Button>
       </div>
 
-      <div className="max-w-6xl mx-auto space-y-6">
-        {/* Game Stats */}
+      <div className="max-w-6xl mx-auto px-3 sm:px-4 space-y-4 sm:space-y-6 pb-6">
+        {/* Game Stats - Mobil optimize */}
         <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <Zap className="h-5 w-5" />
+          <CardHeader className="pb-3 sm:pb-6">
+            <CardTitle className="text-white flex items-center gap-2 text-sm sm:text-base">
+              <Zap className="h-4 w-4 sm:h-5 sm:w-5" />
               İstatistikleriniz
             </CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="pt-0">
             <GameStats
               score={stats.totalScore}
               streak={stats.currentStreak}
@@ -91,18 +92,18 @@ export function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Game Modes */}
+        {/* Game Modes - Mobil responsive */}
         <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <Play className="h-5 w-5" />
+          <CardHeader className="pb-3 sm:pb-6">
+            <CardTitle className="text-white flex items-center gap-2 text-sm sm:text-base">
+              <Play className="h-4 w-4 sm:h-5 sm:w-5" />
               Oyun Modları
             </CardTitle>
-            <CardDescription className="text-white/60">
+            <CardDescription className="text-white/60 text-xs sm:text-sm">
               Oyun deneyiminizi seçin
             </CardDescription>
           </CardHeader>
-          <CardContent className="grid md:grid-cols-3 gap-4">
+          <CardContent className="pt-0 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             {gameModes.map((mode) => (
               <Card 
                 key={mode.id}
@@ -111,14 +112,14 @@ export function Dashboard() {
                 } ${!mode.available ? 'opacity-60' : ''}`}
                 onClick={() => mode.available && setSelectedMode(mode.id)}
               >
-                <CardContent className="p-6 text-center">
-                  <div className={`inline-flex p-4 rounded-full bg-gradient-to-r ${mode.color} mb-4`}>
-                    <div className="text-white">
+                <CardContent className="p-3 sm:p-6 text-center">
+                  <div className={`inline-flex p-2 sm:p-4 rounded-full bg-gradient-to-r ${mode.color} mb-2 sm:mb-4`}>
+                    <div className="text-white text-sm sm:text-base">
                       {mode.icon}
                     </div>
                   </div>
-                  <h3 className="text-lg font-bold text-white mb-2">{mode.title}</h3>
-                  <p className="text-sm text-white/60 mb-4">{mode.description}</p>
+                  <h3 className="text-sm sm:text-lg font-bold text-white mb-1 sm:mb-2">{mode.title}</h3>
+                  <p className="text-xs sm:text-sm text-white/60 mb-2 sm:mb-4">{mode.description}</p>
                   
                   {mode.available ? (
                     <Link href={mode.path}>
@@ -140,36 +141,36 @@ export function Dashboard() {
           </CardContent>
         </Card>
 
-        {/* Recent Achievements */}
+        {/* Recent Achievements - Mobil responsive */}
         <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
-          <CardHeader>
-            <CardTitle className="text-white flex items-center gap-2">
-              <Trophy className="h-5 w-5" />
+          <CardHeader className="pb-3 sm:pb-6">
+            <CardTitle className="text-white flex items-center gap-2 text-sm sm:text-base">
+              <Trophy className="h-4 w-4 sm:h-5 sm:w-5" />
               Son Başarımlar
             </CardTitle>
           </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-4">
+          <CardContent className="pt-0">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               {stats.achievements
                 .filter((achievement: Achievement) => achievement.unlocked)
                 .slice(0, 4)
                 .map((achievement: Achievement, index: number) => (
                   <div 
                     key={achievement.id}
-                    className="flex items-center gap-3 p-3 bg-white/5 rounded-lg border border-white/10"
+                    className="flex items-center gap-2 sm:gap-3 p-2 sm:p-3 bg-white/5 rounded-lg border border-white/10"
                   >
-                    <div className="text-2xl">{achievement.emoji}</div>
-                    <div>
-                      <h4 className="font-semibold text-white">{achievement.name}</h4>
-                      <p className="text-sm text-white/60">{achievement.description}</p>
+                    <div className="text-lg sm:text-2xl flex-shrink-0">{achievement.emoji}</div>
+                    <div className="min-w-0 flex-1">
+                      <h4 className="font-semibold text-white text-xs sm:text-sm truncate">{achievement.name}</h4>
+                      <p className="text-xs text-white/60 line-clamp-2">{achievement.description}</p>
                     </div>
                   </div>
                 ))}
               
               {stats.achievements.filter((a: Achievement) => a.unlocked).length === 0 && (
-                <div className="text-center text-white/60 py-8 col-span-2">
-                  <Trophy className="h-12 w-12 mx-auto mb-2 opacity-40" />
-                  <p>Henüz başarım kazanmadınız. Oyuna başlayın!</p>
+                <div className="text-center text-white/60 py-4 sm:py-8 col-span-full">
+                  <Trophy className="h-8 w-8 sm:h-12 sm:w-12 mx-auto mb-2 opacity-40" />
+                  <p className="text-xs sm:text-sm">Henüz başarım kazanmadınız. Oyuna başlayın!</p>
                 </div>
               )}
             </div>
