@@ -72,7 +72,7 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
     return result;
   };
 
-  // Grid'i oluştur
+  // Grid'i oluştur - sadece gerekli satırları göster
   const gridRows = useMemo(() => {
     const rows: LetterState[][] = [];
     
@@ -95,8 +95,9 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
       rows.push(currentGuessStates);
     }
     
-    // Boş satırlar
-    while (rows.length < maxGuesses) {
+    // Sadece 1-2 boş satır ekle, fazla değil
+    const remainingRows = Math.min(2, maxGuesses - rows.length);
+    for (let r = 0; r < remainingRows; r++) {
       const emptyRow: LetterState[] = [];
       for (let i = 0; i < wordLength; i++) {
         emptyRow.push({ letter: '', state: 'empty' });

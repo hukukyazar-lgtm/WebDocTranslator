@@ -266,7 +266,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   const [secretWord, setSecretWord] = useState('');
   const [guess, setGuess] = useState('');
   const [guesses, setGuesses] = useState<string[]>([]); // Lingo tahmin geçmişi
-  const maxGuesses = 6; // Lingo'da genellikle 6 tahmin hakkı
+  const maxGuesses = 4; // Daha az tahmin hakkı, daha kompakt grid
   const [isSpinning, setIsSpinning] = useState(true);
   const [spinDuration, setSpinDuration] = useState(3.0);
   const [message, setMessage] = useState('');
