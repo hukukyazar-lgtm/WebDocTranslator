@@ -100,7 +100,8 @@ export default function Home() {
   };
 
   const handleGameOver = () => {
-    setAppState('category');
+    // Ana menüye dön - Dashboard'a yönlendirme
+    window.location.href = '/dashboard';
   };
   
   const handleSettingsOpen = () => {
