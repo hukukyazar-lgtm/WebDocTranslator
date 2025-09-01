@@ -75,7 +75,9 @@ export const Dashboard = memo(() => {
   ];
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
+    <div className="h-screen overflow-hidden" style={{
+      background: 'linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%)'
+    }}>
       {/* Header - Mobil uyumlu */}
       <div className="flex items-center justify-between p-3 sm:p-4 mb-4 sm:mb-6">
         <div className="flex items-center gap-2 sm:gap-3">
@@ -98,11 +100,13 @@ export const Dashboard = memo(() => {
       </div>
 
       <div className="max-w-6xl mx-auto px-3 sm:px-4 space-y-3 sm:space-y-4 pb-6">
-        {/* Game Stats - Kompakt */}
-        <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
+        {/* Game Stats - LUMINA Style */}
+        <Card className="backdrop-blur-xl border border-white/20 shadow-2xl" style={{
+          background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
+        }}>
           <CardHeader className="pb-2 sm:pb-3">
-            <CardTitle className="text-white flex items-center gap-2 text-sm">
-              <Zap className="h-4 w-4" />
+            <CardTitle className="text-white flex items-center gap-2 text-sm font-bold">
+              <Zap className="h-4 w-4 text-cyan-400" />
               İstatistikleriniz
             </CardTitle>
           </CardHeader>
@@ -117,11 +121,13 @@ export const Dashboard = memo(() => {
           </CardContent>
         </Card>
 
-        {/* Game Modes - Kompakt */}
-        <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
+        {/* Game Modes - LUMINA Style */}
+        <Card className="backdrop-blur-xl border border-white/20 shadow-2xl" style={{
+          background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
+        }}>
           <CardHeader className="pb-2">
-            <CardTitle className="text-white flex items-center gap-2 text-sm">
-              <Play className="h-4 w-4" />
+            <CardTitle className="text-white flex items-center gap-2 text-sm font-bold">
+              <Play className="h-4 w-4 text-cyan-400" />
               Oyun Modları
             </CardTitle>
           </CardHeader>
@@ -129,16 +135,23 @@ export const Dashboard = memo(() => {
             {gameModes.map((mode) => (
               <Card 
                 key={mode.id}
-                className={`bg-white/5 border-white/20 transition-all duration-300 cursor-pointer ${
-                  selectedMode === mode.id ? 'ring-2 ring-white/40 scale-105' : 'hover:scale-105'
+                className={`backdrop-blur-lg border border-white/20 transition-all duration-300 cursor-pointer shadow-xl ${
+                  selectedMode === mode.id ? 'ring-2 ring-cyan-400/60 scale-105' : 'hover:scale-105'
                 } ${!mode.available ? 'opacity-60' : ''}`}
+                style={{
+                  background: selectedMode === mode.id 
+                    ? 'linear-gradient(135deg, rgba(0, 220, 205, 0.2), rgba(255,255,255,0.1))' 
+                    : 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+                }}
                 onClick={() => mode.available && setSelectedMode(mode.id)}
               >
                 <CardContent className="p-3 sm:p-6 text-center">
                   {mode.id === 'single' ? (
                     <>
-                      <div className={`inline-flex p-2 sm:p-4 rounded-full bg-gradient-to-r ${mode.color} mb-2 sm:mb-4`}>
-                        <div className="text-white text-sm sm:text-base">
+                      <div className="mb-2 sm:mb-4">
+                        <div className="mx-auto w-12 h-12 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center text-white shadow-xl backdrop-blur-lg border border-cyan-400/30" style={{
+                          background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.3), rgba(184, 187, 217, 0.2))'
+                        }}>
                           {mode.icon}
                         </div>
                       </div>
@@ -155,14 +168,17 @@ export const Dashboard = memo(() => {
                   {mode.available ? (
                     <Link href={mode.path}>
                       <Button 
-                        className={`w-full bg-gradient-to-r ${mode.color} text-white border-none hover:opacity-90`}
+                        className="w-full text-white border-none shadow-xl backdrop-blur-lg border border-cyan-400/50 font-bold"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.4), rgba(184, 187, 217, 0.3))'
+                        }}
                         size="sm"
                       >
-                        Başla
+                        🎮 Başla
                       </Button>
                     </Link>
                   ) : (
-                    <Badge variant="secondary" className="bg-white/20 text-white/80">
+                    <Badge variant="secondary" className="bg-white/20 text-white/80 backdrop-blur-lg border border-white/30">
                       Yakında
                     </Badge>
                   )}
@@ -172,11 +188,13 @@ export const Dashboard = memo(() => {
           </CardContent>
         </Card>
 
-        {/* Recent Achievements - Kompakt */}
-        <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
+        {/* Recent Achievements - LUMINA Style */}
+        <Card className="backdrop-blur-xl border border-white/20 shadow-2xl" style={{
+          background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
+        }}>
           <CardHeader className="pb-2">
-            <CardTitle className="text-white flex items-center gap-2 text-sm">
-              <Trophy className="h-4 w-4" />
+            <CardTitle className="text-white flex items-center gap-2 text-sm font-bold">
+              <Trophy className="h-4 w-4 text-cyan-400" />
               Son Başarımlar
             </CardTitle>
           </CardHeader>
