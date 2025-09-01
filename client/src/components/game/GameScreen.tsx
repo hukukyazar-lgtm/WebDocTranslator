@@ -617,7 +617,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         )}
         
-        <main className="flex-1 flex flex-col px-2 sm:px-3 py-2 sm:py-3 overflow-hidden">
+        <main className="flex-1 flex flex-col px-2 sm:px-3 py-2 sm:py-3 pt-16 overflow-hidden">
           <div className="w-full h-full flex flex-col space-y-2 sm:space-y-3">
             {/* Dikey Layout: Çark → Grid → Tahmin Kutusu */}
             <div className="flex-1 flex flex-col items-center justify-center gap-4 sm:gap-6">
