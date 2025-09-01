@@ -141,7 +141,16 @@ export default function Home() {
   // Login sayfası
   if (appState === 'login') {
     return (
-      <LoginScreen onAuthChoice={handleAuthChoice} />
+      <div>
+        <LoginScreen 
+          onAuthChoice={handleAuthChoice}
+          onDashboard={() => setShowDashboard(true)}
+        />
+        <DashboardModal 
+          isOpen={showDashboard} 
+          onClose={() => setShowDashboard(false)} 
+        />
+      </div>
     );
   }
   

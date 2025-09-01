@@ -3,9 +3,10 @@ import { useAuth } from '@/hooks/useAuth';
 
 export interface LoginScreenProps {
   onAuthChoice: (isGuest: boolean) => void;
+  onDashboard?: () => void;
 }
 
-export const LoginScreen = memo<LoginScreenProps>(({ onAuthChoice }) => {
+export const LoginScreen = memo<LoginScreenProps>(({ onAuthChoice, onDashboard }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
   const handleLogin = () => {
@@ -14,6 +15,9 @@ export const LoginScreen = memo<LoginScreenProps>(({ onAuthChoice }) => {
 
   const handleGuestMode = () => {
     onAuthChoice(true);
+    if (onDashboard) {
+      onDashboard();
+    }
   };
 
   const backgroundStyle = {
