@@ -621,9 +621,9 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           <div className="w-full h-full flex flex-col space-y-2 sm:space-y-3">
             {/* Dikey Layout: Çark → Grid → Tahmin Kutusu */}
             <div className="flex-1 flex flex-col items-center justify-center gap-4 sm:gap-6">
-              {/* Üst: Spinning Wheel */}
+              {/* Üst: Spinning Wheel - Daha küçük */}
               <div className="flex-shrink-0">
-                <div className="transform scale-60 sm:scale-75 md:scale-90">
+                <div className="transform scale-40 sm:scale-50 md:scale-60">
                   <SpinningWheel 
                     word={secretWord} 
                     isSpinning={isSpinning} 
