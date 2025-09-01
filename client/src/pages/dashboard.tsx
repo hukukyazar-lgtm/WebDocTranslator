@@ -121,13 +121,22 @@ export function Dashboard() {
                 onClick={() => mode.available && setSelectedMode(mode.id)}
               >
                 <CardContent className="p-3 sm:p-6 text-center">
-                  <div className={`inline-flex p-2 sm:p-4 rounded-full bg-gradient-to-r ${mode.color} mb-2 sm:mb-4`}>
-                    <div className="text-white text-sm sm:text-base">
-                      {mode.icon}
-                    </div>
-                  </div>
-                  <h3 className="text-sm sm:text-lg font-bold text-white mb-1 sm:mb-2">{mode.title}</h3>
-                  <p className="text-xs sm:text-sm text-white/60 mb-2 sm:mb-4">{mode.description}</p>
+                  {mode.id === 'single' ? (
+                    <>
+                      <div className={`inline-flex p-2 sm:p-4 rounded-full bg-gradient-to-r ${mode.color} mb-2 sm:mb-4`}>
+                        <div className="text-white text-sm sm:text-base">
+                          {mode.icon}
+                        </div>
+                      </div>
+                      <h3 className="text-sm sm:text-lg font-bold text-white mb-1 sm:mb-2">{mode.title}</h3>
+                      <p className="text-xs sm:text-sm text-white/60 mb-2 sm:mb-4">{mode.description}</p>
+                    </>
+                  ) : (
+                    <>
+                      <h3 className="text-sm sm:text-lg font-bold text-white mb-1 sm:mb-2">{mode.title}</h3>
+                      <p className="text-xs sm:text-sm text-white/60 mb-2 sm:mb-4">{mode.description}</p>
+                    </>
+                  )}
                   
                   {mode.available ? (
                     <Link href={mode.path}>

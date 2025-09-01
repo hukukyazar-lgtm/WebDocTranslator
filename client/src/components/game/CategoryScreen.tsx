@@ -316,14 +316,14 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
               {t.chooseCategory}
             </h3>
             
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
               {Object.keys(wordLists).map((cat) => (
                 <button
                   key={cat}
                   onClick={() => handleCategorySelect(cat)}
                   onMouseEnter={() => setHoveredCategory(cat)}
                   onMouseLeave={() => setHoveredCategory(null)}
-                  className="group relative p-4 sm:p-6 lg:p-8 rounded-2xl sm:rounded-3xl transition-all duration-500 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl"
+                  className="group relative p-2 sm:p-3 lg:p-4 rounded-xl sm:rounded-2xl transition-all duration-500 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl"
                   style={{
                     background: hoveredCategory === cat 
                       ? `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}60)`
@@ -360,13 +360,13 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                   </div>
                   
                   <div className="text-center">
-                    <div className="text-3xl sm:text-4xl lg:text-5xl mb-2 sm:mb-3 lg:mb-4 mt-4 transition-transform duration-300 group-hover:scale-110">
+                    <div className="text-2xl sm:text-3xl lg:text-4xl mb-1 sm:mb-2 lg:mb-3 mt-2 transition-transform duration-300 group-hover:scale-110">
                       {categoryIcons[cat]}
                     </div>
-                    <div className="font-bold text-white text-sm sm:text-base lg:text-lg">
+                    <div className="font-bold text-white text-xs sm:text-sm lg:text-base">
                       {getCategoryName(cat)}
                     </div>
-                    <div className="text-xs sm:text-sm text-white/60 mt-1">
+                    <div className="text-xs text-white/60 mt-1">
                       {Object.keys(wordLists[cat]).length} {t.levels}
                     </div>
                     
