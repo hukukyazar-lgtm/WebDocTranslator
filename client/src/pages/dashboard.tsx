@@ -72,7 +72,7 @@ export function Dashboard() {
         </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto max-h-0">
+      <div className="flex-1 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 80px)' }}>
         <div className="max-w-6xl mx-auto px-3 sm:px-4 space-y-3 sm:space-y-4 py-3 sm:py-4">
         {/* Game Stats - Kompakt */}
         <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
