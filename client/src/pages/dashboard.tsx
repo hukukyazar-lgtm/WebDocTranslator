@@ -84,7 +84,7 @@ export const Dashboard = memo(() => {
           <div className="text-2xl sm:text-3xl">👁️</div>
           <div>
             <h1 className="text-lg sm:text-2xl font-bold text-white">LUMINA</h1>
-            <p className="text-xs sm:text-sm text-white/60">WordSpin Pro</p>
+            <p className="text-xs sm:text-sm text-white/70">WordSpin Pro</p>
           </div>
         </div>
         <Button 
