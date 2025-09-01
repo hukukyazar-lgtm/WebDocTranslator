@@ -487,7 +487,50 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       
       // 2 saniye sonra otomatik devam et
       setTimeout(() => {
-        handleContinue();
+        // Inline continue logic
+        if (timerRef.current) {
+          clearInterval(timerRef.current);
+          timerRef.current = null;
+        }
+        
+        setGuess('');
+        setIsSpinning(true);
+        setMessage('');
+        setGameOver(false);
+        setElapsedTime(0);
+        setSlowdownApplied(false);
+        setGameSuccess(false);
+        setGuesses([]); // Reset guesses for new word
+        
+        // Get new word
+        const categoryWords = wordLists[category];
+        const wordPool = (categoryWords as any)?.[difficulty] || [];
+        const availableWords = wordPool.filter((word: string) => !usedWords.includes(word));
+        
+        let newWord: string;
+        if (availableWords.length === 0) {
+          setUsedWords([]);
+          newWord = wordPool[Math.floor(Math.random() * wordPool.length)];
+        } else {
+          newWord = availableWords[Math.floor(Math.random() * availableWords.length)];
+        }
+        
+        if (newWord) {
+          setSecretWord(newWord);
+          setUsedWords(prev => [...prev, newWord]);
+        }
+        
+        // Start new timer
+        const startTime = Date.now();
+        timerRef.current = setInterval(() => {
+          const now = Date.now();
+          const elapsed = (now - startTime) / 1000;
+          setElapsedTime(elapsed);
+
+          if (elapsed >= TOTAL_GAME_TIME) {
+            endGame(`${t.timeUp} Doğru kelime: ${newWord}`, false);
+          }
+        }, 100);
       }, 2000);
     } else if (newGuesses.length >= maxGuesses) {
       // Maksimum tahmin sayısına ulaşıldı - oyunu bitir
@@ -499,7 +542,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setMessage(`${t.wrongAnswer} ${maxGuesses - newGuesses.length} tahmin hakkınız kaldı!`);
       setTimeout(() => setMessage(''), 2000);
     }
-  }, [gameOver, guess, secretWord, elapsedTime, endGame, guesses, maxGuesses, t, gameStats, category, difficulty, handleContinue]);
+  }, [gameOver, guess, secretWord, elapsedTime, endGame, guesses, maxGuesses, t, gameStats, category, difficulty, usedWords, timerRef]);
 
   const handleKeyPress = useCallback((key: string) => {
     setGuess(prev => prev + key);
