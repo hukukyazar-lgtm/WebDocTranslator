@@ -657,7 +657,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               </div>
             )}
             
-            {!gameOver && (
+            {true && ( // Her zaman klavye göster - debug için
               <div className="flex-shrink-0 space-y-2">
                 {/* Kompakt Timer + Input */}
                 <div className="backdrop-blur-xl rounded-lg p-2 sm:p-3 border border-white/20 shadow-xl" style={{
