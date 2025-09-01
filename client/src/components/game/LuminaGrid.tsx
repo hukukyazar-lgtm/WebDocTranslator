@@ -15,6 +15,7 @@ interface LetterState {
 
 export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, maxGuesses, isGameOver }) => {
   const wordLength = word.length;
+  const gridWidth = 8; // Sabit grid genişliği - kelimeleri değiştirmeden kutu sayısını ayarlıyoruz
   
   // Lingo renk kodlaması ve animasyonlar
   const getLetterStateClass = (state: LetterState['state'], hasLetter: boolean) => {
@@ -46,22 +47,24 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
     const targetLetters = targetWord.split('');
     const usedTargetIndices = new Set<number>();
 
-    // Kelime uzunluğu kadar döngü - sadece kelime uzunluğu kadar kutu
-    for (let i = 0; i < wordLength; i++) {
+    // Sabit grid genişliği kadar döngü
+    for (let i = 0; i < gridWidth; i++) {
       const guessLetter = i < guessWord.length ? guessWord[i] : '';
-      const targetLetter = targetLetters[i];
+      const targetLetter = i < targetLetters.length ? targetLetters[i] : '';
 
-      if (guessLetter === targetLetter && guessLetter !== '') {
+      if (i < wordLength && guessLetter === targetLetter && guessLetter !== '') {
         result[i] = { letter: guessLetter, state: 'correct' };
         usedTargetIndices.add(i);
+      } else if (i < wordLength && guessLetter !== '') {
+        result[i] = { letter: guessLetter, state: 'absent' };
       } else {
-        result[i] = { letter: guessLetter, state: guessLetter === '' ? 'empty' : 'absent' };
+        result[i] = { letter: guessLetter, state: 'empty' };
       }
     }
 
     // Sonra present letters'ı bul
-    for (let i = 0; i < wordLength; i++) {
-      if (result[i].state === 'absent' && result[i].letter !== '') {
+    for (let i = 0; i < gridWidth; i++) {
+      if (i < wordLength && result[i].state === 'absent' && result[i].letter !== '') {
         // Bu harfin target word'de başka bir yerde olup olmadığını kontrol et
         for (let j = 0; j < targetLetters.length; j++) {
           if (!usedTargetIndices.has(j) && targetLetters[j] === result[i].letter) {
@@ -90,7 +93,7 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
       const currentGuessStates: LetterState[] = [];
       const currentGuessUpper = currentGuess.toUpperCase();
       
-      for (let i = 0; i < wordLength; i++) {
+      for (let i = 0; i < gridWidth; i++) {
         currentGuessStates.push({
           letter: i < currentGuessUpper.length ? currentGuessUpper[i] : '',
           state: 'empty'
@@ -103,7 +106,7 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
     const remainingRows = Math.min(2, maxGuesses - rows.length);
     for (let r = 0; r < remainingRows; r++) {
       const emptyRow: LetterState[] = [];
-      for (let i = 0; i < wordLength; i++) {
+      for (let i = 0; i < gridWidth; i++) {
         emptyRow.push({ letter: '', state: 'empty' });
       }
       rows.push(emptyRow);
@@ -112,26 +115,17 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
     return rows;
   }, [word, guesses, currentGuess, maxGuesses, isGameOver]);
 
-  // Kelime uzunluğuna göre dinamik boyutlandırma
+  // Sabit grid boyutlandırması - 8 kutucuk
   const getCellSize = () => {
-    if (wordLength <= 4) return 'w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18'; // Küçük kelimeler için büyük kutucuklar
-    if (wordLength <= 6) return 'w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16'; // Orta kelimeler 
-    if (wordLength <= 8) return 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14'; // Uzun kelimeler
-    return 'w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12'; // Çok uzun kelimeler için küçük kutucuklar
+    return 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14'; // Sabit boyut
   };
 
   const getTextSize = () => {
-    if (wordLength <= 4) return 'text-xl sm:text-2xl md:text-3xl';
-    if (wordLength <= 6) return 'text-lg sm:text-xl md:text-2xl';
-    if (wordLength <= 8) return 'text-base sm:text-lg md:text-xl';
-    return 'text-sm sm:text-base md:text-lg';
+    return 'text-base sm:text-lg md:text-xl'; // Sabit metin boyutu
   };
 
   const getSpacing = () => {
-    if (wordLength <= 4) return 'space-x-3';
-    if (wordLength <= 6) return 'space-x-2';
-    if (wordLength <= 8) return 'space-x-1.5';
-    return 'space-x-1';
+    return 'space-x-1.5'; // Sabit aralık
   };
 
   return (
