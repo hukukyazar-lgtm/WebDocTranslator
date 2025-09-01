@@ -55,7 +55,7 @@ export function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-x-hidden">
+    <div className="h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden flex flex-col">
       {/* Header - Mobil uyumlu */}
       <div className="flex items-center justify-between p-3 sm:p-4 mb-4 sm:mb-6">
         <div className="flex items-center gap-2 sm:gap-3">
@@ -72,7 +72,7 @@ export function Dashboard() {
         </Button>
       </div>
 
-      <div className="max-w-6xl mx-auto px-3 sm:px-4 space-y-4 sm:space-y-6 pb-6">
+      <div className="max-w-6xl mx-auto px-3 sm:px-4 space-y-4 sm:space-y-6 pb-6 overflow-y-auto flex-1">
         {/* Game Stats - Mobil optimize */}
         <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
           <CardHeader className="pb-3 sm:pb-6">
