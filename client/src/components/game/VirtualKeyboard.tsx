@@ -43,6 +43,10 @@ interface VirtualKeyboardProps {
   onSubmit: () => void;
   usedKeys?: string[];
   language?: Language;
+  // Lingo için ekstra prop'lar
+  correctKeys?: string[]; // Doğru pozisyondaki harfler (yeşil)
+  presentKeys?: string[]; // Yanlış pozisyondaki ama var olan harfler (sarı)
+  absentKeys?: string[]; // Olmayan harfler (gri)
 }
 
 export const VirtualKeyboard = memo(({ 
@@ -51,7 +55,10 @@ export const VirtualKeyboard = memo(({
   onSpace, 
   onSubmit,
   usedKeys = [],
-  language = 'tr'
+  language = 'tr',
+  correctKeys = [],
+  presentKeys = [],
+  absentKeys = []
 }: VirtualKeyboardProps) => {
   const t = keyboardTranslations[language];
   
@@ -60,14 +67,25 @@ export const VirtualKeyboard = memo(({
   }, [onKeyPress]);
 
   const getKeyStyle = useCallback((key: string) => {
-    const baseClasses = "keyboard-key px-1 sm:px-2 lg:px-3 py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-white/30 min-w-[28px] sm:min-w-[36px] lg:min-w-[44px]";
+    const baseClasses = "keyboard-key px-1 sm:px-2 lg:px-3 py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border min-w-[28px] sm:min-w-[36px] lg:min-w-[44px]";
     
-    if (usedKeys.includes(key.toUpperCase())) {
-      return `${baseClasses} bg-white/30 text-white shadow-xl border-white/50`;
+    const upperKey = key.toUpperCase();
+    
+    // Lingo renk sistemi
+    if (correctKeys.includes(upperKey)) {
+      // Doğru pozisyon - Yeşil
+      return `${baseClasses} bg-green-500 text-white border-green-600 shadow-xl`;
+    } else if (presentKeys.includes(upperKey)) {
+      // Yanlış pozisyon ama var - Sarı
+      return `${baseClasses} bg-yellow-500 text-white border-yellow-600 shadow-xl`;
+    } else if (absentKeys.includes(upperKey)) {
+      // Kelimede yok - Gri
+      return `${baseClasses} bg-gray-500 text-white border-gray-600 shadow-xl`;
     }
     
-    return `${baseClasses} bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 shadow-lg`;
-  }, [usedKeys]);
+    // Henüz kullanılmamış
+    return `${baseClasses} bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 border-white/30 shadow-lg`;
+  }, [correctKeys, presentKeys, absentKeys]);
 
   return (
     <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>

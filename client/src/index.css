@@ -462,4 +462,56 @@
   .animate-confetti-burst {
     animation: confetti-burst 2s ease-out forwards;
   }
+
+  /* Lingo Grid Animasyonları */
+  .animate-flip-in {
+    animation: flip-in 0.6s ease-out;
+  }
+
+  .animate-cell-reveal {
+    animation: cell-reveal 0.8s ease-out;
+  }
+
+  .animate-letter-pop {
+    animation: letter-pop 0.3s ease-out;
+  }
+
+  @keyframes flip-in {
+    0% {
+      transform: rotateY(0deg) scale(1);
+    }
+    50% {
+      transform: rotateY(90deg) scale(1.05);
+    }
+    100% {
+      transform: rotateY(0deg) scale(1);
+    }
+  }
+
+  @keyframes cell-reveal {
+    0% {
+      transform: scale(0.8) rotateY(0deg);
+      opacity: 0.7;
+    }
+    50% {
+      transform: scale(1.1) rotateY(180deg);
+      opacity: 0.9;
+    }
+    100% {
+      transform: scale(1) rotateY(360deg);
+      opacity: 1;
+    }
+  }
+
+  @keyframes letter-pop {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
 }

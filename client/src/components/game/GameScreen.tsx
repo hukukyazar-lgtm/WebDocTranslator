@@ -1,6 +1,7 @@
 import { memo, useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { GameHeader } from './GameHeader';
 import { SpinningWheel } from './SpinningWheel';
+import { LingoGrid } from './LingoGrid';
 import { GameStats } from './GameStats';
 import { AchievementNotification } from './AchievementNotification';
 import { DailyGoals } from './DailyGoals';
@@ -263,6 +264,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   
   const [secretWord, setSecretWord] = useState('');
   const [guess, setGuess] = useState('');
+  const [guesses, setGuesses] = useState<string[]>([]); // Lingo tahmin geçmişi
+  const maxGuesses = 6; // Lingo'da genellikle 6 tahmin hakkı
   const [isSpinning, setIsSpinning] = useState(true);
   const [spinDuration, setSpinDuration] = useState(3.0);
   const [message, setMessage] = useState('');
@@ -297,6 +300,54 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const timeLeft = TOTAL_GAME_TIME - Math.floor(elapsedTime);
+
+  // Lingo klavye için harf durumlarını hesapla
+  const getKeyboardLetterStates = useMemo(() => {
+    const correctKeys: string[] = [];
+    const presentKeys: string[] = [];
+    const absentKeys: string[] = [];
+
+    const targetWord = secretWord.toUpperCase();
+
+    guesses.forEach(guess => {
+      const guessWord = guess.toUpperCase();
+      const usedTargetIndices = new Set<number>();
+
+      // İlk önce exact matches'ı bul (doğru pozisyon)
+      for (let i = 0; i < Math.min(guessWord.length, targetWord.length); i++) {
+        if (guessWord[i] === targetWord[i]) {
+          if (!correctKeys.includes(guessWord[i])) {
+            correctKeys.push(guessWord[i]);
+          }
+          usedTargetIndices.add(i);
+        }
+      }
+
+      // Sonra present letters'ı bul (yanlış pozisyon ama var)
+      for (let i = 0; i < guessWord.length; i++) {
+        const letter = guessWord[i];
+        if (!correctKeys.includes(letter) && guessWord[i] !== targetWord[i]) {
+          // Bu harfin target word'de başka bir yerde olup olmadığını kontrol et
+          let foundInTarget = false;
+          for (let j = 0; j < targetWord.length; j++) {
+            if (!usedTargetIndices.has(j) && targetWord[j] === letter) {
+              foundInTarget = true;
+              usedTargetIndices.add(j);
+              break;
+            }
+          }
+          
+          if (foundInTarget && !presentKeys.includes(letter)) {
+            presentKeys.push(letter);
+          } else if (!foundInTarget && !absentKeys.includes(letter) && !correctKeys.includes(letter)) {
+            absentKeys.push(letter);
+          }
+        }
+      }
+    });
+
+    return { correctKeys, presentKeys, absentKeys };
+  }, [secretWord, guesses]);
 
   // Dynamic background based on time left
   const dynamicBackground = useMemo(() => {
@@ -393,29 +444,29 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
 
   const handleGuessSubmit = useCallback(() => {
     if (gameOver) return;
+    if (guess.trim().length === 0) return;
     
-    if (guess.toUpperCase() === secretWord.toUpperCase()) {
-      // Trigger confetti celebration
+    const trimmedGuess = guess.trim().toUpperCase();
+    const newGuesses = [...guesses, trimmedGuess];
+    setGuesses(newGuesses);
+    setGuess('');
+    
+    if (trimmedGuess === secretWord.toUpperCase()) {
+      // Doğru tahmin - oyunu bitir
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 2000);
-      
-      // Hız bonusu mesajı
-      const guessTime = Math.floor(elapsedTime);
-      let bonusMessage = '';
-      if (guessTime <= 5) {
-        bonusMessage = ' 🚀 Hız Bonusu +5!';
-      }
       endGame(`${t.congratulations} ${Math.floor(elapsedTime)} ${t.seconds}`, true);
+    } else if (newGuesses.length >= maxGuesses) {
+      // Maksimum tahmin sayısına ulaşıldı - oyunu bitir
+      endGame(`${t.gameOver} Doğru kelime: ${secretWord}`, false);
     } else {
-      // Trigger shake animation for wrong answer
+      // Yanlış tahmin ama devam ediliyor
       setShakeInput(true);
       setTimeout(() => setShakeInput(false), 500);
-      
-      setMessage("Yanlış Tahmin!");
-      setGuess(''); 
-      setTimeout(() => setMessage(''), 1500);
+      setMessage(`${t.wrongAnswer} ${maxGuesses - newGuesses.length} tahmin hakkınız kaldı!`);
+      setTimeout(() => setMessage(''), 2000);
     }
-  }, [gameOver, guess, secretWord, elapsedTime, endGame]);
+  }, [gameOver, guess, secretWord, elapsedTime, endGame, guesses, maxGuesses, t]);
 
   const handleKeyPress = useCallback((key: string) => {
     setGuess(prev => prev + key);
@@ -487,6 +538,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     
     // Reset all game state
     setGuess('');
+    setGuesses([]); // Lingo tahmin geçmişini sıfırla
     setIsSpinning(true);
     setMessage('');
     setGameOver(false);
@@ -566,14 +618,31 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         
         <main className="flex-1 flex flex-col justify-center px-3 sm:px-4 md:px-6 py-4 sm:py-6 overflow-x-hidden overflow-y-auto">
           <div className="max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto space-y-2 sm:space-y-3 md:space-y-4 w-full">
-            <SpinningWheel 
-              word={secretWord} 
-              isSpinning={isSpinning} 
-              spinDuration={spinDuration} 
-              difficulty={difficulty}
-              category={category}
-              timeLeft={timeLeft}
-            />
+            {/* Lingo Grid + Spinning Wheel kombinasyonu */}
+            <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
+              {/* Lingo Grid */}
+              <div className="order-2 lg:order-1">
+                <LingoGrid
+                  word={secretWord}
+                  guesses={guesses}
+                  currentGuess={guess}
+                  maxGuesses={maxGuesses}
+                  isGameOver={gameOver}
+                />
+              </div>
+              
+              {/* Spinning Wheel */}
+              <div className="order-1 lg:order-2">
+                <SpinningWheel 
+                  word={secretWord} 
+                  isSpinning={isSpinning} 
+                  spinDuration={spinDuration} 
+                  difficulty={difficulty}
+                  category={category}
+                  timeLeft={timeLeft}
+                />
+              </div>
+            </div>
             
             {message && (
               <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.1s' }}>
@@ -646,6 +715,18 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                     </div>
                   </div>
                 </div>
+                
+                {/* Virtual Keyboard */}
+                <VirtualKeyboard
+                  onKeyPress={handleKeyPress}
+                  onBackspace={handleBackspace}
+                  onSpace={handleSpace}
+                  onSubmit={handleGuessSubmit}
+                  language={language as Language}
+                  correctKeys={getKeyboardLetterStates.correctKeys}
+                  presentKeys={getKeyboardLetterStates.presentKeys}
+                  absentKeys={getKeyboardLetterStates.absentKeys}
+                />
                 
               </>
             )}
