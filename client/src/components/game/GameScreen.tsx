@@ -1,7 +1,7 @@
 import { memo, useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { GameHeader } from './GameHeader';
 import { SpinningWheel } from './SpinningWheel';
-import { LingoGrid } from './LingoGrid';
+import { LuminaGrid } from './LuminaGrid';
 import { VirtualKeyboard } from './VirtualKeyboard';
 import { GameStats } from './GameStats';
 import { AchievementNotification } from './AchievementNotification';
@@ -624,7 +624,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               {/* Lingo Grid - Kompakt */}
               <div className="flex-shrink-0">
                 <div className="transform scale-75 sm:scale-90 md:scale-100">
-                  <LingoGrid
+                  <LuminaGrid
                     word={secretWord}
                     guesses={guesses}
                     currentGuess={guess}

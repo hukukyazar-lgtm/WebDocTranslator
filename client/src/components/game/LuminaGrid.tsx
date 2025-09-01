@@ -1,6 +1,6 @@
 import { memo, useMemo } from 'react';
 
-interface LingoGridProps {
+interface LuminaGridProps {
   word: string;
   guesses: string[];
   currentGuess: string;
@@ -13,7 +13,7 @@ interface LetterState {
   state: 'correct' | 'present' | 'absent' | 'empty';
 }
 
-export const LingoGrid = memo<LingoGridProps>(({ word, guesses, currentGuess, maxGuesses, isGameOver }) => {
+export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, maxGuesses, isGameOver }) => {
   const wordLength = word.length;
   
   // Lingo renk kodlaması ve animasyonlar
@@ -107,10 +107,32 @@ export const LingoGrid = memo<LingoGridProps>(({ word, guesses, currentGuess, ma
     return rows;
   }, [word, guesses, currentGuess, maxGuesses, isGameOver]);
 
+  // Kelime uzunluğuna göre dinamik boyutlandırma
+  const getCellSize = () => {
+    if (wordLength <= 4) return 'w-14 h-14 sm:w-16 sm:h-16 md:w-18 md:h-18'; // Küçük kelimeler için büyük kutucuklar
+    if (wordLength <= 6) return 'w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16'; // Orta kelimeler 
+    if (wordLength <= 8) return 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14'; // Uzun kelimeler
+    return 'w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12'; // Çok uzun kelimeler için küçük kutucuklar
+  };
+
+  const getTextSize = () => {
+    if (wordLength <= 4) return 'text-xl sm:text-2xl md:text-3xl';
+    if (wordLength <= 6) return 'text-lg sm:text-xl md:text-2xl';
+    if (wordLength <= 8) return 'text-base sm:text-lg md:text-xl';
+    return 'text-sm sm:text-base md:text-lg';
+  };
+
+  const getSpacing = () => {
+    if (wordLength <= 4) return 'space-x-3';
+    if (wordLength <= 6) return 'space-x-2';
+    if (wordLength <= 8) return 'space-x-1.5';
+    return 'space-x-1';
+  };
+
   return (
-    <div className="flex flex-col items-center space-y-2" data-testid="lingo-grid">
+    <div className="flex flex-col items-center space-y-2" data-testid="lumina-grid">
       {gridRows.map((row, rowIndex) => (
-        <div key={rowIndex} className="flex space-x-2">
+        <div key={rowIndex} className={`flex ${getSpacing()}`}>
           {row.map((cell, cellIndex) => {
             const isCurrentRow = rowIndex === guesses.length && !isGameOver;
             const hasLetter = cell.letter !== '';
@@ -120,17 +142,17 @@ export const LingoGrid = memo<LingoGridProps>(({ word, guesses, currentGuess, ma
               <div
                 key={`${rowIndex}-${cellIndex}`}
                 className={`
-                  w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 
+                  ${getCellSize()}
                   border-2 rounded-lg 
                   flex items-center justify-center 
-                  text-lg sm:text-xl md:text-2xl font-black
+                  ${getTextSize()} font-black
                   transition-all duration-500 ease-in-out
                   ${getLetterStateClass(cell.state, hasLetter)}
                   ${isCurrentRow && hasLetter ? 'animate-bounce' : ''}
                   ${isRevealed ? 'animate-flip-in' : ''}
                   ${isCurrentRow ? 'ring-2 ring-white/30 ring-opacity-50' : ''}
                 `}
-                data-testid={`lingo-cell-${rowIndex}-${cellIndex}`}
+                data-testid={`lumina-cell-${rowIndex}-${cellIndex}`}
                 style={{
                   animationDelay: isRevealed ? `${cellIndex * 100}ms` : '0ms'
                 }}
@@ -147,4 +169,4 @@ export const LingoGrid = memo<LingoGridProps>(({ word, guesses, currentGuess, ma
   );
 });
 
-LingoGrid.displayName = 'LingoGrid';
+LuminaGrid.displayName = 'LuminaGrid';
