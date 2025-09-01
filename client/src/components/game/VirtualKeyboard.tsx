@@ -67,7 +67,7 @@ export const VirtualKeyboard = memo(({
   }, [onKeyPress]);
 
   const getKeyStyle = useCallback((key: string) => {
-    const baseClasses = "keyboard-key px-1 sm:px-2 lg:px-3 py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border min-w-[28px] sm:min-w-[36px] lg:min-w-[44px]";
+    const baseClasses = "keyboard-key px-1 sm:px-2 md:px-3 lg:px-4 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border min-w-[28px] sm:min-w-[36px] md:min-w-[44px] lg:min-w-[52px] touch-manipulation";
     
     // Tüm harfler aynı stil - renklendirme yok
     return `${baseClasses} bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 border-white/30 shadow-lg`;
@@ -75,12 +75,12 @@ export const VirtualKeyboard = memo(({
 
   return (
     <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
-      <div className="backdrop-blur-xl rounded-xl sm:rounded-2xl p-2 sm:p-3 lg:p-6 border border-white/20 shadow-2xl" style={{
+      <div className="backdrop-blur-xl rounded-xl sm:rounded-2xl p-2 sm:p-3 md:p-4 lg:p-6 border border-white/20 shadow-2xl" style={{
         background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
       }}>
-        <div className="space-y-1 sm:space-y-2 lg:space-y-3">
+        <div className="space-y-1 sm:space-y-2 md:space-y-2.5 lg:space-y-3">
           {/* First Row */}
-          <div className="flex justify-center gap-0.5 sm:gap-1">
+          <div className="flex justify-center gap-0.5 sm:gap-1 md:gap-1.5">
             {turkishKeyboardLayout[0].map(key => (
               <button
                 key={key}
@@ -94,7 +94,7 @@ export const VirtualKeyboard = memo(({
           </div>
 
           {/* Second Row */}
-          <div className="flex justify-center gap-0.5 sm:gap-1">
+          <div className="flex justify-center gap-0.5 sm:gap-1 md:gap-1.5">
             {turkishKeyboardLayout[1].map(key => (
               <button
                 key={key}
@@ -108,7 +108,7 @@ export const VirtualKeyboard = memo(({
           </div>
 
           {/* Third Row */}
-          <div className="flex justify-center gap-0.5 sm:gap-1">
+          <div className="flex justify-center gap-0.5 sm:gap-1 md:gap-1.5">
             {turkishKeyboardLayout[2].map(key => (
               <button
                 key={key}
@@ -121,7 +121,7 @@ export const VirtualKeyboard = memo(({
             ))}
             <button
               onClick={onBackspace}
-              className="keyboard-key px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-red-500/50 bg-red-500/20 text-white hover:bg-red-500/40 shadow-lg"
+              className="keyboard-key px-2 sm:px-3 md:px-4 lg:px-5 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-red-500/50 bg-red-500/20 text-white hover:bg-red-500/40 shadow-lg touch-manipulation"
               data-testid="key-backspace"
             >
               <span className="sm:hidden">🗑️</span>

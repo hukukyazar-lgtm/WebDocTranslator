@@ -692,13 +692,13 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         )}
         
-        <main className="flex-1 flex flex-col px-2 sm:px-3 py-2 sm:py-3 pt-16 overflow-y-auto">
-          <div className="w-full flex flex-col space-y-2 sm:space-y-3 min-h-full">
+        <main className="flex-1 flex flex-col px-2 sm:px-3 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 pt-16 overflow-y-auto">
+          <div className="w-full flex flex-col space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6 min-h-full">
             {/* Dikey Layout: Çark → Grid → Tahmin Kutusu */}
-            <div className="flex flex-col items-center justify-start gap-2 sm:gap-4">
+            <div className="flex flex-col items-center justify-start gap-2 sm:gap-4 md:gap-6 lg:gap-8">
               {/* Üst: Spinning Wheel - Daha küçük */}
               <div className="flex-shrink-0">
-                <div className="transform scale-35 sm:scale-45">
+                <div className="transform scale-35 sm:scale-45 md:scale-60 lg:scale-75">
                   <SpinningWheel 
                     word={secretWord} 
                     isSpinning={isSpinning} 
@@ -721,10 +721,10 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 />
               </div>
               
-              {/* Alt: Timer + Input + Keyboard */}
-              <div className="flex-shrink-0 w-full max-w-sm space-y-2">
-                {/* Timer ve Input */}
-                <div className="backdrop-blur-xl rounded-lg p-2 border border-white/20 shadow-xl" style={{
+              {/* Alt: Timer + Input + Keyboard - Tablet Uyumlu */}
+              <div className="flex-shrink-0 w-full max-w-sm md:max-w-md lg:max-w-lg space-y-2 md:space-y-3">
+                {/* Timer ve Input - Tablet */}
+                <div className="backdrop-blur-xl rounded-lg md:rounded-xl p-2 md:p-3 lg:p-4 border border-white/20 shadow-xl" style={{
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
                 }}>
                   {/* Timer - Kompakt */}
@@ -751,8 +751,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                   
                 </div>
                 
-                {/* Virtual Keyboard - Görünür */}
-                <div className="transform scale-90">
+                {/* Virtual Keyboard - Tablet Scale */}
+                <div className="transform scale-90 md:scale-100">
                   <VirtualKeyboard
                     onKeyPress={handleKeyPress}
                     onBackspace={handleBackspace}
@@ -769,18 +769,18 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
             
             {message && (
               <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                <div className="text-center space-y-1">
-                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-accent animate-bounce-soft px-2" data-testid="game-message">
+                <div className="text-center space-y-1 md:space-y-2">
+                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-accent animate-bounce-soft px-2 md:px-4" data-testid="game-message">
                     {message}
                   </p>
                 </div>
               </div>
             )}
 
-            {/* Game Over Results */}
+            {/* Game Over Results - Tablet Uyumlu */}
             {gameOver && (
               <div className="flex justify-center animate-scale-in">
-                <div className="backdrop-blur-xl rounded-xl sm:rounded-2xl md:rounded-3xl p-3 sm:p-4 md:p-6 lg:p-8 border border-white/20 w-full max-w-xs sm:max-w-sm md:max-w-lg shadow-2xl" style={{
+                <div className="backdrop-blur-xl rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 border border-white/20 w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl shadow-2xl" style={{
                   background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
                 }}>
                   <div className="text-center space-y-3 sm:space-y-4 md:space-y-6">
