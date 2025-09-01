@@ -109,8 +109,9 @@ export default function Home() {
   };
 
   const handleGameOver = () => {
-    // Ana menüye dön - Dashboard'a yönlendirme
-    setLocation('/dashboard');
+    // Ana menüye dön - Dashboard modal açma 
+    setShowDashboard(true);
+    setAppState('category'); // Category sayfasına geri dön ama dashboard modal açık olsun
   };
   
   const handleSettingsOpen = () => {
@@ -218,6 +219,10 @@ export default function Home() {
           settings={gameSettings} 
           onGameOver={handleGameOver} 
           isGuestMode={isGuestMode} 
+        />
+        <DashboardModal 
+          isOpen={showDashboard} 
+          onClose={() => setShowDashboard(false)} 
         />
       </div>
     );
