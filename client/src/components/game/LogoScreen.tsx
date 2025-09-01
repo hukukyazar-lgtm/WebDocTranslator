@@ -1,7 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { BarChart3 } from 'lucide-react';
-import luminaLogo from '@assets/generated_images/LUMINA_logo_dark_background_a23c6343.png';
+import luminaLogo from '@/assets/lumina-logo.png';
 
 export interface LogoScreenProps {
   onComplete: () => void;

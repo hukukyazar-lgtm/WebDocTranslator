@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Crown, Users, Trophy, Settings, Zap, Play } from 'lucide-react';
 import { GameStats } from '@/components/game/GameStats';
-import luminaLogo from '@assets/generated_images/LUMINA_logo_dark_background_a23c6343.png';
+import luminaLogo from '@/assets/lumina-logo.png';
 
 export function Dashboard() {
   const [selectedMode, setSelectedMode] = useState('single');

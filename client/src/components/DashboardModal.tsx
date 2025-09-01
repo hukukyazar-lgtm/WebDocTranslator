@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Crown, Users, Trophy, Settings, Zap, Play, X, Globe } from 'lucide-react';
 import { GameStats } from '@/components/game/GameStats';
 import { type Language, getTranslation } from '@/lib/translations';
-import luminaLogo from '@assets/generated_images/LUMINA_logo_dark_background_a23c6343.png';
+import luminaLogo from '@/assets/lumina-logo.png';
 
 interface DashboardModalProps {
   isOpen: boolean;
