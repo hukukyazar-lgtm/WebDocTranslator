@@ -55,9 +55,9 @@ export function Dashboard() {
   ];
 
   return (
-    <div className="h-screen w-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header - Mobil uyumlu */}
-      <div className="flex items-center justify-between p-3 sm:p-4 flex-shrink-0">
+      <div className="flex items-center justify-between p-3 sm:p-4 mb-4 sm:mb-6">
         <div className="flex items-center gap-2 sm:gap-3">
           <div className="text-2xl sm:text-3xl">👁️</div>
           <div>
@@ -72,8 +72,7 @@ export function Dashboard() {
         </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto" style={{ maxHeight: 'calc(100vh - 80px)' }}>
-        <div className="max-w-6xl mx-auto px-3 sm:px-4 space-y-3 sm:space-y-4 py-3 sm:py-4">
+      <div className="max-w-6xl mx-auto px-3 sm:px-4 space-y-3 sm:space-y-4 pb-6">
         {/* Game Stats - Kompakt */}
         <Card className="bg-white/10 border-white/20 backdrop-blur-xl">
           <CardHeader className="pb-2 sm:pb-3">
@@ -174,7 +173,6 @@ export function Dashboard() {
             </div>
           </CardContent>
         </Card>
-        </div>
       </div>
     </div>
   );
