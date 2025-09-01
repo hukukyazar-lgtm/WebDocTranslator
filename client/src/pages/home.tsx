@@ -7,6 +7,7 @@ import { CategoryScreen } from '@/components/game/CategoryScreen';
 import { DifficultyScreen } from '@/components/game/DifficultyScreen';
 import { GameScreen } from '@/components/game/GameScreen';
 import { SettingsScreen } from '@/components/game/SettingsScreen';
+import { DashboardModal } from '@/components/DashboardModal';
 import { useAuth } from '@/hooks/useAuth';
 
 // Auto-detect system language or fallback to English
@@ -46,6 +47,7 @@ export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string>('');
   const [selectedDifficulty, setSelectedDifficulty] = useState<number>(3);
   const [isGuestMode, setIsGuestMode] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(false);
   const { isAuthenticated, isLoading } = useAuth();
   const [, setLocation] = useLocation();
   
@@ -124,7 +126,14 @@ export default function Home() {
   if (appState === 'logo') {
     return (
       <div>
-        <LogoScreen onComplete={handleLogoComplete} />
+        <LogoScreen 
+          onComplete={handleLogoComplete} 
+          onDashboard={() => setShowDashboard(true)}
+        />
+        <DashboardModal 
+          isOpen={showDashboard} 
+          onClose={() => setShowDashboard(false)} 
+        />
       </div>
     );
   }

@@ -1,10 +1,13 @@
 import { memo, useEffect, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { BarChart3 } from 'lucide-react';
 
 export interface LogoScreenProps {
   onComplete: () => void;
+  onDashboard?: () => void;
 }
 
-export const LogoScreen = memo<LogoScreenProps>(({ onComplete }) => {
+export const LogoScreen = memo<LogoScreenProps>(({ onComplete, onDashboard }) => {
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
@@ -33,7 +36,7 @@ export const LogoScreen = memo<LogoScreenProps>(({ onComplete }) => {
   };
 
   return (
-    <div style={backgroundStyle} onClick={handleClick} className="cursor-pointer">
+    <div style={backgroundStyle} onClick={handleClick} className="cursor-pointer relative">
       {/* Space particles background */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute w-1 h-1 bg-cyan-400 rounded-full animate-pulse" style={{ top: '20%', left: '10%' }}></div>
@@ -88,6 +91,26 @@ export const LogoScreen = memo<LogoScreenProps>(({ onComplete }) => {
           )}
         </div>
       </div>
+
+      {/* Dashboard Button - Top Right */}
+      {onDashboard && (
+        <div className="absolute top-4 right-4 z-20">
+          <Button
+            onClick={(e) => {
+              e.stopPropagation();
+              onDashboard();
+            }}
+            className="backdrop-blur-lg border border-cyan-400/50 text-white shadow-xl"
+            style={{
+              background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.3), rgba(255,255,255,0.1))'
+            }}
+            size="sm"
+          >
+            <BarChart3 className="h-4 w-4 mr-2" />
+            Dashboard
+          </Button>
+        </div>
+      )}
     </div>
   );
 });
