@@ -381,8 +381,8 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
           ></div>
           
           {/* Modal Content */}
-          <div className="relative w-full max-w-2xl animate-scale-in">
-            <div className="rounded-3xl p-8 sm:p-10"
+          <div className="relative w-full max-w-lg animate-scale-in">
+            <div className="rounded-2xl p-4 sm:p-6"
                  style={{
                    background: `linear-gradient(135deg, ${getThemeForCategory(selectedCategory).primary}20, ${getThemeForCategory(selectedCategory).secondary}20)`,
                    backdropFilter: 'blur(30px)',
@@ -391,33 +391,33 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                  }}>
               
               {/* Modal Header */}
-              <div className="text-center mb-8">
-                <div className="text-6xl mb-4">
+              <div className="text-center mb-4">
+                <div className="text-4xl mb-2">
                   {categoryIcons[selectedCategory]}
                 </div>
-                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+                <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
                   {getCategoryName(selectedCategory)}
                 </h3>
-                <p className="text-white/70 text-lg mb-6">
+                <p className="text-white/70 text-sm mb-3">
                   {selectedLanguage === 'tr' ? 'Zorluk seviyesini seçin' : 'Choose difficulty level'}
                 </p>
                 
                 {/* Close Button */}
                 <button
                   onClick={closeDifficultyModal}
-                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all duration-300"
+                  className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all duration-300 text-sm"
                 >
                   ✕
                 </button>
               </div>
               
               {/* Zorluk Butonları */}
-              <div className="space-y-4">
+              <div className="space-y-2">
                 {difficultyLabels.map((label, index) => (
                   <button
                     key={index + 1}
                     onClick={() => handleDifficultySelect(index + 1)}
-                    className="w-full p-5 sm:p-6 rounded-2xl transition-all duration-500 transform hover:scale-105 active:scale-95 text-left"
+                    className="w-full p-3 sm:p-4 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 text-left"
                     style={{
                       background: `linear-gradient(135deg, ${difficultyColors[index]}60, ${difficultyColors[index]}30)`,
                       backdropFilter: 'blur(20px)',
@@ -426,25 +426,25 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                     }}
                     data-testid={`modal-difficulty-${index + 1}`}
                   >
-                    <div className="flex items-center gap-5">
-                      <div className="text-4xl" style={{ filter: 'drop-shadow(0 0 10px currentColor)' }}>
+                    <div className="flex items-center gap-3">
+                      <div className="text-2xl" style={{ filter: 'drop-shadow(0 0 8px currentColor)' }}>
                         {['🟢', '🟡', '🟠', '🔴', '⚫'][index]}
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-black text-white text-xl sm:text-2xl mb-1">
+                        <h4 className="font-bold text-white text-base sm:text-lg mb-0.5">
                           {label}
                         </h4>
-                        <div className="text-white/80">
+                        <div className="text-white/80 text-xs sm:text-sm">
                           {[
-                            selectedLanguage === 'tr' ? 'Yeni başlayanlar için ideal - kolay kelimeler' : 'Perfect for beginners - easy words',
-                            selectedLanguage === 'tr' ? 'Deneyimliler için uygun - orta seviye' : 'Suitable for experienced - medium level',
-                            selectedLanguage === 'tr' ? 'Zorlu bir deneyim - zor kelimeler' : 'A challenging experience - hard words',
-                            selectedLanguage === 'tr' ? 'Uzmanlar için tasarlanmış - çok zor' : 'Designed for experts - very hard',
-                            selectedLanguage === 'tr' ? 'Sadece ustalar için - imkansıza yakın' : 'Only for masters - nearly impossible'
+                            selectedLanguage === 'tr' ? 'Yeni başlayanlar için ideal' : 'Perfect for beginners',
+                            selectedLanguage === 'tr' ? 'Deneyimliler için uygun' : 'Suitable for experienced',
+                            selectedLanguage === 'tr' ? 'Zorlu bir deneyim' : 'A challenging experience',
+                            selectedLanguage === 'tr' ? 'Uzmanlar için tasarlanmış' : 'Designed for experts',
+                            selectedLanguage === 'tr' ? 'Sadece ustalar için' : 'Only for masters'
                           ][index]}
                         </div>
                       </div>
-                      <div className="text-3xl text-white/60">→</div>
+                      <div className="text-xl text-white/60">→</div>
                     </div>
                   </button>
                 ))}
