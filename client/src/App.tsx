@@ -12,6 +12,7 @@ function Router() {
     <Switch>
       <Route path="/" component={Home} />
       <Route path="/dashboard" component={Dashboard} />
+      <Route path="/category" component={Home} />
       <Route path="/game" component={Home} />
       <Route component={NotFound} />
     </Switch>

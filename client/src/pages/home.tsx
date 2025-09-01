@@ -47,6 +47,14 @@ export default function Home() {
   const [isGuestMode, setIsGuestMode] = useState(false);
   const { isAuthenticated, isLoading } = useAuth();
   
+  // URL check for direct navigation
+  const currentPath = window.location.pathname;
+  
+  // Direct category page navigation
+  if (currentPath === '/category' && appState === 'logo') {
+    setAppState('category');
+  }
+  
   // URL params check for direct game mode
   const urlParams = new URLSearchParams(window.location.search);
   const gameMode = urlParams.get('mode');
@@ -144,7 +152,7 @@ export default function Home() {
       <CategoryScreen 
         selectedLanguage={selectedLanguage}
         onCategorySelect={handleCategorySelect}
-        onBack={() => setAppState('logo')}
+        onBack={() => window.location.href = '/dashboard'}
         onSettingsOpen={handleSettingsOpen}
         isGuestMode={isGuestMode}
       />

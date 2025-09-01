@@ -43,7 +43,7 @@ export function Dashboard() {
       icon: <Crown className="h-8 w-8" />,
       color: 'from-blue-500 to-purple-600',
       available: true,
-      path: '/game?mode=single'
+      path: '/category'
     },
     {
       id: 'duo',
