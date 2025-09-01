@@ -453,10 +453,42 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     setGuess('');
     
     if (trimmedGuess === secretWord.toUpperCase()) {
-      // Doğru tahmin - oyunu bitir
+      // Doğru tahmin - skor güncelle ve otomatik devam et
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 2000);
-      endGame(`${t.congratulations} ${Math.floor(elapsedTime)} ${t.seconds}`, true);
+      
+      // Başarı mesajı göster
+      setMessage(`${t.congratulations} ${Math.floor(elapsedTime)} ${t.seconds}`);
+      
+      // Game stats güncelle
+      const updatedStats = updateGameStats(gameStats, true, category, Math.floor(elapsedTime));
+      setGameStats(updatedStats);
+      
+      // Skor hesapla ve güncelle
+      const baseScore = calculateScore(Math.floor(elapsedTime), difficulty);
+      const multiplier = calculateStreakMultiplier(updatedStats.currentStreak);
+      const finalScore = baseScore * multiplier;
+      
+      setScore(finalScore);
+      setStreak(updatedStats.currentStreak);
+      setCorrectGuesses(updatedStats.totalCorrectGuesses);
+      setAverageTime(updatedStats.averageGuessTime);
+      setTotalScore(updatedStats.totalScore);
+      
+      // Yeni başarım kontrol et
+      const newAchievements = updatedStats.achievements.filter(a => 
+        a.unlocked && a.unlockedAt && 
+        new Date(a.unlockedAt).getTime() > Date.now() - 1000
+      );
+      
+      if (newAchievements.length > 0) {
+        setCurrentAchievement(newAchievements[0]);
+      }
+      
+      // 2 saniye sonra otomatik devam et
+      setTimeout(() => {
+        handleContinue();
+      }, 2000);
     } else if (newGuesses.length >= maxGuesses) {
       // Maksimum tahmin sayısına ulaşıldı - oyunu bitir
       endGame(`${t.gameOver} Doğru kelime: ${secretWord}`, false);
@@ -467,7 +499,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setMessage(`${t.wrongAnswer} ${maxGuesses - newGuesses.length} tahmin hakkınız kaldı!`);
       setTimeout(() => setMessage(''), 2000);
     }
-  }, [gameOver, guess, secretWord, elapsedTime, endGame, guesses, maxGuesses, t]);
+  }, [gameOver, guess, secretWord, elapsedTime, endGame, guesses, maxGuesses, t, gameStats, category, difficulty, handleContinue]);
 
   const handleKeyPress = useCallback((key: string) => {
     setGuess(prev => prev + key);
