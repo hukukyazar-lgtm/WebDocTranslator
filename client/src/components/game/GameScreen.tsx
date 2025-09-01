@@ -2,6 +2,7 @@ import { memo, useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { GameHeader } from './GameHeader';
 import { SpinningWheel } from './SpinningWheel';
 import { LingoGrid } from './LingoGrid';
+import { VirtualKeyboard } from './VirtualKeyboard';
 import { GameStats } from './GameStats';
 import { AchievementNotification } from './AchievementNotification';
 import { DailyGoals } from './DailyGoals';
@@ -717,7 +718,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 </div>
                 
                 {/* Virtual Keyboard */}
-                {false && <VirtualKeyboard
+                <VirtualKeyboard
                   onKeyPress={handleKeyPress}
                   onBackspace={handleBackspace}
                   onSpace={handleSpace}
@@ -726,7 +727,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                   correctKeys={getKeyboardLetterStates.correctKeys}
                   presentKeys={getKeyboardLetterStates.presentKeys}
                   absentKeys={getKeyboardLetterStates.absentKeys}
-                />}
+                />
                 
               </>
             )}
