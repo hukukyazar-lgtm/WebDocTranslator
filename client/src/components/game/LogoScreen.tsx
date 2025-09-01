@@ -1,6 +1,7 @@
 import { memo, useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { BarChart3 } from 'lucide-react';
+import luminaLogo from '@assets/generated_images/LUMINA_logo_dark_background_a23c6343.png';
 
 export interface LogoScreenProps {
   onComplete: () => void;
@@ -50,19 +51,19 @@ export const LogoScreen = memo<LogoScreenProps>(({ onComplete, onDashboard }) =>
         <div className="text-center max-w-md w-full">
           {/* LUMINA Logo ve başlık */}
           <div className="mb-12 animate-slide-up">
-            {/* Eye Logo */}
+            {/* LUMINA Logo */}
             <div className="mb-8 relative">
-              <div className="w-24 h-24 mx-auto relative">
-                {/* Outer eye shape */}
-                <div className="absolute inset-0 rounded-full border-2 border-cyan-400 flex items-center justify-center">
-                  <div className="w-16 h-16 rounded-full border-2 border-cyan-400/60 flex items-center justify-center">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 relative">
-                      <div className="absolute top-1 left-1 w-2 h-2 bg-white/80 rounded-full animate-pulse"></div>
-                    </div>
-                  </div>
-                </div>
-                {/* Glow effect */}
-                <div className="absolute inset-0 rounded-full bg-cyan-400/20 animate-pulse blur-md"></div>
+              <div className="w-32 h-32 mx-auto relative">
+                <img 
+                  src={luminaLogo} 
+                  alt="LUMINA - The Art of Seeing" 
+                  className="w-full h-full object-contain animate-pulse"
+                  style={{
+                    filter: 'drop-shadow(0 0 20px rgba(0, 220, 205, 0.5))'
+                  }}
+                />
+                {/* Enhanced glow effect */}
+                <div className="absolute inset-0 bg-cyan-400/10 animate-pulse blur-xl rounded-full"></div>
               </div>
             </div>
             

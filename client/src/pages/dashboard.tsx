@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Crown, Users, Trophy, Settings, Zap, Play } from 'lucide-react';
 import { GameStats } from '@/components/game/GameStats';
+import luminaLogo from '@assets/generated_images/LUMINA_logo_dark_background_a23c6343.png';
 
 export function Dashboard() {
   const [selectedMode, setSelectedMode] = useState('single');
@@ -72,7 +73,16 @@ export function Dashboard() {
       {/* LUMINA Header */}
       <div className="flex items-center justify-between p-3 sm:p-4 mb-4 sm:mb-6">
         <div className="flex items-center gap-2 sm:gap-3">
-          <div className="text-2xl sm:text-3xl">👁️</div>
+          <div className="w-8 h-8 sm:w-10 sm:h-10">
+            <img 
+              src={luminaLogo} 
+              alt="LUMINA" 
+              className="w-full h-full object-contain"
+              style={{
+                filter: 'drop-shadow(0 0 10px rgba(0, 220, 205, 0.4))'
+              }}
+            />
+          </div>
           <div>
             <h1 className="text-lg sm:text-2xl font-bold text-white">LUMINA</h1>
             <p className="text-xs sm:text-sm text-white/80">WordSpin Pro</p>
@@ -196,7 +206,16 @@ export function Dashboard() {
         }}>
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2 font-bold">
-              <div className="text-2xl">👁️</div>
+              <div className="w-6 h-6">
+                <img 
+                  src={luminaLogo} 
+                  alt="LUMINA" 
+                  className="w-full h-full object-contain"
+                  style={{
+                    filter: 'drop-shadow(0 0 8px rgba(0, 220, 205, 0.4))'
+                  }}
+                />
+              </div>
               LUMINA - Ayarlar
             </DialogTitle>
           </DialogHeader>

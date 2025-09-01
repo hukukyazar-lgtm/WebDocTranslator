@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Crown, Users, Trophy, Settings, Zap, Play, X, Globe } from 'lucide-react';
 import { GameStats } from '@/components/game/GameStats';
 import { type Language, getTranslation } from '@/lib/translations';
+import luminaLogo from '@assets/generated_images/LUMINA_logo_dark_background_a23c6343.png';
 
 interface DashboardModalProps {
   isOpen: boolean;
@@ -75,7 +76,16 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
           }}>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="text-2xl">👁️</div>
+                <div className="w-8 h-8">
+                  <img 
+                    src={luminaLogo} 
+                    alt="LUMINA" 
+                    className="w-full h-full object-contain"
+                    style={{
+                      filter: 'drop-shadow(0 0 10px rgba(0, 220, 205, 0.3))'
+                    }}
+                  />
+                </div>
                 <div>
                   <h1 className="text-xl font-bold text-white">LUMINA Dashboard</h1>
                   <p className="text-sm text-white/80">WordSpin Pro Kontrol Paneli</p>
@@ -212,8 +222,17 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
         }}>
           <DialogHeader>
             <DialogTitle className="text-white flex items-center gap-2 font-bold">
-              <div className="text-2xl">👁️</div>
-              LUMINA - Ayarlar
+              <div className="w-6 h-6">
+                <img 
+                  src={luminaLogo} 
+                  alt="LUMINA" 
+                  className="w-full h-full object-contain"
+                  style={{
+                    filter: 'drop-shadow(0 0 8px rgba(0, 220, 205, 0.4))'
+                  }}
+                />
+              </div>
+              LUMINA - {getTranslation('dashboard', 'settings', selectedLanguage)}
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-6 text-white">
