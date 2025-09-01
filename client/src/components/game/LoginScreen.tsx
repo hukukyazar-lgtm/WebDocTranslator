@@ -67,19 +67,6 @@ export const LoginScreen = memo<LoginScreenProps>(({ onAuthChoice, onDashboard }
 
           {/* Auth options */}
           <div className="space-y-4 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-            {/* Continue with Replit */}
-            <button
-              onClick={handleLogin}
-              disabled={isLoading}
-              className="w-full py-4 px-8 text-lg font-medium text-black rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-2xl tracking-wide"
-              style={{
-                background: 'linear-gradient(135deg, hsl(180, 100%, 70%) 0%, hsl(200, 80%, 60%) 100%)',
-                boxShadow: '0 8px 32px rgba(0, 255, 255, 0.3)',
-              }}
-              data-testid="button-login"
-            >
-              Continue with Replit
-            </button>
 
             {/* Google Login */}
             <button
