@@ -3,6 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Dashboard overflow fix */
+html, body {
+  overflow: hidden;
+  height: 100%;
+  position: fixed;
+  width: 100%;
+}
+
 :root {
   /* LUMINA Dark Space Theme */
   --background: hsl(230, 35%, 7%);

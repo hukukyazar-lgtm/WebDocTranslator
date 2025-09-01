@@ -55,7 +55,7 @@ export function Dashboard() {
   ];
 
   return (
-    <div className="fixed inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col">
+    <div className="h-screen w-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex flex-col overflow-hidden">
       {/* Header - Mobil uyumlu */}
       <div className="flex items-center justify-between p-3 sm:p-4 flex-shrink-0">
         <div className="flex items-center gap-2 sm:gap-3">
