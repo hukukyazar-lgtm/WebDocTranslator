@@ -703,8 +703,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                   </div>
                 </div>
                 
-                {/* Virtual Keyboard - Kompakt */}
-                <div className="transform scale-90 origin-center">
+                {/* Virtual Keyboard - Görünür */}
+                <div className="transform scale-100 origin-center mt-2">
                   <VirtualKeyboard
                     onKeyPress={handleKeyPress}
                     onBackspace={handleBackspace}
