@@ -47,6 +47,17 @@ export default function Home() {
   const [isGuestMode, setIsGuestMode] = useState(false);
   const { isAuthenticated, isLoading } = useAuth();
   
+  // URL params check for direct game mode
+  const urlParams = new URLSearchParams(window.location.search);
+  const gameMode = urlParams.get('mode');
+  
+  // Direct game mode için category ve difficulty default set et
+  if (gameMode === 'single' && appState === 'logo') {
+    setSelectedCategory('Hayvanlar');
+    setSelectedDifficulty(3);
+    setAppState('game');
+  }
+  
   
   // Auto-detect and set language on first load
   useEffect(() => {
@@ -65,13 +76,8 @@ export default function Home() {
 
   const handleAuthChoice = (isGuest: boolean) => {
     setIsGuestMode(isGuest);
-    if (!isGuest && isAuthenticated) {
-      // Authenticated users go to dashboard
-      window.location.href = '/dashboard';
-    } else {
-      // Guests go directly to category selection
-      setAppState('category');
-    }
+    // Hem login hem misafir girişi dashboard'a yönlendir
+    window.location.href = '/dashboard';
   };
 
   const handleCategorySelect = (category: string, difficulty: number) => {
@@ -108,22 +114,6 @@ export default function Home() {
     return (
       <div>
         <LogoScreen onComplete={handleLogoComplete} />
-        {/* Test için dashboard linki */}
-        <div style={{ position: 'fixed', top: '10px', right: '10px', zIndex: 1000 }}>
-          <a 
-            href="/dashboard" 
-            style={{ 
-              color: 'white', 
-              background: 'rgba(0,0,0,0.7)', 
-              padding: '8px 16px', 
-              borderRadius: '8px',
-              textDecoration: 'none',
-              fontSize: '14px'
-            }}
-          >
-            📊 Dashboard Test
-          </a>
-        </div>
       </div>
     );
   }
