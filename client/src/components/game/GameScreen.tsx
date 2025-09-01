@@ -619,24 +619,11 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         
         <main className="flex-1 flex flex-col px-2 sm:px-3 py-2 sm:py-3 overflow-hidden">
           <div className="w-full h-full flex flex-col space-y-2 sm:space-y-3">
-            {/* Kompakt Lingo Grid + Spinning Wheel */}
-            <div className="flex-1 flex flex-col md:flex-row items-center justify-center gap-2 sm:gap-4 max-h-[60vh]">
-              {/* Lingo Grid - Kompakt */}
+            {/* Dikey Layout: Çark → Grid → Tahmin Kutusu */}
+            <div className="flex-1 flex flex-col items-center justify-center gap-4 sm:gap-6">
+              {/* Üst: Spinning Wheel */}
               <div className="flex-shrink-0">
-                <div className="transform scale-75 sm:scale-90 md:scale-100">
-                  <LuminaGrid
-                    word={secretWord}
-                    guesses={guesses}
-                    currentGuess={guess}
-                    maxGuesses={maxGuesses}
-                    isGameOver={gameOver}
-                  />
-                </div>
-              </div>
-              
-              {/* Spinning Wheel - Küçültülmüş */}
-              <div className="flex-shrink-0">
-                <div className="transform scale-50 sm:scale-60 md:scale-75">
+                <div className="transform scale-60 sm:scale-75 md:scale-90">
                   <SpinningWheel 
                     word={secretWord} 
                     isSpinning={isSpinning} 
@@ -646,6 +633,17 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                     timeLeft={timeLeft}
                   />
                 </div>
+              </div>
+              
+              {/* Orta: Tek satır Lingo Grid */}
+              <div className="flex-shrink-0">
+                <LuminaGrid
+                  word={secretWord}
+                  guesses={guesses}
+                  currentGuess={guess}
+                  maxGuesses={maxGuesses}
+                  isGameOver={gameOver}
+                />
               </div>
             </div>
             

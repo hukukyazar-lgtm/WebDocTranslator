@@ -15,7 +15,7 @@ interface LetterState {
 
 export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, maxGuesses, isGameOver }) => {
   const wordLength = word.length;
-  const gridWidth = 8; // Sabit grid genişliği - kelimeleri değiştirmeden kutu sayısını ayarlıyoruz
+  const gridWidth = wordLength; // Kelime uzunluğuna eşit kutu sayısı
   
   // Lingo renk kodlaması ve animasyonlar
   const getLetterStateClass = (state: LetterState['state'], hasLetter: boolean) => {
@@ -79,41 +79,20 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
     return result;
   };
 
-  // Grid'i oluştur - sadece gerekli satırları göster
-  const gridRows = useMemo(() => {
-    const rows: LetterState[][] = [];
+  // Tek satır grid - sadece mevcut tahmin
+  const currentRow = useMemo(() => {
+    const currentGuessStates: LetterState[] = [];
+    const currentGuessUpper = (currentGuess || '').toUpperCase();
     
-    // Yapılan tahminler
-    for (const guess of guesses) {
-      rows.push(getGuessStates(guess));
+    for (let i = 0; i < gridWidth; i++) {
+      currentGuessStates.push({
+        letter: i < currentGuessUpper.length ? currentGuessUpper[i] : '',
+        state: 'empty'
+      });
     }
     
-    // Mevcut tahmin (eğer oyun devam ediyorsa)
-    if (!isGameOver && currentGuess !== undefined && guesses.length < maxGuesses) {
-      const currentGuessStates: LetterState[] = [];
-      const currentGuessUpper = currentGuess.toUpperCase();
-      
-      for (let i = 0; i < gridWidth; i++) {
-        currentGuessStates.push({
-          letter: i < currentGuessUpper.length ? currentGuessUpper[i] : '',
-          state: 'empty'
-        });
-      }
-      rows.push(currentGuessStates);
-    }
-    
-    // Sadece 1-2 boş satır ekle, fazla değil
-    const remainingRows = Math.min(2, maxGuesses - rows.length);
-    for (let r = 0; r < remainingRows; r++) {
-      const emptyRow: LetterState[] = [];
-      for (let i = 0; i < gridWidth; i++) {
-        emptyRow.push({ letter: '', state: 'empty' });
-      }
-      rows.push(emptyRow);
-    }
-    
-    return rows;
-  }, [word, guesses, currentGuess, maxGuesses, isGameOver]);
+    return currentGuessStates;
+  }, [currentGuess, gridWidth]);
 
   // Sabit grid boyutlandırması - 8 kutucuk
   const getCellSize = () => {
@@ -129,41 +108,27 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
   };
 
   return (
-    <div className="flex flex-col items-center space-y-2" data-testid="lumina-grid">
-      {gridRows.map((row, rowIndex) => (
-        <div key={rowIndex} className={`flex ${getSpacing()}`}>
-          {row.map((cell, cellIndex) => {
-            const isCurrentRow = rowIndex === guesses.length && !isGameOver;
-            const hasLetter = cell.letter !== '';
-            const isRevealed = rowIndex < guesses.length;
-            
-            return (
-              <div
-                key={`${rowIndex}-${cellIndex}`}
-                className={`
-                  ${getCellSize()}
-                  border-2 rounded-lg 
-                  flex items-center justify-center 
-                  ${getTextSize()} font-black
-                  transition-all duration-500 ease-in-out
-                  ${getLetterStateClass(cell.state, hasLetter)}
-                  ${isCurrentRow && hasLetter ? 'animate-bounce' : ''}
-                  ${isRevealed ? 'animate-flip-in' : ''}
-                  ${isCurrentRow ? 'ring-2 ring-white/30 ring-opacity-50' : ''}
-                `}
-                data-testid={`lumina-cell-${rowIndex}-${cellIndex}`}
-                style={{
-                  animationDelay: isRevealed ? `${cellIndex * 100}ms` : '0ms'
-                }}
-              >
-                <span className={`${isCurrentRow && hasLetter ? 'animate-pulse' : ''}`}>
-                  {cell.letter}
-                </span>
-              </div>
-            );
-          })}
-        </div>
-      ))}
+    <div className="flex flex-col items-center" data-testid="lumina-grid">
+      <div className={`flex ${getSpacing()}`}>
+        {currentRow.map((cell, cellIndex) => (
+          <div
+            key={cellIndex}
+            className={`
+              ${getCellSize()}
+              ${getLetterStateClass(cell.state, cell.letter !== '')}
+              ${getTextSize()}
+              font-bold uppercase border-2 rounded-lg
+              flex items-center justify-center
+              transition-all duration-300 ease-in-out
+              select-none
+              ${cell.letter ? 'animate-flip-in' : ''}
+            `}
+            data-testid={`grid-cell-${cellIndex}`}
+          >
+            {cell.letter}
+          </div>
+        ))}
+      </div>
     </div>
   );
 });
