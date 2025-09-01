@@ -319,51 +319,63 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
             </div>
           </div>
 
-          {/* Ana Kategori Grid */}
+          {/* Modal Stil Ana Container */}
           <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
             
-            {/* Ana Başlık */}
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-8 text-center">
+            {/* Modal Benzeri Container */}
+            <div className="w-full max-w-lg mx-auto">
+              <div className="rounded-2xl p-4 sm:p-6"
+                   style={{
+                     background: `linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.10))`,
+                     backdropFilter: 'blur(30px)',
+                     border: `2px solid rgba(255, 255, 255, 0.20)`,
+                     boxShadow: `0 30px 60px rgba(0, 0, 0, 0.3)`
+                   }}>
+            
+            {/* Ana Başlık - Modal Stili */}
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1 text-center">
               {t.chooseCategory}
             </h2>
-            <p className="text-center text-white/60 mb-8">
+            <p className="text-center text-white/70 text-sm mb-3">
               {selectedLanguage === 'tr' ? 'Kategori seçin, zorluk seviyesi modal\'da belirlenecek' : 'Choose category, difficulty will be selected in modal'}
             </p>
             
-            {/* Modern Kategori Grid - Kompakt Tasarım */}
-            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+            {/* Modal Stil Kategori Grid */}
+            <div className="space-y-2">
               {Object.keys(wordLists).map((cat) => (
                 <button
                   key={cat}
                   onClick={() => handleCategoryClick(cat)}
                   onMouseEnter={() => setHoveredCategory(cat)}
                   onMouseLeave={() => setHoveredCategory(null)}
-                  className="group relative p-3 sm:p-4 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95"
+                  className="w-full p-3 sm:p-4 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 text-left"
                   style={{
-                    background: hoveredCategory === cat 
-                      ? `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}60)`
-                      : `linear-gradient(135deg, ${getThemeForCategory(cat).primary}20, ${getThemeForCategory(cat).secondary}20)`,
+                    background: `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}30)`,
                     backdropFilter: 'blur(20px)',
-                    border: `2px solid ${getThemeForCategory(cat).primary}${hoveredCategory === cat ? '80' : '40'}`,
-                    boxShadow: hoveredCategory === cat 
-                      ? `0 15px 30px ${getThemeForCategory(cat).primary}40`
-                      : `0 8px 20px ${getThemeForCategory(cat).primary}20`
+                    border: `2px solid ${getThemeForCategory(cat).primary}80`,
+                    boxShadow: `0 15px 30px ${getThemeForCategory(cat).primary}40`
                   }}
                   data-testid={`button-category-${cat}`}
                 >
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl mb-2 transition-transform duration-300 group-hover:scale-110">
+                  <div className="flex items-center gap-3">
+                    <div className="text-2xl" style={{ filter: 'drop-shadow(0 0 8px currentColor)' }}>
                       {categoryIcons[cat]}
                     </div>
-                    <div className="font-bold text-white text-xs sm:text-sm mb-1">
-                      {getCategoryName(cat)}
+                    <div className="flex-1">
+                      <h4 className="font-bold text-white text-base sm:text-lg mb-0.5">
+                        {getCategoryName(cat)}
+                      </h4>
+                      <div className="text-white/80 text-xs sm:text-sm">
+                        {Object.keys(wordLists[cat]).length} seviye
+                      </div>
                     </div>
-                    <div className="text-xs text-white/60">
-                      {Object.keys(wordLists[cat]).length}
-                    </div>
+                    <div className="text-xl text-white/60">→</div>
                   </div>
                 </button>
               ))}
+            </div>
+              
+              </div>
             </div>
             
           </div>
