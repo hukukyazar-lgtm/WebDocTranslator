@@ -94,22 +94,30 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
     return currentGuessStates;
   }, [currentGuess, gridWidth]);
 
-  // Sabit grid boyutlandırması - 8 kutucuk
+  // Responsive grid boyutlandırması - kelime uzunluğuna göre
   const getCellSize = () => {
-    return 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14'; // Sabit boyut
+    if (wordLength <= 5) return 'w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16'; // Kısa kelimeler
+    if (wordLength <= 8) return 'w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14'; // Orta kelimeler
+    if (wordLength <= 12) return 'w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12'; // Uzun kelimeler
+    return 'w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10'; // Çok uzun kelimeler
   };
 
   const getTextSize = () => {
-    return 'text-base sm:text-lg md:text-xl'; // Sabit metin boyutu
+    if (wordLength <= 5) return 'text-lg sm:text-xl md:text-2xl'; // Kısa kelimeler
+    if (wordLength <= 8) return 'text-base sm:text-lg md:text-xl'; // Orta kelimeler
+    if (wordLength <= 12) return 'text-sm sm:text-base md:text-lg'; // Uzun kelimeler
+    return 'text-xs sm:text-sm md:text-base'; // Çok uzun kelimeler
   };
 
   const getSpacing = () => {
-    return 'space-x-1.5'; // Sabit aralık
+    if (wordLength <= 8) return 'space-x-1.5'; // Normal aralık
+    if (wordLength <= 12) return 'space-x-1'; // Dar aralık
+    return 'space-x-0.5'; // Çok dar aralık
   };
 
   return (
-    <div className="flex flex-col items-center" data-testid="lumina-grid">
-      <div className={`flex ${getSpacing()}`}>
+    <div className="flex flex-col items-center w-full" data-testid="lumina-grid">
+      <div className={`flex ${getSpacing()} justify-center max-w-full overflow-x-auto px-2`}>
         {currentRow.map((cell, cellIndex) => (
           <div
             key={cellIndex}
