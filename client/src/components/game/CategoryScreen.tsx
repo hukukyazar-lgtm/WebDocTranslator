@@ -208,9 +208,17 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
   const difficultyLabels = [t.easy, t.medium, t.hard, t.veryHard, t.extreme];
   const difficultyColors = ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#dc2626'];
   
-  const handleCategorySelect = (category: string) => {
-    const difficulty = categoryDifficulties[category] || 1;
-    onCategorySelect(category, difficulty);
+  const handleCategorySelect = (category: string, e: React.MouseEvent) => {
+    const currentDifficulty = categoryDifficulties[category] || 1;
+    
+    // Shift tuşu ile oyuna başla, yoksa zorluk değiştir
+    if (e.shiftKey) {
+      onCategorySelect(category, currentDifficulty);
+    } else {
+      // Zorluk seviyesini döngüde değiştir (1→2→3→4→5→1)
+      const nextDifficulty = currentDifficulty >= 5 ? 1 : currentDifficulty + 1;
+      setCategoryDifficulties(prev => ({ ...prev, [category]: nextDifficulty }));
+    }
   };
   
   const setDifficulty = (category: string, difficulty: number, e: React.MouseEvent) => {
@@ -312,18 +320,24 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
 
           {/* Kategori seçimi */}
           <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
-            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-8 text-center">
+            <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4 text-center">
               {t.chooseCategory}
             </h3>
+            <p className="text-sm text-white/70 text-center mb-8">
+              {selectedLanguage === 'tr' ? 
+                'Tık: Zorluk değiştir • Shift+Tık: Oyuna başla' :
+                'Click: Change difficulty • Shift+Click: Start game'
+              }
+            </p>
             
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3 lg:gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-1 sm:gap-2 lg:gap-3">
               {Object.keys(wordLists).map((cat) => (
                 <button
                   key={cat}
-                  onClick={() => handleCategorySelect(cat)}
+                  onClick={(e) => handleCategorySelect(cat, e)}
                   onMouseEnter={() => setHoveredCategory(cat)}
                   onMouseLeave={() => setHoveredCategory(null)}
-                  className="group relative p-2 sm:p-3 lg:p-4 rounded-xl sm:rounded-2xl transition-all duration-500 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl"
+                  className="group relative p-1 sm:p-2 lg:p-3 rounded-lg sm:rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl"
                   style={{
                     background: hoveredCategory === cat 
                       ? `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}60)`
@@ -334,44 +348,22 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                   }}
                   data-testid={`button-category-${cat}`}
                 >
-                  {/* Zorluk Seçici */}
-                  <div className="absolute top-2 left-2 flex gap-1 backdrop-blur-sm bg-black/40 rounded-full px-2 py-1 z-10">
-                    {[1, 2, 3, 4, 5].map((level) => {
-                      const isSelected = (categoryDifficulties[cat] || 1) === level;
-                      return (
-                        <div
-                          key={level}
-                          onClick={(e) => setDifficulty(cat, level, e)}
-                          className={`w-3 h-3 rounded-full border-2 transition-all duration-300 cursor-pointer hover:scale-125 ${
-                            isSelected 
-                              ? 'opacity-100 scale-110 shadow-lg' 
-                              : 'opacity-70 hover:opacity-90'
-                          }`}
-                          style={{
-                            backgroundColor: isSelected ? difficultyColors[level - 1] : 'transparent',
-                            borderColor: difficultyColors[level - 1],
-                            boxShadow: isSelected ? `0 0 8px ${difficultyColors[level - 1]}50` : 'none'
-                          }}
-                          title={difficultyLabels[level - 1]}
-                          data-testid={`difficulty-${cat}-${level}`}
-                        />
-                      );
-                    })}
+                  {/* Zorluk Göstergesi - Sadece görsel */}
+                  <div className="absolute top-1 right-1 w-2 h-2 rounded-full z-10" 
+                       style={{ backgroundColor: difficultyColors[(categoryDifficulties[cat] || 1) - 1] }}
+                       title={difficultyLabels[(categoryDifficulties[cat] || 1) - 1]}>
                   </div>
                   
                   <div className="text-center">
-                    <div className="text-2xl sm:text-3xl lg:text-4xl mb-1 sm:mb-2 lg:mb-3 mt-2 transition-transform duration-300 group-hover:scale-110">
+                    <div className="text-lg sm:text-xl lg:text-2xl mb-1 transition-transform duration-300 group-hover:scale-110">
                       {categoryIcons[cat]}
                     </div>
-                    <div className="font-bold text-white text-xs sm:text-sm lg:text-base">
+                    <div className="font-bold text-white text-xs lg:text-sm">
                       {getCategoryName(cat)}
                     </div>
-                    <div className="text-xs text-white/60 mt-1">
-                      {Object.keys(wordLists[cat]).length} {t.levels}
-                    </div>
                     
-                    {/* Seçili Zorluk Göstergesi */}
-                    <div className="mt-2 text-xs font-semibold" style={{ color: difficultyColors[(categoryDifficulties[cat] || 1) - 1] }}>
+                    {/* Kompakt Zorluk Göstergesi */}
+                    <div className="text-xs mt-1" style={{ color: difficultyColors[(categoryDifficulties[cat] || 1) - 1] }}>
                       {difficultyLabels[(categoryDifficulties[cat] || 1) - 1]}
                     </div>
                   </div>
