@@ -74,11 +74,7 @@ export const VirtualKeyboard = memo(({
   }, []);
 
   return (
-    <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
-      <div className="backdrop-blur-xl rounded-xl sm:rounded-2xl p-2 sm:p-3 md:p-4 lg:p-6 border border-white/20 shadow-2xl" style={{
-        background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
-      }}>
-        <div className="space-y-1 sm:space-y-2 md:space-y-2.5 lg:space-y-3">
+    <div className="space-y-1 sm:space-y-2 md:space-y-2.5 lg:space-y-3">
           {/* First Row */}
           <div className="flex justify-center gap-0.5 sm:gap-1 md:gap-1.5">
             {turkishKeyboardLayout[0].map(key => (
@@ -152,8 +148,6 @@ export const VirtualKeyboard = memo(({
               <span className="hidden sm:inline">🚀 {t.submit}</span>
             </button>
           </div>
-        </div>
-      </div>
     </div>
   );
 });
