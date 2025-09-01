@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,6 +9,17 @@ import { Crown, Users, Zap, Trophy, Play, Settings } from 'lucide-react';
 
 export function Dashboard() {
   const [selectedMode, setSelectedMode] = useState<string | null>(null);
+  
+  // Prevent body scrolling on dashboard
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    
+    return () => {
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+    };
+  }, []);
   
   // Use defaults for now - later we can get from local storage or API
   const stats = {
@@ -55,7 +66,7 @@ export function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 overflow-hidden">
       {/* Header - Mobil uyumlu */}
       <div className="flex items-center justify-between p-3 sm:p-4 mb-4 sm:mb-6">
         <div className="flex items-center gap-2 sm:gap-3">
