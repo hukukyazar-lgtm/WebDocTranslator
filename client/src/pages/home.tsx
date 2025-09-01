@@ -47,6 +47,7 @@ export default function Home() {
   const [isGuestMode, setIsGuestMode] = useState(false);
   const { isAuthenticated, isLoading } = useAuth();
   
+  
   // Auto-detect and set language on first load
   useEffect(() => {
     const detectedLang = getStoredLanguage();
@@ -105,7 +106,25 @@ export default function Home() {
   // Logo sayfası
   if (appState === 'logo') {
     return (
-      <LogoScreen onComplete={handleLogoComplete} />
+      <div>
+        <LogoScreen onComplete={handleLogoComplete} />
+        {/* Test için dashboard linki */}
+        <div style={{ position: 'fixed', top: '10px', right: '10px', zIndex: 1000 }}>
+          <a 
+            href="/dashboard" 
+            style={{ 
+              color: 'white', 
+              background: 'rgba(0,0,0,0.7)', 
+              padding: '8px 16px', 
+              borderRadius: '8px',
+              textDecoration: 'none',
+              fontSize: '14px'
+            }}
+          >
+            📊 Dashboard Test
+          </a>
+        </div>
+      </div>
     );
   }
 
