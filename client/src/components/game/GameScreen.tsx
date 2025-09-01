@@ -717,7 +717,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 </div>
                 
                 {/* Virtual Keyboard */}
-                <VirtualKeyboard
+                {false && <VirtualKeyboard
                   onKeyPress={handleKeyPress}
                   onBackspace={handleBackspace}
                   onSpace={handleSpace}
@@ -726,7 +726,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                   correctKeys={getKeyboardLetterStates.correctKeys}
                   presentKeys={getKeyboardLetterStates.presentKeys}
                   absentKeys={getKeyboardLetterStates.absentKeys}
-                />
+                />}
                 
               </>
             )}
