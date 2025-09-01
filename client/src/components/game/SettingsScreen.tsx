@@ -93,8 +93,24 @@ export const SettingsScreen = memo<SettingsScreenProps>(({ selectedLanguage, onL
     onLanguageChange(language);
   };
 
+  const backgroundStyle = {
+    background: 'radial-gradient(ellipse at center, hsl(230, 35%, 15%) 0%, hsl(230, 35%, 7%) 50%, hsl(220, 40%, 5%) 100%)',
+    height: '100vh',
+    overflow: 'hidden',
+    position: 'relative' as const
+  };
+
   return (
-    <div className="h-screen relative overflow-hidden">
+    <div style={backgroundStyle}>
+      {/* Space particles background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute w-1 h-1 bg-cyan-400 rounded-full animate-pulse" style={{ top: '10%', left: '15%' }}></div>
+        <div className="absolute w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{ top: '30%', right: '20%', animationDelay: '1s' }}></div>
+        <div className="absolute w-0.5 h-0.5 bg-cyan-300 rounded-full animate-pulse" style={{ top: '60%', left: '10%', animationDelay: '2s' }}></div>
+        <div className="absolute w-1 h-1 bg-blue-400 rounded-full animate-pulse" style={{ bottom: '40%', right: '15%', animationDelay: '1.5s' }}></div>
+        <div className="absolute w-0.5 h-0.5 bg-cyan-400 rounded-full animate-pulse" style={{ top: '80%', right: '75%', animationDelay: '0.5s' }}></div>
+      </div>
+      
       {/* Main content */}
       <div className="relative z-10 h-screen flex flex-col p-3 sm:p-4 overflow-y-auto">
         <div className="w-full max-w-md sm:max-w-lg lg:max-w-2xl mx-auto my-auto">
@@ -112,11 +128,22 @@ export const SettingsScreen = memo<SettingsScreenProps>(({ selectedLanguage, onL
 
           {/* Header */}
           <div className="text-center mb-8 animate-slide-up">
-            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
-              {t.title}
-            </h1>
-            <p className="text-white/70 text-sm sm:text-base">
-              {t.subtitle}
+            {/* LUMINA Eye Logo */}
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="w-10 h-10 relative">
+                <div className="absolute inset-0 rounded-full border border-cyan-400/60 flex items-center justify-center">
+                  <div className="w-6 h-6 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 relative">
+                    <div className="absolute top-1 left-1 w-1.5 h-1.5 bg-white/80 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+                <div className="absolute inset-0 rounded-full bg-cyan-400/20 animate-pulse blur-sm"></div>
+              </div>
+              <h1 className="text-3xl sm:text-4xl font-black text-white tracking-wider">
+                LUMINA
+              </h1>
+            </div>
+            <p className="text-cyan-400/70 text-sm sm:text-base tracking-wide">
+              Settings
             </p>
           </div>
 
@@ -124,7 +151,7 @@ export const SettingsScreen = memo<SettingsScreenProps>(({ selectedLanguage, onL
           <div 
             className="backdrop-blur-xl rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl animate-slide-up space-y-8"
             style={{ 
-              background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.1), rgba(233, 30, 99, 0.1))',
+              background: 'linear-gradient(135deg, rgba(0, 255, 255, 0.05), rgba(138, 43, 226, 0.05))',
               animationDelay: '0.2s'
             }}
           >

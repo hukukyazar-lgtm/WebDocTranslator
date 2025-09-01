@@ -218,9 +218,10 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
   };
 
   const backgroundStyle = {
-    background: `linear-gradient(135deg, ${theme.primary}20, ${theme.secondary}40, ${theme.primary}60)`,
+    background: 'radial-gradient(ellipse at center, hsl(230, 35%, 15%) 0%, hsl(230, 35%, 7%) 50%, hsl(220, 40%, 5%) 100%)',
     height: '100vh',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    position: 'relative' as const
   };
 
   const availableDifficulties = Object.keys(wordLists[selectedCategory] || {})
@@ -230,6 +231,15 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
 
   return (
     <div style={backgroundStyle}>
+      {/* Space particles background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute w-1 h-1 bg-cyan-400 rounded-full animate-pulse" style={{ top: '10%', left: '15%' }}></div>
+        <div className="absolute w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{ top: '30%', right: '20%', animationDelay: '1s' }}></div>
+        <div className="absolute w-0.5 h-0.5 bg-cyan-300 rounded-full animate-pulse" style={{ top: '60%', left: '10%', animationDelay: '2s' }}></div>
+        <div className="absolute w-1 h-1 bg-blue-400 rounded-full animate-pulse" style={{ bottom: '40%', right: '15%', animationDelay: '1.5s' }}></div>
+        <div className="absolute w-0.5 h-0.5 bg-cyan-400 rounded-full animate-pulse" style={{ top: '80%', right: '75%', animationDelay: '0.5s' }}></div>
+      </div>
+      
       <div className="relative z-10 h-screen flex flex-col p-3 sm:p-4 overflow-y-auto">
         <div className="w-full max-w-md sm:max-w-2xl lg:max-w-4xl mx-auto my-auto">
           {/* Header */}
@@ -244,11 +254,22 @@ export const DifficultyScreen = memo<DifficultyScreenProps>(({ selectedLanguage,
             </button>
             
             <div className="text-center">
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">
-                🎯 <span className="font-black bg-gradient-to-r from-teal-400 via-cyan-500 to-pink-500 bg-clip-text text-transparent">WordSpin</span>
-              </h1>
+              {/* LUMINA Eye Logo */}
+              <div className="flex items-center justify-center gap-3">
+                <div className="w-8 h-8 relative">
+                  <div className="absolute inset-0 rounded-full border border-cyan-400/60 flex items-center justify-center">
+                    <div className="w-4 h-4 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 relative">
+                      <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white/80 rounded-full animate-pulse"></div>
+                    </div>
+                  </div>
+                  <div className="absolute inset-0 rounded-full bg-cyan-400/20 animate-pulse blur-sm"></div>
+                </div>
+                <h1 className="text-2xl sm:text-3xl font-black text-white tracking-wider">
+                  LUMINA
+                </h1>
+              </div>
               {isGuestMode && (
-                <p className="text-sm text-white/60 mt-1">
+                <p className="text-sm text-cyan-400/60 mt-2 tracking-wide">
                   👤 {t.guestMode}
                 </p>
               )}
