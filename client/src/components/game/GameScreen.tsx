@@ -617,31 +617,35 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         )}
         
-        <main className="flex-1 flex flex-col justify-center px-3 sm:px-4 md:px-6 py-4 sm:py-6 overflow-x-hidden overflow-y-auto">
-          <div className="max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto space-y-2 sm:space-y-3 md:space-y-4 w-full">
-            {/* Lingo Grid + Spinning Wheel kombinasyonu */}
-            <div className="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
-              {/* Lingo Grid */}
-              <div className="order-2 lg:order-1">
-                <LingoGrid
-                  word={secretWord}
-                  guesses={guesses}
-                  currentGuess={guess}
-                  maxGuesses={maxGuesses}
-                  isGameOver={gameOver}
-                />
+        <main className="flex-1 flex flex-col px-2 sm:px-3 py-2 sm:py-3 overflow-hidden">
+          <div className="w-full h-full flex flex-col space-y-2 sm:space-y-3">
+            {/* Kompakt Lingo Grid + Spinning Wheel */}
+            <div className="flex-1 flex flex-col md:flex-row items-center justify-center gap-2 sm:gap-4 max-h-[60vh]">
+              {/* Lingo Grid - Kompakt */}
+              <div className="flex-shrink-0">
+                <div className="transform scale-75 sm:scale-90 md:scale-100">
+                  <LingoGrid
+                    word={secretWord}
+                    guesses={guesses}
+                    currentGuess={guess}
+                    maxGuesses={maxGuesses}
+                    isGameOver={gameOver}
+                  />
+                </div>
               </div>
               
-              {/* Spinning Wheel */}
-              <div className="order-1 lg:order-2">
-                <SpinningWheel 
-                  word={secretWord} 
-                  isSpinning={isSpinning} 
-                  spinDuration={spinDuration} 
-                  difficulty={difficulty}
-                  category={category}
-                  timeLeft={timeLeft}
-                />
+              {/* Spinning Wheel - Küçültülmüş */}
+              <div className="flex-shrink-0">
+                <div className="transform scale-50 sm:scale-60 md:scale-75">
+                  <SpinningWheel 
+                    word={secretWord} 
+                    isSpinning={isSpinning} 
+                    spinDuration={spinDuration} 
+                    difficulty={difficulty}
+                    category={category}
+                    timeLeft={timeLeft}
+                  />
+                </div>
               </div>
             </div>
             
@@ -656,80 +660,64 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
             )}
             
             {!gameOver && (
-              <>
-                <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.2s' }}>
-                  <div className="backdrop-blur-xl rounded-xl sm:rounded-2xl md:rounded-3xl p-2 sm:p-3 md:p-4 lg:p-8 border border-white/20 w-full shadow-2xl" style={{
-                    background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
-                  }}>
-                    <div className="text-center space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6">
-                      {/* Timer Display */}
-                      <div className="flex justify-center mb-2 sm:mb-3 md:mb-4">
-                        <div className={`backdrop-blur-lg rounded-xl sm:rounded-2xl px-3 sm:px-4 md:px-6 py-2 sm:py-3 border border-white/20 bg-white/10 flex items-center gap-2 sm:gap-3 shadow-lg ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
-                          <div className="text-lg sm:text-xl md:text-2xl animate-pulse">⏱️</div>
-                          <div className="text-lg sm:text-xl md:text-2xl font-black text-white" data-testid="text-time-left">
-                            {formatTime(timeLeft)}
-                          </div>
-                          <div className="w-12 sm:w-14 md:w-16 h-1.5 sm:h-2 backdrop-blur-lg rounded-full border border-white/20 bg-white/10 overflow-hidden">
-                            <div 
-                              className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
-                              style={{ 
-                                width: `${((TOTAL_GAME_TIME - timeLeft) / TOTAL_GAME_TIME) * 100}%`,
-                                background: timeLeft > 10 
-                                  ? 'linear-gradient(90deg, #10b981, #3b82f6)' 
-                                  : 'linear-gradient(90deg, #f59e0b, #ef4444)'
-                              }}
-                              data-testid="progress-timer"
-                            />
-                          </div>
-                        </div>
+              <div className="flex-shrink-0 space-y-2">
+                {/* Kompakt Timer + Input */}
+                <div className="backdrop-blur-xl rounded-lg p-2 sm:p-3 border border-white/20 shadow-xl" style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
+                }}>
+                  {/* Timer - Kompakt */}
+                  <div className="flex justify-center mb-2">
+                    <div className={`backdrop-blur-lg rounded-lg px-2 py-1 border border-white/20 bg-white/10 flex items-center gap-2 shadow-lg text-sm ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
+                      <div className="text-base animate-pulse">⏱️</div>
+                      <div className="text-base font-black text-white" data-testid="text-time-left">
+                        {formatTime(timeLeft)}
                       </div>
-                      
-                      <div className={`relative ${shakeInput ? 'animate-shake-error' : ''}`}>
-                        <input 
-                          type="text" 
-                          className={`w-full px-2 py-2 sm:px-3 sm:py-3 md:px-4 md:py-4 lg:px-8 lg:py-6 text-base sm:text-lg md:text-xl lg:text-2xl xl:text-3xl font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-lg sm:rounded-xl md:rounded-2xl focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50 ${sparkleText ? 'animate-typing-sparkle' : ''}`}
+                      <div className="w-8 h-1 backdrop-blur-lg rounded-full border border-white/20 bg-white/10 overflow-hidden">
+                        <div 
+                          className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
                           style={{ 
-                            background: 'rgba(255,255,255,0.1)',
-                            textShadow: '0 0 20px rgba(255,255,255,0.5)'
+                            width: `${((TOTAL_GAME_TIME - timeLeft) / TOTAL_GAME_TIME) * 100}%`,
+                            background: timeLeft > 10 
+                              ? 'linear-gradient(90deg, #10b981, #3b82f6)' 
+                              : 'linear-gradient(90deg, #f59e0b, #ef4444)'
                           }}
-                          placeholder={t.enterGuess}
-                          value={guess}
-                          onChange={(e) => setGuess(e.target.value)}
-                          data-testid="input-guess"
+                          data-testid="progress-timer"
                         />
-                        <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3 md:pr-6">
-                          <div 
-                            className="w-4 h-4 rounded-full animate-pulse shadow-lg"
-                            style={{ background: theme.primary, boxShadow: `0 0 10px ${theme.primary}` }}
-                          />
-                        </div>
-                        <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2">
-                          <div 
-                            className="h-1 rounded-full transition-all duration-300"
-                            style={{ 
-                              width: `${Math.max(20, guess.length * 8)}px`,
-                              background: `linear-gradient(90deg, ${theme.primary}, ${theme.secondary})`
-                            }}
-                          />
-                        </div>
                       </div>
                     </div>
                   </div>
+                  
+                  {/* Input - Kompakt */}
+                  <div className={`relative ${shakeInput ? 'animate-shake-error' : ''}`}>
+                    <input 
+                      type="text" 
+                      className={`w-full px-3 py-2 text-lg font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-lg focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50 ${sparkleText ? 'animate-typing-sparkle' : ''}`}
+                      style={{ 
+                        background: 'rgba(255,255,255,0.1)',
+                        textShadow: '0 0 20px rgba(255,255,255,0.5)'
+                      }}
+                      placeholder={t.enterGuess}
+                      value={guess}
+                      onChange={(e) => setGuess(e.target.value)}
+                      data-testid="input-guess"
+                    />
+                  </div>
                 </div>
                 
-                {/* Virtual Keyboard */}
-                <VirtualKeyboard
-                  onKeyPress={handleKeyPress}
-                  onBackspace={handleBackspace}
-                  onSpace={handleSpace}
-                  onSubmit={handleGuessSubmit}
-                  language={language as Language}
-                  correctKeys={getKeyboardLetterStates.correctKeys}
-                  presentKeys={getKeyboardLetterStates.presentKeys}
-                  absentKeys={getKeyboardLetterStates.absentKeys}
-                />
-                
-              </>
+                {/* Virtual Keyboard - Kompakt */}
+                <div className="transform scale-90 origin-center">
+                  <VirtualKeyboard
+                    onKeyPress={handleKeyPress}
+                    onBackspace={handleBackspace}
+                    onSpace={handleSpace}
+                    onSubmit={handleGuessSubmit}
+                    language={language as Language}
+                    correctKeys={getKeyboardLetterStates.correctKeys}
+                    presentKeys={getKeyboardLetterStates.presentKeys}
+                    absentKeys={getKeyboardLetterStates.absentKeys}
+                  />
+                </div>
+              </div>
             )}
 
             {/* Game Over Results */}
