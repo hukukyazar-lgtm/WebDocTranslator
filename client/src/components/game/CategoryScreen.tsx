@@ -202,16 +202,30 @@ const categoryTranslations = {
 export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onCategorySelect, onBack, onSettingsOpen, isGuestMode = false }) => {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<number | null>(null);
+  const [showDifficultyModal, setShowDifficultyModal] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const t = translations[selectedLanguage];
   const categoryT = categoryTranslations[selectedLanguage];
   
   const difficultyLabels = [t.easy, t.medium, t.hard, t.veryHard, t.extreme];
   const difficultyColors = ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#dc2626'];
   
-  const handleCategorySelect = (category: string) => {
-    if (selectedDifficulty) {
-      onCategorySelect(category, selectedDifficulty);
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+    setShowDifficultyModal(true);
+  };
+  
+  const handleDifficultySelect = (difficulty: number) => {
+    setSelectedDifficulty(difficulty);
+    setShowDifficultyModal(false);
+    if (selectedCategory) {
+      onCategorySelect(selectedCategory, difficulty);
     }
+  };
+  
+  const closeDifficultyModal = () => {
+    setShowDifficultyModal(false);
+    setSelectedCategory(null);
   };
   
   const theme = getThemeForCategory(hoveredCategory || 'Hayvanlar');
@@ -305,159 +319,141 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
             </div>
           </div>
 
-          {/* Modern Tek Sayfa - Side by Side Layout */}
+          {/* Ana Kategori Grid */}
           <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
             
             {/* Ana Başlık */}
             <h2 className="text-3xl sm:text-4xl font-bold text-white mb-8 text-center">
-              {selectedLanguage === 'tr' ? 'Oyun Kurulumu' : 'Game Setup'}
+              {t.chooseCategory}
             </h2>
+            <p className="text-center text-white/60 mb-8">
+              {selectedLanguage === 'tr' ? 'Kategori seçin, zorluk seviyesi modal\'da belirlenecek' : 'Choose category, difficulty will be selected in modal'}
+            </p>
             
-            {/* İki Kolonlu Modern Layout */}
-            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-              
-              {/* Sol Taraf - Zorluk Seçimi */}
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-                    {selectedLanguage === 'tr' ? '🎯 Zorluk Seviyesi' : '🎯 Difficulty Level'}
-                  </h3>
-                  <p className="text-sm text-white/60 mb-6">
-                    {selectedLanguage === 'tr' ? 'Meydan okumanızı seçin' : 'Choose your challenge'}
-                  </p>
-                </div>
-                
-                <div className="space-y-3">
-                  {difficultyLabels.map((label, index) => (
-                    <button
-                      key={index + 1}
-                      onClick={() => setSelectedDifficulty(index + 1)}
-                      className={`w-full p-4 sm:p-5 rounded-2xl transition-all duration-500 transform hover:scale-105 active:scale-95 ${
-                        selectedDifficulty === index + 1 
-                          ? 'ring-4 ring-white/40 scale-105' 
-                          : 'hover:scale-102'
-                      }`}
-                      style={{
-                        background: selectedDifficulty === index + 1
-                          ? `linear-gradient(135deg, ${difficultyColors[index]}60, ${difficultyColors[index]}40)`
-                          : `linear-gradient(135deg, ${difficultyColors[index]}30, ${difficultyColors[index]}10)`,
-                        backdropFilter: 'blur(20px)',
-                        border: `2px solid ${difficultyColors[index]}${selectedDifficulty === index + 1 ? '80' : '40'}`,
-                        boxShadow: selectedDifficulty === index + 1 
-                          ? `0 20px 40px ${difficultyColors[index]}40`
-                          : `0 10px 20px ${difficultyColors[index]}20`
-                      }}
-                      data-testid={`difficulty-${index + 1}`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="text-3xl" style={{ filter: 'drop-shadow(0 0 8px currentColor)' }}>
-                          {['🟢', '🟡', '🟠', '🔴', '⚫'][index]}
-                        </div>
-                        <div className="flex-1 text-left">
-                          <h4 className="font-bold text-white text-lg sm:text-xl">
-                            {label}
-                          </h4>
-                          <div className="text-sm text-white/70">
-                            {[
-                              selectedLanguage === 'tr' ? 'Yeni başlayanlar için ideal' : 'Perfect for beginners',
-                              selectedLanguage === 'tr' ? 'Deneyimliler için uygun' : 'Suitable for experienced',
-                              selectedLanguage === 'tr' ? 'Zorlu bir deneyim' : 'A challenging experience',
-                              selectedLanguage === 'tr' ? 'Uzmanlar için tasarlanmış' : 'Designed for experts',
-                              selectedLanguage === 'tr' ? 'Sadece ustalar için' : 'Only for masters'
-                            ][index]}
-                          </div>
-                        </div>
-                        {selectedDifficulty === index + 1 && (
-                          <div className="text-2xl">✅</div>
-                        )}
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Sağ Taraf - Kategori Seçimi */}
-              <div className="space-y-6">
-                <div className="text-center">
-                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
-                    {selectedLanguage === 'tr' ? '📚 Kategori Seçimi' : '📚 Category Selection'}
-                  </h3>
-                  <p className="text-sm text-white/60 mb-6">
-                    {selectedLanguage === 'tr' ? 'Hangi konuda oynamak istiyorsunuz?' : 'What topic would you like to play?'}
-                  </p>
-                </div>
-                
-                {!selectedDifficulty ? (
-                  <div className="text-center p-8 rounded-2xl border-2 border-dashed border-white/20">
-                    <div className="text-6xl mb-4">🎯</div>
-                    <p className="text-white/60">
-                      {selectedLanguage === 'tr' ? 'Önce zorluk seviyesi seçin' : 'Please select a difficulty level first'}
-                    </p>
+            {/* Modern Kategori Grid */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+              {Object.keys(wordLists).map((cat) => (
+                <button
+                  key={cat}
+                  onClick={() => handleCategoryClick(cat)}
+                  onMouseEnter={() => setHoveredCategory(cat)}
+                  onMouseLeave={() => setHoveredCategory(null)}
+                  className="group relative p-6 sm:p-8 rounded-2xl sm:rounded-3xl transition-all duration-500 transform hover:scale-110 active:scale-95 backdrop-blur-lg border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl"
+                  style={{
+                    background: hoveredCategory === cat 
+                      ? `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}60)`
+                      : 'linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.12))',
+                    boxShadow: hoveredCategory === cat 
+                      ? `0 20px 40px ${getThemeForCategory(cat).primary}30`
+                      : '0 8px 20px rgba(0, 0, 0, 0.3)'
+                  }}
+                  data-testid={`button-category-${cat}`}
+                >
+                  <div className="text-center">
+                    <div className="text-4xl sm:text-5xl lg:text-6xl mb-3 sm:mb-4 transition-transform duration-300 group-hover:scale-110">
+                      {categoryIcons[cat]}
+                    </div>
+                    <div className="font-bold text-white text-base sm:text-lg lg:text-xl mb-2">
+                      {getCategoryName(cat)}
+                    </div>
+                    <div className="text-sm text-white/60">
+                      {Object.keys(wordLists[cat]).length} seviye
+                    </div>
                   </div>
-                ) : (
-                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                    {Object.keys(wordLists).map((cat) => (
-                      <button
-                        key={cat}
-                        onClick={() => handleCategorySelect(cat)}
-                        onMouseEnter={() => setHoveredCategory(cat)}
-                        onMouseLeave={() => setHoveredCategory(null)}
-                        className="group relative p-3 sm:p-4 rounded-xl transition-all duration-500 transform hover:scale-110 active:scale-95 backdrop-blur-lg border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl"
-                        style={{
-                          background: hoveredCategory === cat 
-                            ? `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}60)`
-                            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.12))',
-                          boxShadow: hoveredCategory === cat 
-                            ? `0 20px 40px ${getThemeForCategory(cat).primary}30`
-                            : '0 8px 20px rgba(0, 0, 0, 0.3)'
-                        }}
-                        data-testid={`button-category-${cat}`}
-                      >
-                        {/* Seçili zorluk göstergesi */}
-                        <div className="absolute top-2 right-2 w-3 h-3 rounded-full border-2 border-white" 
-                             style={{ backgroundColor: difficultyColors[selectedDifficulty - 1] }}
-                             title={difficultyLabels[selectedDifficulty - 1]}>
-                        </div>
-                        
-                        <div className="text-center">
-                          <div className="text-2xl sm:text-3xl mb-2 transition-transform duration-300 group-hover:scale-110">
-                            {categoryIcons[cat]}
-                          </div>
-                          <div className="font-bold text-white text-xs sm:text-sm">
-                            {getCategoryName(cat)}
-                          </div>
-                          <div className="text-xs text-white/60 mt-1">
-                            {Object.keys(wordLists[cat]).length} seviye
-                          </div>
-                        </div>
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-              
+                  
+                  {/* Hover efekti */}
+                  <div className="absolute inset-0 rounded-2xl sm:rounded-3xl bg-white/5 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                </button>
+              ))}
             </div>
-            
-            {/* Alt kısım - Seçim Özeti */}
-            {selectedDifficulty && (
-              <div className="mt-8 p-6 rounded-2xl text-center"
-                   style={{
-                     background: `linear-gradient(135deg, ${difficultyColors[selectedDifficulty - 1]}20, ${difficultyColors[selectedDifficulty - 1]}10)`,
-                     backdropFilter: 'blur(20px)',
-                     border: `2px solid ${difficultyColors[selectedDifficulty - 1]}40`
-                   }}>
-                <p className="text-white/80 text-sm">
-                  {selectedLanguage === 'tr' 
-                    ? `✨ ${difficultyLabels[selectedDifficulty - 1]} seviyesi seçildi. Şimdi bir kategori seçin!`
-                    : `✨ ${difficultyLabels[selectedDifficulty - 1]} level selected. Now choose a category!`
-                  }
-                </p>
-              </div>
-            )}
             
           </div>
         </div>
       </div>
+      
+      {/* Modern Zorluk Seçimi Pop-up Modal */}
+      {showDifficultyModal && selectedCategory && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          {/* Backdrop */}
+          <div 
+            className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in"
+            onClick={closeDifficultyModal}
+          ></div>
+          
+          {/* Modal Content */}
+          <div className="relative w-full max-w-2xl animate-scale-in">
+            <div className="rounded-3xl p-8 sm:p-10"
+                 style={{
+                   background: `linear-gradient(135deg, ${getThemeForCategory(selectedCategory).primary}20, ${getThemeForCategory(selectedCategory).secondary}20)`,
+                   backdropFilter: 'blur(30px)',
+                   border: `2px solid ${getThemeForCategory(selectedCategory).primary}40`,
+                   boxShadow: `0 30px 60px ${getThemeForCategory(selectedCategory).primary}30`
+                 }}>
+              
+              {/* Modal Header */}
+              <div className="text-center mb-8">
+                <div className="text-6xl mb-4">
+                  {categoryIcons[selectedCategory]}
+                </div>
+                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-2">
+                  {getCategoryName(selectedCategory)}
+                </h3>
+                <p className="text-white/70 text-lg mb-6">
+                  {selectedLanguage === 'tr' ? 'Zorluk seviyesini seçin' : 'Choose difficulty level'}
+                </p>
+                
+                {/* Close Button */}
+                <button
+                  onClick={closeDifficultyModal}
+                  className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all duration-300"
+                >
+                  ✕
+                </button>
+              </div>
+              
+              {/* Zorluk Butonları */}
+              <div className="space-y-4">
+                {difficultyLabels.map((label, index) => (
+                  <button
+                    key={index + 1}
+                    onClick={() => handleDifficultySelect(index + 1)}
+                    className="w-full p-5 sm:p-6 rounded-2xl transition-all duration-500 transform hover:scale-105 active:scale-95 text-left"
+                    style={{
+                      background: `linear-gradient(135deg, ${difficultyColors[index]}60, ${difficultyColors[index]}30)`,
+                      backdropFilter: 'blur(20px)',
+                      border: `2px solid ${difficultyColors[index]}80`,
+                      boxShadow: `0 15px 30px ${difficultyColors[index]}40`
+                    }}
+                    data-testid={`modal-difficulty-${index + 1}`}
+                  >
+                    <div className="flex items-center gap-5">
+                      <div className="text-4xl" style={{ filter: 'drop-shadow(0 0 10px currentColor)' }}>
+                        {['🟢', '🟡', '🟠', '🔴', '⚫'][index]}
+                      </div>
+                      <div className="flex-1">
+                        <h4 className="font-black text-white text-xl sm:text-2xl mb-1">
+                          {label}
+                        </h4>
+                        <div className="text-white/80">
+                          {[
+                            selectedLanguage === 'tr' ? 'Yeni başlayanlar için ideal - kolay kelimeler' : 'Perfect for beginners - easy words',
+                            selectedLanguage === 'tr' ? 'Deneyimliler için uygun - orta seviye' : 'Suitable for experienced - medium level',
+                            selectedLanguage === 'tr' ? 'Zorlu bir deneyim - zor kelimeler' : 'A challenging experience - hard words',
+                            selectedLanguage === 'tr' ? 'Uzmanlar için tasarlanmış - çok zor' : 'Designed for experts - very hard',
+                            selectedLanguage === 'tr' ? 'Sadece ustalar için - imkansıza yakın' : 'Only for masters - nearly impossible'
+                          ][index]}
+                        </div>
+                      </div>
+                      <div className="text-3xl text-white/60">→</div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 });
