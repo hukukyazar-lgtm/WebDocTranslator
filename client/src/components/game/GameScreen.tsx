@@ -3,7 +3,6 @@ import { GameHeader } from './GameHeader';
 import { SpinningWheel } from './SpinningWheel';
 import { LuminaGrid } from './LuminaGrid';
 import { VirtualKeyboard } from './VirtualKeyboard';
-import { GameStats } from './GameStats';
 import { AchievementNotification } from './AchievementNotification';
 import { DailyGoals } from './DailyGoals';
 import { getWordByDifficulty, wordLists } from '@/lib/wordLists';
@@ -907,15 +906,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               </div>
             )}
             
-            {!gameOver && (
-              <GameStats
-                score={totalScore}
-                streak={streak}
-                correctGuesses={correctGuesses}
-                averageTime={averageTime}
-                language={language}
-              />
-            )}
           </div>
         </main>
         
