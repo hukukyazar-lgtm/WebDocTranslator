@@ -10,6 +10,11 @@ import { Crown, Users, Zap, Trophy, Play, Settings } from 'lucide-react';
 export const Dashboard = memo(() => {
   const [selectedMode, setSelectedMode] = useState<string | null>(null);
   
+  const handleSettingsClick = () => {
+    // Basit ayarlar alert'i - gelecekte modal eklenebilir
+    alert('Ayarlar menüsü yakında eklenecek! 🛠️\n\nŞu an mevcut özellikler:\n- Koyu tema\n- Türkçe dil desteği\n- Performans optimizasyonu');
+  };
+  
   // Prevent body scrolling on dashboard
   useEffect(() => {
     document.body.style.overflow = 'hidden';
@@ -76,7 +81,12 @@ export const Dashboard = memo(() => {
             <p className="text-xs sm:text-sm text-white/60">WordSpin Pro</p>
           </div>
         </div>
-        <Button variant="outline" size="sm" className="text-white border-white/20 text-xs sm:text-sm">
+        <Button 
+          variant="outline" 
+          size="sm" 
+          className="text-white border-white/20 text-xs sm:text-sm hover:bg-white/10 transition-colors"
+          onClick={handleSettingsClick}
+        >
           <Settings className="h-3 w-3 sm:h-4 sm:w-4 mr-1 sm:mr-2" />
           <span className="hidden sm:inline">Ayarlar</span>
           <span className="sm:hidden">⚙️</span>
