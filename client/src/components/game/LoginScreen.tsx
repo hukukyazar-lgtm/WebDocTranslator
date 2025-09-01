@@ -17,78 +17,83 @@ export const LoginScreen = memo<LoginScreenProps>(({ onAuthChoice }) => {
   };
 
   const backgroundStyle = {
-    background: 'linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%)',
+    background: 'radial-gradient(ellipse at center, hsl(230, 35%, 15%) 0%, hsl(230, 35%, 7%) 50%, hsl(220, 40%, 5%) 100%)',
     height: '100vh',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    position: 'relative' as const
   };
 
   return (
     <div style={backgroundStyle}>
-      <div className="h-full flex items-center justify-center p-6">
+      {/* Space particles background */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute w-1 h-1 bg-cyan-400 rounded-full animate-pulse" style={{ top: '15%', left: '20%' }}></div>
+        <div className="absolute w-1 h-1 bg-purple-400 rounded-full animate-pulse" style={{ top: '35%', right: '10%', animationDelay: '1s' }}></div>
+        <div className="absolute w-0.5 h-0.5 bg-cyan-300 rounded-full animate-pulse" style={{ top: '70%', left: '15%', animationDelay: '2s' }}></div>
+        <div className="absolute w-1 h-1 bg-blue-400 rounded-full animate-pulse" style={{ bottom: '20%', right: '30%', animationDelay: '1.5s' }}></div>
+        <div className="absolute w-0.5 h-0.5 bg-cyan-400 rounded-full animate-pulse" style={{ top: '85%', right: '80%', animationDelay: '0.5s' }}></div>
+      </div>
+      
+      <div className="h-full flex items-center justify-center p-6 relative z-10">
         <div className="text-center max-w-md w-full">
-          {/* Başlık */}
+          {/* LUMINA Header */}
           <div className="mb-12 animate-slide-up">
-            <h1 className="text-4xl sm:text-5xl font-black mb-4 text-white">
-              Hoş Geldiniz!
+            <h1 className="text-4xl sm:text-5xl font-black mb-4 text-white tracking-wider">
+              LUMINA
             </h1>
-            <p className="text-lg text-white/80 font-medium">
-              Oynamaya başlamak için giriş yapın
+            <p className="text-lg text-cyan-400/80 font-light tracking-wide">
+              Uncover Your Truth
             </p>
           </div>
 
-          {/* Auth seçenekleri */}
+          {/* Auth options */}
           <div className="space-y-4 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-            {/* Replit ile giriş */}
+            {/* Continue with Replit */}
             <button
               onClick={handleLogin}
               disabled={isLoading}
-              className="w-full py-4 px-6 text-lg font-bold text-white rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-2xl"
+              className="w-full py-4 px-8 text-lg font-medium text-black rounded-full transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-2xl tracking-wide"
               style={{
-                background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.9), rgba(233, 30, 99, 0.9))',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid rgba(255, 255, 255, 0.3)',
-                boxShadow: '0 10px 30px rgba(0, 220, 205, 0.3)'
+                background: 'linear-gradient(135deg, hsl(180, 100%, 70%) 0%, hsl(200, 80%, 60%) 100%)',
+                boxShadow: '0 8px 32px rgba(0, 255, 255, 0.3)',
               }}
               data-testid="button-login"
             >
-              <span className="flex items-center justify-center gap-3">
-                <span className="text-2xl">🚀</span>
-                <span>Replit ile Giriş Yap</span>
-              </span>
+              Continue with Replit
             </button>
 
-            {/* Logout seçeneği (giriş yapmış kullanıcılar için) */}
+            {/* Logout option for authenticated users */}
             {isAuthenticated && (
               <div className="text-center">
-                <p className="text-xs text-white/40 mb-4">veya</p>
+                <div className="text-center my-6">
+                  <div className="h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent mb-4"></div>
+                  <p className="text-xs text-cyan-400/50 tracking-wide mb-4">OR</p>
+                </div>
                 <a
                   href="/api/logout"
-                  className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white/80 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
+                  className="inline-flex items-center gap-3 px-6 py-3 text-sm font-medium text-cyan-400/80 hover:text-cyan-400 rounded-full bg-cyan-400/5 hover:bg-cyan-400/10 border border-cyan-400/20 hover:border-cyan-400/40 transition-all duration-300 tracking-wide"
                   data-testid="button-logout"
                 >
                   <span>🚪</span>
-                  <span>Çıkış Yap</span>
+                  <span>Log Out</span>
                 </a>
               </div>
             )}
 
             <div className="text-center">
-              <p className="text-xs text-white/40 mb-4">veya</p>
+              <div className="text-center my-6">
+                <div className="h-px bg-gradient-to-r from-transparent via-cyan-400/30 to-transparent mb-4"></div>
+                <p className="text-xs text-cyan-400/50 tracking-wide mb-4">OR</p>
+              </div>
               
-              {/* Misafir girişi */}
+              {/* Guest mode */}
               <button 
                 onClick={handleGuestMode}
-                className="px-6 py-3 text-sm font-medium text-white/80 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
+                className="text-cyan-400/60 hover:text-cyan-400 text-sm font-light transition-all duration-300 tracking-wide underline underline-offset-4 decoration-cyan-400/30 hover:decoration-cyan-400/60"
                 data-testid="button-guest-mode"
               >
-                <span className="flex items-center justify-center gap-2">
-                  <span>👤</span>
-                  <span>Misafir olarak devam et</span>
-                </span>
+                Play as Guest
               </button>
-              <p className="text-xs text-white/40 mt-2">
-                * İlerleme ve skorlar kaydedilmeyecek
-              </p>
             </div>
           </div>
         </div>

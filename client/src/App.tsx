@@ -22,7 +22,7 @@ function App() {
         <div 
           style={{
             minHeight: '100vh',
-            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 70%, #e94560 100%)',
+            background: 'radial-gradient(ellipse at center, hsl(230, 35%, 15%) 0%, hsl(230, 35%, 7%) 50%, hsl(220, 40%, 5%) 100%)',
             position: 'fixed',
             top: 0,
             left: 0,

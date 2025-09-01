@@ -91,7 +91,7 @@ export default function Home() {
   };
 
   const backgroundStyle = {
-    background: 'linear-gradient(135deg, #00dccd 0%, #f8bbd9 50%, #e91e63 100%)',
+    background: 'radial-gradient(ellipse at center, hsl(230, 35%, 15%) 0%, hsl(230, 35%, 7%) 50%, hsl(220, 40%, 5%) 100%)',
     height: '100vh',
     overflow: 'hidden'
   };
