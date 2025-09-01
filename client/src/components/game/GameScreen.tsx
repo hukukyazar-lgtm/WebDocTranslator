@@ -717,68 +717,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 </div>
               </div>
             )}
-            
-            {true && ( // Her zaman klavye göster - debug için
-              <div className="flex-shrink-0 space-y-2">
-                {/* Kompakt Timer + Input */}
-                <div className="backdrop-blur-xl rounded-lg p-2 sm:p-3 border border-white/20 shadow-xl" style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
-                }}>
-                  {/* Timer - Kompakt */}
-                  <div className="flex justify-center mb-2">
-                    <div className={`backdrop-blur-lg rounded-lg px-2 py-1 border border-white/20 bg-white/10 flex items-center gap-2 shadow-lg text-sm ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
-                      <div className="text-base animate-pulse">⏱️</div>
-                      <div className="text-base font-black text-white" data-testid="text-time-left">
-                        {formatTime(timeLeft)}
-                      </div>
-                      <div className="w-8 h-1 backdrop-blur-lg rounded-full border border-white/20 bg-white/10 overflow-hidden">
-                        <div 
-                          className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
-                          style={{ 
-                            width: `${((TOTAL_GAME_TIME - timeLeft) / TOTAL_GAME_TIME) * 100}%`,
-                            background: timeLeft > 10 
-                              ? 'linear-gradient(90deg, #10b981, #3b82f6)' 
-                              : 'linear-gradient(90deg, #f59e0b, #ef4444)'
-                          }}
-                          data-testid="progress-timer"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  
-                  {/* Input - Kompakt */}
-                  <div className={`relative ${shakeInput ? 'animate-shake-error' : ''}`}>
-                    <input 
-                      type="text" 
-                      inputMode="none"
-                      className={`w-full px-3 py-2 text-lg font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-lg focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50 ${sparkleText ? 'animate-typing-sparkle' : ''}`}
-                      style={{ 
-                        background: 'rgba(255,255,255,0.1)',
-                        textShadow: '0 0 20px rgba(255,255,255,0.5)'
-                      }}
-                      placeholder={t.enterGuess}
-                      value={guess}
-                      onChange={(e) => setGuess(e.target.value)}
-                      data-testid="input-guess"
-                    />
-                  </div>
-                </div>
-                
-                {/* Virtual Keyboard - Görünür */}
-                <div className="transform scale-100 origin-center mt-2">
-                  <VirtualKeyboard
-                    onKeyPress={handleKeyPress}
-                    onBackspace={handleBackspace}
-                    onSpace={handleSpace}
-                    onSubmit={handleGuessSubmit}
-                    language={language as Language}
-                    correctKeys={getKeyboardLetterStates.correctKeys}
-                    presentKeys={getKeyboardLetterStates.presentKeys}
-                    absentKeys={getKeyboardLetterStates.absentKeys}
-                  />
-                </div>
-              </div>
-            )}
 
             {/* Game Over Results */}
             {gameOver && (
