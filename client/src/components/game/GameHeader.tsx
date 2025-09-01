@@ -123,9 +123,13 @@ interface GameHeaderProps {
   category: string;
   difficulty: number;
   language?: Language;
+  isGuestMode?: boolean;
+  gameStats?: any;
+  showDailyGoals?: boolean;
+  onToggleDailyGoals?: () => void;
 }
 
-export const GameHeader = memo(({ category, difficulty, language = 'tr' }: GameHeaderProps) => {
+export const GameHeader = memo(({ category, difficulty, language = 'tr', isGuestMode = true, gameStats, showDailyGoals = false, onToggleDailyGoals }: GameHeaderProps) => {
   const categoryIcon = categoryIcons[category] || '📂';
   const t = headerTranslations[language];
   const categoryT = categoryTranslations[language];
@@ -168,6 +172,45 @@ export const GameHeader = memo(({ category, difficulty, language = 'tr' }: GameH
             </div>
           </div>
         </div>
+        
+        {/* Hedefler Kutusu - Header'da sağ köşede */}
+        {!isGuestMode && gameStats && onToggleDailyGoals && (
+          <div className="relative">
+            <button
+              onClick={onToggleDailyGoals}
+              className="text-white font-medium py-1.5 px-2.5 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-1.5 backdrop-blur-md border border-white/20 text-xs"
+              style={{
+                background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.8), rgba(233, 30, 99, 0.8))',
+                boxShadow: '0 4px 15px rgba(0, 220, 205, 0.2)'
+              }}
+            >
+              <div className="text-sm">📅</div>
+              <div className="text-xs">
+                {gameStats.dailyGoals.filter((g: any) => g.completed).length}/{gameStats.dailyGoals.length}
+              </div>
+            </button>
+            
+            {showDailyGoals && (
+              <div className="absolute top-full right-0 mt-2 w-64 z-50">
+                <div className="bg-white/10 backdrop-blur-xl rounded-lg p-3 border border-white/20">
+                  <div className="text-white text-sm font-semibold mb-2">Günlük Hedefler</div>
+                  <div className="space-y-2">
+                    {gameStats.dailyGoals.map((goal: any, index: number) => (
+                      <div key={index} className="flex items-center gap-2 text-xs">
+                        <div className={goal.completed ? 'text-green-400' : 'text-white/60'}>
+                          {goal.completed ? '✅' : '⭕'}
+                        </div>
+                        <div className={`flex-1 ${goal.completed ? 'text-green-400 line-through' : 'text-white'}`}>
+                          {goal.description}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
         
       </div>
     </header>

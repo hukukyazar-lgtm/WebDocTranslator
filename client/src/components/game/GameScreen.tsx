@@ -4,7 +4,6 @@ import { SpinningWheel } from './SpinningWheel';
 import { LuminaGrid } from './LuminaGrid';
 import { VirtualKeyboard } from './VirtualKeyboard';
 import { AchievementNotification } from './AchievementNotification';
-import { DailyGoals } from './DailyGoals';
 import { getWordByDifficulty, wordLists } from '@/lib/wordLists';
 import { 
   TOTAL_GAME_TIME, 
@@ -667,6 +666,10 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           category={category} 
           difficulty={difficulty} 
           language={language as Language}
+          isGuestMode={isGuestMode}
+          gameStats={gameStats}
+          showDailyGoals={showDailyGoals}
+          onToggleDailyGoals={() => setShowDailyGoals(!showDailyGoals)}
         />
 
         {/* Confetti Celebration */}
@@ -729,7 +732,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                     <div className={`backdrop-blur-lg rounded-lg px-2 py-1 border border-white/20 bg-white/10 flex items-center gap-2 shadow-lg text-sm ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
                       <div className="text-base animate-pulse">⏱️</div>
                       <div className="text-base font-black text-white" data-testid="text-time-left">
-                        {formatTime(timeLeft)}
+                        {timeLeft <= 0 ? 'Süre bitti' : formatTime(timeLeft)}
                       </div>
                       <div className="w-8 h-1 backdrop-blur-lg rounded-full border border-white/20 bg-white/10 overflow-hidden">
                         <div 
@@ -891,32 +894,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         </main>
         
-        {/* Günlük Hedefler - Küçük ve kompakt (sadece giriş yapan kullanıcılar için) */}
-        {!isGuestMode && (
-          <div className="fixed top-20 right-2 z-30">
-            <div className="relative">
-              <button
-                onClick={() => setShowDailyGoals(!showDailyGoals)}
-                className="text-white font-medium py-2 px-3 rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105 flex items-center gap-2 backdrop-blur-md border border-white/20"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.8), rgba(233, 30, 99, 0.8))',
-                  boxShadow: '0 4px 15px rgba(0, 220, 205, 0.2)'
-                }}
-              >
-                <div className="text-lg">📅</div>
-                <div className="text-xs">
-                  {gameStats.dailyGoals.filter(g => g.completed).length}/{gameStats.dailyGoals.length}
-                </div>
-              </button>
-              
-              {showDailyGoals && (
-                <div className="absolute top-full right-0 mt-2 w-64">
-                  <DailyGoals goals={gameStats.dailyGoals} />
-                </div>
-              )}
-            </div>
-          </div>
-        )}
         
         {/* Misafir modu göstergesi */}
         {isGuestMode && (
