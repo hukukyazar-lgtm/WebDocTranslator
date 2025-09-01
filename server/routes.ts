@@ -10,7 +10,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth routes
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = (req.user as any).claims.sub;
       const user = await storage.getUser(userId);
       res.json(user);
     } catch (error) {
@@ -21,7 +21,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Protected route example
   app.get("/api/protected", isAuthenticated, async (req, res) => {
-    const userId = req.user?.claims?.sub;
+    const userId = (req.user as any)?.claims?.sub;
     // Do something with the user id.
     res.json({ message: "This is a protected route", userId });
   });

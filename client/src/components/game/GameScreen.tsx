@@ -352,6 +352,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     
     if (timerRef.current) {
       clearInterval(timerRef.current);
+      timerRef.current = null;
     }
     
     setMessage(endMessage);
@@ -359,11 +360,11 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     setGameOver(true);
     setGameSuccess(success);
     
+    // Update game stats only once per game
+    const updatedStats = updateGameStats(gameStats, success, category, Math.floor(elapsedTime));
+    setGameStats(updatedStats);
+    
     if (success) {
-      // Oyun istatistiklerini güncelle ve başarımları kontrol et
-      const updatedStats = updateGameStats(gameStats, true, category, Math.floor(elapsedTime));
-      setGameStats(updatedStats);
-      
       // Güncellenen değerleri UI için set et
       const baseScore = calculateScore(Math.floor(elapsedTime), difficulty);
       const multiplier = calculateStreakMultiplier(updatedStats.currentStreak);
@@ -385,13 +386,10 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         setCurrentAchievement(newAchievements[0]);
       }
     } else {
-      // Yanlış cevap durumunda
-      const updatedStats = updateGameStats(gameStats, false, category, Math.floor(elapsedTime));
-      setGameStats(updatedStats);
       setStreak(0);
     }
     
-  }, [gameOver, elapsedTime, difficulty]);
+  }, [gameOver, gameStats, category, elapsedTime, difficulty]);
 
   const handleGuessSubmit = useCallback(() => {
     if (gameOver) return;
@@ -435,6 +433,12 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   }, []);
 
   const handleContinue = useCallback(() => {
+    // Clear existing timer first
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    
     // Continue with new word without resetting score
     setGuess('');
     setIsSpinning(true);
@@ -475,6 +479,12 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   }, [category, difficulty, usedWords]);
 
   const handlePlayAgain = useCallback(() => {
+    // Clear existing timer first
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    
     // Reset all game state
     setGuess('');
     setIsSpinning(true);
