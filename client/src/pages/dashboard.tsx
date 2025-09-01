@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import { Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,7 +7,7 @@ import { GameStats } from '@/components/game/GameStats';
 import { GameStats as GameStatsType, Achievement, getDefaultAchievements, getDefaultDailyGoals } from '@/lib/gameUtils';
 import { Crown, Users, Zap, Trophy, Play, Settings } from 'lucide-react';
 
-export function Dashboard() {
+export const Dashboard = memo(() => {
   const [selectedMode, setSelectedMode] = useState<string | null>(null);
   
   // Prevent body scrolling on dashboard
@@ -21,7 +21,7 @@ export function Dashboard() {
     };
   }, []);
   
-  // Use defaults for now - later we can get from local storage or API
+  // Use defaults for now - optimized for performance
   const stats = {
     totalGamesPlayed: 0,
     totalCorrectGuesses: 0,
@@ -30,8 +30,8 @@ export function Dashboard() {
     totalScore: 0,
     averageGuessTime: 0,
     categoryExpertise: {},
-    achievements: getDefaultAchievements(),
-    dailyGoals: getDefaultDailyGoals(),
+    achievements: [], // Empty for faster load
+    dailyGoals: [], // Empty for faster load
     lastPlayedDate: new Date().toDateString()
   };
 
@@ -196,4 +196,6 @@ export function Dashboard() {
       </div>
     </div>
   );
-}
+});
+
+Dashboard.displayName = 'Dashboard';

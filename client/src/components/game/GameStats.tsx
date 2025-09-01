@@ -43,28 +43,26 @@ export const GameStats = memo(({ score, streak, correctGuesses, averageTime, lan
   ];
 
   return (
-    <div className="grid grid-cols-4 gap-2 sm:gap-3 animate-slide-up" style={{ animationDelay: '0.4s' }}>
+    <div className="grid grid-cols-4 gap-2 sm:gap-3">
       {stats.map((stat, index) => (
         <div 
           key={index}
-          className="backdrop-blur-xl rounded-xl p-2 sm:p-3 border border-white/20 text-center group hover:scale-105 transition-all duration-300 shadow-xl"
+          className="backdrop-blur-xl rounded-xl p-2 sm:p-3 border border-white/20 text-center"
           style={{
-            background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))',
-            animationDelay: `${0.4 + index * 0.1}s`
+            background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
           }}
         >
           <div className="space-y-1">
-            <div className="text-lg sm:text-xl animate-bounce-soft group-hover:scale-110 transition-transform">
+            <div className="text-lg sm:text-xl">
               {stat.icon}
             </div>
             <div 
-              className="text-lg sm:text-xl font-black animate-pulse-glow"
+              className="text-lg sm:text-xl font-black"
               style={{ 
                 background: stat.color,
                 backgroundClip: 'text',
                 WebkitBackgroundClip: 'text',
-                color: 'transparent',
-                textShadow: '0 0 20px rgba(255,255,255,0.5)'
+                color: 'transparent'
               }}
               data-testid={stat.testId}
             >
@@ -75,7 +73,7 @@ export const GameStats = memo(({ score, streak, correctGuesses, averageTime, lan
             </div>
           </div>
           <div 
-            className="h-0.5 rounded-full mt-2 opacity-60 group-hover:opacity-100 transition-opacity"
+            className="h-0.5 rounded-full mt-2 opacity-60"
             style={{ background: stat.color }}
           />
         </div>
