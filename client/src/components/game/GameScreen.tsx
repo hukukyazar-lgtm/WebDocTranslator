@@ -723,47 +723,39 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               
               {/* Alt: Timer + Input + Keyboard - Tablet Uyumlu */}
               <div className="flex-shrink-0 w-full max-w-sm md:max-w-md lg:max-w-lg space-y-2 md:space-y-3">
-                {/* Timer ve Input - Tablet */}
-                <div className="backdrop-blur-xl rounded-lg md:rounded-xl p-2 md:p-3 lg:p-4 border border-white/20 shadow-xl" style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
-                }}>
-                  {/* Timer - Kompakt */}
-                  <div className="flex justify-center mb-2">
-                    <div className={`backdrop-blur-lg rounded-lg px-2 py-1 border border-white/20 bg-white/10 flex items-center gap-2 shadow-lg text-sm ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
-                      <div className="text-base animate-pulse">⏱️</div>
-                      <div className="text-base font-black text-white" data-testid="text-time-left">
-                        {timeLeft <= 0 ? 'Süre bitti' : formatTime(timeLeft)}
-                      </div>
-                      <div className="w-8 h-1 backdrop-blur-lg rounded-full border border-white/20 bg-white/10 overflow-hidden">
-                        <div 
-                          className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
-                          style={{ 
-                            width: `${((TOTAL_GAME_TIME - timeLeft) / TOTAL_GAME_TIME) * 100}%`,
-                            background: timeLeft > 10 
-                              ? 'linear-gradient(90deg, #10b981, #3b82f6)' 
-                              : 'linear-gradient(90deg, #f59e0b, #ef4444)'
-                          }}
-                          data-testid="progress-timer"
-                        />
-                      </div>
+                {/* Timer - Kompakt */}
+                <div className="flex justify-center mb-2">
+                  <div className={`backdrop-blur-lg rounded-lg px-2 py-1 bg-white/10 flex items-center gap-2 shadow-lg text-sm ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
+                    <div className="text-base animate-pulse">⏱️</div>
+                    <div className="text-base font-black text-white" data-testid="text-time-left">
+                      {timeLeft <= 0 ? 'Süre bitti' : formatTime(timeLeft)}
+                    </div>
+                    <div className="w-8 h-1 backdrop-blur-lg rounded-full bg-white/10 overflow-hidden">
+                      <div 
+                        className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
+                        style={{ 
+                          width: `${((TOTAL_GAME_TIME - timeLeft) / TOTAL_GAME_TIME) * 100}%`,
+                          background: timeLeft > 10 
+                            ? 'linear-gradient(90deg, #10b981, #3b82f6)' 
+                            : 'linear-gradient(90deg, #f59e0b, #ef4444)'
+                        }}
+                        data-testid="progress-timer"
+                      />
                     </div>
                   </div>
-                  
                 </div>
                 
                 {/* Virtual Keyboard - Tablet Scale */}
-                <div className="transform scale-90 md:scale-100">
-                  <VirtualKeyboard
-                    onKeyPress={handleKeyPress}
-                    onBackspace={handleBackspace}
-                    onSpace={handleSpace}
-                    onSubmit={handleGuessSubmit}
-                    language={language as Language}
-                    correctKeys={getKeyboardLetterStates.correctKeys}
-                    presentKeys={getKeyboardLetterStates.presentKeys}
-                    absentKeys={getKeyboardLetterStates.absentKeys}
-                  />
-                </div>
+                <VirtualKeyboard
+                  onKeyPress={handleKeyPress}
+                  onBackspace={handleBackspace}
+                  onSpace={handleSpace}
+                  onSubmit={handleGuessSubmit}
+                  language={language as Language}
+                  correctKeys={getKeyboardLetterStates.correctKeys}
+                  presentKeys={getKeyboardLetterStates.presentKeys}
+                  absentKeys={getKeyboardLetterStates.absentKeys}
+                />
               </div>
             </div>
             
