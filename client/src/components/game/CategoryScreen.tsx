@@ -202,30 +202,15 @@ const categoryTranslations = {
 export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onCategorySelect, onBack, onSettingsOpen, isGuestMode = false }) => {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<number | null>(null);
-  const [step, setStep] = useState<'difficulty' | 'category'>('difficulty');
   const t = translations[selectedLanguage];
   const categoryT = categoryTranslations[selectedLanguage];
   
   const difficultyLabels = [t.easy, t.medium, t.hard, t.veryHard, t.extreme];
   const difficultyColors = ['#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#dc2626'];
   
-  const handleDifficultySelect = (difficulty: number) => {
-    setSelectedDifficulty(difficulty);
-    setStep('category');
-  };
-  
   const handleCategorySelect = (category: string) => {
     if (selectedDifficulty) {
       onCategorySelect(category, selectedDifficulty);
-    }
-  };
-  
-  const handleBackToStep = () => {
-    if (step === 'category') {
-      setStep('difficulty');
-      setSelectedDifficulty(null);
-    } else {
-      onBack();
     }
   };
   
@@ -273,7 +258,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
           {/* Header */}
           <div className="flex items-center justify-between mb-8 animate-slide-up">
             <button 
-              onClick={handleBackToStep}
+              onClick={onBack}
               className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-all duration-300"
               data-testid="button-back"
             >
@@ -320,128 +305,154 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
             </div>
           </div>
 
-          {/* Modern 2-Step Wizard */}
+          {/* Modern Tek Sayfa - Side by Side Layout */}
           <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
             
-            {/* Step 1: Zorluk Seçimi */}
-            {step === 'difficulty' && (
-              <>
-                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4 text-center">
-                  {selectedLanguage === 'tr' ? 'Zorluk Seviyesi Seçin' : 'Choose Difficulty Level'}
-                </h3>
-                <p className="text-sm text-white/60 text-center mb-8">
-                  {selectedLanguage === 'tr' ? 'Oyun deneyiminiz için uygun zorluğu belirleyin' : 'Select the right challenge for your gaming experience'}
-                </p>
+            {/* Ana Başlık */}
+            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-8 text-center">
+              {selectedLanguage === 'tr' ? 'Oyun Kurulumu' : 'Game Setup'}
+            </h2>
+            
+            {/* İki Kolonlu Modern Layout */}
+            <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+              
+              {/* Sol Taraf - Zorluk Seçimi */}
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                    {selectedLanguage === 'tr' ? '🎯 Zorluk Seviyesi' : '🎯 Difficulty Level'}
+                  </h3>
+                  <p className="text-sm text-white/60 mb-6">
+                    {selectedLanguage === 'tr' ? 'Meydan okumanızı seçin' : 'Choose your challenge'}
+                  </p>
+                </div>
                 
-                <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+                <div className="space-y-3">
                   {difficultyLabels.map((label, index) => (
                     <button
                       key={index + 1}
-                      onClick={() => handleDifficultySelect(index + 1)}
-                      className="group relative p-6 sm:p-8 rounded-2xl sm:rounded-3xl transition-all duration-700 transform hover:scale-110 active:scale-95"
+                      onClick={() => setSelectedDifficulty(index + 1)}
+                      className={`w-full p-4 sm:p-5 rounded-2xl transition-all duration-500 transform hover:scale-105 active:scale-95 ${
+                        selectedDifficulty === index + 1 
+                          ? 'ring-4 ring-white/40 scale-105' 
+                          : 'hover:scale-102'
+                      }`}
                       style={{
-                        background: `linear-gradient(135deg, ${difficultyColors[index]}40, ${difficultyColors[index]}20)`,
+                        background: selectedDifficulty === index + 1
+                          ? `linear-gradient(135deg, ${difficultyColors[index]}60, ${difficultyColors[index]}40)`
+                          : `linear-gradient(135deg, ${difficultyColors[index]}30, ${difficultyColors[index]}10)`,
                         backdropFilter: 'blur(20px)',
-                        border: `2px solid ${difficultyColors[index]}60`,
-                        boxShadow: `0 20px 40px ${difficultyColors[index]}30`
+                        border: `2px solid ${difficultyColors[index]}${selectedDifficulty === index + 1 ? '80' : '40'}`,
+                        boxShadow: selectedDifficulty === index + 1 
+                          ? `0 20px 40px ${difficultyColors[index]}40`
+                          : `0 10px 20px ${difficultyColors[index]}20`
                       }}
                       data-testid={`difficulty-${index + 1}`}
                     >
-                      <div className="text-center">
-                        <div className="text-4xl sm:text-5xl mb-4" 
-                             style={{ filter: 'drop-shadow(0 0 10px currentColor)' }}>
+                      <div className="flex items-center gap-4">
+                        <div className="text-3xl" style={{ filter: 'drop-shadow(0 0 8px currentColor)' }}>
                           {['🟢', '🟡', '🟠', '🔴', '⚫'][index]}
                         </div>
-                        <h4 className="font-black text-white text-lg sm:text-xl mb-2">
-                          {label}
-                        </h4>
-                        <div className="text-xs text-white/70">
-                          {[
-                            selectedLanguage === 'tr' ? 'Yeni başlayanlar için' : 'For beginners',
-                            selectedLanguage === 'tr' ? 'Deneyimliler için' : 'For experienced',
-                            selectedLanguage === 'tr' ? 'Zorlu meydan okuma' : 'Challenging',
-                            selectedLanguage === 'tr' ? 'Uzmanlar için' : 'For experts',
-                            selectedLanguage === 'tr' ? 'İmkansıza yakın' : 'Nearly impossible'
-                          ][index]}
+                        <div className="flex-1 text-left">
+                          <h4 className="font-bold text-white text-lg sm:text-xl">
+                            {label}
+                          </h4>
+                          <div className="text-sm text-white/70">
+                            {[
+                              selectedLanguage === 'tr' ? 'Yeni başlayanlar için ideal' : 'Perfect for beginners',
+                              selectedLanguage === 'tr' ? 'Deneyimliler için uygun' : 'Suitable for experienced',
+                              selectedLanguage === 'tr' ? 'Zorlu bir deneyim' : 'A challenging experience',
+                              selectedLanguage === 'tr' ? 'Uzmanlar için tasarlanmış' : 'Designed for experts',
+                              selectedLanguage === 'tr' ? 'Sadece ustalar için' : 'Only for masters'
+                            ][index]}
+                          </div>
                         </div>
+                        {selectedDifficulty === index + 1 && (
+                          <div className="text-2xl">✅</div>
+                        )}
                       </div>
                     </button>
                   ))}
                 </div>
-              </>
-            )}
+              </div>
+              
+              {/* Sağ Taraf - Kategori Seçimi */}
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h3 className="text-2xl sm:text-3xl font-bold text-white mb-4">
+                    {selectedLanguage === 'tr' ? '📚 Kategori Seçimi' : '📚 Category Selection'}
+                  </h3>
+                  <p className="text-sm text-white/60 mb-6">
+                    {selectedLanguage === 'tr' ? 'Hangi konuda oynamak istiyorsunuz?' : 'What topic would you like to play?'}
+                  </p>
+                </div>
+                
+                {!selectedDifficulty ? (
+                  <div className="text-center p-8 rounded-2xl border-2 border-dashed border-white/20">
+                    <div className="text-6xl mb-4">🎯</div>
+                    <p className="text-white/60">
+                      {selectedLanguage === 'tr' ? 'Önce zorluk seviyesi seçin' : 'Please select a difficulty level first'}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                    {Object.keys(wordLists).map((cat) => (
+                      <button
+                        key={cat}
+                        onClick={() => handleCategorySelect(cat)}
+                        onMouseEnter={() => setHoveredCategory(cat)}
+                        onMouseLeave={() => setHoveredCategory(null)}
+                        className="group relative p-3 sm:p-4 rounded-xl transition-all duration-500 transform hover:scale-110 active:scale-95 backdrop-blur-lg border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl"
+                        style={{
+                          background: hoveredCategory === cat 
+                            ? `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}60)`
+                            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.12))',
+                          boxShadow: hoveredCategory === cat 
+                            ? `0 20px 40px ${getThemeForCategory(cat).primary}30`
+                            : '0 8px 20px rgba(0, 0, 0, 0.3)'
+                        }}
+                        data-testid={`button-category-${cat}`}
+                      >
+                        {/* Seçili zorluk göstergesi */}
+                        <div className="absolute top-2 right-2 w-3 h-3 rounded-full border-2 border-white" 
+                             style={{ backgroundColor: difficultyColors[selectedDifficulty - 1] }}
+                             title={difficultyLabels[selectedDifficulty - 1]}>
+                        </div>
+                        
+                        <div className="text-center">
+                          <div className="text-2xl sm:text-3xl mb-2 transition-transform duration-300 group-hover:scale-110">
+                            {categoryIcons[cat]}
+                          </div>
+                          <div className="font-bold text-white text-xs sm:text-sm">
+                            {getCategoryName(cat)}
+                          </div>
+                          <div className="text-xs text-white/60 mt-1">
+                            {Object.keys(wordLists[cat]).length} seviye
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+              
+            </div>
             
-            {/* Step 2: Kategori Seçimi */}
-            {step === 'category' && (
-              <>
-                <div className="flex items-center justify-center mb-6">
-                  <div className="flex items-center gap-4 px-6 py-3 rounded-full" 
-                       style={{ 
-                         background: `linear-gradient(90deg, ${difficultyColors[selectedDifficulty! - 1]}40, ${difficultyColors[selectedDifficulty! - 1]}20)`,
-                         backdropFilter: 'blur(10px)',
-                         border: `1px solid ${difficultyColors[selectedDifficulty! - 1]}60`
-                       }}>
-                    <div className="text-2xl">
-                      {['🟢', '🟡', '🟠', '🔴', '⚫'][selectedDifficulty! - 1]}
-                    </div>
-                    <span className="font-bold text-white">
-                      {difficultyLabels[selectedDifficulty! - 1]}
-                    </span>
-                  </div>
-                </div>
-                
-                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-4 text-center">
-                  {t.chooseCategory}
-                </h3>
-                <p className="text-sm text-white/60 text-center mb-8">
-                  {selectedLanguage === 'tr' ? 'Hangi konuda oynamak istiyorsunuz?' : 'Which topic would you like to play?'}
+            {/* Alt kısım - Seçim Özeti */}
+            {selectedDifficulty && (
+              <div className="mt-8 p-6 rounded-2xl text-center"
+                   style={{
+                     background: `linear-gradient(135deg, ${difficultyColors[selectedDifficulty - 1]}20, ${difficultyColors[selectedDifficulty - 1]}10)`,
+                     backdropFilter: 'blur(20px)',
+                     border: `2px solid ${difficultyColors[selectedDifficulty - 1]}40`
+                   }}>
+                <p className="text-white/80 text-sm">
+                  {selectedLanguage === 'tr' 
+                    ? `✨ ${difficultyLabels[selectedDifficulty - 1]} seviyesi seçildi. Şimdi bir kategori seçin!`
+                    : `✨ ${difficultyLabels[selectedDifficulty - 1]} level selected. Now choose a category!`
+                  }
                 </p>
-                
-                <div className="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-6 gap-1 sm:gap-2 lg:gap-3">
-                  {Object.keys(wordLists).map((cat) => (
-                    <button
-                  key={cat}
-                  onClick={() => handleCategorySelect(cat)}
-                  onMouseEnter={() => setHoveredCategory(cat)}
-                  onMouseLeave={() => setHoveredCategory(null)}
-                  className="group relative p-1 sm:p-2 lg:p-3 rounded-lg sm:rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/20 hover:border-white/40 shadow-xl hover:shadow-2xl"
-                  style={{
-                    background: hoveredCategory === cat 
-                      ? `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}60)`
-                      : 'linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.1))',
-                    boxShadow: hoveredCategory === cat 
-                      ? `0 20px 40px ${getThemeForCategory(cat).primary}30`
-                      : '0 10px 30px rgba(0, 0, 0, 0.2)'
-                  }}
-                  data-testid={`button-category-${cat}`}
-                >
-                  {/* Seçili zorluk göstergesi */}
-                  {selectedDifficulty && (
-                    <div className="absolute top-1 right-1 w-3 h-3 rounded-full z-10 border-2 border-white" 
-                         style={{ backgroundColor: difficultyColors[selectedDifficulty - 1] }}
-                         title={difficultyLabels[selectedDifficulty - 1]}>
-                    </div>
-                  )}
-                  
-                  <div className="text-center">
-                    <div className="text-lg sm:text-xl lg:text-2xl mb-1 transition-transform duration-300 group-hover:scale-110">
-                      {categoryIcons[cat]}
-                    </div>
-                    <div className="font-bold text-white text-xs lg:text-sm">
-                      {getCategoryName(cat)}
-                    </div>
-                    
-                    {/* Seçili Zorluk */}
-                    {selectedDifficulty && (
-                      <div className="text-xs mt-1" style={{ color: difficultyColors[selectedDifficulty - 1] }}>
-                        {difficultyLabels[selectedDifficulty - 1]}
-                      </div>
-                    )}
-                  </div>
-                    </button>
-                  ))}
-                </div>
-              </>
+              </div>
             )}
             
           </div>
