@@ -1,12 +1,14 @@
 import { memo } from 'react';
 import { useAuth } from '@/hooks/useAuth';
+import { type Language, getTranslation } from '@/lib/translations';
 
 export interface LoginScreenProps {
   onAuthChoice: (isGuest: boolean) => void;
   onDashboard?: () => void;
+  selectedLanguage?: Language;
 }
 
-export const LoginScreen = memo<LoginScreenProps>(({ onAuthChoice, onDashboard }) => {
+export const LoginScreen = memo<LoginScreenProps>(({ onAuthChoice, onDashboard, selectedLanguage = 'tr' }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
   const handleLogin = () => {
@@ -133,7 +135,7 @@ export const LoginScreen = memo<LoginScreenProps>(({ onAuthChoice, onDashboard }
                 className="text-cyan-400/60 hover:text-cyan-400 text-sm font-light transition-all duration-300 tracking-wide underline underline-offset-4 decoration-cyan-400/30 hover:decoration-cyan-400/60"
                 data-testid="button-guest-mode"
               >
-                Play as Guest
+                {getTranslation('login', 'playAsGuest', selectedLanguage)}
               </button>
             </div>
           </div>

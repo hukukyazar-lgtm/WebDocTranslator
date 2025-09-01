@@ -153,6 +153,7 @@ export default function Home() {
         <LoginScreen 
           onAuthChoice={handleAuthChoice}
           onDashboard={() => setShowDashboard(true)}
+          selectedLanguage={selectedLanguage}
         />
         <DashboardModal 
           isOpen={showDashboard} 

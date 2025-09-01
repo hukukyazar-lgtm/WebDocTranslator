@@ -20,6 +20,7 @@ import {
 } from '@/lib/gameUtils';
 import type { GameSettings } from './MenuScreen';
 import type { Language } from './LanguageScreen';
+import { getTranslation, getCategoryTranslation } from '@/lib/translations';
 
 // Game translations
 const gameTranslations = {

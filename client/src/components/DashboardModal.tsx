@@ -7,7 +7,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Crown, Users, Trophy, Settings, Zap, Play, X, Globe } from 'lucide-react';
 import { GameStats } from '@/components/game/GameStats';
-import { type Language } from '@/components/game/LanguageScreen';
+import { type Language, getTranslation } from '@/lib/translations';
 
 interface DashboardModalProps {
   isOpen: boolean;
@@ -36,24 +36,24 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
   const gameModes = [
     {
       id: 'single',
-      title: 'Tek Kişilik',
-      description: 'Klasik WordSpin Pro deneyimi',
+      title: getTranslation('dashboard', 'singlePlayer', selectedLanguage),
+      description: getTranslation('dashboard', 'singlePlayerDesc', selectedLanguage),
       icon: <Crown className="h-6 w-6" />,
       available: true,
       path: '/category'
     },
     {
       id: 'duo',
-      title: 'İki Kişilik',
-      description: 'Arkadaşınla yarış!',
+      title: getTranslation('dashboard', 'twoPlayer', selectedLanguage),
+      description: getTranslation('dashboard', 'twoPlayerDesc', selectedLanguage),
       icon: <Users className="h-6 w-6" />,
       available: false,
       path: '/game/duo'
     },
     {
       id: 'multiplayer',
-      title: 'Çoklu Oyuncu',
-      description: 'Online turnuvalar',
+      title: getTranslation('dashboard', 'multiplayer', selectedLanguage),
+      description: getTranslation('dashboard', 'multiplayerDesc', selectedLanguage),
       icon: <Trophy className="h-6 w-6" />,
       available: false,
       path: '/game/multiplayer'
@@ -89,7 +89,7 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
                   onClick={() => setShowSettings(true)}
                 >
                   <Settings className="h-4 w-4 mr-2" />
-                  Ayarlar
+                  {getTranslation('dashboard', 'settings', selectedLanguage)}
                 </Button>
                 <Button 
                   variant="outline" 
@@ -111,7 +111,7 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
               <CardHeader className="pb-3">
                 <CardTitle className="text-white flex items-center gap-2 text-lg font-bold">
                   <Zap className="h-5 w-5 text-cyan-400" />
-                  İstatistikleriniz
+                  {getTranslation('dashboard', 'statistics', selectedLanguage)}
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
@@ -132,7 +132,7 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
               <CardHeader className="pb-3">
                 <CardTitle className="text-white flex items-center gap-2 text-lg font-bold">
                   <Play className="h-5 w-5 text-cyan-400" />
-                  Oyun Modları
+                  {getTranslation('dashboard', 'gameModes', selectedLanguage)}
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0 grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -170,12 +170,12 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
                             size="sm"
                             onClick={onClose}
                           >
-                            🎮 Başla
+                            {getTranslation('dashboard', 'start', selectedLanguage)}
                           </Button>
                         </Link>
                       ) : (
                         <Badge variant="secondary" className="bg-white/20 text-white/80 backdrop-blur-lg">
-                          Yakında
+                          {getTranslation('dashboard', 'comingSoon', selectedLanguage)}
                         </Badge>
                       )}
                     </CardContent>
@@ -191,13 +191,13 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
               <CardHeader className="pb-3">
                 <CardTitle className="text-white flex items-center gap-2 text-lg font-bold">
                   <Trophy className="h-5 w-5 text-cyan-400" />
-                  Son Başarımlar
+                  {getTranslation('dashboard', 'recentAchievements', selectedLanguage)}
                 </CardTitle>
               </CardHeader>
               <CardContent className="pt-0">
                 <div className="text-center py-6">
                   <div className="text-3xl mb-2">🎯</div>
-                  <p className="text-white/70">İlk oyununuzu oynayarak başarımları açabilirsiniz!</p>
+                  <p className="text-white/70">{getTranslation('dashboard', 'firstGameMessage', selectedLanguage)}</p>
                 </div>
               </CardContent>
             </Card>
@@ -221,7 +221,7 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
             <div className="space-y-3">
               <div className="flex items-center gap-2">
                 <Globe className="h-5 w-5 text-cyan-400" />
-                <h3 className="text-lg font-bold text-white">Dil Seçimi</h3>
+                <h3 className="text-lg font-bold text-white">{getTranslation('dashboard', 'languageSelection', selectedLanguage)}</h3>
               </div>
               <Select 
                 value={selectedLanguage} 
@@ -247,12 +247,12 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
             <div className="space-y-3">
               <h3 className="text-lg font-bold text-white flex items-center gap-2">
                 <Settings className="h-5 w-5 text-cyan-400" />
-                Oyun Ayarları
+                {getTranslation('dashboard', 'gameSettings', selectedLanguage)}
               </h3>
               <div className="p-4 rounded-lg backdrop-blur-lg border border-white/20" style={{
                 background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
               }}>
-                <p className="text-white/80 text-sm">Ses efektleri, müzik ve diğer oyun ayarları yakında eklenecek.</p>
+                <p className="text-white/80 text-sm">{getTranslation('dashboard', 'gameSettingsDesc', selectedLanguage)}</p>
               </div>
             </div>
 
@@ -263,7 +263,7 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
                 background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.4), rgba(184, 187, 217, 0.3))'
               }}
             >
-              Değişiklikleri Kaydet
+              {getTranslation('dashboard', 'saveChanges', selectedLanguage)}
             </Button>
           </div>
         </DialogContent>

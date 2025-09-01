@@ -1,6 +1,7 @@
 import { memo, useState } from 'react';
 import { wordLists } from '@/lib/wordLists';
 import { getThemeForCategory } from '@/lib/gameUtils';
+import { getTranslation, getCategoryTranslation } from '@/lib/translations';
 import type { Language } from './LanguageScreen';
 
 export interface CategoryScreenProps {

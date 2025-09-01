@@ -1,0 +1,485 @@
+export type Language = 'tr' | 'en' | 'es' | 'fr' | 'de' | 'it';
+
+export const translations = {
+  // Dashboard translations
+  dashboard: {
+    tr: {
+      singlePlayer: 'Tek Kişilik',
+      singlePlayerDesc: 'Klasik WordSpin Pro deneyimi',
+      twoPlayer: 'İki Kişilik',
+      twoPlayerDesc: 'Arkadaşınla yarış!',
+      multiplayer: 'Çoklu Oyuncu',
+      multiplayerDesc: 'Online turnuvalar',
+      settings: 'Ayarlar',
+      statistics: 'İstatistikleriniz',
+      gameModes: 'Oyun Modları',
+      comingSoon: 'Yakında',
+      start: '🎮 Başla',
+      recentAchievements: 'Son Başarımlar',
+      firstGameMessage: 'İlk oyununuzu oynayarak başarımları açabilirsiniz!',
+      gameSettings: 'Oyun Ayarları',
+      gameSettingsDesc: 'Ses efektleri, müzik ve diğer oyun ayarları yakında eklenecek.',
+      close: 'Kapat',
+      saveChanges: 'Değişiklikleri Kaydet',
+      languageSelection: 'Dil Seçimi'
+    },
+    en: {
+      singlePlayer: 'Single Player',
+      singlePlayerDesc: 'Classic WordSpin Pro experience',
+      twoPlayer: 'Two Player',
+      twoPlayerDesc: 'Race with your friend!',
+      multiplayer: 'Multiplayer',
+      multiplayerDesc: 'Online tournaments',
+      settings: 'Settings',
+      statistics: 'Your Statistics',
+      gameModes: 'Game Modes',
+      comingSoon: 'Coming Soon',
+      start: '🎮 Start',
+      recentAchievements: 'Recent Achievements',
+      firstGameMessage: 'Play your first game to unlock achievements!',
+      gameSettings: 'Game Settings',
+      gameSettingsDesc: 'Sound effects, music and other game settings coming soon.',
+      close: 'Close',
+      saveChanges: 'Save Changes',
+      languageSelection: 'Language Selection'
+    },
+    es: {
+      singlePlayer: 'Un Jugador',
+      singlePlayerDesc: 'Experiencia clásica de WordSpin Pro',
+      twoPlayer: 'Dos Jugadores',
+      twoPlayerDesc: '¡Compite con tu amigo!',
+      multiplayer: 'Multijugador',
+      multiplayerDesc: 'Torneos en línea',
+      settings: 'Configuración',
+      statistics: 'Tus Estadísticas',
+      gameModes: 'Modos de Juego',
+      comingSoon: 'Próximamente',
+      start: '🎮 Iniciar',
+      recentAchievements: 'Logros Recientes',
+      firstGameMessage: '¡Juega tu primer juego para desbloquear logros!',
+      gameSettings: 'Configuración de Juego',
+      gameSettingsDesc: 'Efectos de sonido, música y otras configuraciones próximamente.',
+      close: 'Cerrar',
+      saveChanges: 'Guardar Cambios',
+      languageSelection: 'Selección de Idioma'
+    },
+    fr: {
+      singlePlayer: 'Un Joueur',
+      singlePlayerDesc: 'Expérience classique WordSpin Pro',
+      twoPlayer: 'Deux Joueurs',
+      twoPlayerDesc: 'Course avec ton ami!',
+      multiplayer: 'Multijoueur',
+      multiplayerDesc: 'Tournois en ligne',
+      settings: 'Paramètres',
+      statistics: 'Tes Statistiques',
+      gameModes: 'Modes de Jeu',
+      comingSoon: 'Bientôt',
+      start: '🎮 Commencer',
+      recentAchievements: 'Succès Récents',
+      firstGameMessage: 'Joue ton premier jeu pour débloquer les succès!',
+      gameSettings: 'Paramètres de Jeu',
+      gameSettingsDesc: 'Effets sonores, musique et autres paramètres à venir.',
+      close: 'Fermer',
+      saveChanges: 'Sauvegarder',
+      languageSelection: 'Sélection de Langue'
+    },
+    de: {
+      singlePlayer: 'Einzelspieler',
+      singlePlayerDesc: 'Klassische WordSpin Pro Erfahrung',
+      twoPlayer: 'Zwei Spieler',
+      twoPlayerDesc: 'Wettrennen mit deinem Freund!',
+      multiplayer: 'Mehrspieler',
+      multiplayerDesc: 'Online-Turniere',
+      settings: 'Einstellungen',
+      statistics: 'Deine Statistiken',
+      gameModes: 'Spielmodi',
+      comingSoon: 'Demnächst',
+      start: '🎮 Starten',
+      recentAchievements: 'Aktuelle Erfolge',
+      firstGameMessage: 'Spiele dein erstes Spiel um Erfolge freizuschalten!',
+      gameSettings: 'Spieleinstellungen',
+      gameSettingsDesc: 'Soundeffekte, Musik und andere Einstellungen kommen bald.',
+      close: 'Schließen',
+      saveChanges: 'Änderungen Speichern',
+      languageSelection: 'Sprachauswahl'
+    },
+    it: {
+      singlePlayer: 'Giocatore Singolo',
+      singlePlayerDesc: 'Esperienza classica WordSpin Pro',
+      twoPlayer: 'Due Giocatori',
+      twoPlayerDesc: 'Gareggia con il tuo amico!',
+      multiplayer: 'Multigiocatore',
+      multiplayerDesc: 'Tornei online',
+      settings: 'Impostazioni',
+      statistics: 'Le Tue Statistiche',
+      gameModes: 'Modalità di Gioco',
+      comingSoon: 'Prossimamente',
+      start: '🎮 Inizia',
+      recentAchievements: 'Successi Recenti',
+      firstGameMessage: 'Gioca il tuo primo gioco per sbloccare i successi!',
+      gameSettings: 'Impostazioni di Gioco',
+      gameSettingsDesc: 'Effetti sonori, musica e altre impostazioni in arrivo.',
+      close: 'Chiudi',
+      saveChanges: 'Salva Modifiche',
+      languageSelection: 'Selezione Lingua'
+    }
+  },
+
+  // Login screen translations
+  login: {
+    tr: {
+      guestMode: 'Misafir Modu - İlerleme kaydedilmiyor',
+      playAsGuest: 'Play as Guest'
+    },
+    en: {
+      guestMode: 'Guest Mode - Progress not saved',
+      playAsGuest: 'Play as Guest'
+    },
+    es: {
+      guestMode: 'Modo Invitado - Progreso no guardado',
+      playAsGuest: 'Jugar como Invitado'
+    },
+    fr: {
+      guestMode: 'Mode Invité - Progrès non sauvegardé',
+      playAsGuest: 'Jouer en Invité'
+    },
+    de: {
+      guestMode: 'Gast-Modus - Fortschritt nicht gespeichert',
+      playAsGuest: 'Als Gast Spielen'
+    },
+    it: {
+      guestMode: 'Modalità Ospite - Progresso non salvato',
+      playAsGuest: 'Gioca come Ospite'
+    }
+  },
+
+  // Game translations
+  game: {
+    tr: {
+      congratulations: 'Tebrikler!',
+      gameOver: 'Oyun Bitti!',
+      timeUp: 'Süre doldu!',
+      wrongAnswer: 'Yanlış cevap!',
+      correct: 'Doğru!',
+      score: 'Puan',
+      streak: 'Seri',
+      totalScore: 'Toplam Puan',
+      averageTime: 'Ortalama Süre',
+      correctGuesses: 'Doğru Tahmin',
+      newGame: 'Yeni Oyun',
+      continue: 'Devam Et',
+      category: 'Kategori',
+      difficulty: 'Zorluk',
+      timeLeft: 'Kalan Süre',
+      submit: 'Gönder',
+      giveUp: 'Pes Et',
+      seconds: 'saniye',
+      guestMode: 'Misafir Modu',
+      mainMenu: 'Ana Menü'
+    },
+    en: {
+      congratulations: 'Congratulations!',
+      gameOver: 'Game Over!',
+      timeUp: 'Time\'s up!',
+      wrongAnswer: 'Wrong answer!',
+      correct: 'Correct!',
+      score: 'Score',
+      streak: 'Streak',
+      totalScore: 'Total Score',
+      averageTime: 'Average Time',
+      correctGuesses: 'Correct Guesses',
+      newGame: 'New Game',
+      continue: 'Continue',
+      category: 'Category',
+      difficulty: 'Difficulty',
+      timeLeft: 'Time Left',
+      submit: 'Submit',
+      giveUp: 'Give Up',
+      seconds: 'seconds',
+      guestMode: 'Guest Mode',
+      mainMenu: 'Main Menu'
+    },
+    es: {
+      congratulations: '¡Felicitaciones!',
+      gameOver: '¡Juego Terminado!',
+      timeUp: '¡Se acabó el tiempo!',
+      wrongAnswer: '¡Respuesta incorrecta!',
+      correct: '¡Correcto!',
+      score: 'Puntuación',
+      streak: 'Racha',
+      totalScore: 'Puntuación Total',
+      averageTime: 'Tiempo Promedio',
+      correctGuesses: 'Adivinanzas Correctas',
+      newGame: 'Nuevo Juego',
+      continue: 'Continuar',
+      category: 'Categoría',
+      difficulty: 'Dificultad',
+      timeLeft: 'Tiempo Restante',
+      submit: 'Enviar',
+      giveUp: 'Rendirse',
+      seconds: 'segundos',
+      guestMode: 'Modo Invitado',
+      mainMenu: 'Menú Principal'
+    },
+    fr: {
+      congratulations: 'Félicitations!',
+      gameOver: 'Jeu Terminé!',
+      timeUp: 'Temps écoulé!',
+      wrongAnswer: 'Mauvaise réponse!',
+      correct: 'Correct!',
+      score: 'Score',
+      streak: 'Série',
+      totalScore: 'Score Total',
+      averageTime: 'Temps Moyen',
+      correctGuesses: 'Bonnes Réponses',
+      newGame: 'Nouveau Jeu',
+      continue: 'Continuer',
+      category: 'Catégorie',
+      difficulty: 'Difficulté',
+      timeLeft: 'Temps Restant',
+      submit: 'Envoyer',
+      giveUp: 'Abandonner',
+      seconds: 'secondes',
+      guestMode: 'Mode Invité',
+      mainMenu: 'Menu Principal'
+    },
+    de: {
+      congratulations: 'Glückwunsch!',
+      gameOver: 'Spiel Vorbei!',
+      timeUp: 'Zeit abgelaufen!',
+      wrongAnswer: 'Falsche Antwort!',
+      correct: 'Richtig!',
+      score: 'Punkte',
+      streak: 'Serie',
+      totalScore: 'Gesamtpunktzahl',
+      averageTime: 'Durchschnittszeit',
+      correctGuesses: 'Richtige Vermutungen',
+      newGame: 'Neues Spiel',
+      continue: 'Weiter',
+      category: 'Kategorie',
+      difficulty: 'Schwierigkeit',
+      timeLeft: 'Verbleibende Zeit',
+      submit: 'Senden',
+      giveUp: 'Aufgeben',
+      seconds: 'Sekunden',
+      guestMode: 'Gast-Modus',
+      mainMenu: 'Hauptmenü'
+    },
+    it: {
+      congratulations: 'Congratulazioni!',
+      gameOver: 'Gioco Finito!',
+      timeUp: 'Tempo scaduto!',
+      wrongAnswer: 'Risposta sbagliata!',
+      correct: 'Corretto!',
+      score: 'Punteggio',
+      streak: 'Serie',
+      totalScore: 'Punteggio Totale',
+      averageTime: 'Tempo Medio',
+      correctGuesses: 'Risposte Corrette',
+      newGame: 'Nuovo Gioco',
+      continue: 'Continua',
+      category: 'Categoria',
+      difficulty: 'Difficoltà',
+      timeLeft: 'Tempo Rimasto',
+      submit: 'Invia',
+      giveUp: 'Arrenditi',
+      seconds: 'secondi',
+      guestMode: 'Modalità Ospite',
+      mainMenu: 'Menu Principale'
+    }
+  },
+
+  // Category translations
+  category: {
+    tr: {
+      back: 'Geri',
+      settings: 'Ayarlar',
+      guestMode: 'Misafir Modu - İlerleme kaydedilmiyor',
+      chooseCategory: 'Kategori Seçin',
+      subtitle: 'Hangi konuda oynamak istiyorsunuz?',
+      currentLang: 'Dil',
+      levels: 'zorluk',
+      easy: 'Kolay',
+      medium: 'Orta',
+      hard: 'Zor',
+      veryHard: 'Çok Zor',
+      extreme: 'Ekstrem',
+      chooseDifficulty: 'Zorluk seviyesini seçin',
+      categoryFirst: 'Kategori seçin, zorluk seviyesi sonra belirlenecek'
+    },
+    en: {
+      back: 'Back',
+      settings: 'Settings',
+      guestMode: 'Guest Mode - Progress not saved',
+      chooseCategory: 'Choose Category',
+      subtitle: 'What topic would you like to play?',
+      currentLang: 'Language',
+      levels: 'difficulty',
+      easy: 'Easy',
+      medium: 'Medium',
+      hard: 'Hard',
+      veryHard: 'Very Hard',
+      extreme: 'Extreme',
+      chooseDifficulty: 'Choose difficulty level',
+      categoryFirst: 'Choose category, difficulty will be selected next'
+    },
+    es: {
+      back: 'Atrás',
+      settings: 'Configuración',
+      guestMode: 'Modo Invitado - Progreso no guardado',
+      chooseCategory: 'Elegir Categoría',
+      subtitle: '¿Sobre qué tema te gustaría jugar?',
+      currentLang: 'Idioma',
+      levels: 'dificultad',
+      easy: 'Fácil',
+      medium: 'Medio',
+      hard: 'Difícil',
+      veryHard: 'Muy Difícil',
+      extreme: 'Extremo',
+      chooseDifficulty: 'Elige el nivel de dificultad',
+      categoryFirst: 'Elige categoría, la dificultad se seleccionará después'
+    },
+    fr: {
+      back: 'Retour',
+      settings: 'Paramètres',
+      guestMode: 'Mode Invité - Progrès non sauvegardé',
+      chooseCategory: 'Choisir Catégorie',
+      subtitle: 'Sur quel sujet aimeriez-vous jouer?',
+      currentLang: 'Langue',
+      levels: 'difficulté',
+      easy: 'Facile',
+      medium: 'Moyen',
+      hard: 'Difficile',
+      veryHard: 'Très Difficile',
+      extreme: 'Extrême',
+      chooseDifficulty: 'Choisissez le niveau de difficulté',
+      categoryFirst: 'Choisissez la catégorie, la difficulté sera sélectionnée ensuite'
+    },
+    de: {
+      back: 'Zurück',
+      settings: 'Einstellungen',
+      guestMode: 'Gast-Modus - Fortschritt nicht gespeichert',
+      chooseCategory: 'Kategorie Auswählen',
+      subtitle: 'Zu welchem Thema möchten Sie spielen?',
+      currentLang: 'Sprache',
+      levels: 'Schwierigkeit',
+      easy: 'Einfach',
+      medium: 'Mittel',
+      hard: 'Schwer',
+      veryHard: 'Sehr Schwer',
+      extreme: 'Extrem',
+      chooseDifficulty: 'Schwierigkeitsgrad wählen',
+      categoryFirst: 'Kategorie auswählen, Schwierigkeit wird als nächstes ausgewählt'
+    },
+    it: {
+      back: 'Indietro',
+      settings: 'Impostazioni',
+      guestMode: 'Modalità Ospite - Progresso non salvato',
+      chooseCategory: 'Scegli Categoria',
+      subtitle: 'Su quale argomento vorresti giocare?',
+      currentLang: 'Lingua',
+      levels: 'difficoltà',
+      easy: 'Facile',
+      medium: 'Medio',
+      hard: 'Difficile',
+      veryHard: 'Molto Difficile',
+      extreme: 'Estremo',
+      chooseDifficulty: 'Scegli il livello di difficoltà',
+      categoryFirst: 'Scegli categoria, la difficoltà sarà selezionata dopo'
+    }
+  },
+
+  // Category names
+  categories: {
+    tr: {
+      'Hayvanlar': 'Hayvanlar',
+      'Yiyecek': 'Yiyecek',
+      'Bilim': 'Bilim',
+      'Ülkeler': 'Ülkeler',
+      'Meslekler': 'Meslekler',
+      'Şehirler': 'Şehirler',
+      'Markalar': 'Markalar',
+      'Spor Dalları': 'Spor Dalları',
+      'Eşyalar': 'Eşyalar',
+      'Filmler': 'Filmler',
+      'Karışık': 'Karışık'
+    },
+    en: {
+      'Hayvanlar': 'Animals',
+      'Yiyecek': 'Food',
+      'Bilim': 'Science',
+      'Ülkeler': 'Countries',
+      'Meslekler': 'Professions',
+      'Şehirler': 'Cities',
+      'Markalar': 'Brands',
+      'Spor Dalları': 'Sports',
+      'Eşyalar': 'Objects',
+      'Filmler': 'Movies',
+      'Karışık': 'Mixed'
+    },
+    es: {
+      'Hayvanlar': 'Animales',
+      'Yiyecek': 'Comida',
+      'Bilim': 'Ciencia',
+      'Ülkeler': 'Países',
+      'Meslekler': 'Profesiones',
+      'Şehirler': 'Ciudades',
+      'Markalar': 'Marcas',
+      'Spor Dalları': 'Deportes',
+      'Eşyalar': 'Objetos',
+      'Filmler': 'Películas',
+      'Karışık': 'Mixto'
+    },
+    fr: {
+      'Hayvanlar': 'Animaux',
+      'Yiyecek': 'Nourriture',
+      'Bilim': 'Science',
+      'Ülkeler': 'Pays',
+      'Meslekler': 'Professions',
+      'Şehirler': 'Villes',
+      'Markalar': 'Marques',
+      'Spor Dalları': 'Sports',
+      'Eşyalar': 'Objets',
+      'Filmler': 'Films',
+      'Karışık': 'Mélangé'
+    },
+    de: {
+      'Hayvanlar': 'Tiere',
+      'Yiyecek': 'Essen',
+      'Bilim': 'Wissenschaft',
+      'Ülkeler': 'Länder',
+      'Meslekler': 'Berufe',
+      'Şehirler': 'Städte',
+      'Markalar': 'Marken',
+      'Spor Dalları': 'Sport',
+      'Eşyalar': 'Objekte',
+      'Filmler': 'Filme',
+      'Karışık': 'Gemischt'
+    },
+    it: {
+      'Hayvanlar': 'Animali',
+      'Yiyecek': 'Cibo',
+      'Bilim': 'Scienza',
+      'Ülkeler': 'Paesi',
+      'Meslekler': 'Professioni',
+      'Şehirler': 'Città',
+      'Markalar': 'Marchi',
+      'Spor Dalları': 'Sport',
+      'Eşyalar': 'Oggetti',
+      'Filmler': 'Film',
+      'Karışık': 'Misto'
+    }
+  }
+};
+
+export function getTranslation(section: keyof typeof translations, key: string, language: Language): string {
+  const sectionTranslations = translations[section];
+  const languageTranslations = sectionTranslations[language];
+  const fallbackTranslations = sectionTranslations['tr']; // Turkish as fallback
+  
+  return (languageTranslations as any)?.[key] || (fallbackTranslations as any)?.[key] || key;
+}
+
+export function getCategoryTranslation(categoryKey: string, language: Language): string {
+  return getTranslation('categories', categoryKey, language);
+}
