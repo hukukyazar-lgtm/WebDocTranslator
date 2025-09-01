@@ -64,7 +64,13 @@ export default function Home() {
 
   const handleAuthChoice = (isGuest: boolean) => {
     setIsGuestMode(isGuest);
-    setAppState('category'); // Skip language screen, go directly to category
+    if (!isGuest && isAuthenticated) {
+      // Authenticated users go to dashboard
+      window.location.href = '/dashboard';
+    } else {
+      // Guests go directly to category selection
+      setAppState('category');
+    }
   };
 
   const handleCategorySelect = (category: string, difficulty: number) => {
