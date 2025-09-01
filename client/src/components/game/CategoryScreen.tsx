@@ -322,9 +322,9 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
           {/* Modal Stil Ana Container */}
           <div className="animate-slide-up mb-4 sm:mb-6 lg:mb-8" style={{ animationDelay: '0.2s' }}>
             
-            {/* Modal Benzeri Container */}
-            <div className="w-full max-w-lg mx-auto">
-              <div className="rounded-2xl p-4 sm:p-6"
+            {/* Modal Benzeri Container - Tablet Uyumlu */}
+            <div className="w-full max-w-lg md:max-w-2xl lg:max-w-3xl mx-auto">
+              <div className="rounded-2xl p-4 sm:p-6 md:p-8"
                    style={{
                      background: `linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.10))`,
                      backdropFilter: 'blur(30px)',
@@ -332,23 +332,23 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                      boxShadow: `0 30px 60px rgba(0, 0, 0, 0.3)`
                    }}>
             
-            {/* Ana Başlık - Modal Stili */}
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-1 text-center">
+            {/* Ana Başlık - Tablet Uyumlu */}
+            <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-1 md:mb-2 text-center">
               {t.chooseCategory}
             </h2>
-            <p className="text-center text-white/70 text-sm mb-3">
+            <p className="text-center text-white/70 text-sm md:text-base mb-3 md:mb-6">
               {selectedLanguage === 'tr' ? 'Kategori seçin, zorluk seviyesi modal\'da belirlenecek' : 'Choose category, difficulty will be selected in modal'}
             </p>
             
-            {/* Modal Stil Kategori Grid */}
-            <div className="space-y-2">
+            {/* Tablet Grid Layout */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
               {Object.keys(wordLists).map((cat) => (
                 <button
                   key={cat}
                   onClick={() => handleCategoryClick(cat)}
                   onMouseEnter={() => setHoveredCategory(cat)}
                   onMouseLeave={() => setHoveredCategory(null)}
-                  className="w-full p-3 sm:p-4 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 text-left"
+                  className="w-full p-4 md:p-5 lg:p-6 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 text-left touch-manipulation"
                   style={{
                     background: `linear-gradient(135deg, ${getThemeForCategory(cat).primary}60, ${getThemeForCategory(cat).secondary}30)`,
                     backdropFilter: 'blur(20px)',
@@ -357,19 +357,19 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                   }}
                   data-testid={`button-category-${cat}`}
                 >
-                  <div className="flex items-center gap-3">
-                    <div className="text-2xl" style={{ filter: 'drop-shadow(0 0 8px currentColor)' }}>
+                  <div className="flex items-center gap-4 md:gap-5">
+                    <div className="text-3xl md:text-4xl" style={{ filter: 'drop-shadow(0 0 8px currentColor)' }}>
                       {categoryIcons[cat]}
                     </div>
                     <div className="flex-1">
-                      <h4 className="font-bold text-white text-base sm:text-lg mb-0.5">
+                      <h4 className="font-bold text-white text-lg md:text-xl lg:text-2xl mb-1">
                         {getCategoryName(cat)}
                       </h4>
-                      <div className="text-white/80 text-xs sm:text-sm">
+                      <div className="text-white/80 text-sm md:text-base">
                         {Object.keys(wordLists[cat]).length} seviye
                       </div>
                     </div>
-                    <div className="text-xl text-white/60">→</div>
+                    <div className="text-2xl md:text-3xl text-white/60">→</div>
                   </div>
                 </button>
               ))}
@@ -391,9 +391,9 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
             onClick={closeDifficultyModal}
           ></div>
           
-          {/* Modal Content */}
-          <div className="relative w-full max-w-lg animate-scale-in">
-            <div className="rounded-2xl p-4 sm:p-6"
+          {/* Modal Content - Tablet Uyumlu */}
+          <div className="relative w-full max-w-lg md:max-w-xl animate-scale-in">
+            <div className="rounded-2xl p-4 sm:p-6 md:p-8"
                  style={{
                    background: `linear-gradient(135deg, ${getThemeForCategory(selectedCategory).primary}20, ${getThemeForCategory(selectedCategory).secondary}20)`,
                    backdropFilter: 'blur(30px)',
@@ -401,34 +401,34 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                    boxShadow: `0 30px 60px ${getThemeForCategory(selectedCategory).primary}30`
                  }}>
               
-              {/* Modal Header */}
-              <div className="text-center mb-4">
-                <div className="text-4xl mb-2">
+              {/* Modal Header - Tablet Uyumlu */}
+              <div className="text-center mb-4 md:mb-6">
+                <div className="text-5xl md:text-6xl mb-3 md:mb-4">
                   {categoryIcons[selectedCategory]}
                 </div>
-                <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">
+                <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-white mb-2">
                   {getCategoryName(selectedCategory)}
                 </h3>
-                <p className="text-white/70 text-sm mb-3">
+                <p className="text-white/70 text-sm md:text-base mb-4 md:mb-6">
                   {selectedLanguage === 'tr' ? 'Zorluk seviyesini seçin' : 'Choose difficulty level'}
                 </p>
                 
-                {/* Close Button */}
+                {/* Close Button - Tablet Touch */}
                 <button
                   onClick={closeDifficultyModal}
-                  className="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all duration-300 text-sm"
+                  className="absolute top-3 right-3 md:top-4 md:right-4 w-10 h-10 md:w-12 md:h-12 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center text-white transition-all duration-300 text-lg md:text-xl touch-manipulation"
                 >
                   ✕
                 </button>
               </div>
               
-              {/* Zorluk Butonları */}
-              <div className="space-y-2">
+              {/* Zorluk Butonları - Tablet Touch */}
+              <div className="space-y-3 md:space-y-4">
                 {difficultyLabels.map((label, index) => (
                   <button
                     key={index + 1}
                     onClick={() => handleDifficultySelect(index + 1)}
-                    className="w-full p-3 sm:p-4 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 text-left"
+                    className="w-full p-4 md:p-5 lg:p-6 rounded-xl transition-all duration-500 transform hover:scale-105 active:scale-95 text-left touch-manipulation"
                     style={{
                       background: `linear-gradient(135deg, ${difficultyColors[index]}60, ${difficultyColors[index]}30)`,
                       backdropFilter: 'blur(20px)',
@@ -437,15 +437,15 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                     }}
                     data-testid={`modal-difficulty-${index + 1}`}
                   >
-                    <div className="flex items-center gap-3">
-                      <div className="text-2xl" style={{ filter: 'drop-shadow(0 0 8px currentColor)' }}>
+                    <div className="flex items-center gap-4 md:gap-5">
+                      <div className="text-3xl md:text-4xl" style={{ filter: 'drop-shadow(0 0 8px currentColor)' }}>
                         {['🟢', '🟡', '🟠', '🔴', '⚫'][index]}
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-bold text-white text-base sm:text-lg mb-0.5">
+                        <h4 className="font-bold text-white text-lg md:text-xl lg:text-2xl mb-1">
                           {label}
                         </h4>
-                        <div className="text-white/80 text-xs sm:text-sm">
+                        <div className="text-white/80 text-sm md:text-base">
                           {[
                             selectedLanguage === 'tr' ? 'Yeni başlayanlar için ideal' : 'Perfect for beginners',
                             selectedLanguage === 'tr' ? 'Deneyimliler için uygun' : 'Suitable for experienced',
@@ -455,7 +455,7 @@ export const CategoryScreen = memo<CategoryScreenProps>(({ selectedLanguage, onC
                           ][index]}
                         </div>
                       </div>
-                      <div className="text-xl text-white/60">→</div>
+                      <div className="text-2xl md:text-3xl text-white/60">→</div>
                     </div>
                   </button>
                 ))}
