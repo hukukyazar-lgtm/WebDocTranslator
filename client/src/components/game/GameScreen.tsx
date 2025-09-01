@@ -689,6 +689,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                   <div className={`relative ${shakeInput ? 'animate-shake-error' : ''}`}>
                     <input 
                       type="text" 
+                      inputMode="none"
                       className={`w-full px-3 py-2 text-lg font-black text-center text-white backdrop-blur-lg border-2 border-white/30 rounded-lg focus:outline-none focus:border-white/60 transition-all duration-300 placeholder:text-white/50 ${sparkleText ? 'animate-typing-sparkle' : ''}`}
                       style={{ 
                         background: 'rgba(255,255,255,0.1)',
