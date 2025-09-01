@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'wouter';
 import { type Language } from '@/components/game/LanguageScreen';
 import { LogoScreen } from '@/components/game/LogoScreen';
 import { LoginScreen } from '@/components/game/LoginScreen';
@@ -46,6 +47,7 @@ export default function Home() {
   const [selectedDifficulty, setSelectedDifficulty] = useState<number>(3);
   const [isGuestMode, setIsGuestMode] = useState(false);
   const { isAuthenticated, isLoading } = useAuth();
+  const [, setLocation] = useLocation();
   
   // URL check for direct navigation
   const currentPath = window.location.pathname;
@@ -101,7 +103,7 @@ export default function Home() {
 
   const handleGameOver = () => {
     // Ana menüye dön - Dashboard'a yönlendirme
-    window.location.href = '/dashboard';
+    setLocation('/dashboard');
   };
   
   const handleSettingsOpen = () => {
