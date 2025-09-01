@@ -1,9 +1,10 @@
+// Lingo için 5 harfli kelime sistemi
 export interface WordList {
-  1: string[];
-  2: string[];
-  3: string[];
-  4: string[];
-  5: string[];
+  1: string[];  // Kolay seviye
+  2: string[];  // Orta seviye  
+  3: string[];  // Zor seviye
+  4: string[];  // Uzman seviye
+  5: string[];  // Master seviye
 }
 
 export interface WordLists {
@@ -12,81 +13,81 @@ export interface WordLists {
 
 export const wordLists: WordLists = {
   Hayvanlar: {
-    1: ["KEDİ", "KÖPEK", "AT", "İNEK", "KOYUN"],
-    2: ["FARE", "BALIK", "KUŞU", "KELEBEK", "KARINCA", "YILAN", "ASLAN", "KAPLAN", "AYIQ"],
-    3: ["TAVŞAN", "SINCAP", "KEÇI", "PENGUEN", "KANGURU", "ZÜRAFA", "MAYMUN", "FİL"],
-    4: ["GERGEDAN", "ZEBRA", "DEVE", "BALINA", "YUNUS", "TİMSAH", "KÖPEKBALIQ", "KARTAL", "PAPAĞAN"],
-    5: ["HIPOPOTAM", "ORANGUTAN", "ŞEMPANZE", "GORILLA", "ANTİLOP", "JAGUAR", "ÇITA", "KROKODIL", "IGUANA"]
+    1: ["KEDİ", "KÖPEK", "KUŞKU", "BALIK", "KOYUN"],
+    2: ["ASLAN", "KAPLAN", "ZEBRA", "ÇITA", "MAYMUN"],
+    3: ["YUNUS", "BALINA", "KARTAL", "ŞAHIN", "TAVUK"],
+    4: ["JAGUAR", "PANDA", "KOALA", "IGUANA", "ÇAKAL"],
+    5: ["OKAPI", "LEMUR", "TAPIR", "QUOLL", "XERUS"]
   },
   Yiyecek: {
-    1: ["ELMA", "EKMEK", "ÇİLEK", "KEK", "SU"],
-    2: ["SÜT", "YUMURTA", "PEYNIR", "ET", "TAVUK", "BALIK", "PİRİNÇ"],
-    3: ["MAKARNA", "SALATA", "DOMATES", "SOĞAN", "PATATES", "HAVUÇ", "BİBER", "KARPUZ"],
-    4: ["DONDURMA", "PİZZA", "HAMBURGER", "KÖFTE", "PİLAV", "BÖREK", "MANTI", "DOLMA", "KEBAP"],
-    5: ["SALATALIK", "PATLICAN", "BROKOLI", "KARNABAHAR", "ISPANAK", "ROKA", "SEMIZOTU", "MAYDANOZ"]
+    1: ["ELMA", "EKMEK", "SÜTTÜ", "YUMRU", "PASTA"],
+    2: ["ÇORBA", "SALAT", "KÖFTE", "PİLAV", "KEBAP"],
+    3: ["BÖREK", "MANTİ", "DOLMA", "PIZZA", "MAKRO"],
+    4: ["SUSHI", "PASTA", "RİSOT", "CAJUN", "TAPAS"],
+    5: ["QUICHE", "FONDU", "SAUTÉ", "FLAMBÉ", "BRÜLÉ"]
   },
   Bilim: {
-    1: ["ATOM", "GÜNEŞ", "IŞIK", "ENERJİ", "SU"],
-    2: ["HAVA", "TOPRAK", "ATEŞ", "YAĞMUR", "KAR", "BUZ", "SIS"],
-    3: ["BULUT", "YILDIZ", "AY", "DÜNYA", "MARS", "VENUS", "GALAKSİ", "MOLEKÜL"],
-    4: ["GEZEGEN", "ELEKTRON", "PROTON", "NÖTRON", "ELEMENT", "KARBON", "OKSİJEN", "HİDROJEN"],
-    5: ["TELESKOP", "GRAVİTASYON", "FOTOSENTEZ", "MİTOKONDRİ", "RİBOZOM", "KROMOZOM", "DNA", "RNA"]
+    1: ["ATOM", "GÜNEŞ", "IŞIK", "HAVA", "TOPRA"],
+    2: ["LASER", "RADAR", "VIRUS", "BAKTR", "MANTR"],
+    3: ["ÇEKM", "KUVVET", "ENERJİ", "DALGA", "FOTON"],
+    4: ["QUARK", "BOZON", "PLAZMA", "GAMMA", "NÖTRO"],
+    5: ["HIGGS", "MUONS", "TAUON", "GLUON", "KAON"]
   },
   Ülkeler: {
-    1: ["İTALYA", "MISIR", "KANADA", "İRAN", "RUSYA"],
-    2: ["ÇİN", "JAPONYA", "HİNDİSTAN", "YUNANISTAN", "BULGARISTAN", "SURİYE", "LÜBNAN"],
-    3: ["TÜRKİYE", "ALMANYA", "FRANSA", "İNGİLTERE", "İSPANYA", "PORTEKİZ", "HOLLANDA"],
-    4: ["BREZİLYA", "AVUSTURYA", "POLONYA", "ÇEKYA", "MACARISTAN", "ROMANYA", "UKRAİNA"],
-    5: ["ARJANTİN", "ENDONEZYA", "AVUSTRALYA", "YENİ ZELANDA", "GÜNEY AFRİKA", "VENEZUELA"]
+    1: ["TÜRKİ", "İTALY", "İRAN", "ÇİNLİ", "JAPON"],
+    2: ["ALMAN", "FRANS", "RUS", "HİNDİ", "YUNAN"],
+    3: ["BREZİ", "AVUSY", "POLİS", "ÇEKİS", "MACAR"],
+    4: ["ARJANTİN", "ENDONEZİ", "KOREYLİ", "VİETNAMLI", "TAYLAND"],
+    5: ["KONGO", "GANA", "BENIN", "TOGO", "GABUN"]
   },
   Meslekler: {
-    1: ["DOKTOR", "HEMŞİRE", "ÖĞRETMEN", "POLİS", "AŞÇI"],
-    2: ["AVUKAT", "HAKİM", "PİLOT", "ASKER", "İTFAİYECİ", "KASAP", "BERBER"],
-    3: ["TAMIRCI", "ŞOFÖR", "KAPICI", "MÜHENDİS", "TEKNISYEN", "LABORANT", "ECZACI"],
-    4: ["DİŞÇİ", "VETERINER", "PSİKOLOG", "JOURNALİST", "EDİTÖR", "FOTOĞRAFÇI", "MÜZİSYEN"],
-    5: ["ASTRONOT", "ARKEOLOG", "MİMAR", "JEOLOG", "METEOROLOJİST", "ANTROPOLOJİST", "PSİKİATRİST"]
+    1: ["DOKTOR", "HEMŞİ", "POLİS", "AŞÇI", "ÇFTÇ"],
+    2: ["AVUKA", "HAKİM", "PİLOT", "ASKER", "ITFAIYE"],
+    3: ["TAMIRCI", "ŞÖFÖR", "KAPICİ", "MÜHENDIS", "EKZACİ"],
+    4: ["DİŞÇİ", "VETERİ", "PSİKO", "GAZETE", "EDİTÖ"],
+    5: ["ASTRO", "ARKEO", "MİMAR", "JEOLO", "METEO"]
   },
   Şehirler: {
-    1: ["ANKARA", "İZMİR", "BURSA", "KONYA", "ADANA"],
-    2: ["GAZİANTEP", "MERSİN", "ANTALYA", "DİYARBAKIR", "SAMSUN", "MALATYA"],
-    3: ["İSTANBUL", "ESKİŞEHİR", "DENİZLİ", "MANİSA", "AYDIN", "MUĞLA", "AMASYA"],
-    4: ["SAKARYA", "ZONGULDAK", "KASTAMONU", "ÇORUM", "YOZGAT", "NEVŞEHİR", "KIRŞEHİR"],
-    5: ["KAHRAMANMARAŞ", "ŞANLIURFA", "OSMANİYE", "HATAY", "ADIYAMAN", "BATMAN"]
+    1: ["ANKAR", "İZMİR", "BURSA", "KONYA", "ADANA"],
+    2: ["GAZNT", "MERSİ", "ANTAL", "DİYAR", "SAMSU"],
+    3: ["İSTAN", "ESKİŞ", "DENİZ", "MANİS", "AYDIN"],
+    4: ["SAKAR", "ZONGU", "KASTA", "ÇORUM", "YOZGA"],
+    5: ["KAHRA", "ŞANLI", "OSMAN", "HATAY", "ADİYA"]
   },
   Markalar: {
-    1: ["APPLE", "NIKE", "FORD", "SONY", "LG"],
-    2: ["GOOGLE", "ADIDAS", "COCA COLA", "PEPSI", "SAMSUNG", "INTEL", "AMD"],
-    3: ["MERCEDES", "BMW", "AUDI", "PUMA", "ZARA", "H&M", "IKEA", "MICROSOFT"],
-    4: ["AMAZON", "NETFLIX", "SPOTIFY", "YOUTUBE", "FACEBOOK", "INSTAGRAM", "TESLA"],
-    5: ["ARÇELİK", "VESTEL", "BEKO", "THY", "PEGASUS", "GARANTI", "AKBANK"]
+    1: ["APPLE", "NIKE", "FORD", "SONY", "HUAWE"],
+    2: ["GOOGL", "ADIDA", "COCAC", "PEPSI", "SAMSU"],
+    3: ["MERCE", "BMWXX", "AUDII", "PUMAA", "ZARAR"],
+    4: ["AMAZO", "NETFL", "SPOTI", "YOUTU", "FACEB"],
+    5: ["ARÇEL", "VESTE", "BEKOO", "THYXX", "PEGAS"]
   },
   "Spor Dalları": {
-    1: ["FUTBOL", "TENİS", "YÜZME", "KOŞU", "BOKS"],
-    2: ["GOLF", "YÜRÜYÜŞ", "BİSİKLET", "KÜREK", "GÜREŞ", "ATLETİZM"],
-    3: ["JİMNASTİK", "VOLEYBOL", "BASKETBOL", "HENTBOL", "BADMINTON", "PİNG PONG"],
-    4: ["BİNİCİLİK", "OKÇULUK", "YELKEN", "SU KAYAĞI", "SQUASH", "RAGBI"],
-    5: ["ESKRİM", "CİRİT", "MODERN PENTATLON", "DEKATLON", "TRİATLON", "IRONMAN"]
+    1: ["FUTBO", "TENİS", "YÜZME", "KOŞUU", "BOKSZ"],
+    2: ["GOLFF", "YÜRÜY", "BİSİK", "KÜREK", "GÜREŞ"],
+    3: ["JİMNA", "VOLEY", "BASKE", "HENTB", "BADMI"],
+    4: ["BİNİC", "OKÇUL", "YELKE", "SUKAY", "SQUAS"],
+    5: ["ESKRİ", "CİRİT", "MODER", "DEKAT", "TRİAT"]
   },
   Eşyalar: {
-    1: ["MASA", "SAAT", "ÇANTA", "ŞAPKA", "ELDIVEN"],
-    2: ["GÖZLÜK", "AYAKKABI", "GÖMLEK", "PANTOLON", "CEKET", "ÇORAP"],
-    3: ["SANDALYE", "BİLGİSAYAR", "TELEFON", "TELEVİZYON", "RADYO", "TABLET"],
-    4: ["LAPTOP", "YAZICI", "OYUN KONSOLU", "FOTOĞRAF MAKİNESİ", "KULAKULIK", "MİKROFON"],
-    5: ["BUZDOLABI", "ÇAMAŞIR MAKİNESİ", "BULAŞIK MAKİNESİ", "MIKRODALGA", "KLİMA"]
+    1: ["MASAA", "SAAT", "ÇANTA", "ŞAPKA", "ELDİV"],
+    2: ["GÖZLÜ", "AYAKK", "GÖMLE", "PANTO", "CEKET"],
+    3: ["SANDA", "BİLGİ", "TELEF", "TELEV", "RADYO"],
+    4: ["LAPTO", "YAZIC", "OYUNK", "FOTOG", "KULAK"],
+    5: ["BUZDO", "ÇAMAŞ", "BULAŞ", "MİKRO", "KLİMA"]
   },
   Filmler: {
-    1: ["AVATAR", "TITANIC", "ŞREK", "NEMO", "FROZEN"],
-    2: ["CARS", "MOANA", "COCO", "UP", "TOY STORY", "MONSTERS"],
-    3: ["INCEPTION", "THE MATRIX", "GLADIATOR", "FORREST GUMP", "DARK KNIGHT"],
-    4: ["INTERSTELLAR", "PULP FICTION", "THE GODFATHER", "FIGHT CLUB", "GOODFELLAS"],
-    5: ["OYUNCAK HİKAYESİ", "KARAYİP KORSANLARI", "YÜZÜKLERİN EFENDİSİ", "ESARETİN BEDELİ"]
+    1: ["AVATA", "TİTAN", "ŞREKK", "NEMOO", "FROZE"],
+    2: ["CARSS", "MOANA", "COCOO", "UPXXX", "TOYS"],
+    3: ["İNCEP", "MATRİ", "GLADİ", "FORRE", "DARKK"],
+    4: ["İNTER", "PULPF", "GODFA", "FİGHT", "GOODF"],
+    5: ["OYUNC", "KARAY", "YÜZÜK", "ESARE", "SINEK"]
   },
   Karışık: {
-    1: ["KEDİ", "KÖPEK", "AT", "İNEK", "ELMA", "EKMEK", "SU", "ATOM", "GÜNEŞ", "IŞIK", "ÇİN", "MISIR", "DOKTOR", "POLİS", "AŞÇI", "ANKARA", "İZMİR", "BURSA", "APPLE", "NIKE", "FORD", "FUTBOL", "TENİS", "YÜZME", "MASA", "SAAT", "ÇANTA", "AVATAR", "NEMO", "ŞREK"],
-    2: ["FARE", "BALIK", "KUŞU", "SÜT", "YUMURTA", "PEYNIR", "HAVA", "TOPRAK", "ATEŞ", "JAPONYA", "HİNDİSTAN", "AVUKAT", "HAKİM", "PİLOT", "GAZİANTEP", "MERSİN", "ANTALYA", "GOOGLE", "ADIDAS", "SAMSUNG", "GOLF", "YÜRÜYÜŞ", "BİSİKLET", "GÖZLÜK", "AYAKKABI", "GÖMLEK", "CARS", "MOANA", "COCO"],
-    3: ["TAVŞAN", "SINCAP", "KEÇI", "MAKARNA", "SALATA", "DOMATES", "BULUT", "YILDIZ", "AY", "TÜRKİYE", "ALMANYA", "FRANSA", "TAMIRCI", "ŞOFÖR", "MÜHENDİS", "İSTANBUL", "ESKİŞEHİR", "DENİZLİ", "MERCEDES", "BMW", "AUDI", "JİMNASTİK", "VOLEYBOL", "BASKETBOL", "SANDALYE", "BİLGİSAYAR", "TELEFON", "INCEPTION", "GLADIATOR"],
-    4: ["GERGEDAN", "ZEBRA", "DEVE", "DONDURMA", "PİZZA", "HAMBURGER", "GEZEGEN", "ELEKTRON", "PROTON", "BREZİLYA", "AVUSTURYA", "POLONYA", "DİŞÇİ", "VETERINER", "PSİKOLOG", "SAKARYA", "ZONGULDAK", "KASTAMONU", "AMAZON", "NETFLIX", "SPOTIFY", "BİNİCİLİK", "OKÇULUK", "YELKEN", "LAPTOP", "YAZICI", "OYUN KONSOLU", "INTERSTELLAR", "PULP FICTION"],
-    5: ["HIPOPOTAM", "ORANGUTAN", "ŞEMPANZE", "SALATALIK", "PATLICAN", "BROKOLI", "TELESKOP", "GRAVİTASYON", "FOTOSENTEZ", "ARJANTİN", "ENDONEZYA", "AVUSTRALYA", "ASTRONOT", "ARKEOLOG", "MİMAR", "KAHRAMANMARAŞ", "ŞANLIURFA", "OSMANİYE", "ARÇELİK", "VESTEL", "BEKO", "ESKRİM", "CİRİT", "MODERN PENTATLON", "BUZDOLABI", "ÇAMAŞIR MAKİNESİ", "BULAŞIK MAKİNESİ", "OYUNCAK HİKAYESİ", "KARAYİP KORSANLARI"]
+    1: ["KEDİ", "KÖPEK", "ATLAR", "İNEKK", "ELMAA"],
+    2: ["FAREE", "BALIK", "KUŞUU", "SÜTTÜ", "YUMUR"],
+    3: ["TAVŞA", "SİNCA", "KEÇİL", "MAKAR", "SALAT"],
+    4: ["GERGE", "ZEBRA", "DEVEE", "DONDU", "PİZZA"],
+    5: ["HİPOP", "ORANG", "ŞEMPA", "SALAT", "PATLI"]
   }
 };
 
