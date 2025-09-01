@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { type Language } from '@/components/game/LanguageScreen';
 import { LogoScreen } from '@/components/game/LogoScreen';
+import { LoginScreen } from '@/components/game/LoginScreen';
 import { CategoryScreen } from '@/components/game/CategoryScreen';
 import { DifficultyScreen } from '@/components/game/DifficultyScreen';
 import { GameScreen } from '@/components/game/GameScreen';
@@ -36,7 +37,7 @@ const setStoredLanguage = (lang: Language): void => {
   }
 };
 
-type AppState = 'logo' | 'category' | 'difficulty' | 'game' | 'settings';
+type AppState = 'logo' | 'login' | 'category' | 'difficulty' | 'game' | 'settings';
 
 export default function Home() {
   const [appState, setAppState] = useState<AppState>('logo');
@@ -55,6 +56,10 @@ export default function Home() {
   const handleLanguageChange = (language: Language) => {
     setSelectedLanguage(language);
     setStoredLanguage(language);
+  };
+
+  const handleLogoComplete = () => {
+    setAppState('login');
   };
 
   const handleAuthChoice = (isGuest: boolean) => {
@@ -91,10 +96,17 @@ export default function Home() {
     overflow: 'hidden'
   };
 
-  // Logo ve giriş sayfası
+  // Logo sayfası
   if (appState === 'logo') {
     return (
-      <LogoScreen onAuthChoice={handleAuthChoice} />
+      <LogoScreen onComplete={handleLogoComplete} />
+    );
+  }
+
+  // Login sayfası
+  if (appState === 'login') {
+    return (
+      <LoginScreen onAuthChoice={handleAuthChoice} />
     );
   }
   

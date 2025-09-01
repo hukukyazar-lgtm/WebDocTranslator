@@ -1,12 +1,10 @@
 import { memo, useEffect, useState } from 'react';
-import { useAuth } from '@/hooks/useAuth';
 
 export interface LogoScreenProps {
-  onAuthChoice: (isGuest: boolean) => void;
+  onComplete: () => void;
 }
 
-export const LogoScreen = memo<LogoScreenProps>(({ onAuthChoice }) => {
-  const { isAuthenticated, isLoading } = useAuth();
+export const LogoScreen = memo<LogoScreenProps>(({ onComplete }) => {
   const [showContent, setShowContent] = useState(false);
 
   useEffect(() => {
@@ -15,15 +13,16 @@ export const LogoScreen = memo<LogoScreenProps>(({ onAuthChoice }) => {
     return () => clearTimeout(timer);
   }, []);
 
-  // Not: Otomatik dil seçimine geçiş devre dışı bırakıldı
-  // Kullanıcı manuel olarak seçim yapmalı
+  useEffect(() => {
+    // 3 saniye sonra otomatik olarak login ekranına geç
+    const timer = setTimeout(() => {
+      onComplete();
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [onComplete]);
 
-  const handleLogin = () => {
-    window.location.href = '/api/login';
-  };
-
-  const handleGuestMode = () => {
-    onAuthChoice(true);
+  const handleClick = () => {
+    onComplete();
   };
 
   const backgroundStyle = {
@@ -33,7 +32,7 @@ export const LogoScreen = memo<LogoScreenProps>(({ onAuthChoice }) => {
   };
 
   return (
-    <div style={backgroundStyle}>
+    <div style={backgroundStyle} onClick={handleClick} className="cursor-pointer">
       <div className="h-full flex items-center justify-center p-6">
         <div className="text-center max-w-md w-full">
           {/* Logo ve başlık */}
@@ -51,61 +50,17 @@ export const LogoScreen = memo<LogoScreenProps>(({ onAuthChoice }) => {
             </p>
           </div>
 
-          {/* Auth seçenekleri */}
+          {/* Loading indicator */}
           {showContent && (
-            <div className="space-y-4 animate-slide-up" style={{ animationDelay: '0.3s' }}>
-              {/* Replit ile giriş */}
-              <button
-                onClick={handleLogin}
-                disabled={isLoading}
-                className="w-full py-4 px-6 text-lg font-bold text-white rounded-2xl transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-2xl"
-                style={{
-                  background: 'linear-gradient(135deg, rgba(0, 220, 205, 0.9), rgba(233, 30, 99, 0.9))',
-                  backdropFilter: 'blur(20px)',
-                  border: '1px solid rgba(255, 255, 255, 0.3)',
-                  boxShadow: '0 10px 30px rgba(0, 220, 205, 0.3)'
-                }}
-                data-testid="button-login"
-              >
-                <span className="flex items-center justify-center gap-3">
-                  <span className="text-2xl">🚀</span>
-                  <span>Replit ile Giriş Yap</span>
-                </span>
-              </button>
-
-              {/* Logout seçeneği (giriş yapmış kullanıcılar için) */}
-              {isAuthenticated && (
-                <div className="text-center">
-                  <p className="text-xs text-white/40 mb-4">veya</p>
-                  <a
-                    href="/api/logout"
-                    className="inline-flex items-center gap-2 px-6 py-3 text-sm font-medium text-white/80 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
-                    data-testid="button-logout"
-                  >
-                    <span>🚪</span>
-                    <span>Çıkış Yap</span>
-                  </a>
-                </div>
-              )}
-
-              <div className="text-center">
-                <p className="text-xs text-white/40 mb-4">veya</p>
-                
-                {/* Misafir girişi */}
-                <button 
-                  onClick={handleGuestMode}
-                  className="px-6 py-3 text-sm font-medium text-white/80 hover:text-white rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 transition-all duration-300"
-                  data-testid="button-guest-mode"
-                >
-                  <span className="flex items-center justify-center gap-2">
-                    <span>👤</span>
-                    <span>Misafir olarak devam et</span>
-                  </span>
-                </button>
-                <p className="text-xs text-white/40 mt-2">
-                  * İlerleme ve skorlar kaydedilmeyecek
-                </p>
+            <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
+              <div className="flex justify-center items-center space-x-2 text-white/60">
+                <div className="animate-bounce" style={{ animationDelay: '0s' }}>●</div>
+                <div className="animate-bounce" style={{ animationDelay: '0.2s' }}>●</div>
+                <div className="animate-bounce" style={{ animationDelay: '0.4s' }}>●</div>
               </div>
+              <p className="text-sm text-white/40 mt-4">
+                Dokunmak için tıklayın
+              </p>
             </div>
           )}
         </div>
