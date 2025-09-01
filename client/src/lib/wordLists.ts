@@ -12,63 +12,63 @@ export interface WordLists {
 
 export const wordLists: WordLists = {
   Hayvanlar: {
-    1: ["KEDİ", "KÖPEK", "KUŞKU", "BALIK", "KOYUN"],
-    2: ["ASLAN", "KAPLAN", "ZEBRA", "ÇITA", "MAYMUN"],
-    3: ["YUNUS", "BALINA", "KARTAL", "ŞAHIN", "TAVUK"],
-    4: ["JAGUAR", "PANDA", "KOALA", "IGUANA", "ÇAKAL"],
-    5: ["OKAPI", "LEMUR", "TAPIR", "QUOLL", "XERUS"]
+    1: ["KEDİS", "KÖPEK", "KUŞKU", "BALIK", "KOYUN"],
+    2: ["ASLAN", "TIGER", "ZEBRA", "ÇİTAH", "PANDA"],
+    3: ["YUNUS", "KARTAL", "ŞAHİN", "TAVUK", "ÇAKAL"],
+    4: ["KOALA", "LEMUR", "TAPIR", "OKAPI", "QUOLL"],
+    5: ["XERUS", "VARAN", "IGANA", "KANGO", "HIPPO"]
   },
   Yiyecek: {
-    1: ["ELMA", "EKMEK", "SÜTTÜ", "YUMRU", "PASTA"],
+    1: ["ELMAZ", "EKMEK", "SÜTTE", "YUMTA", "PASTA"],
     2: ["ÇORBA", "SALAT", "KÖFTE", "PİLAV", "KEBAP"],
-    3: ["BÖREK", "MANTİ", "DOLMA", "PIZZA", "MAKRO"],
-    4: ["SUSHI", "PASTA", "RİSOT", "CAJUN", "TAPAS"],
-    5: ["QUICHE", "FONDU", "SAUTÉ", "FLAMBÉ", "BRÜLÉ"]
+    3: ["BÖREK", "MANTİ", "DOLMA", "PİZZA", "MAKRO"],
+    4: ["SUSHİ", "RİSOT", "CAJUN", "TAPAS", "MANTI"],
+    5: ["FONDU", "SAUTE", "FLABE", "BRULE", "QUİCH"]
   },
   Bilim: {
-    1: ["ATOM", "GÜNEŞ", "IŞIK", "HAVA", "TOPRA"],
-    2: ["LASER", "RADAR", "VIRUS", "BAKTR", "MANTR"],
-    3: ["ÇEKM", "KUVVET", "ENERJİ", "DALGA", "FOTON"],
-    4: ["QUARK", "BOZON", "PLAZMA", "GAMMA", "NÖTRO"],
-    5: ["HIGGS", "MUONS", "TAUON", "GLUON", "KAON"]
+    1: ["ATOMU", "GÜNEŞ", "IŞIKS", "HAVAT", "TOPRA"],
+    2: ["LASER", "RADAR", "VİRÜS", "BAKTR", "MANTR"],
+    3: ["ÇEKİM", "ENERJ", "DALGA", "FOTON", "GAMMA"],
+    4: ["QUARK", "BOZON", "PLAZM", "NÖTRO", "HİGGS"],
+    5: ["MUONS", "TAUON", "GLUON", "KAONS", "MESON"]
   },
   Ülkeler: {
-    1: ["TÜRKİ", "İTALY", "İRAN", "ÇİNLİ", "JAPON"],
-    2: ["ALMAN", "FRANS", "RUS", "HİNDİ", "YUNAN"],
-    3: ["BREZİ", "AVUSY", "POLİS", "ÇEKİS", "MACAR"],
-    4: ["ARJANTİN", "ENDONEZİ", "KOREYLİ", "VİETNAMLI", "TAYLAND"],
-    5: ["KONGO", "GANA", "BENIN", "TOGO", "GABUN"]
+    1: ["TÜRKİ", "İTALY", "İRANS", "ÇİNLİ", "JAPON"],
+    2: ["ALMAN", "FRANS", "RUSİA", "HİNDİ", "YUNAN"],
+    3: ["BREZİ", "AVUST", "POLİS", "ÇEKİS", "MACAR"],
+    4: ["ARJAN", "ENDON", "KOREY", "VİETN", "TAYLA"],
+    5: ["KONGO", "GHANA", "BENİN", "TOGOS", "GABON"]
   },
   Meslekler: {
-    1: ["DOKTOR", "HEMŞİ", "POLİS", "AŞÇI", "ÇFTÇ"],
-    2: ["AVUKA", "HAKİM", "PİLOT", "ASKER", "ITFAIYE"],
-    3: ["TAMIRCI", "ŞÖFÖR", "KAPICİ", "MÜHENDIS", "EKZACİ"],
-    4: ["DİŞÇİ", "VETERİ", "PSİKO", "GAZETE", "EDİTÖ"],
+    1: ["DOKTR", "HEMŞİ", "POLİS", "AŞÇIS", "ÇİFTÇ"],
+    2: ["AVUKA", "HAKİM", "PİLOT", "ASKER", "İTFAİ"],
+    3: ["TAMİR", "ŞÖFÖR", "KAPI", "MÜHEN", "ECZAC"],
+    4: ["DİŞÇİ", "VETERİ", "PSİKO", "GAZET", "EDİTÖ"],
     5: ["ASTRO", "ARKEO", "MİMAR", "JEOLO", "METEO"]
   },
   Şehirler: {
     1: ["ANKAR", "İZMİR", "BURSA", "KONYA", "ADANA"],
-    2: ["GAZNT", "MERSİ", "ANTAL", "DİYAR", "SAMSU"],
+    2: ["GAZİA", "MERSİ", "ANTAL", "DİYAR", "SAMSU"],
     3: ["İSTAN", "ESKİŞ", "DENİZ", "MANİS", "AYDIN"],
     4: ["SAKAR", "ZONGU", "KASTA", "ÇORUM", "YOZGA"],
     5: ["KAHRA", "ŞANLI", "OSMAN", "HATAY", "ADİYA"]
   },
   Markalar: {
-    1: ["APPLE", "NIKE", "FORD", "SONY", "HUAWE"],
-    2: ["GOOGL", "ADIDA", "COCAC", "PEPSI", "SAMSU"],
-    3: ["MERCE", "BMWXX", "AUDII", "PUMAA", "ZARAR"],
-    4: ["AMAZO", "NETFL", "SPOTI", "YOUTU", "FACEB"],
+    1: ["APPLE", "NİKES", "FORDS", "SONYS", "HUAWE"],
+    2: ["GOOGL", "ADİDA", "COCAC", "PEPSİ", "SAMSU"],
+    3: ["MERCE", "BMWXX", "AUDİİ", "PUMAA", "ZARAR"],
+    4: ["AMAZO", "NETFL", "SPOTİ", "YOUTU", "FACEB"],
     5: ["ARÇEL", "VESTE", "BEKOO", "THYXX", "PEGAS"]
   },
   "Spor Dalları": {
-    1: ["FUTBO", "TENİS", "YÜZME", "KOŞUU", "BOKSZ"],
+    1: ["FUTBO", "TENİS", "YÜZME", "KOŞUU", "BOKSS"],
     2: ["GOLFF", "YÜRÜY", "BİSİK", "KÜREK", "GÜREŞ"],
-    3: ["JİMNA", "VOLEY", "BASKE", "HENTB", "BADMI"],
+    3: ["JİMNA", "VOLEY", "BASKE", "HENTB", "BADMİ"],
     4: ["BİNİC", "OKÇUL", "YELKE", "SUKAY", "SQUAS"],
     5: ["ESKRİ", "CİRİT", "MODER", "DEKAT", "TRİAT"]
   },
   Eşyalar: {
-    1: ["MASAA", "SAAT", "ÇANTA", "ŞAPKA", "ELDİV"],
+    1: ["MASAA", "SAATS", "ÇANTA", "ŞAPKA", "ELDİV"],
     2: ["GÖZLÜ", "AYAKK", "GÖMLE", "PANTO", "CEKET"],
     3: ["SANDA", "BİLGİ", "TELEF", "TELEV", "RADYO"],
     4: ["LAPTO", "YAZIC", "OYUNK", "FOTOG", "KULAK"],
@@ -76,17 +76,17 @@ export const wordLists: WordLists = {
   },
   Filmler: {
     1: ["AVATA", "TİTAN", "ŞREKK", "NEMOO", "FROZE"],
-    2: ["CARSS", "MOANA", "COCOO", "UPXXX", "TOYS"],
+    2: ["CARSS", "MOANA", "COCOO", "UPXXX", "TOYSS"],
     3: ["İNCEP", "MATRİ", "GLADİ", "FORRE", "DARKK"],
     4: ["İNTER", "PULPF", "GODFA", "FİGHT", "GOODF"],
-    5: ["OYUNC", "KARAY", "YÜZÜK", "ESARE", "SINEK"]
+    5: ["OYUNC", "KARAY", "YÜZÜK", "ESARE", "SİNEK"]
   },
   Karışık: {
-    1: ["KEDİ", "KÖPEK", "ATLAR", "İNEKK", "ELMAA"],
-    2: ["FAREE", "BALIK", "KUŞUU", "SÜTTÜ", "YUMUR"],
+    1: ["KEDİS", "KÖPEK", "ATLAR", "İNEKK", "ELMAA"],
+    2: ["FAREE", "BALIK", "KUŞUU", "SÜTTE", "YUMUR"],
     3: ["TAVŞA", "SİNCA", "KEÇİL", "MAKAR", "SALAT"],
     4: ["GERGE", "ZEBRA", "DEVEE", "DONDU", "PİZZA"],
-    5: ["HİPOP", "ORANG", "ŞEMPA", "SALAT", "PATLI"]
+    5: ["HİPOP", "ORANG", "ŞEMPA", "SALAT", "PATLİ"]
   }
 };
 
