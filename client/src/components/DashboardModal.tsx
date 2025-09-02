@@ -28,10 +28,10 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
   const stats = {
     totalGamesPlayed: (isAuthenticated && gameStats) ? gameStats.gamesPlayed : 0,
     totalCorrectGuesses: (isAuthenticated && gameStats) ? Math.round(gameStats.gamesPlayed * gameStats.successRate / 100) : 0,
-    currentStreak: (isAuthenticated && gameStats) ? gameStats.currentStreak : 0,
+    currentStreak: (isAuthenticated && gameStats) ? gameStats.bestStreak : 0,
     bestStreak: (isAuthenticated && gameStats) ? gameStats.bestStreak : 0,
     totalScore: (isAuthenticated && gameStats) ? gameStats.totalScore : 0,
-    averageGuessTime: (isAuthenticated && gameStats) ? gameStats.averageTime : 0,
+    averageGuessTime: (isAuthenticated && gameStats) ? gameStats.averageGuessTime : 0,
     categoryExpertise: {},
     achievements: [],
     dailyGoals: [],
@@ -131,7 +131,7 @@ export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLan
               <CardContent className="pt-0">
                 <GameStats
                   score={stats.totalScore}
-                  streak={stats.currentStreak}
+                  streak={stats.bestStreak}
                   correctGuesses={stats.totalCorrectGuesses}
                   averageTime={stats.averageGuessTime}
                   language="tr"
