@@ -2,10 +2,11 @@ import { useState } from 'react';
 import { GameOverPreview } from '@/components/GameOverPreview';
 import { ModernGameOver } from '@/components/ModernGameOver';
 import { FuturisticGameOver } from '@/components/FuturisticGameOver';
+import { CodyCrossGameOver } from '@/components/CodyCrossGameOver';
 import { Button } from '@/components/ui/button';
 
 export default function Preview() {
-  const [currentStyle, setCurrentStyle] = useState<'classic' | 'modern' | 'futuristic'>('modern');
+  const [currentStyle, setCurrentStyle] = useState<'classic' | 'modern' | 'futuristic' | 'codycross'>('codycross');
 
   return (
     <div className="relative">
@@ -35,12 +36,21 @@ export default function Preview() {
         >
           Futuristik
         </Button>
+        <Button 
+          variant={currentStyle === 'codycross' ? 'default' : 'outline'}
+          size="sm"
+          onClick={() => setCurrentStyle('codycross')}
+          className="backdrop-blur-sm"
+        >
+          CodyCross
+        </Button>
       </div>
 
       {/* Render selected style */}
       {currentStyle === 'classic' && <GameOverPreview />}
       {currentStyle === 'modern' && <ModernGameOver />}
       {currentStyle === 'futuristic' && <FuturisticGameOver />}
+      {currentStyle === 'codycross' && <CodyCrossGameOver />}
     </div>
   );
 }
