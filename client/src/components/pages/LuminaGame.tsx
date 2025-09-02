@@ -126,38 +126,41 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
             <ChevronLeft className="w-6 h-6" />
           </Button>
           
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-1">
             {/* Lives */}
-            <div className="flex items-center gap-1">
-              {Array.from({ length: 3 }).map((_, i) => (
-                <Heart 
-                  key={i} 
-                  className={`w-5 h-5 ${i < lives ? 'text-red-500 fill-red-500' : 'text-white/30'}`}
-                />
-              ))}
-            </div>
-            
-            {/* Streak */}
-            <div className="flex items-center gap-2 bg-white/20 rounded-full px-3 py-1">
-              <Zap className="w-4 h-4 text-yellow-400 fill-yellow-400" />
-              <span className="text-white font-bold text-sm">{streak}</span>
-            </div>
+            {Array.from({ length: 3 }).map((_, i) => (
+              <Heart 
+                key={i} 
+                className={`w-5 h-5 ${i < lives ? 'text-red-500 fill-red-500' : 'text-white/30'}`}
+              />
+            ))}
           </div>
         </div>
 
-        {/* Category and Timer Row */}
+        {/* Category and Game Info Row */}
         <div className="flex items-center justify-between mb-6">
           <Badge className="bg-white/20 text-white border-white/30 px-3 py-1 rounded-full font-bold text-sm">
             🐾 {category}
           </Badge>
           
-          {/* Timer - Central and prominent */}
-          <Card className="flex items-center gap-2 px-4 py-2 bg-white/95 rounded-full shadow-xl border-0">
-            <Timer className={`w-5 h-5 ${timeLeft <= 10 ? 'text-red-500' : 'text-blue-600'}`} />
-            <div className={`text-2xl font-black ${timeLeft <= 10 ? 'text-red-600' : 'text-gray-800'}`}>
-              {timeLeft}s
-            </div>
-          </Card>
+          {/* Timer ve Seri - Merkez konumda */}
+          <div className="flex items-center gap-3">
+            {/* Seri Sayacı */}
+            <Card className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full shadow-xl border-0">
+              <Zap className="w-5 h-5 text-white" />
+              <div className="text-xl font-black text-white">
+                {streak}
+              </div>
+            </Card>
+            
+            {/* Timer */}
+            <Card className="flex items-center gap-2 px-4 py-2 bg-white/95 rounded-full shadow-xl border-0">
+              <Timer className={`w-5 h-5 ${timeLeft <= 10 ? 'text-red-500' : 'text-blue-600'}`} />
+              <div className={`text-2xl font-black ${timeLeft <= 10 ? 'text-red-600' : 'text-gray-800'}`}>
+                {timeLeft}s
+              </div>
+            </Card>
+          </div>
           
           <Badge className="bg-white/20 text-white border-white/30 px-3 py-1 rounded-full font-bold text-sm">
             ⚡ {difficulty}
