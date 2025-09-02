@@ -97,7 +97,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           {categories.map((category) => (
             <Card 
               key={category.id} 
-              className={`relative overflow-hidden border-0 shadow-lg rounded-2xl transition-all duration-300 transform cursor-pointer hover:scale-105 active:scale-95 ${
+              className={`relative overflow-hidden border-0 shadow-lg rounded-2xl transition-all duration-300 transform cursor-pointer hover:scale-105 ${
                 categoryDifficulties[category.name]
                   ? categoryDifficulties[category.name] === 'kolay' 
                     ? 'bg-gradient-to-br from-green-100 to-green-200 text-green-800 border-2 border-green-400' 
@@ -117,10 +117,10 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                 <div className="absolute top-2 right-2 flex flex-col gap-1">
                   <button
                     onClick={(e) => handleDifficultySelect("kolay", category.name, e)}
-                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
+                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 shadow-lg hover:shadow-xl ring-2 ${
                       categoryDifficulties[category.name] === "kolay"
-                        ? 'bg-green-200 ring-green-400 scale-110'
-                        : 'bg-white hover:bg-green-100 active:bg-green-200 ring-green-300/50 hover:ring-green-400/80'
+                        ? 'bg-green-200 ring-green-400 scale-110 active:scale-100'
+                        : 'bg-white hover:bg-green-100 ring-green-300/50 hover:ring-green-400/80 active:scale-90'
                     }`}
                     title="Kolay"
                     data-testid={`difficulty-${category.name}-easy`}
@@ -129,10 +129,10 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   </button>
                   <button
                     onClick={(e) => handleDifficultySelect("orta", category.name, e)}
-                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
+                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 shadow-lg hover:shadow-xl ring-2 ${
                       categoryDifficulties[category.name] === "orta"
-                        ? 'bg-yellow-200 ring-yellow-400 scale-110'
-                        : 'bg-white hover:bg-yellow-100 active:bg-yellow-200 ring-yellow-300/50 hover:ring-yellow-400/80'
+                        ? 'bg-yellow-200 ring-yellow-400 scale-110 active:scale-100'
+                        : 'bg-white hover:bg-yellow-100 ring-yellow-300/50 hover:ring-yellow-400/80 active:scale-90'
                     }`}
                     title="Orta"
                     data-testid={`difficulty-${category.name}-medium`}
@@ -141,10 +141,10 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   </button>
                   <button
                     onClick={(e) => handleDifficultySelect("zor", category.name, e)}
-                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
+                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 shadow-lg hover:shadow-xl ring-2 ${
                       categoryDifficulties[category.name] === "zor"
-                        ? 'bg-red-200 ring-red-400 scale-110'
-                        : 'bg-white hover:bg-red-100 active:bg-red-200 ring-red-300/50 hover:ring-red-400/80'
+                        ? 'bg-red-200 ring-red-400 scale-110 active:scale-100'
+                        : 'bg-white hover:bg-red-100 ring-red-300/50 hover:ring-red-400/80 active:scale-90'
                     }`}
                     title="Zor"
                     data-testid={`difficulty-${category.name}-hard`}
