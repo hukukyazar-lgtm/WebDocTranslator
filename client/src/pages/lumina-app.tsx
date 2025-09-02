@@ -196,7 +196,23 @@ export default function LuminaApp() {
       }
       
       const categoryUsedWords = usedWords[categoryKey]?.[difficultyKey] || [];
-      const nextWord = getWordByDifficulty(categoryKey, difficultyLevel, [...categoryUsedWords, currentWord]);
+      let nextWord = getWordByDifficulty(categoryKey, difficultyLevel, [...categoryUsedWords, currentWord]);
+      
+      // If no word found (category completed), reset used words and try again
+      if (!nextWord) {
+        console.log('No more words in category, resetting used words for infinite play');
+        // Reset used words for this category/difficulty
+        setUsedWords(prev => ({
+          ...prev,
+          [categoryKey]: {
+            ...prev[categoryKey],
+            [difficultyKey]: [] // Reset to empty array
+          }
+        }));
+        
+        // Get a new word with fresh pool (excluding current word)
+        nextWord = getWordByDifficulty(categoryKey, difficultyLevel, [currentWord]);
+      }
       
       if (nextWord) {
         // Continue with next word
@@ -212,7 +228,8 @@ export default function LuminaApp() {
         }));
         return; // Don't go to game over screen
       } else {
-        // No more words available, end game
+        // This should never happen now, but keep as fallback
+        console.error('Still no word available even after reset - this should not happen');
         setGameState(prev => ({
           ...prev,
           isGameOver: true,
