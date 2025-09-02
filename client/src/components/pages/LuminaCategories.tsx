@@ -97,12 +97,24 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           {categories.map((category) => (
             <Card 
               key={category.id} 
-              className={`relative overflow-hidden border-0 shadow-lg rounded-2xl transition-all duration-300 transform cursor-pointer hover:scale-105 ${
+              className={`relative overflow-hidden border-0 rounded-2xl transition-all duration-300 transform cursor-pointer hover:scale-105 ${
+                selectedCategory === category.name
+                  ? 'shadow-2xl scale-105 z-10' // Seçili kategori daha büyük ve önde
+                  : categoryDifficulties[category.name] 
+                  ? 'shadow-md'
+                  : 'shadow-lg'
+              } ${
                 categoryDifficulties[category.name]
                   ? categoryDifficulties[category.name] === 'kolay' 
-                    ? 'bg-gradient-to-br from-green-100 to-green-200 text-green-800 border-2 border-green-400' 
+                    ? selectedCategory === category.name
+                      ? 'bg-gradient-to-br from-green-200 to-green-300 text-green-900 border-4 border-green-500' // Daha parlak seçili
+                      : 'bg-gradient-to-br from-green-100 to-green-200 text-green-800 border-2 border-green-400'
                     : categoryDifficulties[category.name] === 'orta'
-                    ? 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-800 border-2 border-yellow-400'
+                    ? selectedCategory === category.name
+                      ? 'bg-gradient-to-br from-yellow-200 to-yellow-300 text-yellow-900 border-4 border-yellow-500'
+                      : 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-800 border-2 border-yellow-400'
+                    : selectedCategory === category.name
+                    ? 'bg-gradient-to-br from-red-200 to-red-300 text-red-900 border-4 border-red-500'
                     : 'bg-gradient-to-br from-red-100 to-red-200 text-red-800 border-2 border-red-400'
                   : 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200'
               }`}
