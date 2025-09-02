@@ -265,13 +265,10 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 ? `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`
                 : `${transformAlign} translateZ(5px)`;
                 
-              // Simple color animation for medium difficulty
+              // Test: Always show red for medium difficulty
               const getLetterColor = () => {
                 if (difficulty === 2 && isSpinning) {
-                  // Cycle through colors based on animation frame and letter index
-                  const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
-                  const colorIndex = (animationFrame + i) % colors.length;
-                  return colors[colorIndex];
+                  return '#ff0000'; // Always red to test
                 }
                 return letterColors[i];
               };
