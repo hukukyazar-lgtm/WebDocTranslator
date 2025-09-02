@@ -182,28 +182,31 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
 
         {/* Player stats preview */}
         <div className="mt-8 text-center">
-          <div className="flex items-center justify-center space-x-6 text-white/80">
-            <div>
-              <div className="text-2xl font-black text-white" data-testid="stat-games-played">
-                {currentStats.gamesPlayed}
+          {/* İstatistikler sadece login yapan kullanıcılara gösterilecek */}
+          {isAuthenticated && (
+            <div className="flex items-center justify-center space-x-6 text-white/80">
+              <div>
+                <div className="text-2xl font-black text-white" data-testid="stat-games-played">
+                  {currentStats.gamesPlayed}
+                </div>
+                <div className="text-sm">Oynanmış</div>
               </div>
-              <div className="text-sm">Oynanmış</div>
-            </div>
-            <div className="w-px h-8 bg-white/30"></div>
-            <div>
-              <div className="text-2xl font-black text-white" data-testid="stat-success-rate">
-                {currentStats.successRate}%
+              <div className="w-px h-8 bg-white/30"></div>
+              <div>
+                <div className="text-2xl font-black text-white" data-testid="stat-success-rate">
+                  {currentStats.successRate}%
+                </div>
+                <div className="text-sm">Başarı</div>
               </div>
-              <div className="text-sm">Başarı</div>
-            </div>
-            <div className="w-px h-8 bg-white/30"></div>
-            <div>
-              <div className="text-2xl font-black text-white" data-testid="stat-best-streak">
-                {currentStats.bestStreak}
+              <div className="w-px h-8 bg-white/30"></div>
+              <div>
+                <div className="text-2xl font-black text-white" data-testid="stat-best-streak">
+                  {currentStats.bestStreak}
+                </div>
+                <div className="text-sm">En Yüksek Seri</div>
               </div>
-              <div className="text-sm">En Yüksek Seri</div>
             </div>
-          </div>
+          )}
           
           {isAuthenticated && (
             <div className="mt-4 text-white/60 text-sm">
