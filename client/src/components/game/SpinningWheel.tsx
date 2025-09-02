@@ -287,29 +287,39 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 return letterColors[i];
               };
 
+              // LuminaGame CSS tasarımı - gradient kutular
+              const getLetterGradient = (index: number) => {
+                const gradients = [
+                  'linear-gradient(135deg, #4facfe, #00f2fe)',
+                  'linear-gradient(135deg, #43e97b, #38f9d7)', 
+                  'linear-gradient(135deg, #fa709a, #fee140)',
+                  'linear-gradient(135deg, #667eea, #764ba2)'
+                ];
+                return gradients[index % 4];
+              };
+
               return (
-                <span 
+                <div
                   key={i}
-                  className={`absolute font-sans font-semibold uppercase letter-glow ${fontSize}`}
-                  style={{ 
-                    letterSpacing: letters.length > 10 ? '-0.05em' : letters.length > 8 ? '-0.02em' : '0',
-                    color: getLetterColor(),
-                    transform: finalTransform, 
-                    filter: `blur(${blurAmount}px) drop-shadow(0 0 12px ${isSpinning ? 'currentColor' : 'rgba(255,255,255,0.8)'}) drop-shadow(0 5px 10px rgba(0,0,0,0.3))`,
-                    transition: 'transform 1s, filter 0.5s, opacity 0.3s, color 0.5s',
-                    textShadow: isSpinning 
-                      ? (intensityLevel === 'final'
-                        ? `0 0 30px currentColor, 0 0 60px currentColor, 0 0 90px currentColor, 0 5px 15px rgba(0,0,0,0.6)`
-                        : `0 0 20px currentColor, 0 0 40px currentColor, 0 3px 10px rgba(0,0,0,0.5)`)
-                      : `2px 2px 8px rgba(0,0,0,0.8), 0 0 20px rgba(255,255,255,0.6), 0 0 40px rgba(255,255,255,0.4), 0 4px 12px rgba(0,0,0,0.7)`,
+                  className="absolute transform -translate-x-1/2 -translate-y-1/2"
+                  style={{
+                    transform: finalTransform,
+                    filter: isSpinning ? `blur(${timeLeft <= 5 ? 0.5 : timeLeft <= 10 ? 1 : 2}px)` : 'none',
                     opacity: isSpinning ? letterVisibility : 1,
-                    WebkitTextStroke: isSpinning ? 'none' : '1px rgba(0,0,0,0.5)',
-                    transformStyle: 'preserve-3d'
+                    transition: 'opacity 0.3s ease-in-out, transform 1s, filter 0.5s'
                   }}
                   data-testid={`wheel-letter-${i}`}
                 >
-                  {char}
-                </span>
+                  <div 
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black text-white shadow-2xl border border-white/20"
+                    style={{
+                      background: getLetterGradient(i),
+                      transform: `scale(${1 + Math.sin(Date.now() * 0.002 + i) * 0.1})`
+                    }}
+                  >
+                    {char || '?'}
+                  </div>
+                </div>
               );
             })}
             
