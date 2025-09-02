@@ -179,29 +179,7 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
           </div>
         </div>
 
-        {/* Player stats preview */}
-        <div className="mt-8 text-center">
-          {/* İstatistikler sadece login yapan kullanıcılara gösterilecek */}
-          {isAuthenticated && (
-            <div className="flex items-center justify-center space-x-6 text-white/80">
-              <div>
-                <div className="text-2xl font-black text-white" data-testid="stat-games-played">
-                  {currentStats.gamesPlayed}
-                </div>
-                <div className="text-sm">Oynanmış</div>
-              </div>
-              <div className="w-px h-8 bg-white/30"></div>
-              <div>
-                <div className="text-2xl font-black text-white" data-testid="stat-best-streak">
-                  {currentStats.bestStreak}
-                </div>
-                <div className="text-sm">En Yüksek Seri</div>
-              </div>
-            </div>
-          )}
-          
-          
-        </div>
+        {/* Removed stats preview - will be in dedicated stats page */}
       </div>
 
       <style>{`
