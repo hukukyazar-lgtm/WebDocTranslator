@@ -201,74 +201,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           </div>
         )}
 
-        {/* Bottom stats - Useful player information */}
-        <div className="mt-8 text-center">
-          <Card className="p-4 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30 max-w-sm mx-auto">
-            <div className="flex items-center justify-around text-white">
-              <div>
-                {isAuthenticated && stats ? (
-                  (() => {
-                    const totalGames = stats.gamesPlayed || 0;
-                    let level = 1;
-                    let levelName = "Kolay";
-                    let gamesInLevel = totalGames;
-                    let maxGamesInLevel = 50;
-                    
-                    if (totalGames >= 100) {
-                      level = 3;
-                      levelName = "Zor";
-                      gamesInLevel = totalGames - 100;
-                    } else if (totalGames >= 50) {
-                      level = 2;
-                      levelName = "Orta";
-                      gamesInLevel = totalGames - 50;
-                    }
-                    
-                    return (
-                      <>
-                        <div className="text-lg font-black">Seviye {level} ({levelName})</div>
-                        <div className="text-xs opacity-80">{gamesInLevel}/{maxGamesInLevel} oyun</div>
-                      </>
-                    );
-                  })()
-                ) : (
-                  <>
-                    <div className="text-lg font-black">Seviye 1 (Kolay)</div>
-                    <div className="text-xs opacity-80">0/50 oyun</div>
-                  </>
-                )}
-              </div>
-              <div className="w-px h-8 bg-white/30"></div>
-              <div>
-                {isAuthenticated && stats ? (
-                  <>
-                    <div className="text-lg font-black">{(stats.totalScore || 0).toLocaleString()}</div>
-                    <div className="text-xs opacity-80">Toplam Puan</div>
-                  </>
-                ) : (
-                  <>
-                    <div className="text-lg font-black">0</div>
-                    <div className="text-xs opacity-80">Toplam Puan</div>
-                  </>
-                )}
-              </div>
-              <div className="w-px h-8 bg-white/30"></div>
-              <div>
-                {isAuthenticated && progress?.lastGame ? (
-                  <>
-                    <div className="text-lg font-black">{progress.lastGame.category}</div>
-                    <div className="text-xs opacity-80">Son oyun</div>
-                  </>
-                ) : (
-                  <>
-                    <div className="text-lg font-black">-</div>
-                    <div className="text-xs opacity-80">Son oyun</div>
-                  </>
-                )}
-              </div>
-            </div>
-          </Card>
-        </div>
+        {/* Stats moved to dedicated stats page */}
       </div>
 
       <style>{`
