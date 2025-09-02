@@ -192,13 +192,6 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
               </div>
               <div className="w-px h-8 bg-white/30"></div>
               <div>
-                <div className="text-2xl font-black text-white" data-testid="stat-success-rate">
-                  {currentStats.successRate}%
-                </div>
-                <div className="text-sm">Başarı</div>
-              </div>
-              <div className="w-px h-8 bg-white/30"></div>
-              <div>
                 <div className="text-2xl font-black text-white" data-testid="stat-best-streak">
                   {currentStats.bestStreak}
                 </div>
