@@ -142,10 +142,10 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
                     <div className="text-sm">Çıkış</div>
                   </>
                 ) : (
-                  <div className="relative w-full h-full flex flex-col items-center justify-center">
-                    <div className="relative mb-1">
-                      <User className="w-5 h-5 text-white" />
-                      <Gamepad2 className="w-3 h-3 text-white absolute -top-0.5 -right-0.5" />
+                  <div className="w-full h-full flex flex-col items-center justify-center">
+                    <div className="flex items-center gap-1 mb-1">
+                      <Gamepad2 className="w-4 h-4 text-white" />
+                      <User className="w-6 h-6 text-white" />
                     </div>
                     <div className="text-xs font-bold text-center">
                       <div>Oyuncu Girişi</div>
