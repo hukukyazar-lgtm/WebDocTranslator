@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, Star } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
+import { useGameStats } from '@/hooks/useGameStats';
 
 interface LuminaCategoriesProps {
   onGameStart: (category: string, difficulty: string) => void;
@@ -10,6 +12,8 @@ interface LuminaCategoriesProps {
 }
 
 export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesProps) => {
+  const { isAuthenticated } = useAuth();
+  const { stats } = useGameStats();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>('kolay'); // Varsayılan olarak kolay seçili
 
@@ -181,18 +185,45 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           <Card className="p-4 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30 max-w-sm mx-auto">
             <div className="flex items-center justify-around text-white">
               <div>
-                <div className="text-lg font-black">Seviye 5</div>
-                <div className="text-xs opacity-80">220/500 puan</div>
+                {isAuthenticated && stats ? (
+                  <>
+                    <div className="text-lg font-black">Seviye {Math.floor(stats.totalScore / 500) + 1}</div>
+                    <div className="text-xs opacity-80">{stats.totalScore % 500}/500 puan</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-lg font-black">Seviye 1</div>
+                    <div className="text-xs opacity-80">0/500 puan</div>
+                  </>
+                )}
               </div>
               <div className="w-px h-8 bg-white/30"></div>
               <div>
-                <div className="text-lg font-black">3/10</div>
-                <div className="text-xs opacity-80">Tamamlanan</div>
+                {isAuthenticated && stats ? (
+                  <>
+                    <div className="text-lg font-black">{Math.floor(stats.gamesPlayed / 10)}/10</div>
+                    <div className="text-xs opacity-80">Tamamlanan</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-lg font-black">0/10</div>
+                    <div className="text-xs opacity-80">Tamamlanan</div>
+                  </>
+                )}
               </div>
               <div className="w-px h-8 bg-white/30"></div>
               <div>
-                <div className="text-lg font-black">Hayvanlar</div>
-                <div className="text-xs opacity-80">Son oyun</div>
+                {isAuthenticated && stats && stats.gamesPlayed > 0 ? (
+                  <>
+                    <div className="text-lg font-black">Hayvanlar</div>
+                    <div className="text-xs opacity-80">Son oyun</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="text-lg font-black">-</div>
+                    <div className="text-xs opacity-80">Son oyun</div>
+                  </>
+                )}
               </div>
             </div>
           </Card>
