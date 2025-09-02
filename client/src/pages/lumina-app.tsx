@@ -7,6 +7,7 @@ import { LuminaLogin } from '@/components/pages/LuminaLogin';
 import { LuminaSettings } from '@/components/pages/LuminaSettings';
 import { getWordByDifficulty } from '@/lib/wordLists';
 import { useAuth } from '@/hooks/useAuth';
+import { useGameStats } from '@/hooks/useGameStats';
 
 type AppScreen = 'menu' | 'categories' | 'game' | 'gameover' | 'login' | 'settings';
 
@@ -46,6 +47,7 @@ const initialGameState: GameState = {
 
 export default function LuminaApp() {
   const { user, isLoading, isAuthenticated } = useAuth();
+  const { saveGameSession } = useGameStats();
   const [currentScreen, setCurrentScreen] = useState<AppScreen>('menu');
   const [gameState, setGameState] = useState<GameState>(initialGameState);
   const [playerProfile, setPlayerProfile] = useState({
@@ -154,7 +156,9 @@ export default function LuminaApp() {
     setCurrentScreen('game');
   };
 
-  const handleGameOver = (success: boolean, finalScore: number) => {
+  const handleGameOver = async (success: boolean, finalScore: number, gameTime?: number) => {
+    const timeSpent = gameTime || (30 - gameState.timeLeft);
+    
     setGameState(prev => ({
       ...prev,
       isGameOver: true,
@@ -162,6 +166,22 @@ export default function LuminaApp() {
       score: finalScore,
       isSpinning: false
     }));
+    
+    // Save game session to database if user is authenticated
+    if (isAuthenticated) {
+      try {
+        await saveGameSession({
+          category: gameState.category,
+          difficulty: gameState.difficulty.toLowerCase(),
+          word: gameState.currentWord,
+          isCorrect: success,
+          score: finalScore,
+          guessTime: timeSpent,
+        });
+      } catch (error) {
+        console.error('Failed to save game session:', error);
+      }
+    }
     
     // Update category progress and used words if successful
     if (success) {
@@ -187,7 +207,7 @@ export default function LuminaApp() {
       }));
     }
     
-    // Update player stats
+    // Update local player stats (for guests or as backup)
     setPlayerProfile(prev => ({
       ...prev,
       gamesPlayed: prev.gamesPlayed + 1,

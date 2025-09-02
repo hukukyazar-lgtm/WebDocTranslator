@@ -17,6 +17,8 @@ import {
   User,
   Bell
 } from 'lucide-react';
+import { useGameStats } from '@/hooks/useGameStats';
+import { useAuth } from '@/hooks/useAuth';
 
 interface LuminaSettingsProps {
   playerProfile: {
@@ -31,6 +33,17 @@ interface LuminaSettingsProps {
 }
 
 export const LuminaSettings = memo(({ playerProfile, onBack, onProfileUpdate }: LuminaSettingsProps) => {
+  const { stats } = useGameStats();
+  const { user, isAuthenticated } = useAuth();
+
+  // Use real stats if authenticated, otherwise use passed props
+  const currentStats = isAuthenticated && stats ? {
+    ...playerProfile,
+    gamesPlayed: stats.gamesPlayed,
+    successRate: stats.successRate,
+    bestStreak: stats.bestStreak,
+    totalScore: stats.totalScore,
+  } : playerProfile;
   return (
     <div className="min-h-screen relative overflow-hidden" style={{
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
@@ -177,21 +190,53 @@ export const LuminaSettings = memo(({ playerProfile, onBack, onProfileUpdate }: 
 
           {/* Game Progress */}
           <Card className="p-6 bg-white rounded-3xl shadow-xl border-0">
-            <h3 className="text-lg font-black text-gray-800 mb-4">İstatistikler</h3>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-black text-gray-800">İstatistikler</h3>
+              {isAuthenticated && (
+                <Badge className="bg-green-100 text-green-800 border-green-200 font-semibold text-xs">
+                  ✅ Canlı
+                </Badge>
+              )}
+              {!isAuthenticated && (
+                <Badge className="bg-gray-100 text-gray-600 border-gray-200 font-semibold text-xs">
+                  ⚠️ Misafir
+                </Badge>
+              )}
+            </div>
+            <div className="grid grid-cols-2 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-black text-blue-600">{playerProfile.gamesPlayed}</div>
+                <div className="text-2xl font-black text-blue-600" data-testid="settings-games-played">
+                  {currentStats.gamesPlayed}
+                </div>
                 <div className="text-sm text-gray-600 font-medium">Oyun</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-black text-green-600">{playerProfile.successRate}%</div>
+                <div className="text-2xl font-black text-green-600" data-testid="settings-success-rate">
+                  {currentStats.successRate}%
+                </div>
                 <div className="text-sm text-gray-600 font-medium">Başarı</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-black text-purple-600">{playerProfile.bestStreak}</div>
+                <div className="text-2xl font-black text-purple-600" data-testid="settings-best-streak">
+                  {currentStats.bestStreak}
+                </div>
                 <div className="text-sm text-gray-600 font-medium">En Yüksek Seri</div>
               </div>
+              <div className="text-center">
+                <div className="text-2xl font-black text-orange-600" data-testid="settings-total-score">
+                  {currentStats.totalScore}
+                </div>
+                <div className="text-sm text-gray-600 font-medium">Toplam Puan</div>
+              </div>
             </div>
+            
+            {!isAuthenticated && (
+              <div className="mt-4 p-3 bg-yellow-50 rounded-xl border border-yellow-200">
+                <p className="text-sm text-yellow-800 text-center font-medium">
+                  🔐 Giriş yap, istatistiklerin kaybolmasın!
+                </p>
+              </div>
+            )}
           </Card>
 
           {/* Other Settings */}

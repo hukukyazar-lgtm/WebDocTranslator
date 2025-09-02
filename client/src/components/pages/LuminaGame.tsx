@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, Heart, Zap, Timer, HelpCircle, RotateCcw, Delete } from 'lucide-react';
+import { useGameStats } from '@/hooks/useGameStats';
+import { useAuth } from '@/hooks/useAuth';
 
 interface LuminaGameProps {
   gameState: {
@@ -17,7 +19,7 @@ interface LuminaGameProps {
     usedLetters: string[];
   };
   onKeyPress: (key: string) => void;
-  onGameOver: (success: boolean, score: number) => void;
+  onGameOver: (success: boolean, score: number, gameTime?: number) => void;
   onBack?: () => void;
   turkishKeyboard: string[][];
 }

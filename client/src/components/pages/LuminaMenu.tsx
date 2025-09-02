@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Play, Settings, Trophy, User, HelpCircle, LogOut } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
+import { useGameStats } from '@/hooks/useGameStats';
 
 interface LuminaMenuProps {
   playerStats: {
@@ -17,6 +18,10 @@ interface LuminaMenuProps {
 
 export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin }: LuminaMenuProps) => {
   const { user, isLoading, isAuthenticated } = useAuth();
+  const { stats } = useGameStats();
+
+  // Use real stats if authenticated, otherwise use passed props for guests
+  const currentStats = isAuthenticated && stats ? stats : playerStats;
 
   const handleProfileAction = () => {
     if (isAuthenticated) {
@@ -166,20 +171,38 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
         <div className="mt-8 text-center">
           <div className="flex items-center justify-center space-x-6 text-white/80">
             <div>
-              <div className="text-2xl font-black text-white">{playerStats.gamesPlayed}</div>
+              <div className="text-2xl font-black text-white" data-testid="stat-games-played">
+                {currentStats.gamesPlayed}
+              </div>
               <div className="text-sm">Oynanmış</div>
             </div>
             <div className="w-px h-8 bg-white/30"></div>
             <div>
-              <div className="text-2xl font-black text-white">{playerStats.successRate}%</div>
+              <div className="text-2xl font-black text-white" data-testid="stat-success-rate">
+                {currentStats.successRate}%
+              </div>
               <div className="text-sm">Başarı</div>
             </div>
             <div className="w-px h-8 bg-white/30"></div>
             <div>
-              <div className="text-2xl font-black text-white">{playerStats.bestStreak}</div>
+              <div className="text-2xl font-black text-white" data-testid="stat-best-streak">
+                {currentStats.bestStreak}
+              </div>
               <div className="text-sm">En Yüksek Seri</div>
             </div>
           </div>
+          
+          {isAuthenticated && (
+            <div className="mt-4 text-white/60 text-sm">
+              ✅ İstatistikler kaydediliyor
+            </div>
+          )}
+          
+          {!isAuthenticated && (
+            <div className="mt-4 text-white/60 text-sm">
+              ⚠️ Giriş yap, istatistiklerin kaybolmasın
+            </div>
+          )}
         </div>
       </div>
 
