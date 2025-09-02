@@ -13,11 +13,14 @@ interface LuminaGameOverProps {
   timeLeft: number;
   streak: number;
   category: string;
+  onContinue?: () => void;
   onPlayAgain: () => void;
   onMainMenu: () => void;
+  completedWords?: number;
+  totalWords?: number;
 }
 
-export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak, category, onPlayAgain, onMainMenu }: LuminaGameOverProps) => {
+export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak, category, onContinue, onPlayAgain, onMainMenu, completedWords = 0, totalWords = 50 }: LuminaGameOverProps) => {
   const gameResult = {
     isWin: gameSuccess,
     score: score,
@@ -178,7 +181,22 @@ export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak
 
               {/* CodyCross-style action buttons */}
               <div className="space-y-4">
-                {/* Primary action - big and colorful */}
+                {/* Continue button - only show if successful and under 50 words */}
+                {onContinue && (
+                  <Button 
+                    onClick={onContinue}
+                    className="w-full h-16 rounded-2xl text-xl font-black border-0 shadow-xl text-white relative overflow-hidden"
+                    style={{
+                      background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                    <Zap className="w-6 h-6 mr-3" />
+                    Devam Et ({completedWords + 1}/{totalWords})
+                  </Button>
+                )}
+                
+                {/* Play again action */}
                 <Button 
                   onClick={onPlayAgain}
                   className="w-full h-16 rounded-2xl text-xl font-black border-0 shadow-xl text-white relative overflow-hidden"

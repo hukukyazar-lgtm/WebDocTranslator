@@ -54,6 +54,9 @@ export default function LuminaApp() {
     totalScore: 1247
   });
 
+  // Category progress tracking - track completed words per category/difficulty
+  const [categoryProgress, setCategoryProgress] = useState<{[key: string]: {[difficulty: string]: number}}>({});
+
   // Timer logic
   useEffect(() => {
     let timer: NodeJS.Timeout;
@@ -144,6 +147,19 @@ export default function LuminaApp() {
       isSpinning: false
     }));
     
+    // Update category progress if successful
+    if (success) {
+      const categoryKey = gameState.category;
+      const difficultyKey = gameState.difficulty;
+      setCategoryProgress(prev => ({
+        ...prev,
+        [categoryKey]: {
+          ...prev[categoryKey],
+          [difficultyKey]: (prev[categoryKey]?.[difficultyKey] || 0) + 1
+        }
+      }));
+    }
+    
     // Update player stats
     setPlayerProfile(prev => ({
       ...prev,
@@ -155,6 +171,21 @@ export default function LuminaApp() {
     }));
     
     setCurrentScreen('gameover');
+  };
+
+  const handleContinue = () => {
+    // Check if category is completed (50 words)
+    const categoryKey = gameState.category;
+    const difficultyKey = gameState.difficulty;
+    const completedWords = categoryProgress[categoryKey]?.[difficultyKey] || 0;
+    
+    if (completedWords < 50) {
+      // Continue with same category/difficulty
+      handleCategorySelect(gameState.category, gameState.difficulty);
+    } else {
+      // Category completed, go back to selection
+      setCurrentScreen('categories');
+    }
   };
 
   const handlePlayAgain = () => {
@@ -250,6 +281,11 @@ export default function LuminaApp() {
       );
 
     case 'gameover':
+      const categoryKey = gameState.category;
+      const difficultyKey = gameState.difficulty;
+      const completedWords = categoryProgress[categoryKey]?.[difficultyKey] || 0;
+      const canContinue = gameState.gameSuccess && completedWords < 50;
+      
       return (
         <LuminaGameOver
           gameSuccess={gameState.gameSuccess}
@@ -258,8 +294,11 @@ export default function LuminaApp() {
           timeLeft={gameState.timeLeft}
           streak={gameState.streak}
           category={gameState.category}
+          onContinue={canContinue ? handleContinue : undefined}
           onPlayAgain={handlePlayAgain}
           onMainMenu={handleBackToMenu}
+          completedWords={completedWords}
+          totalWords={50}
         />
       );
 
