@@ -7,6 +7,8 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Crown, Users, Trophy, Settings, Zap, Play, X, Globe } from 'lucide-react';
 import { GameStats } from '@/components/game/GameStats';
+import { useAuth } from '@/hooks/useAuth';
+import { useGameStats } from '@/hooks/useGameStats';
 import { type Language, getTranslation } from '@/lib/translations';
 import luminaLogo from '@/assets/lumina-logo.png';
 
@@ -18,16 +20,18 @@ interface DashboardModalProps {
 }
 
 export function DashboardModal({ isOpen, onClose, selectedLanguage = 'tr', onLanguageChange }: DashboardModalProps) {
+  const { isAuthenticated } = useAuth();
+  const { stats: gameStats } = useGameStats();
   const [selectedMode, setSelectedMode] = useState('single');
   const [showSettings, setShowSettings] = useState(false);
 
   const stats = {
-    totalGamesPlayed: 0,
-    totalCorrectGuesses: 0,
-    currentStreak: 0,
-    bestStreak: 0,
-    totalScore: 0,
-    averageGuessTime: 0,
+    totalGamesPlayed: (isAuthenticated && gameStats) ? gameStats.gamesPlayed : 0,
+    totalCorrectGuesses: (isAuthenticated && gameStats) ? Math.round(gameStats.gamesPlayed * gameStats.successRate / 100) : 0,
+    currentStreak: (isAuthenticated && gameStats) ? gameStats.currentStreak : 0,
+    bestStreak: (isAuthenticated && gameStats) ? gameStats.bestStreak : 0,
+    totalScore: (isAuthenticated && gameStats) ? gameStats.totalScore : 0,
+    averageGuessTime: (isAuthenticated && gameStats) ? gameStats.averageTime : 0,
     categoryExpertise: {},
     achievements: [],
     dailyGoals: [],

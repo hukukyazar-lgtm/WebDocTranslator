@@ -47,26 +47,18 @@ const initialGameState: GameState = {
 
 export default function LuminaApp() {
   const { user, isLoading, isAuthenticated } = useAuth();
-  const { saveGameSession } = useGameStats();
+  const { saveGameSession, stats } = useGameStats();
   const [currentScreen, setCurrentScreen] = useState<AppScreen>('menu');
   const [gameState, setGameState] = useState<GameState>(initialGameState);
-  const [playerProfile, setPlayerProfile] = useState({
+  
+  // Calculate current player profile based on auth status and stats
+  const playerProfile = useMemo(() => ({
     name: user?.firstName || user?.email || 'Oyuncu',
-    gamesPlayed: 247,
-    successRate: 89,
-    bestStreak: 15,
-    totalScore: 1247
-  });
-
-  // Update player profile when user data changes
-  useEffect(() => {
-    if (user) {
-      setPlayerProfile(prev => ({
-        ...prev,
-        name: user.firstName || user.email || 'Oyuncu'
-      }));
-    }
-  }, [user]);
+    gamesPlayed: (isAuthenticated && stats) ? stats.gamesPlayed : 0,
+    successRate: (isAuthenticated && stats) ? stats.successRate : 0,
+    bestStreak: (isAuthenticated && stats) ? stats.bestStreak : 0,
+    totalScore: (isAuthenticated && stats) ? stats.totalScore : 0
+  }), [user?.firstName, user?.email, isAuthenticated, stats]);
 
   // Category progress tracking - track completed words per category/difficulty
   const [categoryProgress, setCategoryProgress] = useState<{[key: string]: {[difficulty: string]: number}}>({});
@@ -363,7 +355,7 @@ export default function LuminaApp() {
         <LuminaSettings
           playerProfile={playerProfile}
           onBack={handleBackToMenu}
-          onProfileUpdate={setPlayerProfile}
+          onProfileUpdate={() => {}}
         />
       );
 

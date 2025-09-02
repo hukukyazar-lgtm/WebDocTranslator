@@ -6,9 +6,13 @@ import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Crown, Users, Trophy, Settings, Zap, Play } from 'lucide-react';
 import { GameStats } from '@/components/game/GameStats';
+import { useAuth } from '@/hooks/useAuth';
+import { useGameStats } from '@/hooks/useGameStats';
 import luminaLogo from '@/assets/lumina-logo.png';
 
 export function Dashboard() {
+  const { isAuthenticated } = useAuth();
+  const { stats: gameStats } = useGameStats();
   const [selectedMode, setSelectedMode] = useState('single');
   const [showSettings, setShowSettings] = useState(false);
 
@@ -27,12 +31,12 @@ export function Dashboard() {
   };
 
   const stats = {
-    totalGamesPlayed: 0,
-    totalCorrectGuesses: 0,
-    currentStreak: 0,
-    bestStreak: 0,
-    totalScore: 0,
-    averageGuessTime: 0,
+    totalGamesPlayed: (isAuthenticated && gameStats) ? gameStats.gamesPlayed : 0,
+    totalCorrectGuesses: (isAuthenticated && gameStats) ? Math.round(gameStats.gamesPlayed * gameStats.successRate / 100) : 0,
+    currentStreak: (isAuthenticated && gameStats) ? gameStats.currentStreak : 0,
+    bestStreak: (isAuthenticated && gameStats) ? gameStats.bestStreak : 0,
+    totalScore: (isAuthenticated && gameStats) ? gameStats.totalScore : 0,
+    averageGuessTime: (isAuthenticated && gameStats) ? gameStats.averageTime : 0,
     categoryExpertise: {},
     achievements: [],
     dailyGoals: [],
