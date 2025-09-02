@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CodyCrossGameOver } from '@/components/CodyCrossGameOver';
 import { Button } from '@/components/ui/button';
 
@@ -11,6 +11,11 @@ import { CodyCrossCategories } from '@/components/pages/CodyCrossCategories';
 
 export default function Preview() {
   const [currentPage, setCurrentPage] = useState<'menu' | 'game' | 'gameover' | 'login' | 'settings' | 'categories'>('menu');
+  
+  // Force component refresh
+  useEffect(() => {
+    console.log('Preview component mounted with CodyCross pages');
+  }, []);
 
   return (
     <div className="relative">
