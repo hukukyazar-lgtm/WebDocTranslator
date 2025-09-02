@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, Heart, Zap, Timer, HelpCircle, RotateCcw, Delete } from 'lucide-react';
+import { ChevronLeft, Heart, Zap, Timer, HelpCircle, RotateCcw, Delete, Star } from 'lucide-react';
 import { useGameStats } from '@/hooks/useGameStats';
 import { useAuth } from '@/hooks/useAuth';
 import { SpinningWheel } from '../game/SpinningWheel';
@@ -16,6 +16,7 @@ interface LuminaGameProps {
     timeLeft: number;
     lives: number;
     streak: number;
+    score: number;
     isSpinning: boolean;
     usedLetters: string[];
   };
@@ -26,7 +27,9 @@ interface LuminaGameProps {
 }
 
 export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, turkishKeyboard }: LuminaGameProps) => {
-  const { currentWord, guessedWord, category, difficulty, timeLeft, lives, streak, isSpinning, usedLetters } = gameState;
+  const { currentWord, guessedWord, category, difficulty, timeLeft, lives, streak, score, isSpinning, usedLetters } = gameState;
+  const { isAuthenticated } = useAuth();
+  const { stats } = useGameStats();
   const scrambledLetters = currentWord.split('');
   const turkishKeyboardLayout = turkishKeyboard;
   
@@ -143,12 +146,20 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
             🐾 {category}
           </Badge>
           
-          {/* Timer ve Seri - Merkez konumda */}
-          <div className="flex items-center gap-3">
+          {/* Timer, Seri ve Toplam Puan - Merkez konumda */}
+          <div className="flex items-center gap-2">
+            {/* Toplam Puan */}
+            <Card className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full shadow-xl border-0">
+              <Star className="w-4 h-4 text-white fill-white" />
+              <div className="text-sm font-black text-white">
+                {isAuthenticated && stats ? (stats.totalScore + (score || 0)).toLocaleString() : (score || 0).toLocaleString()}
+              </div>
+            </Card>
+            
             {/* Seri Sayacı */}
-            <Card className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full shadow-xl border-0">
-              <Zap className="w-5 h-5 text-white" />
-              <div className="text-xl font-black text-white">
+            <Card className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full shadow-xl border-0">
+              <Zap className="w-4 h-4 text-white" />
+              <div className="text-lg font-black text-white">
                 {streak}
               </div>
             </Card>
