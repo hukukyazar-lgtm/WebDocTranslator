@@ -79,74 +79,84 @@ export const CodyCrossGameOver = memo(() => {
                 </div>
               )}
 
-              {/* Minimalist philosophical logo - Nike style simplicity */}
+              {/* Monopoly GO style luxurious logo */}
               <div className="relative mb-6">
-                <div className="w-20 h-20 mx-auto mb-4 relative">
-                  {/* Simple colorful background */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full opacity-90"></div>
-                  <div className="absolute inset-2 bg-white rounded-full shadow-lg"></div>
+                <div className="w-28 h-28 mx-auto mb-4 relative">
+                  {/* Golden luxury background with shine effects */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-amber-400 to-orange-500 rounded-full animate-pulse shadow-2xl"></div>
+                  <div className="absolute inset-1 bg-gradient-to-br from-yellow-200 via-amber-300 to-yellow-400 rounded-full animate-pulse opacity-80" style={{ animationDelay: '0.3s' }}></div>
+                  <div className="absolute inset-3 bg-gradient-to-br from-white via-yellow-50 to-amber-50 rounded-full shadow-xl"></div>
                   
-                  {/* Minimalist symbol - simplified eye of knowledge */}
+                  {/* Shine overlay effect */}
+                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/30 to-transparent animate-spin-slow opacity-60"></div>
+                  
+                  {/* Luxurious philosophical eye symbol */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative w-12 h-12 flex items-center justify-center">
-                      {/* Clean, simple eye shape - like Nike swoosh but philosophical */}
-                      <svg width="40" height="24" viewBox="0 0 40 24" className="text-purple-600">
-                        {/* Outer eye shape - minimal line */}
-                        <path 
-                          d="M2 12C8 4, 32 4, 38 12C32 20, 8 20, 2 12Z" 
-                          fill="none" 
-                          stroke="currentColor" 
-                          strokeWidth="2.5"
-                          className="animate-pulse"
-                        />
-                        {/* Simple iris - gradient circle */}
-                        <circle 
-                          cx="20" 
-                          cy="12" 
-                          r="6" 
-                          fill="url(#irisGradient)"
-                          className="animate-pulse"
-                          style={{ animationDelay: '0.5s' }}
-                        />
-                        {/* Pupil - depth of understanding */}
-                        <circle 
-                          cx="20" 
-                          cy="12" 
-                          r="3" 
-                          fill="#1a1a1a"
-                        />
-                        {/* Light reflection - spark of insight */}
-                        <circle 
-                          cx="21" 
-                          cy="10" 
-                          r="1" 
-                          fill="white"
-                          className="animate-pulse"
-                        />
+                    <div className="relative w-16 h-16">
+                      {/* Ornate frame around the eye */}
+                      <div className="absolute inset-0 border-4 border-gradient-to-r from-amber-600 to-yellow-600 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 shadow-inner">
                         
-                        {/* Gradient definitions */}
-                        <defs>
-                          <linearGradient id="irisGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" stopColor="#3b82f6" />
-                            <stop offset="50%" stopColor="#8b5cf6" />
-                            <stop offset="100%" stopColor="#06b6d4" />
-                          </linearGradient>
-                        </defs>
-                      </svg>
+                        {/* Central wisdom eye with luxury styling */}
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                          <div className="w-12 h-7 rounded-full bg-gradient-to-b from-emerald-300 to-teal-500 relative border-3 border-amber-500 shadow-lg">
+                            {/* Luxurious iris with gold accents */}
+                            <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 w-7 h-6 rounded-full bg-gradient-to-b from-purple-500 via-indigo-600 to-purple-700 shadow-inner border border-yellow-400">
+                              {/* Pupil with golden rim */}
+                              <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-black border border-yellow-500">
+                                {/* Luxurious light reflection */}
+                                <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
+                                <div className="absolute bottom-0.5 right-0.5 w-0.5 h-0.5 bg-yellow-300 rounded-full animate-ping"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        {/* Golden decorative elements around eye */}
+                        <div className="absolute top-2 left-3 w-1 h-1 bg-yellow-500 rounded-full animate-ping shadow-lg"></div>
+                        <div className="absolute top-3 right-2 w-1 h-1 bg-amber-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+                        <div className="absolute bottom-2 left-2 w-1 h-1 bg-orange-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+                        <div className="absolute bottom-3 right-3 w-1 h-1 bg-yellow-600 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
+                      </div>
                       
-                      {/* Single floating element - minimal wisdom symbol */}
-                      <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-yellow-400 animate-ping opacity-60"></div>
+                      {/* Monopoly GO style floating luxury symbols */}
+                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-yellow-500 text-lg animate-bounce-gentle">💎</div>
+                      <div className="absolute top-1/2 -right-3 transform -translate-y-1/2 text-amber-500 text-lg animate-float-gentle" style={{ animationDelay: '1s' }}>🏆</div>
+                      <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 text-orange-500 text-lg animate-pulse" style={{ animationDelay: '0.5s' }}>⭐</div>
+                      <div className="absolute top-1/2 -left-3 transform -translate-y-1/2 text-yellow-600 text-lg animate-spin-slow" style={{ animationDelay: '1.5s' }}>🎯</div>
                     </div>
                   </div>
                 </div>
                 
-                {/* Clean, bold LUMINA text */}
-                <h1 className="text-3xl font-black text-white mb-1 tracking-wide">
-                  <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
-                    LUMINA
-                  </span>
-                </h1>
-                <p className="text-sm text-white/70 font-medium">Insight Through Words</p>
+                {/* Monopoly GO style golden text with luxury effects */}
+                <div className="relative">
+                  <h1 className="text-4xl font-black text-white mb-2 tracking-wider relative">
+                    {/* Golden gradient text */}
+                    <span 
+                      className="bg-gradient-to-r from-yellow-200 via-amber-100 to-yellow-200 bg-clip-text text-transparent"
+                      style={{
+                        textShadow: '0 0 20px rgba(251, 191, 36, 0.5), 0 0 40px rgba(245, 158, 11, 0.3)'
+                      }}
+                    >
+                      LUMINA
+                    </span>
+                    {/* Multiple shadow layers for luxury depth */}
+                    <span className="absolute inset-0 text-amber-600/40 transform translate-x-1 translate-y-1 -z-10 blur-sm">
+                      LUMINA
+                    </span>
+                    <span className="absolute inset-0 text-yellow-500/20 transform translate-x-2 translate-y-2 -z-20 blur-md">
+                      LUMINA
+                    </span>
+                  </h1>
+                  
+                  {/* Luxury tagline with golden accent */}
+                  <div className="flex items-center justify-center gap-2">
+                    <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"></div>
+                    <p className="text-sm text-yellow-100 font-bold tracking-wider uppercase">
+                      Words of Fortune
+                    </p>
+                    <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"></div>
+                  </div>
+                </div>
               </div>
 
               {/* Big result emoji and text */}
