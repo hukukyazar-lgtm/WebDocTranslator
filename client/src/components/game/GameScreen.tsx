@@ -443,6 +443,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   }, [gameOver, gameStats, category, elapsedTime, difficulty]);
 
   const handleGuessSubmit = useCallback(() => {
+    console.log('handleGuessSubmit called, gameOver:', gameOver, 'guess:', guess);
     if (gameOver) return;
     if (guess.trim().length === 0) return;
     
