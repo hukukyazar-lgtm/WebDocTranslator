@@ -252,7 +252,7 @@ export default function LuminaApp() {
         isSpinning: false
       }));
       
-      // Save final game session to database if user is authenticated
+      // Save final streak session to database if user is authenticated
       if (isAuthenticated) {
         try {
           await saveGameSession({
@@ -260,7 +260,7 @@ export default function LuminaApp() {
             difficulty: gameState.difficulty.toLowerCase(),
             word: gameState.currentWord,
             isCorrect: false,
-            score: gameState.streak, // Save the achieved streak as score
+            score: gameState.streak, // Save the achieved streak as final score
             guessTime: timeSpent,
           });
         } catch (error) {
