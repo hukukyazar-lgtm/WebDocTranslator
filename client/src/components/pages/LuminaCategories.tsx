@@ -71,17 +71,97 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
             <ChevronLeft className="w-6 h-6" />
           </Button>
           <div className="text-center">
-            <h1 className="text-3xl font-black text-white">Kategoriler</h1>
-            <p className="text-white/80 font-medium">Favori konunu seç</p>
+            <h1 className="text-3xl font-black text-white">Oyun Kurulumu</h1>
+            <p className="text-white/80 font-medium">Zorluk ve kategori seç</p>
           </div>
           <div className="w-12"></div>
         </div>
 
-        {/* Categories grid */}
-        <div className="grid grid-cols-1 gap-4 max-w-md mx-auto">
-          {categories.map((category) => {
-            const progress = (category.completed / category.total) * 100;
-            const isCompleted = category.completed === category.total;
+        {/* Difficulty Selection - at top */}
+        <div className="mb-8 max-w-md mx-auto">
+          <Card className="p-6 bg-white/95 backdrop-blur-sm rounded-3xl border-0 shadow-2xl">
+            <div className="text-center mb-4">
+              <h3 className="text-xl font-black text-gray-800">🎯 Zorluk Seviyesi</h3>
+              <p className="text-gray-600 font-medium">Önce zorluk seçin</p>
+            </div>
+            
+            <div className="grid grid-cols-3 gap-3">
+              <Button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDifficultySelect("kolay");
+                }}
+                variant="outline"
+                size="sm"
+                className={`transition-all duration-200 transform active:scale-95 font-bold px-4 py-3 rounded-2xl text-center ${
+                  selectedDifficulty === "kolay"
+                    ? 'bg-gradient-to-br from-green-400 to-green-600 text-white border-green-500 shadow-xl scale-105'
+                    : 'bg-green-100 text-green-800 border-green-200 hover:bg-green-200 hover:text-green-900 hover:scale-105'
+                }`}
+                data-testid="difficulty-easy"
+              >
+                <div className="text-2xl mb-1">🟢</div>
+                <div className="text-sm font-black">KOLAY</div>
+                <div className="text-xs opacity-80">2-4 harf</div>
+              </Button>
+              <Button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDifficultySelect("orta");
+                }}
+                variant="outline"
+                size="sm"
+                className={`transition-all duration-200 transform active:scale-95 font-bold px-4 py-3 rounded-2xl text-center ${
+                  selectedDifficulty === "orta"
+                    ? 'bg-gradient-to-br from-yellow-400 to-orange-500 text-white border-yellow-500 shadow-xl scale-105'
+                    : 'bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200 hover:text-yellow-900 hover:scale-105'
+                }`}
+                data-testid="difficulty-medium"
+              >
+                <div className="text-2xl mb-1">🟡</div>
+                <div className="text-sm font-black">ORTA</div>
+                <div className="text-xs opacity-80">5-6 harf</div>
+              </Button>
+              <Button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDifficultySelect("zor");
+                }}
+                variant="outline"
+                size="sm"
+                className={`transition-all duration-200 transform active:scale-95 font-bold px-4 py-3 rounded-2xl text-center ${
+                  selectedDifficulty === "zor"
+                    ? 'bg-gradient-to-br from-red-400 to-red-600 text-white border-red-500 shadow-xl scale-105'
+                    : 'bg-red-100 text-red-800 border-red-200 hover:bg-red-200 hover:text-red-900 hover:scale-105'
+                }`}
+                data-testid="difficulty-hard"
+              >
+                <div className="text-2xl mb-1">🔴</div>
+                <div className="text-sm font-black">ZOR</div>
+                <div className="text-xs opacity-80">7+ harf</div>
+              </Button>
+            </div>
+          </Card>
+        </div>
+
+        {/* Category Selection Header */}
+        {selectedDifficulty && (
+          <div className="text-center mb-4">
+            <h2 className="text-2xl font-black text-white">📂 Kategori Seçin</h2>
+            <p className="text-white/80 font-medium">
+              {selectedDifficulty === "kolay" ? "Kolay seviye" : 
+               selectedDifficulty === "orta" ? "Orta seviye" : 
+               "Zor seviye"} için kategori
+            </p>
+          </div>
+        )}
+
+        {/* Categories grid - only show when difficulty is selected */}
+        {selectedDifficulty && (
+          <div className="grid grid-cols-1 gap-4 max-w-md mx-auto">
+            {categories.map((category) => {
+              const progress = (category.completed / category.total) * 100;
+              const isCompleted = category.completed === category.total;
             
             return (
               <Card 
@@ -150,83 +230,23 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                 )}
               </Card>
             );
-          })}
-        </div>
+            })}
+          </div>
+        )}
 
-        {/* Difficulty Selection */}
-        {selectedCategory && (
+        {/* Start Game Button - only show when both selected */}
+        {selectedCategory && selectedDifficulty && (
           <div className="mt-6 max-w-md mx-auto">
-            <Card className="p-6 bg-white/95 backdrop-blur-sm rounded-3xl border-0 shadow-2xl">
-              <div className="text-center mb-4">
-                <h3 className="text-xl font-black text-gray-800">Zorluk Seçin</h3>
-                <p className="text-gray-600 font-medium">{selectedCategory} kategorisi için</p>
-              </div>
-              
-              <div className="grid grid-cols-3 gap-2 mb-4">
-                <Button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDifficultySelect("kolay");
-                  }}
-                  variant="outline"
-                  size="sm"
-                  className={`transition-all duration-200 transform active:scale-95 font-semibold px-3 py-2 rounded-xl ${
-                    selectedDifficulty === "kolay"
-                      ? 'bg-green-500 text-white border-green-500 shadow-lg scale-105'
-                      : 'bg-green-100 text-green-800 border-green-200 hover:bg-green-200 hover:text-green-900'
-                  }`}
-                  data-testid="difficulty-easy"
-                >
-                  Kolay
-                </Button>
-                <Button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDifficultySelect("orta");
-                  }}
-                  variant="outline"
-                  size="sm"
-                  className={`transition-all duration-200 transform active:scale-95 font-semibold px-3 py-2 rounded-xl ${
-                    selectedDifficulty === "orta"
-                      ? 'bg-yellow-500 text-white border-yellow-500 shadow-lg scale-105'
-                      : 'bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200 hover:text-yellow-900'
-                  }`}
-                  data-testid="difficulty-medium"
-                >
-                  Orta
-                </Button>
-                <Button 
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleDifficultySelect("zor");
-                  }}
-                  variant="outline"
-                  size="sm"
-                  className={`transition-all duration-200 transform active:scale-95 font-semibold px-3 py-2 rounded-xl ${
-                    selectedDifficulty === "zor"
-                      ? 'bg-red-500 text-white border-red-500 shadow-lg scale-105'
-                      : 'bg-red-100 text-red-800 border-red-200 hover:bg-red-200 hover:text-red-900'
-                  }`}
-                  data-testid="difficulty-hard"
-                >
-                  Zor
-                </Button>
-              </div>
-              
-              {/* Start Game Button */}
-              {selectedCategory && selectedDifficulty && (
-                <Button 
-                  onClick={handleStartGame}
-                  className="w-full rounded-2xl font-black text-white shadow-xl border-0 py-3 text-lg transition-all duration-200 transform active:scale-95 hover:scale-105"
-                  style={{
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                  }}
-                  data-testid="start-game-button"
-                >
-                  🎮 Oyunu Başlat
-                </Button>
-              )}
-            </Card>
+            <Button 
+              onClick={handleStartGame}
+              className="w-full rounded-3xl font-black text-white shadow-2xl border-0 py-4 text-xl transition-all duration-200 transform active:scale-95 hover:scale-105 animate-pulse"
+              style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+              }}
+              data-testid="start-game-button"
+            >
+              🚀 OYUNU BAŞLAT
+            </Button>
           </div>
         )}
 
