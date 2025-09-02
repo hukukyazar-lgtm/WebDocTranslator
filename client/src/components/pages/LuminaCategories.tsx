@@ -96,7 +96,6 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           </Button>
           <div className="text-center">
             <h1 className="text-3xl font-black text-white">Kategoriler</h1>
-            <p className="text-white/80 font-medium">Kategori kartlarındaki K/O/Z butonlarına tıkla</p>
           </div>
           <div className="w-12"></div>
         </div>
