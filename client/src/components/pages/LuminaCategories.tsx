@@ -63,6 +63,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
     completed: isAuthenticated && progress ? (progress.categories[category.name] || 0) : 0
   }));
 
+
   return (
     <div className="min-h-screen relative overflow-hidden" style={{
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
@@ -207,8 +208,8 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
               <div>
                 {isAuthenticated && stats ? (
                   <>
-                    <div className="text-lg font-black">Seviye {Math.floor(stats.totalScore / 500) + 1}</div>
-                    <div className="text-xs opacity-80">{stats.totalScore % 500}/500 puan</div>
+                    <div className="text-lg font-black">Seviye {Math.floor((stats.totalScore || 0) / 500) + 1}</div>
+                    <div className="text-xs opacity-80">{(stats.totalScore || 0) % 500}/500 puan</div>
                   </>
                 ) : (
                   <>
@@ -221,7 +222,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
               <div>
                 {isAuthenticated && stats ? (
                   <>
-                    <div className="text-lg font-black">{Math.floor(stats.gamesPlayed / 10)}/10</div>
+                    <div className="text-lg font-black">{stats.gamesPlayed || 0}/10</div>
                     <div className="text-xs opacity-80">Tamamlanan</div>
                   </>
                 ) : (
