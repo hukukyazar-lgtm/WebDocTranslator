@@ -76,12 +76,74 @@ export default function Preview() {
       </div>
 
       {/* Render selected page */}
-      {currentPage === 'menu' && <CodyCrossMenu />}
-      {currentPage === 'categories' && <CodyCrossCategories />}
-      {currentPage === 'game' && <CodyCrossGame />}
-      {currentPage === 'gameover' && <CodyCrossGameOver />}
-      {currentPage === 'login' && <CodyCrossLogin />}
-      {currentPage === 'settings' && <CodyCrossSettings />}
+      {currentPage === 'menu' && (
+        <CodyCrossMenu 
+          playerStats={{ gamesPlayed: 247, successRate: 89, bestStreak: 15 }}
+          onStartGame={() => setCurrentPage('categories')}
+          onSettings={() => setCurrentPage('settings')}
+          onLogin={() => setCurrentPage('login')}
+        />
+      )}
+      {currentPage === 'categories' && (
+        <CodyCrossCategories 
+          onCategorySelect={(cat, diff) => setCurrentPage('game')}
+          onBack={() => setCurrentPage('menu')}
+        />
+      )}
+      {currentPage === 'game' && (
+        <CodyCrossGame 
+          gameState={{
+            currentWord: "KAPLAN",
+            guessedWord: "K_P___",
+            category: "Hayvanlar",
+            difficulty: "Orta",
+            timeLeft: 23,
+            lives: 2,
+            streak: 5,
+            isSpinning: true,
+            usedLetters: ['K', 'P', 'M']
+          }}
+          onKeyPress={(key) => console.log('Key pressed:', key)}
+          onGameOver={(success, score) => setCurrentPage('gameover')}
+          turkishKeyboard={[
+            ['Q','W','E','R','T','Y','U','I','O','P','Ğ','Ü'],
+            ['A','S','D','F','G','H','J','K','L','Ş','İ'],
+            ['Z','X','C','V','B','N','M','Ö','Ç']
+          ]}
+        />
+      )}
+      {currentPage === 'gameover' && (
+        <CodyCrossGameOver 
+          gameSuccess={true}
+          score={2450}
+          word="KAPLAN"
+          timeLeft={18}
+          streak={7}
+          category="Hayvanlar"
+          onPlayAgain={() => setCurrentPage('game')}
+          onMainMenu={() => setCurrentPage('menu')}
+        />
+      )}
+      {currentPage === 'login' && (
+        <CodyCrossLogin 
+          onLogin={() => setCurrentPage('menu')}
+          onBack={() => setCurrentPage('menu')}
+          onGuestMode={() => setCurrentPage('menu')}
+        />
+      )}
+      {currentPage === 'settings' && (
+        <CodyCrossSettings 
+          playerProfile={{
+            name: 'Preview Oyuncusu',
+            gamesPlayed: 247,
+            successRate: 89,
+            bestStreak: 15,
+            totalScore: 1247
+          }}
+          onBack={() => setCurrentPage('menu')}
+          onProfileUpdate={(profile) => console.log('Profile updated:', profile)}
+        />
+      )}
     </div>
   );
 }

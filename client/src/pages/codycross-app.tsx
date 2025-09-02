@@ -64,6 +64,7 @@ export default function CodyCrossApp() {
           
           // Game over if time runs out
           if (newTimeLeft <= 0) {
+            setTimeout(() => setCurrentScreen('gameover'), 1500);
             return {
               ...prev,
               timeLeft: 0,
@@ -192,7 +193,11 @@ export default function CodyCrossApp() {
     case 'menu':
       return (
         <CodyCrossMenu
-          playerStats={playerProfile}
+          playerStats={{
+            gamesPlayed: playerProfile.gamesPlayed,
+            successRate: playerProfile.successRate,
+            bestStreak: playerProfile.bestStreak
+          }}
           onStartGame={handleStartGame}
           onSettings={() => setCurrentScreen('settings')}
           onLogin={() => setCurrentScreen('login')}
@@ -250,6 +255,15 @@ export default function CodyCrossApp() {
       );
 
     default:
-      return <CodyCrossMenu playerStats={playerProfile} onStartGame={handleStartGame} onSettings={() => setCurrentScreen('settings')} onLogin={() => setCurrentScreen('login')} />;
+      return <CodyCrossMenu 
+        playerStats={{
+          gamesPlayed: playerProfile.gamesPlayed,
+          successRate: playerProfile.successRate,
+          bestStreak: playerProfile.bestStreak
+        }} 
+        onStartGame={handleStartGame} 
+        onSettings={() => setCurrentScreen('settings')} 
+        onLogin={() => setCurrentScreen('login')} 
+      />;
   }
 }
