@@ -35,7 +35,7 @@ const initialGameState: GameState = {
   difficulty: 'Orta',
   timeLeft: 30,
   score: 0,
-  streak: 5,
+  streak: 0,
   isSpinning: true,
   guesses: [],
   maxGuesses: 6,
@@ -156,7 +156,9 @@ export default function LuminaApp() {
       isGameOver: true,
       gameSuccess: success,
       score: finalScore,
-      isSpinning: false
+      isSpinning: false,
+      // Update streak based on success - for guest players
+      streak: success ? prev.streak + 1 : 0
     }));
     
     // Save game session to database if user is authenticated
