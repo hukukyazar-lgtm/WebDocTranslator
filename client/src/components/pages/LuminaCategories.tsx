@@ -11,11 +11,14 @@ interface LuminaCategoriesProps {
 
 export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesProps) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>('kolay'); // Varsayılan olarak kolay seçili
 
   const handleCategorySelect = (categoryName: string) => {
     setSelectedCategory(categoryName);
-    setSelectedDifficulty(null); // Reset difficulty when category changes
+    // Kolay seviye seçili kalsın, sıfırlanmasın
+    if (!selectedDifficulty) {
+      setSelectedDifficulty('kolay');
+    }
   };
 
   const handleDifficultySelect = (difficulty: string, categoryName: string, e: React.MouseEvent) => {

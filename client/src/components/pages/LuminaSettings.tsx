@@ -259,8 +259,20 @@ export const LuminaSettings = memo(({ playerProfile, onBack, onProfileUpdate }: 
               </Button>
               
               <Button 
-                onClick={() => console.log('Çıkış yapıldı')}
-                className="w-full h-12 rounded-xl font-semibold bg-red-50 text-red-600 hover:bg-red-100 justify-start"
+                onClick={() => {
+                  // Tıklama efekti ve çıkış işlemi
+                  const button = document.activeElement as HTMLElement;
+                  if (button) {
+                    button.style.transform = 'scale(0.95)';
+                    button.style.transition = 'transform 0.1s ease';
+                    setTimeout(() => {
+                      button.style.transform = 'scale(1)';
+                      // Çıkış işlemi
+                      window.location.href = '/api/logout';
+                    }, 100);
+                  }
+                }}
+                className="w-full h-12 rounded-xl font-semibold bg-red-50 text-red-600 hover:bg-red-100 active:scale-95 transition-all duration-100 justify-start"
               >
                 <LogOut className="w-5 h-5 mr-3" />
                 Çıkış Yap
