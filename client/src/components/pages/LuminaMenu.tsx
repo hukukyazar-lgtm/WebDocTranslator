@@ -118,8 +118,18 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
 
             <Card className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
               <Button 
-                onClick={handleProfileAction}
-                className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" style={{
+                onClick={(e) => {
+                  // Tıklama efekti ekle
+                  const button = e.currentTarget;
+                  button.style.transform = 'scale(0.95)';
+                  button.style.transition = 'transform 0.1s ease';
+                  setTimeout(() => {
+                    button.style.transform = 'scale(1)';
+                    // Asıl işlemi çalıştır
+                    handleProfileAction();
+                  }, 100);
+                }}
+                className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg active:scale-95 transition-all duration-100" style={{
                   background: isAuthenticated 
                     ? 'linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%)' 
                     : 'linear-gradient(135deg, #fa709a 0%, #fee140 100())'
