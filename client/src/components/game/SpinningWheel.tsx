@@ -129,8 +129,8 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
 
   return (
     <div className="flex justify-center" style={{ perspective: '1000px' }}>
-      <div className="game-card rounded-3xl p-8 shadow-2xl animate-slide-up" style={{ transformStyle: 'preserve-3d' }}>
-        <div className="relative flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
+      <div className="relative w-64 h-64" style={{ transformStyle: 'preserve-3d' }}>
+        <div className="absolute inset-0 flex items-center justify-center" style={{ transformStyle: 'preserve-3d' }}>
           {/* Enhanced outer ring particles with dynamic intensity */}
           <div className="absolute w-96 h-96 lg:w-[28rem] lg:h-[28rem] rounded-full" style={{ transformStyle: 'preserve-3d' }}>
             {Array.from({ length: intensityLevel === 'final' ? 24 : 12 }).map((_, i) => {
