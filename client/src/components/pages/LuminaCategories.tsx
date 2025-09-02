@@ -18,8 +18,12 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
     setSelectedDifficulty(null); // Reset difficulty when category changes
   };
 
-  const handleDifficultySelect = (difficulty: string) => {
+  const handleDifficultySelect = (difficulty: string, categoryName: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    setSelectedCategory(categoryName);
     setSelectedDifficulty(difficulty);
+    // Hemen oyunu başlat
+    onGameStart(categoryName, difficulty);
   };
 
   const handleStartGame = () => {
@@ -72,102 +76,57 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           </Button>
           <div className="text-center">
             <h1 className="text-3xl font-black text-white">Kategoriler</h1>
-            <p className="text-white/80 font-medium">Önce kategori, sonra zorluk seç</p>
+            <p className="text-white/80 font-medium">Kategori kartlarındaki K/O/Z butonlarına tıkla</p>
           </div>
           <div className="w-12"></div>
         </div>
 
-        {/* Categories grid - minimal design */}
+        {/* Categories grid - with embedded difficulty */}
         <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto mb-6">
           {categories.map((category) => (
             <Card 
               key={category.id} 
-              className={`relative overflow-hidden border-0 shadow-lg rounded-2xl transition-all duration-200 transform cursor-pointer hover:scale-105 active:scale-95 ${
-                selectedCategory === category.name 
-                  ? 'bg-gradient-to-br from-purple-500 to-blue-600 text-white' 
-                  : 'bg-white/90 hover:bg-white text-gray-800'
-              }`}
+              className="relative overflow-hidden border-0 shadow-lg rounded-2xl transition-all duration-200 transform cursor-pointer hover:scale-105 active:scale-95 bg-white/90 hover:bg-white text-gray-800"
               onClick={() => handleCategorySelect(category.name)}
               data-testid={`category-${category.name}`}
             >
-              <div className="p-4 text-center">
+              <div className="p-4 text-center relative">
                 <div className="text-3xl mb-2">{category.emoji}</div>
-                <div className="font-black text-sm">{category.name}</div>
+                <div className="font-black text-sm mb-3">{category.name}</div>
+                
+                {/* Zorluk butonları - sağ alt köşe */}
+                <div className="absolute bottom-1 right-1 flex gap-0.5">
+                  <button
+                    onClick={(e) => handleDifficultySelect("kolay", category.name, e)}
+                    className="w-5 h-5 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-95 bg-green-500 text-white shadow-sm hover:shadow-md"
+                    title="Kolay"
+                    data-testid={`difficulty-${category.name}-easy`}
+                  >
+                    K
+                  </button>
+                  <button
+                    onClick={(e) => handleDifficultySelect("orta", category.name, e)}
+                    className="w-5 h-5 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-95 bg-yellow-500 text-white shadow-sm hover:shadow-md"
+                    title="Orta"
+                    data-testid={`difficulty-${category.name}-medium`}
+                  >
+                    O
+                  </button>
+                  <button
+                    onClick={(e) => handleDifficultySelect("zor", category.name, e)}
+                    className="w-5 h-5 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-95 bg-red-500 text-white shadow-sm hover:shadow-md"
+                    title="Zor"
+                    data-testid={`difficulty-${category.name}-hard`}
+                  >
+                    Z
+                  </button>
+                </div>
               </div>
             </Card>
           ))}
         </div>
 
-        {/* Difficulty Selection - only show when category selected */}
-        {selectedCategory && (
-          <div className="max-w-md mx-auto mb-6">
-            <div className="text-center mb-4">
-              <h3 className="text-xl font-black text-white">Zorluk Seçin</h3>
-              <p className="text-white/80 font-medium">{selectedCategory} kategorisi</p>
-            </div>
-            
-            <div className="flex gap-2 justify-center">
-              <Button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDifficultySelect("kolay");
-                }}
-                className={`px-4 py-2 rounded-xl font-bold transition-all duration-200 transform active:scale-95 ${
-                  selectedDifficulty === "kolay"
-                    ? 'bg-green-500 text-white scale-105 shadow-lg'
-                    : 'bg-white/90 text-green-700 hover:bg-green-100'
-                }`}
-                data-testid="difficulty-easy"
-              >
-                Kolay
-              </Button>
-              <Button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDifficultySelect("orta");
-                }}
-                className={`px-4 py-2 rounded-xl font-bold transition-all duration-200 transform active:scale-95 ${
-                  selectedDifficulty === "orta"
-                    ? 'bg-yellow-500 text-white scale-105 shadow-lg'
-                    : 'bg-white/90 text-yellow-700 hover:bg-yellow-100'
-                }`}
-                data-testid="difficulty-medium"
-              >
-                Orta
-              </Button>
-              <Button 
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDifficultySelect("zor");
-                }}
-                className={`px-4 py-2 rounded-xl font-bold transition-all duration-200 transform active:scale-95 ${
-                  selectedDifficulty === "zor"
-                    ? 'bg-red-500 text-white scale-105 shadow-lg'
-                    : 'bg-white/90 text-red-700 hover:bg-red-100'
-                }`}
-                data-testid="difficulty-hard"
-              >
-                Zor
-              </Button>
-            </div>
-          </div>
-        )}
 
-        {/* Start Game Button - only show when both selected */}
-        {selectedCategory && selectedDifficulty && (
-          <div className="max-w-md mx-auto">
-            <Button 
-              onClick={handleStartGame}
-              className="w-full rounded-2xl font-black text-white shadow-xl border-0 py-3 text-lg transition-all duration-200 transform active:scale-95 hover:scale-105"
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-              }}
-              data-testid="start-game-button"
-            >
-              Oyunu Başlat
-            </Button>
-          </div>
-        )}
 
         {/* Bottom stats */}
         <div className="mt-8 text-center">
