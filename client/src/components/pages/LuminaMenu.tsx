@@ -111,7 +111,7 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
               }}>
                 <Trophy className="w-6 h-6 mb-1" />
-                <div className="text-sm">Başarımlar</div>
+                <div className="text-sm">İstatistikler</div>
               </Button>
             </Card>
 
