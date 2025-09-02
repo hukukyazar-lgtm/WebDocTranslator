@@ -1,70 +1,82 @@
 import { useState } from 'react';
-import { GameOverPreview } from '@/components/GameOverPreview';
-import { ModernGameOver } from '@/components/ModernGameOver';
-import { FuturisticGameOver } from '@/components/FuturisticGameOver';
 import { CodyCrossGameOver } from '@/components/CodyCrossGameOver';
-import { MonopolyGameOver } from '@/components/MonopolyGameOver';
 import { Button } from '@/components/ui/button';
 
+// CodyCross style page components
+import { CodyCrossMenu } from '@/components/pages/CodyCrossMenu';
+import { CodyCrossGame } from '@/components/pages/CodyCrossGame';
+import { CodyCrossLogin } from '@/components/pages/CodyCrossLogin';
+import { CodyCrossSettings } from '@/components/pages/CodyCrossSettings';
+import { CodyCrossCategories } from '@/components/pages/CodyCrossCategories';
+
 export default function Preview() {
-  const [currentStyle, setCurrentStyle] = useState<'classic' | 'modern' | 'futuristic' | 'codycross' | 'monopoly'>('monopoly');
+  const [currentPage, setCurrentPage] = useState<'menu' | 'game' | 'gameover' | 'login' | 'settings' | 'categories'>('menu');
 
   return (
     <div className="relative">
-      {/* Enhanced Style switcher */}
+      {/* Page navigator */}
       <div className="fixed top-4 left-4 z-50">
-        <div className="bg-black/80 backdrop-blur-lg rounded-xl p-3 shadow-2xl border border-white/10">
-          <div className="grid grid-cols-1 gap-2 min-w-[120px]">
+        <div className="bg-white/20 backdrop-blur-lg rounded-xl p-3 shadow-2xl border border-blue-300/30">
+          <div className="grid grid-cols-1 gap-2 min-w-[140px]">
             <Button 
-              variant={currentStyle === 'monopoly' ? 'default' : 'outline'}
+              variant={currentPage === 'menu' ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setCurrentStyle('monopoly')}
-              className="justify-start bg-gradient-to-r from-yellow-600 to-amber-600 hover:from-yellow-500 hover:to-amber-500 text-white border-yellow-500 font-bold"
+              onClick={() => setCurrentPage('menu')}
+              className="justify-start bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-400 hover:to-purple-500 text-white border-blue-400 font-semibold text-xs"
             >
-              💰 Monopoly GO
+              🏠 Ana Menü
             </Button>
             <Button 
-              variant={currentStyle === 'codycross' ? 'default' : 'outline'}
+              variant={currentPage === 'categories' ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setCurrentStyle('codycross')}
-              className="justify-start bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-400 hover:to-purple-500 text-white border-blue-400 font-semibold"
+              onClick={() => setCurrentPage('categories')}
+              className="justify-start bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-400 hover:to-blue-400 text-white border-green-400 font-semibold text-xs"
             >
-              🎮 CodyCross
+              📂 Kategoriler
             </Button>
             <Button 
-              variant={currentStyle === 'modern' ? 'default' : 'outline'}
+              variant={currentPage === 'game' ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setCurrentStyle('modern')}
-              className="justify-start bg-gradient-to-r from-slate-600 to-purple-600 hover:from-slate-500 hover:to-purple-500 text-white border-slate-400"
+              onClick={() => setCurrentPage('game')}
+              className="justify-start bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white border-purple-400 font-semibold text-xs"
             >
-              ✨ Modern
+              🎮 Oyun
             </Button>
             <Button 
-              variant={currentStyle === 'futuristic' ? 'default' : 'outline'}
+              variant={currentPage === 'gameover' ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setCurrentStyle('futuristic')}
-              className="justify-start bg-gradient-to-r from-cyan-600 to-purple-600 hover:from-cyan-500 hover:to-purple-500 text-white border-cyan-400"
+              onClick={() => setCurrentPage('gameover')}
+              className="justify-start bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-400 hover:to-red-400 text-white border-orange-400 font-semibold text-xs"
             >
-              🚀 Futuristik
+              🎉 Sonuç
             </Button>
             <Button 
-              variant={currentStyle === 'classic' ? 'default' : 'outline'}
+              variant={currentPage === 'login' ? 'default' : 'outline'}
               size="sm"
-              onClick={() => setCurrentStyle('classic')}
-              className="justify-start bg-white/20 hover:bg-white/30 text-white border-white/30"
+              onClick={() => setCurrentPage('login')}
+              className="justify-start bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white border-cyan-400 font-semibold text-xs"
             >
-              📋 Klasik
+              🔐 Giriş
+            </Button>
+            <Button 
+              variant={currentPage === 'settings' ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setCurrentPage('settings')}
+              className="justify-start bg-gradient-to-r from-gray-500 to-slate-600 hover:from-gray-400 hover:to-slate-500 text-white border-gray-400 font-semibold text-xs"
+            >
+              ⚙️ Ayarlar
             </Button>
           </div>
         </div>
       </div>
 
-      {/* Render selected style */}
-      {currentStyle === 'classic' && <GameOverPreview />}
-      {currentStyle === 'modern' && <ModernGameOver />}
-      {currentStyle === 'futuristic' && <FuturisticGameOver />}
-      {currentStyle === 'codycross' && <CodyCrossGameOver />}
-      {currentStyle === 'monopoly' && <MonopolyGameOver />}
+      {/* Render selected page */}
+      {currentPage === 'menu' && <CodyCrossMenu />}
+      {currentPage === 'categories' && <CodyCrossCategories />}
+      {currentPage === 'game' && <CodyCrossGame />}
+      {currentPage === 'gameover' && <CodyCrossGameOver />}
+      {currentPage === 'login' && <CodyCrossLogin />}
+      {currentPage === 'settings' && <CodyCrossSettings />}
     </div>
   );
 }
