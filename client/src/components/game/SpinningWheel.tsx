@@ -11,8 +11,6 @@ interface SpinningWheelProps {
 }
 
 export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty, category, timeLeft = 30 }: SpinningWheelProps) => {
-  // RENDER TEST - bu alert çıkmazsa component hiç render edilmiyor demektir
-  alert('SpinningWheel RENDER EDİLDİ!');
   
   const letters = word.split('');
   const radius = 120;
@@ -263,21 +261,28 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               const letterVisibility = getLetterVisibility(timeLeft, i, letters.length, difficulty);
               const fontSize = getFontSize(letters.length, isSpinning);
 
-              // Simple transform - back to original working system
+              // Progressive difficulty transform system
               const finalTransform = isSpinning 
-                ? `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`
+                ? getLetterTransform(i, baseAngle, letterSpacing, radius, dynamicScale, (angle * speedMultiplier), difficulty, isSpinning)
                 : `${transformAlign} translateZ(5px)`;
                 
-              // Debug ALL difficulty values
-              if (i === 0) { // Only log once per render
-                alert(`SpinningWheel: difficulty=${difficulty} (type: ${typeof difficulty}), isSpinning=${isSpinning}`);
-              }
+              // Progressive difficulty animations are now active!
               
-              // Test: Always show red for medium difficulty
+              // Progressive difficulty letter colors based on animation intensity
               const getLetterColor = () => {
-                if (difficulty === 2 && isSpinning) {
-                  console.log(`Letter ${i} should be RED: difficulty=${difficulty}, isSpinning=${isSpinning}`);
-                  return '#ff0000'; // Always red to test
+                if (difficulty === 1) {
+                  // Easy: Normal rainbow colors
+                  return letterColors[i];
+                } else if (difficulty === 2) {
+                  // Medium: Enhanced colors with rotation effect
+                  const baseColor = letterColors[i];
+                  return isSpinning ? baseColor : letterColors[i];
+                } else if (difficulty === 3) {
+                  // Hard: Dynamic color shifting based on animation
+                  const colorIndex = isSpinning 
+                    ? (i + Math.floor(animationFrame / 10)) % rainbowColors.length
+                    : i % rainbowColors.length;
+                  return rainbowColors[colorIndex];
                 }
                 return letterColors[i];
               };
