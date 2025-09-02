@@ -22,8 +22,6 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
     e.stopPropagation();
     setSelectedCategory(categoryName);
     setSelectedDifficulty(difficulty);
-    // Hemen oyunu başlat
-    onGameStart(categoryName, difficulty);
   };
 
   const handleStartGame = () => {
@@ -98,7 +96,11 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                 <div className="absolute top-2 right-2 flex flex-col gap-1">
                   <button
                     onClick={(e) => handleDifficultySelect("kolay", category.name, e)}
-                    className="w-6 h-6 rounded-full text-xs font-bold transition-all duration-150 transform hover:scale-125 active:scale-75 active:rotate-12 bg-green-500 text-white shadow-lg hover:shadow-xl hover:bg-green-400 active:bg-green-600 ring-2 ring-green-300/50 hover:ring-green-400/80"
+                    className={`w-6 h-6 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
+                      selectedCategory === category.name && selectedDifficulty === "kolay"
+                        ? 'bg-green-600 ring-green-400 scale-110'
+                        : 'bg-green-500 hover:bg-green-400 active:bg-green-600 ring-green-300/50 hover:ring-green-400/80'
+                    } text-white`}
                     title="Kolay"
                     data-testid={`difficulty-${category.name}-easy`}
                   >
@@ -106,7 +108,11 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   </button>
                   <button
                     onClick={(e) => handleDifficultySelect("orta", category.name, e)}
-                    className="w-6 h-6 rounded-full text-xs font-bold transition-all duration-150 transform hover:scale-125 active:scale-75 active:rotate-12 bg-yellow-500 text-white shadow-lg hover:shadow-xl hover:bg-yellow-400 active:bg-yellow-600 ring-2 ring-yellow-300/50 hover:ring-yellow-400/80"
+                    className={`w-6 h-6 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
+                      selectedCategory === category.name && selectedDifficulty === "orta"
+                        ? 'bg-yellow-600 ring-yellow-400 scale-110'
+                        : 'bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 ring-yellow-300/50 hover:ring-yellow-400/80'
+                    } text-white`}
                     title="Orta"
                     data-testid={`difficulty-${category.name}-medium`}
                   >
@@ -114,7 +120,11 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   </button>
                   <button
                     onClick={(e) => handleDifficultySelect("zor", category.name, e)}
-                    className="w-6 h-6 rounded-full text-xs font-bold transition-all duration-150 transform hover:scale-125 active:scale-75 active:rotate-12 bg-red-500 text-white shadow-lg hover:shadow-xl hover:bg-red-400 active:bg-red-600 ring-2 ring-red-300/50 hover:ring-red-400/80"
+                    className={`w-6 h-6 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
+                      selectedCategory === category.name && selectedDifficulty === "zor"
+                        ? 'bg-red-600 ring-red-400 scale-110'
+                        : 'bg-red-500 hover:bg-red-400 active:bg-red-600 ring-red-300/50 hover:ring-red-400/80'
+                    } text-white`}
                     title="Zor"
                     data-testid={`difficulty-${category.name}-hard`}
                   >
@@ -127,6 +137,27 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
         </div>
 
 
+
+        {/* Oyna Butonu - sadece kategori ve zorluk seçildiğinde göster */}
+        {selectedCategory && selectedDifficulty && (
+          <div className="max-w-md mx-auto mb-6">
+            <div className="text-center mb-4">
+              <h3 className="text-xl font-black text-white">{selectedCategory}</h3>
+              <p className="text-white/80 font-medium">Zorluk: {selectedDifficulty === 'kolay' ? 'Kolay' : selectedDifficulty === 'orta' ? 'Orta' : 'Zor'}</p>
+            </div>
+            
+            <button
+              onClick={handleStartGame}
+              className="w-full rounded-2xl font-black text-white shadow-xl border-0 py-4 text-lg transition-all duration-300 transform active:scale-95 hover:scale-105 animate-pulse hover:animate-none"
+              style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+              }}
+              data-testid="start-game-button"
+            >
+              🚀 Oyunu Başlat
+            </button>
+          </div>
+        )}
 
         {/* Bottom stats */}
         <div className="mt-8 text-center">
