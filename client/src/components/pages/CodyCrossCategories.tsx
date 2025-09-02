@@ -12,11 +12,15 @@ interface CodyCrossCategoriesProps {
 export const CodyCrossCategories = memo(({ onCategorySelect, onBack }: CodyCrossCategoriesProps) => {
   const categories = [
     { id: 1, name: "Hayvanlar", emoji: "🐾", color: "from-green-400 to-blue-500", completed: 85, total: 100 },
-    { id: 2, name: "Yiyecekler", emoji: "🍎", color: "from-red-400 to-pink-500", completed: 67, total: 80 },
+    { id: 2, name: "Yiyecek", emoji: "🍎", color: "from-red-400 to-pink-500", completed: 67, total: 80 },
     { id: 3, name: "Bilim", emoji: "🔬", color: "from-purple-400 to-indigo-500", completed: 42, total: 75 },
     { id: 4, name: "Ülkeler", emoji: "🌍", color: "from-blue-400 to-cyan-500", completed: 123, total: 150 },
-    { id: 5, name: "Spor", emoji: "⚽", color: "from-orange-400 to-red-500", completed: 34, total: 60 },
-    { id: 6, name: "Müzik", emoji: "🎵", color: "from-pink-400 to-purple-500", completed: 78, total: 90 },
+    { id: 5, name: "Meslekler", emoji: "👨‍💼", color: "from-indigo-400 to-blue-500", completed: 34, total: 60 },
+    { id: 6, name: "Şehirler", emoji: "🏙️", color: "from-teal-400 to-cyan-500", completed: 45, total: 70 },
+    { id: 7, name: "Spor Dalları", emoji: "⚽", color: "from-orange-400 to-red-500", completed: 34, total: 60 },
+    { id: 8, name: "Markalar", emoji: "🏷️", color: "from-purple-400 to-pink-500", completed: 28, total: 50 },
+    { id: 9, name: "Filmler", emoji: "🎬", color: "from-pink-400 to-purple-500", completed: 78, total: 90 },
+    { id: 10, name: "Eşyalar", emoji: "📱", color: "from-gray-400 to-blue-500", completed: 56, total: 80 }
   ];
 
   return (
