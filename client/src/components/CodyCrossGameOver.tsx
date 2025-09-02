@@ -79,67 +79,74 @@ export const CodyCrossGameOver = memo(() => {
                 </div>
               )}
 
-              {/* Philosophical word-vision logo */}
+              {/* Minimalist philosophical logo - Nike style simplicity */}
               <div className="relative mb-6">
-                <div className="w-24 h-24 mx-auto mb-4 relative">
-                  {/* Colorful background with knowledge theme */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-blue-300 via-purple-300 to-pink-300 rounded-full animate-pulse opacity-80"></div>
-                  <div className="absolute inset-1 bg-gradient-to-br from-indigo-200 via-blue-200 to-cyan-200 rounded-full animate-pulse opacity-70" style={{ animationDelay: '0.5s' }}></div>
-                  <div className="absolute inset-3 bg-white rounded-full shadow-lg"></div>
+                <div className="w-20 h-20 mx-auto mb-4 relative">
+                  {/* Simple colorful background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full opacity-90"></div>
+                  <div className="absolute inset-2 bg-white rounded-full shadow-lg"></div>
                   
-                  {/* Central philosophical eye of knowledge */}
+                  {/* Minimalist symbol - simplified eye of knowledge */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative w-16 h-16">
-                      {/* Outer wisdom circle */}
-                      <div className="w-16 h-16 rounded-full border-3 border-gradient-to-r from-purple-500 to-blue-500 bg-gradient-to-br from-blue-50 to-purple-50 relative overflow-hidden shadow-lg">
+                    <div className="relative w-12 h-12 flex items-center justify-center">
+                      {/* Clean, simple eye shape - like Nike swoosh but philosophical */}
+                      <svg width="40" height="24" viewBox="0 0 40 24" className="text-purple-600">
+                        {/* Outer eye shape - minimal line */}
+                        <path 
+                          d="M2 12C8 4, 32 4, 38 12C32 20, 8 20, 2 12Z" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          strokeWidth="2.5"
+                          className="animate-pulse"
+                        />
+                        {/* Simple iris - gradient circle */}
+                        <circle 
+                          cx="20" 
+                          cy="12" 
+                          r="6" 
+                          fill="url(#irisGradient)"
+                          className="animate-pulse"
+                          style={{ animationDelay: '0.5s' }}
+                        />
+                        {/* Pupil - depth of understanding */}
+                        <circle 
+                          cx="20" 
+                          cy="12" 
+                          r="3" 
+                          fill="#1a1a1a"
+                        />
+                        {/* Light reflection - spark of insight */}
+                        <circle 
+                          cx="21" 
+                          cy="10" 
+                          r="1" 
+                          fill="white"
+                          className="animate-pulse"
+                        />
                         
-                        {/* The seeing eye - center of wisdom */}
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                          <div className="w-10 h-6 rounded-full bg-gradient-to-b from-cyan-400 to-blue-600 relative border-2 border-purple-700">
-                            {/* Iris - window to knowledge */}
-                            <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 w-6 h-5 rounded-full bg-gradient-to-b from-purple-600 via-indigo-700 to-purple-900 shadow-inner">
-                              {/* Pupil - depth of understanding */}
-                              <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full bg-black">
-                                {/* Light of comprehension */}
-                                <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full animate-pulse"></div>
-                                {/* Inner spark of insight */}
-                                <div className="absolute bottom-0.5 right-0.5 w-0.5 h-0.5 bg-yellow-300 rounded-full animate-ping"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Floating letters around the eye - representing words and knowledge */}
-                        <div className="absolute top-1 left-2 text-xs font-bold text-purple-600 animate-float-gentle">A</div>
-                        <div className="absolute top-2 right-1 text-xs font-bold text-blue-600 animate-float-gentle" style={{ animationDelay: '0.5s' }}>B</div>
-                        <div className="absolute bottom-1 left-1 text-xs font-bold text-indigo-600 animate-float-gentle" style={{ animationDelay: '1s' }}>C</div>
-                        <div className="absolute bottom-2 right-2 text-xs font-bold text-cyan-600 animate-float-gentle" style={{ animationDelay: '1.5s' }}>?</div>
-                        
-                        {/* Wisdom sparkles */}
-                        <div className="absolute top-3 right-3 w-1 h-1 bg-yellow-400 rounded-full animate-ping"></div>
-                        <div className="absolute bottom-3 left-3 w-1 h-1 bg-pink-400 rounded-full animate-ping" style={{ animationDelay: '0.7s' }}></div>
-                      </div>
+                        {/* Gradient definitions */}
+                        <defs>
+                          <linearGradient id="irisGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#3b82f6" />
+                            <stop offset="50%" stopColor="#8b5cf6" />
+                            <stop offset="100%" stopColor="#06b6d4" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
                       
-                      {/* Orbiting knowledge symbols */}
-                      <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 text-yellow-500 text-sm animate-spin-slow">💡</div>
-                      <div className="absolute top-1/2 -right-2 transform -translate-y-1/2 text-blue-500 text-sm animate-bounce-gentle" style={{ animationDelay: '1s' }}>📖</div>
-                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-purple-500 text-sm animate-pulse" style={{ animationDelay: '0.5s' }}>✨</div>
-                      <div className="absolute top-1/2 -left-2 transform -translate-y-1/2 text-green-500 text-sm animate-float-gentle" style={{ animationDelay: '1.5s' }}>🔍</div>
+                      {/* Single floating element - minimal wisdom symbol */}
+                      <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-yellow-400 animate-ping opacity-60"></div>
                     </div>
                   </div>
                 </div>
                 
-                {/* Philosophical LUMINA text */}
-                <h1 className="text-3xl font-black text-white mb-2 tracking-wide relative">
-                  <span className="bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-200 bg-clip-text text-transparent">
-                    LUMINA
-                  </span>
-                  {/* Glowing text effect */}
-                  <span className="absolute inset-0 text-white/10 transform translate-x-0.5 translate-y-0.5 -z-10 blur-sm">
+                {/* Clean, bold LUMINA text */}
+                <h1 className="text-3xl font-black text-white mb-1 tracking-wide">
+                  <span className="bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
                     LUMINA
                   </span>
                 </h1>
-                <p className="text-sm text-white/80 font-medium italic">Kelimelerin Işığı</p>
+                <p className="text-sm text-white/70 font-medium">Insight Through Words</p>
               </div>
 
               {/* Big result emoji and text */}
