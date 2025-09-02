@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, Star } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useGameStats } from '@/hooks/useGameStats';
+import { useCategoryProgress } from '@/hooks/useCategoryProgress';
 
 interface LuminaCategoriesProps {
   onGameStart: (category: string, difficulty: string) => void;
@@ -14,6 +15,7 @@ interface LuminaCategoriesProps {
 export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesProps) => {
   const { isAuthenticated } = useAuth();
   const { stats } = useGameStats();
+  const { progress } = useCategoryProgress();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [categoryDifficulties, setCategoryDifficulties] = useState<Record<string, string>>({});
 
@@ -42,18 +44,24 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
       onGameStart(selectedCategory, categoryDifficulties[selectedCategory]);
     }
   };
-  const categories = [
-    { id: 1, name: "Hayvanlar", emoji: "🐾", color: "from-green-400 to-blue-500", completed: 85, total: 100 },
-    { id: 2, name: "Yiyecek", emoji: "🍎", color: "from-red-400 to-pink-500", completed: 67, total: 80 },
-    { id: 3, name: "Bilim", emoji: "🔬", color: "from-purple-400 to-indigo-500", completed: 42, total: 75 },
-    { id: 4, name: "Ülkeler", emoji: "🌍", color: "from-blue-400 to-cyan-500", completed: 123, total: 150 },
-    { id: 5, name: "Meslekler", emoji: "👨‍💼", color: "from-indigo-400 to-blue-500", completed: 34, total: 60 },
-    { id: 6, name: "Şehirler", emoji: "🏙️", color: "from-teal-400 to-cyan-500", completed: 45, total: 70 },
-    { id: 7, name: "Spor Dalları", emoji: "⚽", color: "from-orange-400 to-red-500", completed: 34, total: 60 },
-    { id: 8, name: "Markalar", emoji: "🏷️", color: "from-purple-400 to-pink-500", completed: 28, total: 50 },
-    { id: 9, name: "Filmler", emoji: "🎬", color: "from-pink-400 to-purple-500", completed: 78, total: 90 },
-    { id: 10, name: "Eşyalar", emoji: "📱", color: "from-gray-400 to-blue-500", completed: 56, total: 80 }
+  const baseCategories = [
+    { id: 1, name: "Hayvanlar", emoji: "🐾", color: "from-green-400 to-blue-500", total: 100 },
+    { id: 2, name: "Yiyecek", emoji: "🍎", color: "from-red-400 to-pink-500", total: 80 },
+    { id: 3, name: "Bilim", emoji: "🔬", color: "from-purple-400 to-indigo-500", total: 75 },
+    { id: 4, name: "Ülkeler", emoji: "🌍", color: "from-blue-400 to-cyan-500", total: 150 },
+    { id: 5, name: "Meslekler", emoji: "👨‍💼", color: "from-indigo-400 to-blue-500", total: 60 },
+    { id: 6, name: "Şehirler", emoji: "🏙️", color: "from-teal-400 to-cyan-500", total: 70 },
+    { id: 7, name: "Spor Dalları", emoji: "⚽", color: "from-orange-400 to-red-500", total: 60 },
+    { id: 8, name: "Markalar", emoji: "🏷️", color: "from-purple-400 to-pink-500", total: 50 },
+    { id: 9, name: "Filmler", emoji: "🎬", color: "from-pink-400 to-purple-500", total: 90 },
+    { id: 10, name: "Eşyalar", emoji: "📱", color: "from-gray-400 to-blue-500", total: 80 }
   ];
+
+  // Database verilerini kategorilerle birleştir
+  const categories = baseCategories.map(category => ({
+    ...category,
+    completed: isAuthenticated && progress ? (progress.categories[category.name] || 0) : 0
+  }));
 
   return (
     <div className="min-h-screen relative overflow-hidden" style={{
@@ -225,9 +233,9 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
               </div>
               <div className="w-px h-8 bg-white/30"></div>
               <div>
-                {isAuthenticated && stats && stats.gamesPlayed > 0 ? (
+                {isAuthenticated && progress?.lastGame ? (
                   <>
-                    <div className="text-lg font-black">Hayvanlar</div>
+                    <div className="text-lg font-black">{progress.lastGame.category}</div>
                     <div className="text-xs opacity-80">Son oyun</div>
                   </>
                 ) : (

@@ -96,6 +96,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Category progress endpoint
+  app.get('/api/category-progress', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const progress = await storage.getCategoryProgress(userId);
+      res.json(progress);
+    } catch (error) {
+      console.error("Error fetching category progress:", error);
+      res.status(500).json({ message: "Failed to fetch category progress" });
+    }
+  });
+
   // Google OAuth routes (ready for activation)
   app.get('/api/auth/google', async (req, res) => {
     // TODO: Implement Google OAuth when credentials are provided

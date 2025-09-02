@@ -36,6 +36,12 @@ export interface IStorage {
     totalScore: number;
     averageGuessTime: number;
   }>;
+
+  // Category progress
+  getCategoryProgress(userId: string): Promise<{
+    categories: { [category: string]: number };
+    lastGame?: { category: string; word: string; date: string };
+  }>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -144,6 +150,47 @@ export class DatabaseStorage implements IStorage {
       bestStreak: stats.bestStreak || 0,
       totalScore: stats.totalScore || 0,
       averageGuessTime,
+    };
+  }
+
+  async getCategoryProgress(userId: string): Promise<{
+    categories: { [category: string]: number },
+    lastGame?: { category: string, word: string, date: string }
+  }> {
+    // Get category counts
+    const sessions = await db
+      .select({
+        category: gameSessions.category,
+        count: sql<number>`count(*)`,
+      })
+      .from(gameSessions)
+      .where(eq(gameSessions.userId, userId))
+      .groupBy(gameSessions.category);
+
+    const categories: { [category: string]: number } = {};
+    for (const session of sessions) {
+      categories[session.category] = session.count;
+    }
+
+    // Get last game
+    const [lastGame] = await db
+      .select({
+        category: gameSessions.category,
+        word: gameSessions.word,
+        createdAt: gameSessions.createdAt,
+      })
+      .from(gameSessions)
+      .where(eq(gameSessions.userId, userId))
+      .orderBy(desc(gameSessions.createdAt))
+      .limit(1);
+
+    return {
+      categories,
+      lastGame: lastGame ? {
+        category: lastGame.category,
+        word: lastGame.word,
+        date: lastGame.createdAt?.toISOString() || ''
+      } : undefined
     };
   }
 }
