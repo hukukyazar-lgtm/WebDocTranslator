@@ -294,8 +294,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   }));
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
   const [showDailyGoals, setShowDailyGoals] = useState(false);
-  const [showSuccessModal, setShowSuccessModal] = useState(false);
-  console.log('showSuccessModal state:', showSuccessModal);
   
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -443,7 +441,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   }, [gameOver, gameStats, category, elapsedTime, difficulty]);
 
   const handleGuessSubmit = useCallback(() => {
-    console.log('handleGuessSubmit called, gameOver:', gameOver, 'guess:', guess);
     if (gameOver) return;
     if (guess.trim().length === 0) return;
     
@@ -452,7 +449,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     setGuesses(newGuesses);
     setGuess('');
     
-    console.log('Guess:', trimmedGuess, 'Secret:', secretWord.toUpperCase(), 'Match:', trimmedGuess === secretWord.toUpperCase());
     
     if (trimmedGuess === secretWord.toUpperCase()) {
       // Doğru tahmin - skor güncelle ve modal göster
@@ -491,9 +487,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         setCurrentAchievement(newAchievements[0]);
       }
       
-      // Modal'ı göster - gameOver'ı set etme!
-      console.log('Setting showSuccessModal to true');
-      setShowSuccessModal(true);
+      // Başarı durumunda game over ekranını göster
+      setGameOver(true);
     } else if (newGuesses.length >= maxGuesses) {
       // Maksimum tahmin sayısına ulaşıldı - oyunu bitir
       endGame(`${t.gameOver} Doğru kelime: ${secretWord}`, false);
@@ -522,8 +517,11 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   }, []);
 
   const handleContinue = useCallback(() => {
-    // Modal'ı kapat
-    setShowSuccessModal(false);
+    // Clear existing timer first
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
     
     // Continue with new word without resetting score
     setGuess('');
@@ -869,90 +867,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         )}
         
-        {/* Başarı Modal'ı */}
-        {showSuccessModal && (
-          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-            <div 
-              className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 backdrop-blur-xl rounded-2xl border border-green-400/30 p-6 max-w-md w-full mx-4 shadow-2xl transform animate-bounce-in"
-              style={{
-                boxShadow: `0 0 40px ${theme.primary}40`
-              }}
-            >
-              {/* Başlık */}
-              <div className="text-center mb-4">
-                <div className="text-4xl mb-2">🎉</div>
-                <h2 className="text-2xl font-black text-white mb-1">
-                  {t.congratulations}
-                </h2>
-                <p className="text-white/70 text-sm">
-                  {Math.floor(elapsedTime)} {t.seconds}
-                </p>
-              </div>
-
-              {/* İstatistikler */}
-              <div className="grid grid-cols-2 gap-3 mb-6">
-                <div className="backdrop-blur-lg rounded-xl p-3 border border-white/20" style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
-                }}>
-                  <div className="text-2xl mb-1">💎</div>
-                  <div 
-                    className="text-xl font-black mb-1"
-                    style={{
-                      background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
-                      backgroundClip: 'text',
-                      WebkitBackgroundClip: 'text',
-                      color: 'transparent'
-                    }}
-                  >
-                    +{score}
-                  </div>
-                  <div className="text-xs font-bold text-white/60">
-                    {t.score}
-                  </div>
-                </div>
-                
-                <div className="backdrop-blur-lg rounded-xl p-3 border border-white/20" style={{
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
-                }}>
-                  <div className="text-2xl mb-1">🔥</div>
-                  <div 
-                    className="text-xl font-black mb-1"
-                    style={{
-                      background: `linear-gradient(45deg, ${theme.secondary}, ${theme.primary})`,
-                      backgroundClip: 'text',
-                      WebkitBackgroundClip: 'text',
-                      color: 'transparent'
-                    }}
-                  >
-                    {streak}
-                  </div>
-                  <div className="text-xs font-bold text-white/60">{t.streak}</div>
-                </div>
-              </div>
-
-              {/* Butonlar */}
-              <div className="space-y-3">
-                <button
-                  onClick={handleContinue}
-                  className="w-full py-3 px-6 text-sm font-black rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border text-white shadow-2xl"
-                  style={{
-                    background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
-                    borderColor: `${theme.primary}80`,
-                    boxShadow: `0 0 20px ${theme.primary}40`
-                  }}
-                >
-                  ⚡ {t.continue}
-                </button>
-                <button
-                  onClick={onGameOver}
-                  className="w-full py-3 px-6 text-sm font-black rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/30 bg-white/10 text-white/90 hover:bg-white/20 shadow-lg"
-                >
-                  🏠 {t.mainMenu}
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
         
         {/* Başarım Bildirimi - Devre Dışı */}
         {false && <AchievementNotification 
