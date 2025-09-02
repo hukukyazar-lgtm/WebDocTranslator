@@ -79,50 +79,67 @@ export const CodyCrossGameOver = memo(() => {
                 </div>
               )}
 
-              {/* CodyCross-style colorful logo */}
+              {/* Philosophical word-vision logo */}
               <div className="relative mb-6">
-                <div className="w-20 h-20 mx-auto mb-4 relative">
-                  {/* Colorful background circles */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-orange-300 rounded-full animate-pulse opacity-80"></div>
-                  <div className="absolute inset-1 bg-gradient-to-r from-pink-300 to-purple-300 rounded-full animate-pulse opacity-70" style={{ animationDelay: '0.5s' }}></div>
-                  <div className="absolute inset-2 bg-white rounded-full shadow-lg"></div>
+                <div className="w-24 h-24 mx-auto mb-4 relative">
+                  {/* Colorful background with knowledge theme */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-300 via-purple-300 to-pink-300 rounded-full animate-pulse opacity-80"></div>
+                  <div className="absolute inset-1 bg-gradient-to-br from-indigo-200 via-blue-200 to-cyan-200 rounded-full animate-pulse opacity-70" style={{ animationDelay: '0.5s' }}></div>
+                  <div className="absolute inset-3 bg-white rounded-full shadow-lg"></div>
                   
-                  {/* Modern eye design in CodyCross style */}
+                  {/* Central philosophical eye of knowledge */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative w-12 h-12">
-                      {/* Outer eye shape with gradient */}
-                      <div className="w-12 h-8 rounded-full border-4 border-gray-700 bg-gradient-to-b from-cyan-200 to-blue-400 relative overflow-hidden">
-                        {/* Animated iris */}
-                        <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-b from-purple-600 to-indigo-800 shadow-lg animate-pulse">
-                          {/* Pupil */}
-                          <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full bg-black">
-                            {/* Light reflection */}
-                            <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                    <div className="relative w-16 h-16">
+                      {/* Outer wisdom circle */}
+                      <div className="w-16 h-16 rounded-full border-3 border-gradient-to-r from-purple-500 to-blue-500 bg-gradient-to-br from-blue-50 to-purple-50 relative overflow-hidden shadow-lg">
+                        
+                        {/* The seeing eye - center of wisdom */}
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                          <div className="w-10 h-6 rounded-full bg-gradient-to-b from-cyan-400 to-blue-600 relative border-2 border-purple-700">
+                            {/* Iris - window to knowledge */}
+                            <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 w-6 h-5 rounded-full bg-gradient-to-b from-purple-600 via-indigo-700 to-purple-900 shadow-inner">
+                              {/* Pupil - depth of understanding */}
+                              <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full bg-black">
+                                {/* Light of comprehension */}
+                                <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                                {/* Inner spark of insight */}
+                                <div className="absolute bottom-0.5 right-0.5 w-0.5 h-0.5 bg-yellow-300 rounded-full animate-ping"></div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         
-                        {/* Sparkle effects */}
-                        <div className="absolute top-1 right-1 w-1 h-1 bg-white rounded-full animate-ping"></div>
-                        <div className="absolute bottom-1 left-1 w-0.5 h-0.5 bg-yellow-300 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+                        {/* Floating letters around the eye - representing words and knowledge */}
+                        <div className="absolute top-1 left-2 text-xs font-bold text-purple-600 animate-float-gentle">A</div>
+                        <div className="absolute top-2 right-1 text-xs font-bold text-blue-600 animate-float-gentle" style={{ animationDelay: '0.5s' }}>B</div>
+                        <div className="absolute bottom-1 left-1 text-xs font-bold text-indigo-600 animate-float-gentle" style={{ animationDelay: '1s' }}>C</div>
+                        <div className="absolute bottom-2 right-2 text-xs font-bold text-cyan-600 animate-float-gentle" style={{ animationDelay: '1.5s' }}>?</div>
+                        
+                        {/* Wisdom sparkles */}
+                        <div className="absolute top-3 right-3 w-1 h-1 bg-yellow-400 rounded-full animate-ping"></div>
+                        <div className="absolute bottom-3 left-3 w-1 h-1 bg-pink-400 rounded-full animate-ping" style={{ animationDelay: '0.7s' }}></div>
                       </div>
                       
-                      {/* Floating mini sparkles around eye */}
-                      <div className="absolute -top-1 -right-1 w-2 h-2 text-yellow-400">⭐</div>
-                      <div className="absolute -bottom-1 -left-1 w-2 h-2 text-pink-400">✨</div>
+                      {/* Orbiting knowledge symbols */}
+                      <div className="absolute -top-2 left-1/2 transform -translate-x-1/2 text-yellow-500 text-sm animate-spin-slow">💡</div>
+                      <div className="absolute top-1/2 -right-2 transform -translate-y-1/2 text-blue-500 text-sm animate-bounce-gentle" style={{ animationDelay: '1s' }}>📖</div>
+                      <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 text-purple-500 text-sm animate-pulse" style={{ animationDelay: '0.5s' }}>✨</div>
+                      <div className="absolute top-1/2 -left-2 transform -translate-y-1/2 text-green-500 text-sm animate-float-gentle" style={{ animationDelay: '1.5s' }}>🔍</div>
                     </div>
                   </div>
                 </div>
                 
-                {/* Colorful LUMINA text */}
+                {/* Philosophical LUMINA text */}
                 <h1 className="text-3xl font-black text-white mb-2 tracking-wide relative">
-                  <span className="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-200 bg-clip-text text-transparent">
                     LUMINA
                   </span>
-                  {/* Text shadow effect */}
-                  <span className="absolute inset-0 text-white/20 transform translate-x-0.5 translate-y-0.5 -z-10">
+                  {/* Glowing text effect */}
+                  <span className="absolute inset-0 text-white/10 transform translate-x-0.5 translate-y-0.5 -z-10 blur-sm">
                     LUMINA
                   </span>
                 </h1>
+                <p className="text-sm text-white/80 font-medium italic">Kelimelerin Işığı</p>
               </div>
 
               {/* Big result emoji and text */}
@@ -288,6 +305,13 @@ export const CodyCrossGameOver = memo(() => {
         }
         .animate-bounce-gentle {
           animation: bounce-gentle 2s ease-in-out infinite;
+        }
+        .animate-spin-slow {
+          animation: spin 4s linear infinite;
+        }
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
         }
       `}</style>
     </div>
