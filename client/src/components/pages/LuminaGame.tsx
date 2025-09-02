@@ -18,10 +18,11 @@ interface LuminaGameProps {
   };
   onKeyPress: (key: string) => void;
   onGameOver: (success: boolean, score: number) => void;
+  onBack?: () => void;
   turkishKeyboard: string[][];
 }
 
-export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, turkishKeyboard }: LuminaGameProps) => {
+export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, turkishKeyboard }: LuminaGameProps) => {
   const { currentWord, guessedWord, category, difficulty, timeLeft, lives, streak, isSpinning, usedLetters } = gameState;
   const scrambledLetters = currentWord.split('');
   const turkishKeyboardLayout = turkishKeyboard;
@@ -44,11 +45,12 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, turkishKeyb
     return 'animate-spin';
   }, [isSpinning, timeLeft]);
 
-  // Letter visibility based on time
+  // Letter visibility based on time - more visible letters
   const getLetterOpacity = (index: number) => {
+    if (!isSpinning) return 1; // Always visible when not spinning
     const timeProgress = (30 - timeLeft) / 30;
     const letterProgress = index / scrambledLetters.length;
-    return timeProgress > letterProgress ? 1 : 0.3;
+    return timeProgress > letterProgress ? 1 : 0.6; // Increase minimum opacity
   };
 
   return (
@@ -76,7 +78,12 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, turkishKeyb
       <div className="relative z-10 min-h-screen flex flex-col p-4">
         {/* Game header */}
         <div className="flex items-center justify-between mb-4">
-          <Button variant="outline" className="p-3 rounded-full bg-white/20 border-white/30 text-white hover:bg-white/30">
+          <Button 
+            onClick={onBack}
+            variant="outline" 
+            className="p-3 rounded-full bg-white/20 border-white/30 text-white hover:bg-white/30"
+            data-testid="back-button"
+          >
             <ChevronLeft className="w-6 h-6" />
           </Button>
           
@@ -121,27 +128,28 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, turkishKeyb
         {/* LUMINA Spinning Wheel */}
         <div className="flex-1 flex flex-col items-center justify-center mb-6">
           <div className="relative w-64 h-64 mb-8">
-            {/* Invisible wheel container */}
+            {/* Spinning wheel container */}
             <div className={`absolute inset-0 ${spinClass}`} 
                  style={{ 
-                   filter: isSpinning ? `blur(${timeLeft <= 5 ? 1 : timeLeft <= 10 ? 2 : 3}px)` : 'none',
+                   filter: isSpinning ? `blur(${timeLeft <= 5 ? 0.5 : timeLeft <= 10 ? 1 : 2}px)` : 'none',
                    animationDuration: isSpinning ? `${timeLeft <= 5 ? 8 : timeLeft <= 10 ? 5 : 3}s` : '0s'
                  }}>
-              {scrambledLetters.map((letter, index) => {
+              {scrambledLetters && scrambledLetters.length > 0 && scrambledLetters.map((letter, index) => {
                 const position = getLetterPosition(index, scrambledLetters.length);
                 return (
                   <div
-                    key={index}
+                    key={`${letter}-${index}`}
                     className="absolute transform -translate-x-1/2 -translate-y-1/2"
                     style={{
                       left: `calc(50% + ${position.x}px)`,
                       top: `calc(50% + ${position.y}px)`,
                       opacity: getLetterOpacity(index),
-                      transform: `translate(-50%, -50%) scale(${1 + Math.sin(Date.now() * 0.01 + index) * 0.1})`,
+                      transform: `translate(-50%, -50%) scale(${1 + Math.sin(Date.now() * 0.002 + index) * 0.1})`,
+                      transition: 'opacity 0.3s ease-in-out'
                     }}
                   >
                     <div 
-                      className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black text-white shadow-2xl"
+                      className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black text-white shadow-2xl border border-white/20"
                       style={{
                         background: `linear-gradient(135deg, ${
                           index % 4 === 0 ? '#4facfe, #00f2fe' :
@@ -151,7 +159,7 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, turkishKeyb
                         })`
                       }}
                     >
-                      {letter}
+                      {letter || '?'}
                     </div>
                   </div>
                 );

@@ -141,7 +141,7 @@ export const LuminaCategories = memo(({ onCategorySelect, onBack }: LuminaCatego
                     </div>
                     
                     <Button 
-                      onClick={() => onCategorySelect(category.name, "medium")}
+                      onClick={() => onCategorySelect(category.name, "orta")}
                       className="rounded-xl font-bold text-white shadow-lg border-0"
                       style={{
                         background: `linear-gradient(135deg, ${category.color.split(' ')[1]}, ${category.color.split(' ')[3]})`

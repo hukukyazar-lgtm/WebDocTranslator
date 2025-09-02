@@ -96,13 +96,39 @@ export default function LuminaApp() {
   };
 
   const handleCategorySelect = (category: string, difficulty: string) => {
-    const word = getWordByDifficulty(category, parseInt(difficulty));
+    // Convert difficulty string to number
+    let difficultyLevel = 2; // default to medium
+    switch(difficulty.toLowerCase()) {
+      case 'easy':
+      case 'kolay':
+        difficultyLevel = 1;
+        break;
+      case 'medium':
+      case 'orta':
+        difficultyLevel = 2;
+        break;
+      case 'hard':
+      case 'zor':
+        difficultyLevel = 3;
+        break;
+      default:
+        difficultyLevel = parseInt(difficulty) || 2;
+    }
+    
+    const word = getWordByDifficulty(category, difficultyLevel);
+    console.log('Selected category:', category, 'difficulty:', difficulty, 'level:', difficultyLevel, 'word:', word);
+    
+    if (!word) {
+      console.error('No word found for category:', category, 'difficulty:', difficultyLevel);
+      return;
+    }
+    
     setGameState({
       ...initialGameState,
       currentWord: word,
       guessedWord: word.replace(/./g, '_'),
       category,
-      difficulty,
+      difficulty: difficulty,
       timeLeft: 30,
       isSpinning: true
     });
@@ -218,6 +244,7 @@ export default function LuminaApp() {
           gameState={gameState}
           onKeyPress={handleKeyPress}
           onGameOver={handleGameOver}
+          onBack={() => setCurrentScreen('categories')}
           turkishKeyboard={turkishKeyboardLayout}
         />
       );
