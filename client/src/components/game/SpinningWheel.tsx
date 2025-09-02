@@ -265,16 +265,15 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 ? `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`
                 : `${transformAlign} translateZ(5px)`;
                 
-              // Direct animation for medium difficulty
-              const getAnimationStyle = () => {
+              // Simple color animation for medium difficulty
+              const getLetterColor = () => {
                 if (difficulty === 2 && isSpinning) {
-                  return {
-                    animation: 'medium-letter-test 1s ease-in-out infinite',
-                    borderRadius: '4px',
-                    padding: '2px'
-                  };
+                  // Cycle through colors based on animation frame and letter index
+                  const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff'];
+                  const colorIndex = (animationFrame + i) % colors.length;
+                  return colors[colorIndex];
                 }
-                return {};
+                return letterColors[i];
               };
 
               return (
@@ -283,9 +282,8 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                   className={`absolute font-sans font-semibold uppercase letter-glow ${fontSize}`}
                   style={{ 
                     letterSpacing: letters.length > 10 ? '-0.05em' : letters.length > 8 ? '-0.02em' : '0',
-                    color: letterColors[i],
-                    transform: finalTransform,
-                    ...getAnimationStyle(), 
+                    color: getLetterColor(),
+                    transform: finalTransform, 
                     filter: `blur(${blurAmount}px) drop-shadow(0 0 12px ${isSpinning ? 'currentColor' : 'rgba(255,255,255,0.8)'}) drop-shadow(0 5px 10px rgba(0,0,0,0.3))`,
                     transition: 'transform 1s, filter 0.5s, opacity 0.3s, color 0.5s',
                     textShadow: isSpinning 
