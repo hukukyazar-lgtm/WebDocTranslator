@@ -94,11 +94,11 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                 <div className="text-3xl mb-2">{category.emoji}</div>
                 <div className="font-black text-sm mb-3">{category.name}</div>
                 
-                {/* Zorluk butonları - sağ alt köşe */}
-                <div className="absolute bottom-1 right-1 flex gap-0.5">
+                {/* Zorluk butonları - sağ üstten alta dikey */}
+                <div className="absolute top-2 right-2 flex flex-col gap-1">
                   <button
                     onClick={(e) => handleDifficultySelect("kolay", category.name, e)}
-                    className="w-5 h-5 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-95 bg-green-500 text-white shadow-sm hover:shadow-md"
+                    className="w-6 h-6 rounded-full text-xs font-bold transition-all duration-150 transform hover:scale-125 active:scale-75 active:rotate-12 bg-green-500 text-white shadow-lg hover:shadow-xl hover:bg-green-400 active:bg-green-600 ring-2 ring-green-300/50 hover:ring-green-400/80"
                     title="Kolay"
                     data-testid={`difficulty-${category.name}-easy`}
                   >
@@ -106,7 +106,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   </button>
                   <button
                     onClick={(e) => handleDifficultySelect("orta", category.name, e)}
-                    className="w-5 h-5 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-95 bg-yellow-500 text-white shadow-sm hover:shadow-md"
+                    className="w-6 h-6 rounded-full text-xs font-bold transition-all duration-150 transform hover:scale-125 active:scale-75 active:rotate-12 bg-yellow-500 text-white shadow-lg hover:shadow-xl hover:bg-yellow-400 active:bg-yellow-600 ring-2 ring-yellow-300/50 hover:ring-yellow-400/80"
                     title="Orta"
                     data-testid={`difficulty-${category.name}-medium`}
                   >
@@ -114,7 +114,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   </button>
                   <button
                     onClick={(e) => handleDifficultySelect("zor", category.name, e)}
-                    className="w-5 h-5 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-95 bg-red-500 text-white shadow-sm hover:shadow-md"
+                    className="w-6 h-6 rounded-full text-xs font-bold transition-all duration-150 transform hover:scale-125 active:scale-75 active:rotate-12 bg-red-500 text-white shadow-lg hover:shadow-xl hover:bg-red-400 active:bg-red-600 ring-2 ring-red-300/50 hover:ring-red-400/80"
                     title="Zor"
                     data-testid={`difficulty-${category.name}-hard`}
                   >
