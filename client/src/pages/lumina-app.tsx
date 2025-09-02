@@ -136,15 +136,17 @@ export default function LuminaApp() {
       return;
     }
     
-    setGameState({
+    setGameState(prev => ({
       ...initialGameState,
       currentWord: word,
       guessedWord: word.replace(/./g, '_'),
       category,
       difficulty: difficulty,
       timeLeft: 30,
-      isSpinning: true
-    });
+      isSpinning: true,
+      // Keep current streak - don't reset it
+      streak: prev.streak
+    }));
     setCurrentScreen('game');
   };
 
