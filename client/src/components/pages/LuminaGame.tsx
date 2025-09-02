@@ -213,10 +213,10 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
           </div>
         </div>
 
-        {/* Turkish Keyboard - CodyCross Style */}
-        <div className="space-y-2 mb-4">
+        {/* Turkish Keyboard - Mobile Adaptive */}
+        <div className="space-y-1 sm:space-y-2 mb-4 px-2">
           {turkishKeyboardLayout.map((row, rowIndex) => (
-            <div key={rowIndex} className="flex justify-center gap-1">
+            <div key={rowIndex} className="flex justify-center gap-0.5 sm:gap-1">
               {row.map((letter, letterIndex) => {
                 const isUsed = usedLetters.includes(letter);
                 const isCorrect = currentWord.includes(letter);
@@ -224,7 +224,7 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
                   <Button
                     key={letterIndex}
                     onClick={() => onKeyPress(letter)}
-                    className={`w-8 h-8 text-sm font-bold rounded-lg shadow-lg transition-all duration-200 transform active:scale-95 ${
+                    className={`w-7 h-8 sm:w-8 sm:h-9 md:w-10 md:h-10 text-xs sm:text-sm font-bold rounded-lg shadow-lg transition-all duration-200 transform active:scale-95 touch-manipulation ${
                       isUsed 
                         ? isCorrect 
                           ? 'bg-gradient-to-br from-green-400 to-green-600 text-white border-0'
@@ -238,17 +238,6 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
               })}
             </div>
           ))}
-          
-          {/* Backspace Button */}
-          <div className="flex justify-center mt-2">
-            <Button
-              onClick={() => onKeyPress('BACKSPACE')}
-              className="w-16 h-8 text-sm font-bold rounded-lg shadow-lg transition-all duration-200 transform active:scale-95 bg-gradient-to-br from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white border-0"
-              data-testid="backspace-button"
-            >
-              <Delete className="w-4 h-4" />
-            </Button>
-          </div>
         </div>
 
         {/* Action buttons */}
