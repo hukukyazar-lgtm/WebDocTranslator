@@ -15,25 +15,31 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
   const { isAuthenticated } = useAuth();
   const { stats } = useGameStats();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>('kolay'); // Varsayılan olarak kolay seçili
+  const [categoryDifficulties, setCategoryDifficulties] = useState<Record<string, string>>({});
 
   const handleCategorySelect = (categoryName: string) => {
     setSelectedCategory(categoryName);
-    // Kolay seviye seçili kalsın, sıfırlanmasın
-    if (!selectedDifficulty) {
-      setSelectedDifficulty('kolay');
+    // Eğer bu kategori için zorluk seçimi yoksa, kolay olarak ayarla
+    if (!categoryDifficulties[categoryName]) {
+      setCategoryDifficulties(prev => ({
+        ...prev,
+        [categoryName]: 'kolay'
+      }));
     }
   };
 
   const handleDifficultySelect = (difficulty: string, categoryName: string, e: React.MouseEvent) => {
     e.stopPropagation();
     setSelectedCategory(categoryName);
-    setSelectedDifficulty(difficulty);
+    setCategoryDifficulties(prev => ({
+      ...prev,
+      [categoryName]: difficulty
+    }));
   };
 
   const handleStartGame = () => {
-    if (selectedCategory && selectedDifficulty) {
-      onGameStart(selectedCategory, selectedDifficulty);
+    if (selectedCategory && categoryDifficulties[selectedCategory]) {
+      onGameStart(selectedCategory, categoryDifficulties[selectedCategory]);
     }
   };
   const categories = [
@@ -92,10 +98,10 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
             <Card 
               key={category.id} 
               className={`relative overflow-hidden border-0 shadow-lg rounded-2xl transition-all duration-300 transform cursor-pointer hover:scale-105 active:scale-95 ${
-                selectedCategory === category.name && selectedDifficulty
-                  ? selectedDifficulty === 'kolay' 
+                categoryDifficulties[category.name]
+                  ? categoryDifficulties[category.name] === 'kolay' 
                     ? 'bg-gradient-to-br from-green-100 to-green-200 text-green-800 border-2 border-green-400' 
-                    : selectedDifficulty === 'orta'
+                    : categoryDifficulties[category.name] === 'orta'
                     ? 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-800 border-2 border-yellow-400'
                     : 'bg-gradient-to-br from-red-100 to-red-200 text-red-800 border-2 border-red-400'
                   : 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200'
@@ -112,7 +118,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   <button
                     onClick={(e) => handleDifficultySelect("kolay", category.name, e)}
                     className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
-                      selectedCategory === category.name && selectedDifficulty === "kolay"
+                      categoryDifficulties[category.name] === "kolay"
                         ? 'bg-green-200 ring-green-400 scale-110'
                         : 'bg-white hover:bg-green-100 active:bg-green-200 ring-green-300/50 hover:ring-green-400/80'
                     }`}
@@ -124,7 +130,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   <button
                     onClick={(e) => handleDifficultySelect("orta", category.name, e)}
                     className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
-                      selectedCategory === category.name && selectedDifficulty === "orta"
+                      categoryDifficulties[category.name] === "orta"
                         ? 'bg-yellow-200 ring-yellow-400 scale-110'
                         : 'bg-white hover:bg-yellow-100 active:bg-yellow-200 ring-yellow-300/50 hover:ring-yellow-400/80'
                     }`}
@@ -136,7 +142,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   <button
                     onClick={(e) => handleDifficultySelect("zor", category.name, e)}
                     className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
-                      selectedCategory === category.name && selectedDifficulty === "zor"
+                      categoryDifficulties[category.name] === "zor"
                         ? 'bg-red-200 ring-red-400 scale-110'
                         : 'bg-white hover:bg-red-100 active:bg-red-200 ring-red-300/50 hover:ring-red-400/80'
                     }`}
@@ -154,11 +160,11 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
 
 
         {/* Oyna Butonu - sadece kategori ve zorluk seçildiğinde göster */}
-        {selectedCategory && selectedDifficulty && (
+        {selectedCategory && categoryDifficulties[selectedCategory] && (
           <div className="max-w-md mx-auto mb-6">
             <div className="text-center mb-4">
               <h3 className="text-xl font-black text-white">{selectedCategory}</h3>
-              <p className="text-white/80 font-medium">Zorluk: {selectedDifficulty === 'kolay' ? 'Kolay' : selectedDifficulty === 'orta' ? 'Orta' : 'Zor'}</p>
+              <p className="text-white/80 font-medium">Zorluk: {categoryDifficulties[selectedCategory] === 'kolay' ? 'Kolay' : categoryDifficulties[selectedCategory] === 'orta' ? 'Orta' : 'Zor'}</p>
             </div>
             
             <button
