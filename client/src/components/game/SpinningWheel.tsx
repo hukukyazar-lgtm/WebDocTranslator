@@ -228,7 +228,8 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
           >
             {letters.map((char, i) => {
               const angle = (i / letters.length) * 360;
-              const rotation = Date.now() * 0.1 % 360; // Simple rotation for dynamic effects
+              const baseAngle = angle;
+              const letterSpacing = 360 / letters.length;
               
               // Much more aggressive scale reduction for long words
               const getScaleFactor = () => {
@@ -246,19 +247,44 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               const letterVisibility = getLetterVisibility(timeLeft, i, letters.length, difficulty);
               const fontSize = getFontSize(letters.length, isSpinning);
 
-              // Use progressive difficulty transform system
-              const finalTransform = isSpinning 
-                ? `${getLetterTransform(i, 0, 360/letters.length, radius, dynamicScale, rotation, difficulty, isSpinning)} translateZ(15px)`
-                : `${transformAlign} translateZ(5px)`;
+              // Progressive difficulty transform system based on wheel class
+              const getProgressiveTransform = () => {
+                if (!isSpinning) {
+                  return `${transformAlign} translateZ(5px)`;
+                }
+                
+                const baseTransform = `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`;
+                
+                // Easy level (1): Normal wheel rotation only
+                if (difficulty === 1) {
+                  return baseTransform;
+                }
+                
+                // Medium level (2): Add individual letter rotation
+                if (difficulty === 2) {
+                  return `rotate(${baseAngle}deg) translate(${radius}px) rotate(${i * 90}deg) scale(${dynamicScale}) translateZ(15px)`;
+                }
+                
+                // Hard level (3): Add position chaos with sine wave
+                if (difficulty === 3) {
+                  const chaos = Math.sin(i * 0.8) * 20;
+                  const chaosRadius = radius + chaos;
+                  return `rotate(${baseAngle + chaos}deg) translate(${chaosRadius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`;
+                }
+                
+                return baseTransform;
+              };
 
               return (
                 <span 
                   key={i}
-                  className={`absolute font-sans font-semibold uppercase letter-glow transition-all duration-1000 ${fontSize}`}
+                  className={`absolute font-sans font-semibold uppercase letter-glow transition-all duration-1000 ${fontSize} ${
+                    difficulty === 2 && isSpinning ? 'animate-rotate-letter' : ''
+                  }`}
                   style={{ 
                     letterSpacing: letters.length > 10 ? '-0.05em' : letters.length > 8 ? '-0.02em' : '0',
                     color: letterColors[i],
-                    transform: finalTransform, 
+                    transform: getProgressiveTransform(), 
                     filter: `blur(${blurAmount}px) drop-shadow(0 0 12px ${isSpinning ? 'currentColor' : 'rgba(255,255,255,0.8)'}) drop-shadow(0 5px 10px rgba(0,0,0,0.3))`,
                     transition: 'transform 1s, filter 0.5s, opacity 0.3s, color 0.5s',
                     textShadow: isSpinning 
