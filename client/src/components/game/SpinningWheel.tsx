@@ -11,6 +11,9 @@ interface SpinningWheelProps {
 }
 
 export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty, category, timeLeft = 30 }: SpinningWheelProps) => {
+  // RENDER TEST - bu alert çıkmazsa component hiç render edilmiyor demektir
+  alert('SpinningWheel RENDER EDİLDİ!');
+  
   const letters = word.split('');
   const radius = 120;
   const theme = getThemeForCategory(category);
