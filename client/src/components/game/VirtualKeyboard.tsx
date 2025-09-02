@@ -67,11 +67,28 @@ export const VirtualKeyboard = memo(({
   }, [onKeyPress]);
 
   const getKeyStyle = useCallback((key: string) => {
-    const baseClasses = "keyboard-key px-1 sm:px-2 md:px-3 lg:px-4 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border min-w-[28px] sm:min-w-[36px] md:min-w-[44px] lg:min-w-[52px] touch-manipulation";
+    const baseClasses = "keyboard-key px-1 sm:px-2 md:px-3 lg:px-4 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none backdrop-blur-lg border min-w-[28px] sm:min-w-[36px] md:min-w-[44px] lg:min-w-[52px] touch-manipulation";
     
-    // Tüm harfler aynı stil - renklendirme yok
-    return `${baseClasses} bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 border-white/30 shadow-lg`;
-  }, []);
+    const upperKey = key.toUpperCase();
+    
+    // Correct letters (green pulsing effect)
+    if (correctKeys.includes(upperKey)) {
+      return `${baseClasses} bg-green-500/40 text-white border-green-400 shadow-lg animate-pulse-green active:scale-90`;
+    }
+    
+    // Present letters (yellow vibrating effect) 
+    if (presentKeys.includes(upperKey)) {
+      return `${baseClasses} bg-yellow-500/40 text-white border-yellow-400 shadow-lg animate-shake active:scale-90`;
+    }
+    
+    // Absent letters (red shake effect)
+    if (absentKeys.includes(upperKey)) {
+      return `${baseClasses} bg-red-500/40 text-white/60 border-red-400 shadow-lg animate-shake-red active:scale-90`;
+    }
+    
+    // Default state
+    return `${baseClasses} bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 border-white/30 shadow-lg active:scale-95`;
+  }, [correctKeys, presentKeys, absentKeys]);
 
   return (
     <div className="space-y-1 sm:space-y-2 md:space-y-2.5 lg:space-y-3">

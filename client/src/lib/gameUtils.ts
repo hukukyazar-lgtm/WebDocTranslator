@@ -436,30 +436,50 @@ export const getBlurIntensity = (difficulty: number, timeLeft: number, isSpinnin
   return baseBlur;
 };
 
-// Calculate letter visibility based on difficulty and time
+// Enhanced mystery reveal system - letters emerge gradually with dramatic timing
 export const getLetterVisibility = (timeLeft: number, letterIndex: number, totalLetters: number, difficulty: number = 3): number => {
   const timeProgress = (30 - timeLeft) / 30; // 0 to 1 progression
-  const letterProgress = letterIndex / totalLetters; // Position of this letter
   
-  // Visibility timing based on difficulty
-  let visibilityThreshold;
-  if (difficulty <= 2) {
-    visibilityThreshold = 0.1; // Easy: Letters show early
-  } else if (difficulty === 3) {
-    visibilityThreshold = 0.2; // Medium: Normal timing
-  } else {
-    visibilityThreshold = 0.3; // Hard: Letters show later
+  // MYSTERY PHASE 1: Complete invisibility (30-20 seconds)
+  if (timeLeft > 20) {
+    return 0.02; // Almost completely hidden
   }
   
-  // Letters become visible progressively
-  if (timeProgress > letterProgress + visibilityThreshold) {
-    return 1; // Fully visible
-  } else if (timeProgress > letterProgress) {
-    return (timeProgress - letterProgress) / visibilityThreshold; // Fading in
+  // MYSTERY PHASE 2: Ghostly hints (20-15 seconds)
+  if (timeLeft > 15) {
+    return 0.08 + (Math.sin(Date.now() * 0.01 + letterIndex) * 0.03); // Subtle flickering
   }
   
-  // Base visibility also depends on difficulty
-  return difficulty <= 2 ? 0.3 : difficulty === 3 ? 0.1 : 0.05;
+  // MYSTERY PHASE 3: Progressive reveal (15-10 seconds)
+  if (timeLeft > 10) {
+    const revealProgress = (20 - timeLeft) / 5; // 0 to 1 over 5 seconds
+    const letterRevealThreshold = (letterIndex / totalLetters) * 0.7; // Stagger letter reveals
+    
+    if (revealProgress > letterRevealThreshold) {
+      const fadeStrength = (revealProgress - letterRevealThreshold) / (1 - letterRevealThreshold);
+      return 0.1 + (fadeStrength * 0.3); // Gradual 10% to 40% visibility
+    }
+    return 0.08; // Still mostly hidden
+  }
+  
+  // DRAMATIC PHASE 4: Major reveal (10-5 seconds)
+  if (timeLeft > 5) {
+    const dramaticProgress = (15 - timeLeft) / 5; // 0 to 1 over 5 seconds
+    const letterPosition = letterIndex / totalLetters;
+    
+    // Central letters reveal first, then edges
+    const centerDistance = Math.abs(letterPosition - 0.5) * 2;
+    const revealOrder = 1 - centerDistance; // Center = 1, edges = 0
+    
+    if (dramaticProgress > (0.3 - revealOrder * 0.2)) {
+      return 0.4 + (dramaticProgress * 0.4); // 40% to 80% visibility
+    }
+    return 0.15;
+  }
+  
+  // FINAL REVELATION (5-0 seconds) - Full clarity for dramatic finale
+  const finalProgress = (10 - timeLeft) / 5;
+  return 0.8 + (finalProgress * 0.2); // 80% to 100% visibility
 };
 
 // Get dramatic scale effect for letters
