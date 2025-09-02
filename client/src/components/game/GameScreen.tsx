@@ -478,6 +478,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setCorrectGuesses(updatedStats.totalCorrectGuesses);
       setAverageTime(updatedStats.averageGuessTime);
       setTotalScore(updatedStats.totalScore);
+      setGameSuccess(true); // Başarılı olduğunu işaretle
       
       // Yeni başarım kontrol et
       const newAchievements = updatedStats.achievements.filter(a => 
@@ -489,7 +490,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         setCurrentAchievement(newAchievements[0]);
       }
       
-      // Modal'ı göster
+      // Modal'ı göster - gameOver'ı set etme!
       console.log('Setting showSuccessModal to true');
       setShowSuccessModal(true);
     } else if (newGuesses.length >= maxGuesses) {
