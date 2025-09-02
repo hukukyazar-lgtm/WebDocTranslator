@@ -108,20 +108,45 @@ export const LuminaCategories = memo(({ onCategorySelect, onBack }: LuminaCatego
                     </div>
                   </div>
 
-                  {/* Difficulty badges */}
+                  {/* Difficulty buttons */}
                   <div className="flex items-center justify-between">
-                    <div className="flex gap-2">
-                      <Badge className="bg-green-100 text-green-800 border-green-200">Kolay</Badge>
-                      <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200">Orta</Badge>
-                      <Badge className="bg-red-100 text-red-800 border-red-200">Zor</Badge>
+                    <div className="flex gap-1">
+                      <Button 
+                        onClick={() => onCategorySelect(category.name, "easy")}
+                        variant="outline"
+                        size="sm"
+                        className="bg-green-100 text-green-800 border-green-200 hover:bg-green-200 hover:text-green-900 font-semibold px-3 py-1 rounded-lg transition-all duration-200"
+                        data-testid={`difficulty-easy-${category.name}`}
+                      >
+                        Kolay
+                      </Button>
+                      <Button 
+                        onClick={() => onCategorySelect(category.name, "medium")}
+                        variant="outline"
+                        size="sm"
+                        className="bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200 hover:text-yellow-900 font-semibold px-3 py-1 rounded-lg transition-all duration-200"
+                        data-testid={`difficulty-medium-${category.name}`}
+                      >
+                        Orta
+                      </Button>
+                      <Button 
+                        onClick={() => onCategorySelect(category.name, "hard")}
+                        variant="outline"
+                        size="sm"
+                        className="bg-red-100 text-red-800 border-red-200 hover:bg-red-200 hover:text-red-900 font-semibold px-3 py-1 rounded-lg transition-all duration-200"
+                        data-testid={`difficulty-hard-${category.name}`}
+                      >
+                        Zor
+                      </Button>
                     </div>
                     
                     <Button 
-                      onClick={() => onCategorySelect(category.name, "2")}
+                      onClick={() => onCategorySelect(category.name, "medium")}
                       className="rounded-xl font-bold text-white shadow-lg border-0"
                       style={{
                         background: `linear-gradient(135deg, ${category.color.split(' ')[1]}, ${category.color.split(' ')[3]})`
                       }}
+                      data-testid={`play-button-${category.name}`}
                     >
                       Oyna
                     </Button>
