@@ -5,6 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, Heart, Zap, Timer, HelpCircle, RotateCcw, Delete } from 'lucide-react';
 import { useGameStats } from '@/hooks/useGameStats';
 import { useAuth } from '@/hooks/useAuth';
+import { SpinningWheel } from '../game/SpinningWheel';
 
 interface LuminaGameProps {
   gameState: {
@@ -28,6 +29,16 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
   const { currentWord, guessedWord, category, difficulty, timeLeft, lives, streak, isSpinning, usedLetters } = gameState;
   const scrambledLetters = currentWord.split('');
   const turkishKeyboardLayout = turkishKeyboard;
+  
+  // Convert difficulty string to number for SpinningWheel
+  const difficultyLevel = useMemo(() => {
+    switch(difficulty.toLowerCase()) {
+      case 'kolay': return 1;
+      case 'orta': return 2;
+      case 'zor': return 3;
+      default: return 2;
+    }
+  }, [difficulty]);
 
   // Calculate spinning wheel position for each letter
   const getLetterPosition = (index: number, total: number) => {
@@ -155,49 +166,15 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
 
         {/* LUMINA Spinning Wheel */}
         <div className="flex-1 flex flex-col items-center justify-center mb-6">
-          <div className="relative w-64 h-64 mb-8">
-            {/* Spinning wheel container */}
-            <div className={`absolute inset-0 ${spinClass}`} 
-                 style={{ 
-                   filter: isSpinning ? `blur(${timeLeft <= 5 ? 0.5 : timeLeft <= 10 ? 1 : 2}px)` : 'none',
-                   animationDuration: isSpinning ? getAnimationDuration() : '0s'
-                 }}>
-              {scrambledLetters && scrambledLetters.length > 0 && scrambledLetters.map((letter, index) => {
-                const position = getLetterPosition(index, scrambledLetters.length);
-                return (
-                  <div
-                    key={`${letter}-${index}`}
-                    className="absolute transform -translate-x-1/2 -translate-y-1/2"
-                    style={{
-                      left: `calc(50% + ${position.x}px)`,
-                      top: `calc(50% + ${position.y}px)`,
-                      opacity: getLetterOpacity(index),
-                      transform: `translate(-50%, -50%) scale(${1 + Math.sin(Date.now() * 0.002 + index) * 0.1})`,
-                      transition: 'opacity 0.3s ease-in-out'
-                    }}
-                  >
-                    <div 
-                      className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black text-white shadow-2xl border border-white/20"
-                      style={{
-                        background: `linear-gradient(135deg, ${
-                          index % 4 === 0 ? '#4facfe, #00f2fe' :
-                          index % 4 === 1 ? '#43e97b, #38f9d7' :
-                          index % 4 === 2 ? '#fa709a, #fee140' :
-                          '#667eea, #764ba2'
-                        })`
-                      }}
-                    >
-                      {letter || '?'}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-            
-            {/* Center pulse effect */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="w-6 h-6 bg-white/80 rounded-full animate-pulse shadow-lg"></div>
-            </div>
+          <div className="relative mb-8">
+            <SpinningWheel
+              word={currentWord}
+              isSpinning={isSpinning}
+              spinDuration={3000}
+              difficulty={difficultyLevel}
+              category={category}
+              timeLeft={timeLeft}
+            />
           </div>
 
           {/* Word guess display */}
