@@ -199,16 +199,6 @@ export default function LuminaApp() {
       }));
     }
     
-    // Update local player stats (for guests or as backup)
-    setPlayerProfile(prev => ({
-      ...prev,
-      gamesPlayed: prev.gamesPlayed + 1,
-      totalScore: prev.totalScore + finalScore,
-      successRate: success ? Math.min(prev.successRate + 1, 100) : Math.max(prev.successRate - 1, 0),
-      streak: success ? gameState.streak + 1 : 0,
-      bestStreak: success ? Math.max(prev.bestStreak, gameState.streak + 1) : prev.bestStreak
-    }));
-    
     setCurrentScreen('gameover');
   };
 
