@@ -1,4 +1,4 @@
-import { memo, useMemo } from 'react';
+import { memo, useMemo, useEffect, useState } from 'react';
 import { rainbowColors, getThemeForCategory, getBlurIntensity, getLetterVisibility, getLetterScale, getIntensityLevel, getWheelSpeedMultiplier } from '@/lib/gameUtils';
 
 interface SpinningWheelProps {
@@ -14,6 +14,19 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
   const letters = word.split('');
   const radius = 120;
   const theme = getThemeForCategory(category);
+  
+  // Animation state for progressive difficulty
+  const [animationFrame, setAnimationFrame] = useState(0);
+  
+  useEffect(() => {
+    if (!isSpinning) return;
+    
+    const interval = setInterval(() => {
+      setAnimationFrame(prev => prev + 1);
+    }, 50); // Update every 50ms for smooth animations
+    
+    return () => clearInterval(interval);
+  }, [isSpinning]);
   
   const blurAmount = getBlurIntensity(difficulty, timeLeft, isSpinning);
   const intensityLevel = getIntensityLevel(timeLeft);
@@ -247,12 +260,13 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               const letterVisibility = getLetterVisibility(timeLeft, i, letters.length, difficulty);
               const fontSize = getFontSize(letters.length, isSpinning);
 
-              // Progressive difficulty transform system based on wheel class
+              // Progressive difficulty transform system
               const getProgressiveTransform = () => {
                 if (!isSpinning) {
                   return `${transformAlign} translateZ(5px)`;
                 }
                 
+                // Base spinning transform
                 const baseTransform = `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`;
                 
                 // Easy level (1): Normal wheel rotation only
@@ -260,16 +274,16 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                   return baseTransform;
                 }
                 
-                // Medium level (2): Add individual letter rotation
+                // Medium level (2): Letters spin around their own axis
                 if (difficulty === 2) {
-                  return `rotate(${baseAngle}deg) translate(${radius}px) rotate(${i * 90}deg) scale(${dynamicScale}) translateZ(15px)`;
+                  return `rotate(${baseAngle}deg) translate(${radius}px) scale(${dynamicScale}) translateZ(15px)`; // Let CSS handle individual rotation
                 }
                 
-                // Hard level (3): Add position chaos with sine wave
+                // Hard level (3): Chaotic positioning using animation frame
                 if (difficulty === 3) {
-                  const chaos = Math.sin(i * 0.8) * 20;
-                  const chaosRadius = radius + chaos;
-                  return `rotate(${baseAngle + chaos}deg) translate(${chaosRadius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`;
+                  const chaosAngle = baseAngle + Math.sin(animationFrame * 0.1 + i) * 20;
+                  const chaosRadius = radius + Math.cos(animationFrame * 0.08 + i * 0.7) * 30;
+                  return `rotate(${chaosAngle}deg) translate(${chaosRadius}px) rotate(-${chaosAngle}deg) scale(${dynamicScale}) translateZ(15px)`;
                 }
                 
                 return baseTransform;
@@ -278,7 +292,7 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               return (
                 <span 
                   key={i}
-                  className={`absolute font-sans font-semibold uppercase letter-glow transition-all duration-1000 ${fontSize} ${
+                  className={`absolute font-sans font-semibold uppercase letter-glow transition-all duration-300 ${fontSize} ${
                     difficulty === 2 && isSpinning ? 'animate-rotate-letter' : ''
                   }`}
                   style={{ 
