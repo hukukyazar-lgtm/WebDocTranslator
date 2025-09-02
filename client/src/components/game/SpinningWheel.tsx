@@ -260,41 +260,27 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               const letterVisibility = getLetterVisibility(timeLeft, i, letters.length, difficulty);
               const fontSize = getFontSize(letters.length, isSpinning);
 
-              // Progressive difficulty transform system
-              const getTransformForDifficulty = () => {
-                if (!isSpinning) {
-                  return `${transformAlign} translateZ(5px)`;
-                }
+              // Simple transform - back to original working system
+              const finalTransform = isSpinning 
+                ? `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`
+                : `${transformAlign} translateZ(5px)`;
                 
-                // Easy level (1): Normal wheel rotation
-                if (difficulty === 1) {
-                  return `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`;
-                }
-                
-                // Medium level (2): Add extra letter rotation
-                if (difficulty === 2) {
-                  const extraRotation = (animationFrame * 5) % 360;
-                  return `rotate(${baseAngle}deg) translate(${radius}px) rotate(${extraRotation}deg) scale(${dynamicScale}) translateZ(15px)`;
-                }
-                
-                // Hard level (3): Chaotic movement
-                if (difficulty === 3) {
-                  const chaos = Math.sin(animationFrame * 0.1 + i) * 20;
-                  const chaosRadius = radius + Math.cos(animationFrame * 0.08 + i * 0.5) * 25;
-                  return `rotate(${baseAngle + chaos}deg) translate(${chaosRadius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`;
-                }
-                
-                return `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`;
+              // Get difficulty-based CSS class
+              const getDifficultyClass = () => {
+                if (!isSpinning) return '';
+                if (difficulty === 2) return 'medium-letter-spin';
+                if (difficulty === 3) return 'hard-letter-chaos';
+                return '';
               };
 
               return (
                 <span 
                   key={i}
-                  className={`absolute font-sans font-semibold uppercase letter-glow ${fontSize}`}
+                  className={`absolute font-sans font-semibold uppercase letter-glow ${fontSize} ${getDifficultyClass()}`}
                   style={{ 
                     letterSpacing: letters.length > 10 ? '-0.05em' : letters.length > 8 ? '-0.02em' : '0',
                     color: letterColors[i],
-                    transform: getTransformForDifficulty(), 
+                    transform: finalTransform, 
                     filter: `blur(${blurAmount}px) drop-shadow(0 0 12px ${isSpinning ? 'currentColor' : 'rgba(255,255,255,0.8)'}) drop-shadow(0 5px 10px rgba(0,0,0,0.3))`,
                     transition: 'transform 1s, filter 0.5s, opacity 0.3s, color 0.5s',
                     textShadow: isSpinning 
