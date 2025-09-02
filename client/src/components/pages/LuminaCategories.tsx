@@ -176,23 +176,23 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           </div>
         )}
 
-        {/* Bottom stats */}
+        {/* Bottom stats - Useful player information */}
         <div className="mt-8 text-center">
           <Card className="p-4 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30 max-w-sm mx-auto">
             <div className="flex items-center justify-around text-white">
               <div>
-                <div className="text-2xl font-black">429</div>
-                <div className="text-sm opacity-80">Toplam Kelime</div>
+                <div className="text-lg font-black">Seviye 5</div>
+                <div className="text-xs opacity-80">220/500 puan</div>
               </div>
               <div className="w-px h-8 bg-white/30"></div>
               <div>
-                <div className="text-2xl font-black">67%</div>
-                <div className="text-sm opacity-80">Genel İlerleme</div>
+                <div className="text-lg font-black">3/10</div>
+                <div className="text-xs opacity-80">Tamamlanan</div>
               </div>
               <div className="w-px h-8 bg-white/30"></div>
               <div>
-                <div className="text-2xl font-black">12</div>
-                <div className="text-sm opacity-80">Rozetler</div>
+                <div className="text-lg font-black">Hayvanlar</div>
+                <div className="text-xs opacity-80">Son oyun</div>
               </div>
             </div>
           </Card>
