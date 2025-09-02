@@ -209,8 +209,29 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
           )}
           
           {!isAuthenticated && (
-            <div className="mt-4 text-white/60 text-sm">
-              ⚠️ Giriş yap, istatistiklerin kaybolmasın
+            <div className="mt-4 relative">
+              {/* Göz alıcı bilgilendirme kutusu */}
+              <div className="bg-gradient-to-r from-yellow-400 via-orange-400 to-red-400 p-4 rounded-2xl shadow-xl border-2 border-white/20 animate-pulse">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                    <span className="text-white text-lg">⚡</span>
+                  </div>
+                  <h3 className="text-white font-black text-lg">İstatistiklerin Kaybolacak!</h3>
+                </div>
+                <p className="text-white/90 text-sm leading-relaxed">
+                  🎯 <strong>Giriş yapmadan</strong> oynadığın tüm skorlar ve başarılar geçici! 
+                  Giriş yap ki istatistiklerin <strong>daima korunsun.</strong>
+                </p>
+                
+                {/* Animasyonlu ok */}
+                <div className="flex justify-center mt-3">
+                  <div className="animate-bounce">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
             </div>
           )}
         </div>
