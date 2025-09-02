@@ -56,6 +56,9 @@ export default function LuminaApp() {
 
   // Category progress tracking - track completed words per category/difficulty
   const [categoryProgress, setCategoryProgress] = useState<{[key: string]: {[difficulty: string]: number}}>({});
+  
+  // Used words tracking to prevent repetition
+  const [usedWords, setUsedWords] = useState<{[key: string]: {[difficulty: string]: string[]}}>({});
 
   // Timer logic
   useEffect(() => {
@@ -118,7 +121,8 @@ export default function LuminaApp() {
         difficultyLevel = parseInt(difficulty) || 2;
     }
     
-    const word = getWordByDifficulty(category, difficultyLevel);
+    const categoryUsedWords = usedWords[category]?.[difficulty] || [];
+    const word = getWordByDifficulty(category, difficultyLevel, categoryUsedWords);
     console.log('Selected category:', category, 'difficulty:', difficulty, 'level:', difficultyLevel, 'word:', word);
     
     if (!word) {
@@ -147,15 +151,26 @@ export default function LuminaApp() {
       isSpinning: false
     }));
     
-    // Update category progress if successful
+    // Update category progress and used words if successful
     if (success) {
       const categoryKey = gameState.category;
       const difficultyKey = gameState.difficulty;
+      const currentWord = gameState.currentWord;
+      
       setCategoryProgress(prev => ({
         ...prev,
         [categoryKey]: {
           ...prev[categoryKey],
           [difficultyKey]: (prev[categoryKey]?.[difficultyKey] || 0) + 1
+        }
+      }));
+      
+      // Add word to used words list
+      setUsedWords(prev => ({
+        ...prev,
+        [categoryKey]: {
+          ...prev[categoryKey],
+          [difficultyKey]: [...(prev[categoryKey]?.[difficultyKey] || []), currentWord]
         }
       }));
     }
