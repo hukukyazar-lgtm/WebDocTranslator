@@ -169,7 +169,7 @@ export class DatabaseStorage implements IStorage {
 
     const categories: { [category: string]: number } = {};
     for (const session of sessions) {
-      categories[session.category] = session.count;
+      categories[session.category] = Number(session.count);
     }
 
     // Get last game

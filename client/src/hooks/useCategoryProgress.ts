@@ -19,6 +19,7 @@ export function useCategoryProgress() {
     retry: false,
   });
 
+
   return {
     progress,
     isLoading,
