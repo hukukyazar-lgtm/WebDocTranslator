@@ -265,9 +265,9 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 ? `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`
                 : `${transformAlign} translateZ(5px)`;
                 
-              // Debug difficulty value
+              // Debug difficulty value - ALWAYS log, even when not spinning
               if (i === 0) { // Only log once per render
-                console.log('SpinningWheel DEBUG:', { difficulty, isSpinning, category });
+                console.log('SpinningWheel ALWAYS:', { difficulty, isSpinning, category, word });
               }
               
               // Test: Always show red for medium difficulty
