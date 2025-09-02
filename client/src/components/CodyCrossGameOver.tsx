@@ -6,15 +6,26 @@ import { RotateCcw, Home, Share2, Star, Zap, Clock, Trophy } from 'lucide-react'
 import luminaLogo from '@/assets/lumina-logo.png';
 
 // CodyCross style - modern, colorful, friendly, with soft shapes and vibrant colors
-export const CodyCrossGameOver = memo(() => {
+interface CodyCrossGameOverProps {
+  gameSuccess: boolean;
+  score: number;
+  word: string;
+  timeLeft: number;
+  streak: number;
+  category: string;
+  onPlayAgain: () => void;
+  onMainMenu: () => void;
+}
+
+export const CodyCrossGameOver = memo(({ gameSuccess, score, word, timeLeft, streak, category, onPlayAgain, onMainMenu }: CodyCrossGameOverProps) => {
   const gameResult = {
-    isWin: true,
-    score: 2450,
-    timeRemaining: 18,
-    streak: 7,
-    category: "Hayvanlar",
+    isWin: gameSuccess,
+    score: score,
+    timeRemaining: timeLeft,
+    streak: streak,
+    category: category,
     difficulty: "Orta",
-    correctWord: "KAPLAN",
+    correctWord: word,
     totalTime: 30,
     attempts: 3
   };
@@ -169,6 +180,7 @@ export const CodyCrossGameOver = memo(() => {
               <div className="space-y-4">
                 {/* Primary action - big and colorful */}
                 <Button 
+                  onClick={onPlayAgain}
                   className="w-full h-16 rounded-2xl text-xl font-black border-0 shadow-xl text-white relative overflow-hidden"
                   style={{
                     background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
@@ -182,6 +194,7 @@ export const CodyCrossGameOver = memo(() => {
                 {/* Secondary actions */}
                 <div className="grid grid-cols-2 gap-4">
                   <Button 
+                    onClick={onMainMenu}
                     className="h-14 rounded-xl font-bold border-0 shadow-lg text-white"
                     style={{
                       background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'

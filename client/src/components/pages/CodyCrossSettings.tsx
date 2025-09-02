@@ -18,7 +18,19 @@ import {
   Bell
 } from 'lucide-react';
 
-export const CodyCrossSettings = memo(() => {
+interface CodyCrossSettingsProps {
+  playerProfile: {
+    name: string;
+    gamesPlayed: number;
+    successRate: number;
+    bestStreak: number;
+    totalScore: number;
+  };
+  onBack: () => void;
+  onProfileUpdate: (profile: any) => void;
+}
+
+export const CodyCrossSettings = memo(({ playerProfile, onBack, onProfileUpdate }: CodyCrossSettingsProps) => {
   return (
     <div className="min-h-screen relative overflow-hidden" style={{
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
@@ -44,7 +56,9 @@ export const CodyCrossSettings = memo(() => {
       <div className="relative z-10 min-h-screen p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <Button variant="outline" className="p-3 rounded-full bg-white/20 border-white/30 text-white hover:bg-white/30">
+          <Button 
+            onClick={onBack}
+            variant="outline" className="p-3 rounded-full bg-white/20 border-white/30 text-white hover:bg-white/30">
             <ChevronLeft className="w-6 h-6" />
           </Button>
           <div className="text-center">
@@ -62,11 +76,11 @@ export const CodyCrossSettings = memo(() => {
                 <User className="w-8 h-8 text-white" />
               </div>
               <div className="flex-1">
-                <h3 className="text-xl font-black text-gray-800">Oyuncu</h3>
+                <h3 className="text-xl font-black text-gray-800">{playerProfile.name}</h3>
                 <p className="text-gray-600 font-medium">Premium Üye</p>
                 <div className="flex items-center gap-1 mt-1">
                   <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
-                  <span className="text-sm text-gray-700 font-semibold">1,247 puan</span>
+                  <span className="text-sm text-gray-700 font-semibold">{playerProfile.totalScore} puan</span>
                 </div>
               </div>
             </div>
@@ -166,15 +180,15 @@ export const CodyCrossSettings = memo(() => {
             <h3 className="text-lg font-black text-gray-800 mb-4">İstatistikler</h3>
             <div className="grid grid-cols-3 gap-4">
               <div className="text-center">
-                <div className="text-2xl font-black text-blue-600">247</div>
+                <div className="text-2xl font-black text-blue-600">{playerProfile.gamesPlayed}</div>
                 <div className="text-sm text-gray-600 font-medium">Oyun</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-black text-green-600">89%</div>
+                <div className="text-2xl font-black text-green-600">{playerProfile.successRate}%</div>
                 <div className="text-sm text-gray-600 font-medium">Başarı</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-black text-purple-600">15</div>
+                <div className="text-2xl font-black text-purple-600">{playerProfile.bestStreak}</div>
                 <div className="text-sm text-gray-600 font-medium">En Yüksek Seri</div>
               </div>
             </div>

@@ -5,7 +5,13 @@ import { Input } from '@/components/ui/input';
 import { Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
 import { useState } from 'react';
 
-export const CodyCrossLogin = memo(() => {
+interface CodyCrossLoginProps {
+  onLogin: () => void;
+  onBack: () => void;
+  onGuestMode: () => void;
+}
+
+export const CodyCrossLogin = memo(({ onLogin, onBack, onGuestMode }: CodyCrossLoginProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -91,9 +97,12 @@ export const CodyCrossLogin = memo(() => {
               </div>
 
               {/* Login button */}
-              <Button className="w-full h-14 rounded-2xl text-lg font-bold text-white shadow-xl" style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-              }}>
+              <Button 
+                onClick={onLogin}
+                className="w-full h-14 rounded-2xl text-lg font-bold text-white shadow-xl" style={{
+                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                }}
+              >
                 <LogIn className="w-5 h-5 mr-3" />
                 Giriş Yap
               </Button>
@@ -144,7 +153,10 @@ export const CodyCrossLogin = memo(() => {
           {/* Guest play option */}
           <div className="mt-8">
             <Card className="p-4 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30">
-              <Button className="w-full h-12 rounded-xl font-bold bg-transparent border-2 border-white/50 text-white hover:bg-white/10">
+              <Button 
+                onClick={onGuestMode}
+                className="w-full h-12 rounded-xl font-bold bg-transparent border-2 border-white/50 text-white hover:bg-white/10"
+              >
                 Misafir Olarak Oyna
               </Button>
             </Card>

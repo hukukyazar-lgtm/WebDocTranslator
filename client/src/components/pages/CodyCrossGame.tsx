@@ -4,23 +4,27 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, Heart, Zap, Timer, HelpCircle, RotateCcw } from 'lucide-react';
 
-export const CodyCrossGame = memo(() => {
-  const currentWord = "KAPLAN";
-  const guessedWord = "K_P___"; // Player's current guess
-  const scrambledLetters = currentWord.split('');
-  const category = "Hayvanlar";
-  const difficulty = "Orta";
-  const timeLeft = 23;
-  const lives = 2;
-  const streak = 5;
-  const isSpinning = true;
+interface CodyCrossGameProps {
+  gameState: {
+    currentWord: string;
+    guessedWord: string;
+    category: string;
+    difficulty: string;
+    timeLeft: number;
+    lives: number;
+    streak: number;
+    isSpinning: boolean;
+    usedLetters: string[];
+  };
+  onKeyPress: (key: string) => void;
+  onGameOver: (success: boolean, score: number) => void;
+  turkishKeyboard: string[][];
+}
 
-  // Turkish keyboard layout
-  const turkishKeyboardLayout = [
-    ['Q','W','E','R','T','Y','U','I','O','P','Ğ','Ü'],
-    ['A','S','D','F','G','H','J','K','L','Ş','İ'],
-    ['Z','X','C','V','B','N','M','Ö','Ç']
-  ];
+export const CodyCrossGame = memo(({ gameState, onKeyPress, onGameOver, turkishKeyboard }: CodyCrossGameProps) => {
+  const { currentWord, guessedWord, category, difficulty, timeLeft, lives, streak, isSpinning, usedLetters } = gameState;
+  const scrambledLetters = currentWord.split('');
+  const turkishKeyboardLayout = turkishKeyboard;
 
   // Calculate spinning wheel position for each letter
   const getLetterPosition = (index: number, total: number) => {
@@ -180,11 +184,12 @@ export const CodyCrossGame = memo(() => {
           {turkishKeyboardLayout.map((row, rowIndex) => (
             <div key={rowIndex} className="flex justify-center gap-1">
               {row.map((letter, letterIndex) => {
-                const isUsed = guessedWord.includes(letter);
+                const isUsed = usedLetters.includes(letter);
                 const isCorrect = currentWord.includes(letter);
                 return (
                   <Button
                     key={letterIndex}
+                    onClick={() => onKeyPress(letter)}
                     className={`w-8 h-8 text-sm font-bold rounded-lg shadow-lg transition-all duration-200 transform active:scale-95 ${
                       isUsed 
                         ? isCorrect 

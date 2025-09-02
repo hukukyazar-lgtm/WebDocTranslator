@@ -4,7 +4,12 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, Star } from 'lucide-react';
 
-export const CodyCrossCategories = memo(() => {
+interface CodyCrossCategoriesProps {
+  onCategorySelect: (category: string, difficulty: string) => void;
+  onBack: () => void;
+}
+
+export const CodyCrossCategories = memo(({ onCategorySelect, onBack }: CodyCrossCategoriesProps) => {
   const categories = [
     { id: 1, name: "Hayvanlar", emoji: "🐾", color: "from-green-400 to-blue-500", completed: 85, total: 100 },
     { id: 2, name: "Yiyecekler", emoji: "🍎", color: "from-red-400 to-pink-500", completed: 67, total: 80 },
@@ -39,7 +44,9 @@ export const CodyCrossCategories = memo(() => {
       <div className="relative z-10 min-h-screen p-6">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
-          <Button variant="outline" className="p-3 rounded-full bg-white/20 border-white/30 text-white hover:bg-white/30">
+          <Button 
+            onClick={onBack}
+            variant="outline" className="p-3 rounded-full bg-white/20 border-white/30 text-white hover:bg-white/30">
             <ChevronLeft className="w-6 h-6" />
           </Button>
           <div className="text-center">
@@ -106,6 +113,7 @@ export const CodyCrossCategories = memo(() => {
                     </div>
                     
                     <Button 
+                      onClick={() => onCategorySelect(category.name, "3")}
                       className="rounded-xl font-bold text-white shadow-lg border-0"
                       style={{
                         background: `linear-gradient(135deg, ${category.color.split(' ')[1]}, ${category.color.split(' ')[3]})`

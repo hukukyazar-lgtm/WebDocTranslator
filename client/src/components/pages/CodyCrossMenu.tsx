@@ -3,7 +3,18 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Play, Settings, Trophy, User, HelpCircle } from 'lucide-react';
 
-export const CodyCrossMenu = memo(() => {
+interface CodyCrossMenuProps {
+  playerStats: {
+    gamesPlayed: number;
+    successRate: number;
+    bestStreak: number;
+  };
+  onStartGame: () => void;
+  onSettings: () => void;
+  onLogin: () => void;
+}
+
+export const CodyCrossMenu = memo(({ playerStats, onStartGame, onSettings, onLogin }: CodyCrossMenuProps) => {
   return (
     <div className="min-h-screen relative overflow-hidden" style={{
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
@@ -49,9 +60,12 @@ export const CodyCrossMenu = memo(() => {
         <div className="w-full max-w-md space-y-4">
           {/* Play button - main action */}
           <Card className="p-6 bg-white rounded-3xl shadow-2xl border-0">
-            <Button className="w-full h-20 rounded-2xl text-2xl font-black shadow-xl text-white" style={{
-              background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
-            }}>
+            <Button 
+              onClick={onStartGame}
+              className="w-full h-20 rounded-2xl text-2xl font-black shadow-xl text-white" style={{
+                background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+              }}
+            >
               <Play className="w-8 h-8 mr-4" />
               OYNA
             </Button>
@@ -80,9 +94,12 @@ export const CodyCrossMenu = memo(() => {
 
           <div className="grid grid-cols-2 gap-4">
             <Card className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
-              <Button className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" style={{
-                background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
-              }}>
+              <Button 
+                onClick={onSettings}
+                className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" style={{
+                  background: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)'
+                }}
+              >
                 <Settings className="w-6 h-6 mb-1" />
                 <div className="text-sm">Ayarlar</div>
               </Button>
@@ -103,17 +120,17 @@ export const CodyCrossMenu = memo(() => {
         <div className="mt-8 text-center">
           <div className="flex items-center justify-center space-x-6 text-white/80">
             <div>
-              <div className="text-2xl font-black text-white">247</div>
+              <div className="text-2xl font-black text-white">{playerStats.gamesPlayed}</div>
               <div className="text-sm">Oynanmış</div>
             </div>
             <div className="w-px h-8 bg-white/30"></div>
             <div>
-              <div className="text-2xl font-black text-white">89%</div>
+              <div className="text-2xl font-black text-white">{playerStats.successRate}%</div>
               <div className="text-sm">Başarı</div>
             </div>
             <div className="w-px h-8 bg-white/30"></div>
             <div>
-              <div className="text-2xl font-black text-white">15</div>
+              <div className="text-2xl font-black text-white">{playerStats.bestStreak}</div>
               <div className="text-sm">En Yüksek Seri</div>
             </div>
           </div>

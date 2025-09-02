@@ -6,15 +6,17 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import Home from "@/pages/home";
 import NotFound from "@/pages/not-found";
 import Preview from "@/pages/preview";
+import CodyCrossApp from "@/pages/codycross-app";
 
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Home} />
+      <Route path="/" component={CodyCrossApp} />
       <Route path="/dashboard" component={Home} />
       <Route path="/category" component={Home} />
       <Route path="/game" component={Home} />
       <Route path="/preview" component={Preview} />
+      <Route path="/old" component={Home} />
       <Route component={NotFound} />
     </Switch>
   );
