@@ -19,6 +19,8 @@ interface LuminaGameProps {
     score: number;
     isSpinning: boolean;
     usedLetters: string[];
+    isSequentialGuess: boolean;
+    nextExpectedLetterIndex: number;
   };
   onKeyPress: (key: string) => void;
   onGameOver: (success: boolean, score: number, gameTime?: number) => void;
@@ -27,7 +29,7 @@ interface LuminaGameProps {
 }
 
 export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, turkishKeyboard }: LuminaGameProps) => {
-  const { currentWord, guessedWord, category, difficulty, timeLeft, lives, streak, score, isSpinning, usedLetters } = gameState;
+  const { currentWord, guessedWord, category, difficulty, timeLeft, lives, streak, score, isSpinning, usedLetters, isSequentialGuess } = gameState;
   const { isAuthenticated } = useAuth();
   const { stats } = useGameStats();
   const scrambledLetters = currentWord.split('');
@@ -148,12 +150,19 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
           
           {/* Timer, Seri ve Toplam Puan - Merkez konumda */}
           <div className="flex items-center gap-2">
-            {/* Toplam Puan */}
-            <Card className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-full shadow-xl border-0">
+            {/* Toplam Puan - Sıralı bonusta parlar */}
+            <Card className={`flex items-center gap-2 px-3 py-2 rounded-full shadow-xl border-0 transition-all duration-300 ${
+              isSequentialGuess 
+                ? 'bg-gradient-to-r from-yellow-300 to-amber-400 animate-pulse scale-110' 
+                : 'bg-gradient-to-r from-emerald-400 to-teal-500'
+            }`}>
               <Star className="w-4 h-4 text-white fill-white" />
               <div className="text-sm font-black text-white">
                 {isAuthenticated && stats ? (stats.totalScore + (score || 0)).toLocaleString() : (score || 0).toLocaleString()}
               </div>
+              {isSequentialGuess && (
+                <div className="text-xs text-white/90 font-bold">2x</div>
+              )}
             </Card>
             
             {/* Seri Sayacı */}

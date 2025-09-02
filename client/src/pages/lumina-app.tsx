@@ -26,6 +26,8 @@ interface GameState {
   gameSuccess: boolean;
   lives: number;
   usedLetters: string[];
+  isSequentialGuess: boolean;
+  nextExpectedLetterIndex: number;
 }
 
 const initialGameState: GameState = {
@@ -42,7 +44,9 @@ const initialGameState: GameState = {
   isGameOver: false,
   gameSuccess: false,
   lives: 3,
-  usedLetters: []
+  usedLetters: [],
+  isSequentialGuess: true,
+  nextExpectedLetterIndex: 0
 };
 
 export default function LuminaApp() {
@@ -297,6 +301,8 @@ export default function LuminaApp() {
       const newUsedLetters = [...prev.usedLetters, key];
       let newGuessedWord = prev.guessedWord;
       let correctGuess = false;
+      let newIsSequentialGuess = prev.isSequentialGuess;
+      let newNextExpectedLetterIndex = prev.nextExpectedLetterIndex;
       
       // Check if letter is in word
       for (let i = 0; i < prev.currentWord.length; i++) {
@@ -308,12 +314,33 @@ export default function LuminaApp() {
         }
       }
       
+      // Check sequential bonus - oyuncu sırayla mı gidiyor?
+      if (correctGuess && newIsSequentialGuess) {
+        // Sonraki beklenen harf bu mu?
+        if (newNextExpectedLetterIndex < prev.currentWord.length && 
+            prev.currentWord[newNextExpectedLetterIndex].toUpperCase() === key.toUpperCase()) {
+          // Sıralı devam ediyor!
+          newNextExpectedLetterIndex++;
+        } else {
+          // Sıralı bozuldu
+          newIsSequentialGuess = false;
+        }
+      } else if (correctGuess && !newIsSequentialGuess) {
+        // Zaten sıra bozulmuş, normal devam et
+      } else if (!correctGuess) {
+        // Yanlış harf, sıra bozuldu
+        newIsSequentialGuess = false;
+      }
+      
       const newLives = correctGuess ? prev.lives : prev.lives - 1;
       const wordComplete = !newGuessedWord.includes('_');
       
       // Check win condition
       if (wordComplete) {
-        const finalScore = prev.timeLeft * 10; // Score based on time left
+        // Sıralı bonus kontrolü
+        const baseScore = prev.timeLeft * 10;
+        const finalScore = newIsSequentialGuess ? baseScore * 2 : baseScore;
+        
         setTimeout(() => handleGameOver(true, finalScore), 500);
       }
       // Check lose condition
@@ -325,7 +352,9 @@ export default function LuminaApp() {
         ...prev,
         guessedWord: newGuessedWord,
         usedLetters: newUsedLetters,
-        lives: newLives
+        lives: newLives,
+        isSequentialGuess: newIsSequentialGuess,
+        nextExpectedLetterIndex: newNextExpectedLetterIndex
       };
     });
   };
