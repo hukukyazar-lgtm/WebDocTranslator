@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Play, Settings, Trophy, User, HelpCircle, LogOut, BarChart3 } from 'lucide-react';
+import { Play, Settings, Trophy, User, HelpCircle, LogOut, Gamepad2 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useGameStats } from '@/hooks/useGameStats';
 
@@ -132,7 +132,7 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
                 className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg active:scale-95 transition-all duration-100" style={{
                   background: isAuthenticated 
                     ? 'linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%)' 
-                    : 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+                    : 'linear-gradient(135deg, #ff6b35 0%, #f7931e 100%)'
                 }}
                 data-testid={isAuthenticated ? 'logout-button' : 'login-button'}
               >
@@ -142,10 +142,16 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
                     <div className="text-sm">Çıkış</div>
                   </>
                 ) : (
-                  <>
-                    <User className="w-6 h-6 mb-1" />
-                    <div className="text-sm">Giriş</div>
-                  </>
+                  <div className="relative w-full h-full flex flex-col items-center justify-center">
+                    <div className="relative mb-1">
+                      <User className="w-5 h-5 text-white" />
+                      <Gamepad2 className="w-3 h-3 text-white absolute -top-0.5 -right-0.5" />
+                    </div>
+                    <div className="text-xs font-bold text-center">
+                      <div>Oyuncu Girişi</div>
+                      <div className="text-[10px] opacity-90 mt-0.5">Rekorlarını Sakla</div>
+                    </div>
+                  </div>
                 )}
               </Button>
             </Card>
