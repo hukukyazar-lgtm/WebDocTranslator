@@ -142,19 +142,10 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
                     <div className="text-sm">Çıkış</div>
                   </>
                 ) : (
-                  <div className="relative w-full h-full flex flex-col items-center justify-center">
-                    {/* Animasyonlu ikon ve koruma simgesi */}
-                    <div className="relative mb-1">
-                      <User className="w-6 h-6 text-white" />
-                      <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full flex items-center justify-center animate-pulse">
-                        <span className="text-[8px] text-white font-bold">🛡️</span>
-                      </div>
-                    </div>
-                    <div className="text-xs font-bold text-center">
-                      <div>Giriş Yap</div>
-                      <div className="text-[10px] bg-white/20 px-1 rounded mt-0.5">İstatistik Koruması</div>
-                    </div>
-                  </div>
+                  <>
+                    <User className="w-6 h-6 mb-1" />
+                    <div className="text-sm">Giriş</div>
+                  </>
                 )}
               </Button>
             </Card>
@@ -217,11 +208,6 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
             </div>
           )}
           
-          {!isAuthenticated && (
-            <div className="mt-4 text-white/60 text-sm">
-              ⚠️ Giriş yap, istatistiklerin kaybolmasın
-            </div>
-          )}
         </div>
       </div>
 
