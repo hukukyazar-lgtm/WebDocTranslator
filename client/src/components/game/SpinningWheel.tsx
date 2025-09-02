@@ -304,8 +304,10 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               return (
                 <div
                   key={i}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2"
+                  className="absolute"
                   style={{
+                    left: '50%',
+                    top: '50%',
                     transform: finalTransform,
                     filter: isSpinning ? `blur(${timeLeft <= 5 ? 0.5 : timeLeft <= 10 ? 1 : 2}px)` : 'none',
                     opacity: isSpinning ? letterVisibility : 1,
@@ -317,7 +319,7 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                     className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black text-white shadow-2xl border border-white/20"
                     style={{
                       background: getLetterGradient(i),
-                      transform: `scale(${1 + Math.sin(Date.now() * 0.002 + i) * 0.1})`,
+                      transform: `translate(-50%, -50%) scale(${1 + Math.sin(Date.now() * 0.002 + i) * 0.1})`,
                       boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 20px rgba(255, 255, 255, 0.1)'
                     }}
                   >
