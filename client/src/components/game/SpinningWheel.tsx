@@ -268,8 +268,8 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               // Get difficulty-based CSS class
               const getDifficultyClass = () => {
                 if (!isSpinning) return '';
-                if (difficulty === 2) return 'medium-letter-spin';
-                if (difficulty === 3) return 'hard-letter-chaos';
+                if (difficulty === 2) return 'medium-letter-pulse';
+                if (difficulty === 3) return 'hard-letter-glow';
                 return '';
               };
 
