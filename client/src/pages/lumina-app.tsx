@@ -200,7 +200,6 @@ export default function LuminaApp() {
       
       // If no word found (category completed), reset used words and try again
       if (!nextWord) {
-        console.log('No more words in category, resetting used words for infinite play');
         // Reset used words for this category/difficulty
         setUsedWords(prev => ({
           ...prev,
