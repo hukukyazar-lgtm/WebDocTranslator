@@ -58,6 +58,19 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
     return baseSpeed;
   }, [isSpinning, timeLeft, difficulty]);
 
+  // Get animation duration based on difficulty and time
+  const getAnimationDuration = () => {
+    // Time-based priority (final moments)
+    if (timeLeft <= 5) return '12s';
+    if (timeLeft <= 10) return '8s'; 
+    if (timeLeft <= 15) return '5s';
+    
+    // Difficulty-based base speed
+    if (difficulty === 'kolay') return '5s'; // Slow for easy
+    if (difficulty === 'orta') return '3s'; // Medium for normal
+    return '1.5s'; // Fast for hard
+  };
+
   // Letter visibility based on time - more visible letters
   const getLetterOpacity = (index: number) => {
     if (!isSpinning) return 1; // Always visible when not spinning
@@ -145,7 +158,7 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
             <div className={`absolute inset-0 ${spinClass}`} 
                  style={{ 
                    filter: isSpinning ? `blur(${timeLeft <= 5 ? 0.5 : timeLeft <= 10 ? 1 : 2}px)` : 'none',
-                   animationDuration: isSpinning ? `${timeLeft <= 5 ? 8 : timeLeft <= 10 ? 5 : 3}s` : '0s'
+                   animationDuration: isSpinning ? getAnimationDuration() : '0s'
                  }}>
               {scrambledLetters && scrambledLetters.length > 0 && scrambledLetters.map((letter, index) => {
                 const position = getLetterPosition(index, scrambledLetters.length);
