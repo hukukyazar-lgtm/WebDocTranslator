@@ -4,7 +4,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, Heart, Zap, Timer, HelpCircle, RotateCcw } from 'lucide-react';
 
-interface CodyCrossGameProps {
+interface LuminaGameProps {
   gameState: {
     currentWord: string;
     guessedWord: string;
@@ -21,7 +21,7 @@ interface CodyCrossGameProps {
   turkishKeyboard: string[][];
 }
 
-export const CodyCrossGame = memo(({ gameState, onKeyPress, onGameOver, turkishKeyboard }: CodyCrossGameProps) => {
+export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, turkishKeyboard }: LuminaGameProps) => {
   const { currentWord, guessedWord, category, difficulty, timeLeft, lives, streak, isSpinning, usedLetters } = gameState;
   const scrambledLetters = currentWord.split('');
   const turkishKeyboardLayout = turkishKeyboard;
@@ -233,14 +233,6 @@ export const CodyCrossGame = memo(({ gameState, onKeyPress, onGameOver, turkishK
           </Button>
         </div>
 
-        {/* Word hint */}
-        <div className="text-center mt-4">
-          <Card className="inline-block px-4 py-2 bg-white/90 rounded-2xl shadow-lg border-0">
-            <p className="text-gray-700 font-semibold text-sm">
-              "Çizgili büyük kedi türü"
-            </p>
-          </Card>
-        </div>
       </div>
 
       <style>{`
@@ -281,4 +273,4 @@ export const CodyCrossGame = memo(({ gameState, onKeyPress, onGameOver, turkishK
   );
 });
 
-CodyCrossGame.displayName = 'CodyCrossGame';
+LuminaGame.displayName = 'LuminaGame';

@@ -1,20 +1,20 @@
 import { useState, useEffect } from 'react';
-import { CodyCrossGameOver } from '@/components/CodyCrossGameOver';
+import { LuminaGameOver } from '@/components/LuminaGameOver';
 import { Button } from '@/components/ui/button';
 
-// CodyCross style page components
-import { CodyCrossMenu } from '@/components/pages/CodyCrossMenu';
-import { CodyCrossGame } from '@/components/pages/CodyCrossGame';
-import { CodyCrossLogin } from '@/components/pages/CodyCrossLogin';
-import { CodyCrossSettings } from '@/components/pages/CodyCrossSettings';
-import { CodyCrossCategories } from '@/components/pages/CodyCrossCategories';
+// Lumina style page components
+import { LuminaMenu } from '@/components/pages/LuminaMenu';
+import { LuminaGame } from '@/components/pages/LuminaGame';
+import { LuminaLogin } from '@/components/pages/LuminaLogin';
+import { LuminaSettings } from '@/components/pages/LuminaSettings';
+import { LuminaCategories } from '@/components/pages/LuminaCategories';
 
 export default function Preview() {
   const [currentPage, setCurrentPage] = useState<'menu' | 'game' | 'gameover' | 'login' | 'settings' | 'categories'>('menu');
   
   // Force component refresh
   useEffect(() => {
-    console.log('Preview component mounted with CodyCross pages');
+    console.log('Preview component mounted with Lumina pages');
   }, []);
 
   return (
@@ -77,7 +77,7 @@ export default function Preview() {
 
       {/* Render selected page */}
       {currentPage === 'menu' && (
-        <CodyCrossMenu 
+        <LuminaMenu 
           playerStats={{ gamesPlayed: 247, successRate: 89, bestStreak: 15 }}
           onStartGame={() => setCurrentPage('categories')}
           onSettings={() => setCurrentPage('settings')}
@@ -85,13 +85,13 @@ export default function Preview() {
         />
       )}
       {currentPage === 'categories' && (
-        <CodyCrossCategories 
+        <LuminaCategories 
           onCategorySelect={(cat, diff) => setCurrentPage('game')}
           onBack={() => setCurrentPage('menu')}
         />
       )}
       {currentPage === 'game' && (
-        <CodyCrossGame 
+        <LuminaGame 
           gameState={{
             currentWord: "KAPLAN",
             guessedWord: "K_P___",
@@ -113,7 +113,7 @@ export default function Preview() {
         />
       )}
       {currentPage === 'gameover' && (
-        <CodyCrossGameOver 
+        <LuminaGameOver 
           gameSuccess={true}
           score={2450}
           word="KAPLAN"
@@ -125,14 +125,14 @@ export default function Preview() {
         />
       )}
       {currentPage === 'login' && (
-        <CodyCrossLogin 
+        <LuminaLogin 
           onLogin={() => setCurrentPage('menu')}
           onBack={() => setCurrentPage('menu')}
           onGuestMode={() => setCurrentPage('menu')}
         />
       )}
       {currentPage === 'settings' && (
-        <CodyCrossSettings 
+        <LuminaSettings 
           playerProfile={{
             name: 'Preview Oyuncusu',
             gamesPlayed: 247,

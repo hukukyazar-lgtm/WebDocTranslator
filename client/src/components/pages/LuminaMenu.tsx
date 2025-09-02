@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Play, Settings, Trophy, User, HelpCircle } from 'lucide-react';
 
-interface CodyCrossMenuProps {
+interface LuminaMenuProps {
   playerStats: {
     gamesPlayed: number;
     successRate: number;
@@ -14,7 +14,7 @@ interface CodyCrossMenuProps {
   onLogin: () => void;
 }
 
-export const CodyCrossMenu = memo(({ playerStats, onStartGame, onSettings, onLogin }: CodyCrossMenuProps) => {
+export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin }: LuminaMenuProps) => {
   return (
     <div className="min-h-screen relative overflow-hidden" style={{
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
@@ -167,4 +167,4 @@ export const CodyCrossMenu = memo(({ playerStats, onStartGame, onSettings, onLog
   );
 });
 
-CodyCrossMenu.displayName = 'CodyCrossMenu';
+LuminaMenu.displayName = 'LuminaMenu';

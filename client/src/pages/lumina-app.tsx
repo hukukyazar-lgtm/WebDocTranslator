@@ -1,10 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
-import { CodyCrossMenu } from '@/components/pages/CodyCrossMenu';
-import { CodyCrossCategories } from '@/components/pages/CodyCrossCategories';
-import { CodyCrossGame } from '@/components/pages/CodyCrossGame';
-import { CodyCrossGameOver } from '@/components/CodyCrossGameOver';
-import { CodyCrossLogin } from '@/components/pages/CodyCrossLogin';
-import { CodyCrossSettings } from '@/components/pages/CodyCrossSettings';
+import { LuminaMenu } from '@/components/pages/LuminaMenu';
+import { LuminaCategories } from '@/components/pages/LuminaCategories';
+import { LuminaGame } from '@/components/pages/LuminaGame';
+import { LuminaGameOver } from '@/components/LuminaGameOver';
+import { LuminaLogin } from '@/components/pages/LuminaLogin';
+import { LuminaSettings } from '@/components/pages/LuminaSettings';
 import { getWordByDifficulty } from '@/lib/wordLists';
 
 type AppScreen = 'menu' | 'categories' | 'game' | 'gameover' | 'login' | 'settings';
@@ -43,7 +43,7 @@ const initialGameState: GameState = {
   usedLetters: []
 };
 
-export default function CodyCrossApp() {
+export default function LuminaApp() {
   const [currentScreen, setCurrentScreen] = useState<AppScreen>('menu');
   const [gameState, setGameState] = useState<GameState>(initialGameState);
   const [playerProfile, setPlayerProfile] = useState({
@@ -192,7 +192,7 @@ export default function CodyCrossApp() {
   switch (currentScreen) {
     case 'menu':
       return (
-        <CodyCrossMenu
+        <LuminaMenu
           playerStats={{
             gamesPlayed: playerProfile.gamesPlayed,
             successRate: playerProfile.successRate,
@@ -206,7 +206,7 @@ export default function CodyCrossApp() {
 
     case 'categories':
       return (
-        <CodyCrossCategories
+        <LuminaCategories
           onCategorySelect={handleCategorySelect}
           onBack={handleBackToMenu}
         />
@@ -214,7 +214,7 @@ export default function CodyCrossApp() {
 
     case 'game':
       return (
-        <CodyCrossGame
+        <LuminaGame
           gameState={gameState}
           onKeyPress={handleKeyPress}
           onGameOver={handleGameOver}
@@ -224,7 +224,7 @@ export default function CodyCrossApp() {
 
     case 'gameover':
       return (
-        <CodyCrossGameOver
+        <LuminaGameOver
           gameSuccess={gameState.gameSuccess}
           score={gameState.score}
           word={gameState.currentWord}
@@ -238,7 +238,7 @@ export default function CodyCrossApp() {
 
     case 'login':
       return (
-        <CodyCrossLogin
+        <LuminaLogin
           onLogin={() => setCurrentScreen('menu')}
           onBack={handleBackToMenu}
           onGuestMode={() => setCurrentScreen('menu')}
@@ -247,7 +247,7 @@ export default function CodyCrossApp() {
 
     case 'settings':
       return (
-        <CodyCrossSettings
+        <LuminaSettings
           playerProfile={playerProfile}
           onBack={handleBackToMenu}
           onProfileUpdate={setPlayerProfile}
@@ -255,7 +255,7 @@ export default function CodyCrossApp() {
       );
 
     default:
-      return <CodyCrossMenu 
+      return <LuminaMenu 
         playerStats={{
           gamesPlayed: playerProfile.gamesPlayed,
           successRate: playerProfile.successRate,

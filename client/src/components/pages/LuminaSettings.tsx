@@ -18,7 +18,7 @@ import {
   Bell
 } from 'lucide-react';
 
-interface CodyCrossSettingsProps {
+interface LuminaSettingsProps {
   playerProfile: {
     name: string;
     gamesPlayed: number;
@@ -30,7 +30,7 @@ interface CodyCrossSettingsProps {
   onProfileUpdate: (profile: any) => void;
 }
 
-export const CodyCrossSettings = memo(({ playerProfile, onBack, onProfileUpdate }: CodyCrossSettingsProps) => {
+export const LuminaSettings = memo(({ playerProfile, onBack, onProfileUpdate }: LuminaSettingsProps) => {
   return (
     <div className="min-h-screen relative overflow-hidden" style={{
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
@@ -242,4 +242,4 @@ export const CodyCrossSettings = memo(({ playerProfile, onBack, onProfileUpdate 
   );
 });
 
-CodyCrossSettings.displayName = 'CodyCrossSettings';
+LuminaSettings.displayName = 'LuminaSettings';

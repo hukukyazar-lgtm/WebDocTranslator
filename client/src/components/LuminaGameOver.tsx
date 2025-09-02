@@ -6,7 +6,7 @@ import { RotateCcw, Home, Share2, Star, Zap, Clock, Trophy } from 'lucide-react'
 import luminaLogo from '@/assets/lumina-logo.png';
 
 // CodyCross style - modern, colorful, friendly, with soft shapes and vibrant colors
-interface CodyCrossGameOverProps {
+interface LuminaGameOverProps {
   gameSuccess: boolean;
   score: number;
   word: string;
@@ -17,7 +17,7 @@ interface CodyCrossGameOverProps {
   onMainMenu: () => void;
 }
 
-export const CodyCrossGameOver = memo(({ gameSuccess, score, word, timeLeft, streak, category, onPlayAgain, onMainMenu }: CodyCrossGameOverProps) => {
+export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak, category, onPlayAgain, onMainMenu }: LuminaGameOverProps) => {
   const gameResult = {
     isWin: gameSuccess,
     score: score,
@@ -289,4 +289,4 @@ export const CodyCrossGameOver = memo(({ gameSuccess, score, word, timeLeft, str
   );
 });
 
-CodyCrossGameOver.displayName = 'CodyCrossGameOver';
+LuminaGameOver.displayName = 'LuminaGameOver';

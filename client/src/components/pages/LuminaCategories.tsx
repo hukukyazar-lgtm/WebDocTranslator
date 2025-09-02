@@ -4,12 +4,12 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, Star } from 'lucide-react';
 
-interface CodyCrossCategoriesProps {
+interface LuminaCategoriesProps {
   onCategorySelect: (category: string, difficulty: string) => void;
   onBack: () => void;
 }
 
-export const CodyCrossCategories = memo(({ onCategorySelect, onBack }: CodyCrossCategoriesProps) => {
+export const LuminaCategories = memo(({ onCategorySelect, onBack }: LuminaCategoriesProps) => {
   const categories = [
     { id: 1, name: "Hayvanlar", emoji: "🐾", color: "from-green-400 to-blue-500", completed: 85, total: 100 },
     { id: 2, name: "Yiyecek", emoji: "🍎", color: "from-red-400 to-pink-500", completed: 67, total: 80 },
@@ -170,4 +170,4 @@ export const CodyCrossCategories = memo(({ onCategorySelect, onBack }: CodyCross
   );
 });
 
-CodyCrossCategories.displayName = 'CodyCrossCategories';
+LuminaCategories.displayName = 'LuminaCategories';

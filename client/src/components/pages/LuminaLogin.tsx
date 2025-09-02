@@ -5,13 +5,13 @@ import { Input } from '@/components/ui/input';
 import { Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
 import { useState } from 'react';
 
-interface CodyCrossLoginProps {
+interface LuminaLoginProps {
   onLogin: () => void;
   onBack: () => void;
   onGuestMode: () => void;
 }
 
-export const CodyCrossLogin = memo(({ onLogin, onBack, onGuestMode }: CodyCrossLoginProps) => {
+export const LuminaLogin = memo(({ onLogin, onBack, onGuestMode }: LuminaLoginProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
@@ -174,4 +174,4 @@ export const CodyCrossLogin = memo(({ onLogin, onBack, onGuestMode }: CodyCrossL
   );
 });
 
-CodyCrossLogin.displayName = 'CodyCrossLogin';
+LuminaLogin.displayName = 'LuminaLogin';
