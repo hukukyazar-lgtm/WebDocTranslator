@@ -233,7 +233,7 @@ export default function LuminaApp() {
     case 'categories':
       return (
         <LuminaCategories
-          onCategorySelect={handleCategorySelect}
+          onGameStart={handleCategorySelect}
           onBack={handleBackToMenu}
         />
       );

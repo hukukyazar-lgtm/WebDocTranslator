@@ -1,15 +1,32 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { ChevronLeft, Star } from 'lucide-react';
 
 interface LuminaCategoriesProps {
-  onCategorySelect: (category: string, difficulty: string) => void;
+  onGameStart: (category: string, difficulty: string) => void;
   onBack: () => void;
 }
 
-export const LuminaCategories = memo(({ onCategorySelect, onBack }: LuminaCategoriesProps) => {
+export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesProps) => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
+
+  const handleCategorySelect = (categoryName: string) => {
+    setSelectedCategory(categoryName);
+    setSelectedDifficulty(null); // Reset difficulty when category changes
+  };
+
+  const handleDifficultySelect = (difficulty: string) => {
+    setSelectedDifficulty(difficulty);
+  };
+
+  const handleStartGame = () => {
+    if (selectedCategory && selectedDifficulty) {
+      onGameStart(selectedCategory, selectedDifficulty);
+    }
+  };
   const categories = [
     { id: 1, name: "Hayvanlar", emoji: "🐾", color: "from-green-400 to-blue-500", completed: 85, total: 100 },
     { id: 2, name: "Yiyecek", emoji: "🍎", color: "from-red-400 to-pink-500", completed: 67, total: 80 },
@@ -67,7 +84,16 @@ export const LuminaCategories = memo(({ onCategorySelect, onBack }: LuminaCatego
             const isCompleted = category.completed === category.total;
             
             return (
-              <Card key={category.id} className="relative overflow-hidden border-0 shadow-xl rounded-3xl bg-white">
+              <Card 
+                key={category.id} 
+                className={`relative overflow-hidden border-0 shadow-xl rounded-3xl transition-all duration-200 transform cursor-pointer hover:scale-105 active:scale-95 ${
+                  selectedCategory === category.name 
+                    ? 'bg-gradient-to-br from-blue-50 to-purple-50 ring-4 ring-blue-400/50' 
+                    : 'bg-white hover:shadow-2xl'
+                }`}
+                onClick={() => handleCategorySelect(category.name)}
+                data-testid={`category-${category.name}`}
+              >
                 <div className="p-6">
                   {/* Category header */}
                   <div className="flex items-center justify-between mb-4">
@@ -108,49 +134,14 @@ export const LuminaCategories = memo(({ onCategorySelect, onBack }: LuminaCatego
                     </div>
                   </div>
 
-                  {/* Difficulty buttons */}
-                  <div className="flex items-center justify-between">
-                    <div className="flex gap-1">
-                      <Button 
-                        onClick={() => onCategorySelect(category.name, "easy")}
-                        variant="outline"
-                        size="sm"
-                        className="bg-green-100 text-green-800 border-green-200 hover:bg-green-200 hover:text-green-900 font-semibold px-3 py-1 rounded-lg transition-all duration-200"
-                        data-testid={`difficulty-easy-${category.name}`}
-                      >
-                        Kolay
-                      </Button>
-                      <Button 
-                        onClick={() => onCategorySelect(category.name, "medium")}
-                        variant="outline"
-                        size="sm"
-                        className="bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200 hover:text-yellow-900 font-semibold px-3 py-1 rounded-lg transition-all duration-200"
-                        data-testid={`difficulty-medium-${category.name}`}
-                      >
-                        Orta
-                      </Button>
-                      <Button 
-                        onClick={() => onCategorySelect(category.name, "hard")}
-                        variant="outline"
-                        size="sm"
-                        className="bg-red-100 text-red-800 border-red-200 hover:bg-red-200 hover:text-red-900 font-semibold px-3 py-1 rounded-lg transition-all duration-200"
-                        data-testid={`difficulty-hard-${category.name}`}
-                      >
-                        Zor
-                      </Button>
+                  {/* Selection indicator */}
+                  {selectedCategory === category.name && (
+                    <div className="mt-2 text-center">
+                      <Badge className="bg-blue-100 text-blue-800 border-blue-200 px-3 py-1 rounded-full">
+                        ✓ Seçildi
+                      </Badge>
                     </div>
-                    
-                    <Button 
-                      onClick={() => onCategorySelect(category.name, "orta")}
-                      className="rounded-xl font-bold text-white shadow-lg border-0"
-                      style={{
-                        background: `linear-gradient(135deg, ${category.color.split(' ')[1]}, ${category.color.split(' ')[3]})`
-                      }}
-                      data-testid={`play-button-${category.name}`}
-                    >
-                      Oyna
-                    </Button>
-                  </div>
+                  )}
                 </div>
 
                 {/* Completion glow effect */}
@@ -161,6 +152,83 @@ export const LuminaCategories = memo(({ onCategorySelect, onBack }: LuminaCatego
             );
           })}
         </div>
+
+        {/* Difficulty Selection */}
+        {selectedCategory && (
+          <div className="mt-6 max-w-md mx-auto">
+            <Card className="p-6 bg-white/95 backdrop-blur-sm rounded-3xl border-0 shadow-2xl">
+              <div className="text-center mb-4">
+                <h3 className="text-xl font-black text-gray-800">Zorluk Seçin</h3>
+                <p className="text-gray-600 font-medium">{selectedCategory} kategorisi için</p>
+              </div>
+              
+              <div className="grid grid-cols-3 gap-2 mb-4">
+                <Button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDifficultySelect("kolay");
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className={`transition-all duration-200 transform active:scale-95 font-semibold px-3 py-2 rounded-xl ${
+                    selectedDifficulty === "kolay"
+                      ? 'bg-green-500 text-white border-green-500 shadow-lg scale-105'
+                      : 'bg-green-100 text-green-800 border-green-200 hover:bg-green-200 hover:text-green-900'
+                  }`}
+                  data-testid="difficulty-easy"
+                >
+                  Kolay
+                </Button>
+                <Button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDifficultySelect("orta");
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className={`transition-all duration-200 transform active:scale-95 font-semibold px-3 py-2 rounded-xl ${
+                    selectedDifficulty === "orta"
+                      ? 'bg-yellow-500 text-white border-yellow-500 shadow-lg scale-105'
+                      : 'bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200 hover:text-yellow-900'
+                  }`}
+                  data-testid="difficulty-medium"
+                >
+                  Orta
+                </Button>
+                <Button 
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDifficultySelect("zor");
+                  }}
+                  variant="outline"
+                  size="sm"
+                  className={`transition-all duration-200 transform active:scale-95 font-semibold px-3 py-2 rounded-xl ${
+                    selectedDifficulty === "zor"
+                      ? 'bg-red-500 text-white border-red-500 shadow-lg scale-105'
+                      : 'bg-red-100 text-red-800 border-red-200 hover:bg-red-200 hover:text-red-900'
+                  }`}
+                  data-testid="difficulty-hard"
+                >
+                  Zor
+                </Button>
+              </div>
+              
+              {/* Start Game Button */}
+              {selectedCategory && selectedDifficulty && (
+                <Button 
+                  onClick={handleStartGame}
+                  className="w-full rounded-2xl font-black text-white shadow-xl border-0 py-3 text-lg transition-all duration-200 transform active:scale-95 hover:scale-105"
+                  style={{
+                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                  }}
+                  data-testid="start-game-button"
+                >
+                  🎮 Oyunu Başlat
+                </Button>
+              )}
+            </Card>
+          </div>
+        )}
 
         {/* Bottom stats */}
         <div className="mt-8 text-center">
