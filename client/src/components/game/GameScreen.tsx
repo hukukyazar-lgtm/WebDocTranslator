@@ -347,18 +347,26 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     return { correctKeys, presentKeys, absentKeys };
   }, [secretWord, guesses]);
 
-  // Dynamic background based on time left
+  // Dynamic background based on time left with dramatic color transitions
   const dynamicBackground = useMemo(() => {
-    if (timeLeft > 20) {
-      return theme.background;
-    } else if (timeLeft > 10) {
-      // Transition to orange/yellow
-      return `linear-gradient(135deg, ${theme.background.match(/hsl\([^)]+\)/)?.[0] || 'hsl(25, 95%, 15%)'} 0%, hsl(45, 80%, 10%) 100%)`;
+    if (timeLeft > 15) {
+      // Cool blues (30-16 seconds) - calm phase
+      return 'linear-gradient(135deg, hsl(220, 80%, 15%) 0%, hsl(240, 70%, 12%) 50%, hsl(200, 85%, 10%) 100%)';
+    } else if (timeLeft > 5) {
+      // Warm oranges (15-6 seconds) - tension building
+      return 'linear-gradient(135deg, hsl(25, 85%, 15%) 0%, hsl(35, 90%, 12%) 50%, hsl(45, 80%, 10%) 100%)';
     } else {
-      // Transition to red (danger)
-      return 'linear-gradient(135deg, hsl(0, 70%, 15%) 0%, hsl(15, 80%, 10%) 100%)';
+      // Intense reds (5-0 seconds) - high tension
+      return 'linear-gradient(135deg, hsl(0, 90%, 18%) 0%, hsl(15, 85%, 15%) 50%, hsl(5, 95%, 12%) 100%)';
     }
-  }, [timeLeft, theme.background]);
+  }, [timeLeft]);
+
+  // Pulse effect for final moments
+  const pulseIntensity = useMemo(() => {
+    if (timeLeft <= 3) return 'animate-pulse-intense';
+    if (timeLeft <= 5) return 'animate-pulse';
+    return '';
+  }, [timeLeft]);
 
 
   // Initialize game
@@ -621,7 +629,10 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     <>
       
       <div 
-        className="h-screen relative overflow-hidden flex flex-col w-full"
+        className={`h-screen relative overflow-hidden flex flex-col w-full transition-all duration-500 ${pulseIntensity}`}
+        style={{
+          background: dynamicBackground
+        }}
       >
         {/* Statik arka plan - animasyon yok */}
         <GameHeader 
