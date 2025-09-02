@@ -265,24 +265,27 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 ? `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`
                 : `${transformAlign} translateZ(5px)`;
                 
-              // Debug ALL values first
-              console.log(`LETTER ${i}: difficulty=${difficulty}, isSpinning=${isSpinning}`);
-              
-              // Simple test for medium difficulty only
-              const difficultyClass = (isSpinning && difficulty === 2) ? 'medium-letter-pulse' : '';
-              
-              if (difficultyClass) {
-                console.log(`✓ APPLYING CLASS: ${difficultyClass} to letter ${i}`);
-              }
+              // Direct animation for medium difficulty
+              const getAnimationStyle = () => {
+                if (difficulty === 2 && isSpinning) {
+                  return {
+                    animation: 'medium-letter-test 1s ease-in-out infinite',
+                    borderRadius: '4px',
+                    padding: '2px'
+                  };
+                }
+                return {};
+              };
 
               return (
                 <span 
                   key={i}
-                  className={`absolute font-sans font-semibold uppercase letter-glow ${fontSize} ${difficultyClass}`}
+                  className={`absolute font-sans font-semibold uppercase letter-glow ${fontSize}`}
                   style={{ 
                     letterSpacing: letters.length > 10 ? '-0.05em' : letters.length > 8 ? '-0.02em' : '0',
                     color: letterColors[i],
-                    transform: finalTransform, 
+                    transform: finalTransform,
+                    ...getAnimationStyle(), 
                     filter: `blur(${blurAmount}px) drop-shadow(0 0 12px ${isSpinning ? 'currentColor' : 'rgba(255,255,255,0.8)'}) drop-shadow(0 5px 10px rgba(0,0,0,0.3))`,
                     transition: 'transform 1s, filter 0.5s, opacity 0.3s, color 0.5s',
                     textShadow: isSpinning 
