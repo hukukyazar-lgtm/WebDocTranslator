@@ -225,7 +225,10 @@ export default function LuminaApp() {
           usedLetters: [],
           streak: newStreak,
           score: prev.score + finalScore,
-          isSpinning: true
+          isSpinning: true,
+          // Reset sequential tracking for new word
+          isSequentialGuess: true,
+          nextExpectedLetterIndex: 0
         }));
         return; // Don't go to game over screen
       } else {
