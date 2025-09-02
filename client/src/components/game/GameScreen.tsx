@@ -299,7 +299,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
 
   const timeLeft = TOTAL_GAME_TIME - Math.floor(elapsedTime);
 
-  // Lingo klavye için harf durumlarını hesapla
+  // Enhanced keyboard feedback system with Turkish character support
   const getKeyboardLetterStates = useMemo(() => {
     const correctKeys: string[] = [];
     const presentKeys: string[] = [];
@@ -311,38 +311,48 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       const guessWord = guess.toUpperCase();
       const usedTargetIndices = new Set<number>();
 
-      // İlk önce exact matches'ı bul (doğru pozisyon)
+      // First find exact matches (correct position and letter)
       for (let i = 0; i < Math.min(guessWord.length, targetWord.length); i++) {
         if (guessWord[i] === targetWord[i]) {
-          if (!correctKeys.includes(guessWord[i])) {
-            correctKeys.push(guessWord[i]);
+          const letter = guessWord[i];
+          if (!correctKeys.includes(letter)) {
+            correctKeys.push(letter);
           }
           usedTargetIndices.add(i);
         }
       }
 
-      // Sonra present letters'ı bul (yanlış pozisyon ama var)
+      // Then find present letters (wrong position but exists in word)
       for (let i = 0; i < guessWord.length; i++) {
         const letter = guessWord[i];
-        if (!correctKeys.includes(letter) && guessWord[i] !== targetWord[i]) {
-          // Bu harfin target word'de başka bir yerde olup olmadığını kontrol et
-          let foundInTarget = false;
-          for (let j = 0; j < targetWord.length; j++) {
-            if (!usedTargetIndices.has(j) && targetWord[j] === letter) {
-              foundInTarget = true;
-              usedTargetIndices.add(j);
-              break;
-            }
+        
+        // Skip if already marked as correct or if it's correct in this position
+        if (correctKeys.includes(letter) || (i < targetWord.length && guessWord[i] === targetWord[i])) {
+          continue;
+        }
+
+        // Check if letter exists elsewhere in target word
+        let foundInTarget = false;
+        for (let j = 0; j < targetWord.length; j++) {
+          if (!usedTargetIndices.has(j) && targetWord[j] === letter) {
+            foundInTarget = true;
+            usedTargetIndices.add(j);
+            break;
           }
-          
-          if (foundInTarget && !presentKeys.includes(letter)) {
-            presentKeys.push(letter);
-          } else if (!foundInTarget && !absentKeys.includes(letter) && !correctKeys.includes(letter)) {
-            absentKeys.push(letter);
-          }
+        }
+        
+        if (foundInTarget && !presentKeys.includes(letter)) {
+          presentKeys.push(letter);
+        } else if (!foundInTarget && !absentKeys.includes(letter)) {
+          absentKeys.push(letter);
         }
       }
     });
+
+    // Debug logging
+    if (guesses.length > 0) {
+      console.log('Keyboard feedback:', { correctKeys, presentKeys, absentKeys, secretWord, guesses });
+    }
 
     return { correctKeys, presentKeys, absentKeys };
   }, [secretWord, guesses]);
@@ -361,8 +371,9 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     }
   }, [timeLeft]);
 
-  // Pulse effect for final moments
-  const pulseIntensity = useMemo(() => {
+  // Enhanced pulse and shake effects for final moments
+  const finalEffects = useMemo(() => {
+    if (timeLeft <= 2) return 'animate-pulse-intense animate-shake-screen';
     if (timeLeft <= 3) return 'animate-pulse-intense';
     if (timeLeft <= 5) return 'animate-pulse';
     return '';
@@ -629,7 +640,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     <>
       
       <div 
-        className={`h-screen relative overflow-hidden flex flex-col w-full transition-all duration-500 ${pulseIntensity}`}
+        className={`h-screen relative overflow-hidden flex flex-col w-full transition-all duration-500 ${finalEffects}`}
         style={{
           background: dynamicBackground
         }}
