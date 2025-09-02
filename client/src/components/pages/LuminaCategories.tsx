@@ -71,181 +71,100 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
             <ChevronLeft className="w-6 h-6" />
           </Button>
           <div className="text-center">
-            <h1 className="text-3xl font-black text-white">Oyun Kurulumu</h1>
-            <p className="text-white/80 font-medium">Zorluk ve kategori seç</p>
+            <h1 className="text-3xl font-black text-white">Kategoriler</h1>
+            <p className="text-white/80 font-medium">Önce kategori, sonra zorluk seç</p>
           </div>
           <div className="w-12"></div>
         </div>
 
-        {/* Difficulty Selection - at top */}
-        <div className="mb-8 max-w-md mx-auto">
-          <Card className="p-6 bg-white/95 backdrop-blur-sm rounded-3xl border-0 shadow-2xl">
+        {/* Categories grid - minimal design */}
+        <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto mb-6">
+          {categories.map((category) => (
+            <Card 
+              key={category.id} 
+              className={`relative overflow-hidden border-0 shadow-lg rounded-2xl transition-all duration-200 transform cursor-pointer hover:scale-105 active:scale-95 ${
+                selectedCategory === category.name 
+                  ? 'bg-gradient-to-br from-purple-500 to-blue-600 text-white' 
+                  : 'bg-white/90 hover:bg-white text-gray-800'
+              }`}
+              onClick={() => handleCategorySelect(category.name)}
+              data-testid={`category-${category.name}`}
+            >
+              <div className="p-4 text-center">
+                <div className="text-3xl mb-2">{category.emoji}</div>
+                <div className="font-black text-sm">{category.name}</div>
+              </div>
+            </Card>
+          ))}
+        </div>
+
+        {/* Difficulty Selection - only show when category selected */}
+        {selectedCategory && (
+          <div className="max-w-md mx-auto mb-6">
             <div className="text-center mb-4">
-              <h3 className="text-xl font-black text-gray-800">🎯 Zorluk Seviyesi</h3>
-              <p className="text-gray-600 font-medium">Önce zorluk seçin</p>
+              <h3 className="text-xl font-black text-white">Zorluk Seçin</h3>
+              <p className="text-white/80 font-medium">{selectedCategory} kategorisi</p>
             </div>
             
-            <div className="grid grid-cols-3 gap-3">
+            <div className="flex gap-2 justify-center">
               <Button 
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDifficultySelect("kolay");
                 }}
-                variant="outline"
-                size="sm"
-                className={`transition-all duration-200 transform active:scale-95 font-bold px-4 py-3 rounded-2xl text-center ${
+                className={`px-4 py-2 rounded-xl font-bold transition-all duration-200 transform active:scale-95 ${
                   selectedDifficulty === "kolay"
-                    ? 'bg-gradient-to-br from-green-400 to-green-600 text-white border-green-500 shadow-xl scale-105'
-                    : 'bg-green-100 text-green-800 border-green-200 hover:bg-green-200 hover:text-green-900 hover:scale-105'
+                    ? 'bg-green-500 text-white scale-105 shadow-lg'
+                    : 'bg-white/90 text-green-700 hover:bg-green-100'
                 }`}
                 data-testid="difficulty-easy"
               >
-                <div className="text-2xl mb-1">🟢</div>
-                <div className="text-sm font-black">KOLAY</div>
-                <div className="text-xs opacity-80">2-4 harf</div>
+                Kolay
               </Button>
               <Button 
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDifficultySelect("orta");
                 }}
-                variant="outline"
-                size="sm"
-                className={`transition-all duration-200 transform active:scale-95 font-bold px-4 py-3 rounded-2xl text-center ${
+                className={`px-4 py-2 rounded-xl font-bold transition-all duration-200 transform active:scale-95 ${
                   selectedDifficulty === "orta"
-                    ? 'bg-gradient-to-br from-yellow-400 to-orange-500 text-white border-yellow-500 shadow-xl scale-105'
-                    : 'bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-200 hover:text-yellow-900 hover:scale-105'
+                    ? 'bg-yellow-500 text-white scale-105 shadow-lg'
+                    : 'bg-white/90 text-yellow-700 hover:bg-yellow-100'
                 }`}
                 data-testid="difficulty-medium"
               >
-                <div className="text-2xl mb-1">🟡</div>
-                <div className="text-sm font-black">ORTA</div>
-                <div className="text-xs opacity-80">5-6 harf</div>
+                Orta
               </Button>
               <Button 
                 onClick={(e) => {
                   e.stopPropagation();
                   handleDifficultySelect("zor");
                 }}
-                variant="outline"
-                size="sm"
-                className={`transition-all duration-200 transform active:scale-95 font-bold px-4 py-3 rounded-2xl text-center ${
+                className={`px-4 py-2 rounded-xl font-bold transition-all duration-200 transform active:scale-95 ${
                   selectedDifficulty === "zor"
-                    ? 'bg-gradient-to-br from-red-400 to-red-600 text-white border-red-500 shadow-xl scale-105'
-                    : 'bg-red-100 text-red-800 border-red-200 hover:bg-red-200 hover:text-red-900 hover:scale-105'
+                    ? 'bg-red-500 text-white scale-105 shadow-lg'
+                    : 'bg-white/90 text-red-700 hover:bg-red-100'
                 }`}
                 data-testid="difficulty-hard"
               >
-                <div className="text-2xl mb-1">🔴</div>
-                <div className="text-sm font-black">ZOR</div>
-                <div className="text-xs opacity-80">7+ harf</div>
+                Zor
               </Button>
             </div>
-          </Card>
-        </div>
-
-        {/* Category Selection Header */}
-        {selectedDifficulty && (
-          <div className="text-center mb-4">
-            <h2 className="text-2xl font-black text-white">📂 Kategori Seçin</h2>
-            <p className="text-white/80 font-medium">
-              {selectedDifficulty === "kolay" ? "Kolay seviye" : 
-               selectedDifficulty === "orta" ? "Orta seviye" : 
-               "Zor seviye"} için kategori
-            </p>
-          </div>
-        )}
-
-        {/* Categories grid - only show when difficulty is selected */}
-        {selectedDifficulty && (
-          <div className="grid grid-cols-1 gap-4 max-w-md mx-auto">
-            {categories.map((category) => {
-              const progress = (category.completed / category.total) * 100;
-              const isCompleted = category.completed === category.total;
-            
-            return (
-              <Card 
-                key={category.id} 
-                className={`relative overflow-hidden border-0 shadow-xl rounded-3xl transition-all duration-200 transform cursor-pointer hover:scale-105 active:scale-95 ${
-                  selectedCategory === category.name 
-                    ? 'bg-gradient-to-br from-blue-50 to-purple-50 ring-4 ring-blue-400/50' 
-                    : 'bg-white hover:shadow-2xl'
-                }`}
-                onClick={() => handleCategorySelect(category.name)}
-                data-testid={`category-${category.name}`}
-              >
-                <div className="p-6">
-                  {/* Category header */}
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-4">
-                      <div 
-                        className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${category.color} flex items-center justify-center text-2xl shadow-lg`}
-                      >
-                        {category.emoji}
-                      </div>
-                      <div>
-                        <h3 className="text-xl font-black text-gray-800">{category.name}</h3>
-                        <p className="text-sm text-gray-600 font-medium">
-                          {category.completed}/{category.total} tamamlandı
-                        </p>
-                      </div>
-                    </div>
-                    
-                    {isCompleted && (
-                      <div className="flex items-center gap-1">
-                        <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                        <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                        <Star className="w-5 h-5 text-yellow-500 fill-yellow-500" />
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Progress bar */}
-                  <div className="mb-4">
-                    <div className="flex items-center justify-between text-sm mb-2">
-                      <span className="text-gray-600 font-semibold">İlerleme</span>
-                      <span className="text-gray-800 font-bold">{Math.round(progress)}%</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-3">
-                      <div 
-                        className={`h-3 rounded-full bg-gradient-to-r ${category.color} transition-all duration-500`}
-                        style={{ width: `${progress}%` }}
-                      ></div>
-                    </div>
-                  </div>
-
-                  {/* Selection indicator */}
-                  {selectedCategory === category.name && (
-                    <div className="mt-2 text-center">
-                      <Badge className="bg-blue-100 text-blue-800 border-blue-200 px-3 py-1 rounded-full">
-                        ✓ Seçildi
-                      </Badge>
-                    </div>
-                  )}
-                </div>
-
-                {/* Completion glow effect */}
-                {isCompleted && (
-                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-300/20 via-transparent to-yellow-300/20 pointer-events-none"></div>
-                )}
-              </Card>
-            );
-            })}
           </div>
         )}
 
         {/* Start Game Button - only show when both selected */}
         {selectedCategory && selectedDifficulty && (
-          <div className="mt-6 max-w-md mx-auto">
+          <div className="max-w-md mx-auto">
             <Button 
               onClick={handleStartGame}
-              className="w-full rounded-3xl font-black text-white shadow-2xl border-0 py-4 text-xl transition-all duration-200 transform active:scale-95 hover:scale-105 animate-pulse"
+              className="w-full rounded-2xl font-black text-white shadow-xl border-0 py-3 text-lg transition-all duration-200 transform active:scale-95 hover:scale-105"
               style={{
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
               }}
               data-testid="start-game-button"
             >
-              🚀 OYUNU BAŞLAT
+              Oyunu Başlat
             </Button>
           </div>
         )}
