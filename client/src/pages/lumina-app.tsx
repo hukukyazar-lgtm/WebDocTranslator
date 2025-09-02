@@ -144,8 +144,9 @@ export default function LuminaApp() {
       difficulty: difficulty,
       timeLeft: 30,
       isSpinning: true,
-      // Keep current streak - don't reset it
-      streak: prev.streak
+      // Keep current streak and score - don't reset them
+      streak: prev.streak,
+      score: prev.score
     }));
     setCurrentScreen('game');
   };
