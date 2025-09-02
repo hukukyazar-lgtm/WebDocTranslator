@@ -31,6 +31,45 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
   };
   const spacing = getSpacing();
   
+  // Progressive difficulty letter transform system
+  const getLetterTransform = (
+    index: number, 
+    baseAngle: number, 
+    letterSpacing: number, 
+    baseRadius: number, 
+    letterScale: number, 
+    rotation: number,
+    difficulty: number,
+    isSpinning: boolean
+  ) => {
+    const baseTransform = `rotate(${baseAngle + (index * letterSpacing) + rotation}deg) translate(${baseRadius}px) rotate(-${baseAngle + (index * letterSpacing) + rotation}deg) scale(${letterScale})`;
+    
+    if (!isSpinning) {
+      return `rotate(${baseAngle + (index * letterSpacing)}deg) translate(${baseRadius}px) rotate(-${baseAngle + (index * letterSpacing)}deg) scale(${letterScale})`;
+    }
+    
+    // Easy level (1): Normal wheel rotation only
+    if (difficulty === 1) {
+      return baseTransform;
+    }
+    
+    // Medium level (2): Individual letter rotation + wheel rotation  
+    if (difficulty === 2) {
+      const letterRotation = (rotation * 2) + (index * 45); // Individual rotation speed
+      return `rotate(${baseAngle + (index * letterSpacing) + rotation}deg) translate(${baseRadius}px) rotate(${letterRotation}deg) scale(${letterScale})`;
+    }
+    
+    // Hard level (3): Position shuffling based on wheel speed
+    if (difficulty === 3) {
+      const speedFactor = Math.abs(rotation % 360) / 360; // Speed as 0-1
+      const shuffle = Math.sin((rotation * 0.02) + (index * 0.5)) * 30 * speedFactor; // Position offset
+      const newRadius = baseRadius + shuffle;
+      return `rotate(${baseAngle + (index * letterSpacing) + rotation}deg) translate(${newRadius}px) rotate(-${baseAngle + (index * letterSpacing) + rotation}deg) scale(${letterScale})`;
+    }
+    
+    return baseTransform;
+  };
+  
   // Calculate font size based on word length - extremely aggressive scaling for long words
   const getFontSize = (letterCount: number, isSpinning: boolean) => {
     if (isSpinning) {
@@ -189,7 +228,8 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
           >
             {letters.map((char, i) => {
               const angle = (i / letters.length) * 360;
-              const transformSpin = `rotate(${angle}deg) translate(${radius}px) rotate(${-angle}deg)`;
+              const rotation = Date.now() * 0.1 % 360; // Simple rotation for dynamic effects
+              
               // Much more aggressive scale reduction for long words
               const getScaleFactor = () => {
                 if (letters.length <= 4) return 2;
@@ -206,18 +246,19 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
               const letterVisibility = getLetterVisibility(timeLeft, i, letters.length, difficulty);
               const fontSize = getFontSize(letters.length, isSpinning);
 
+              // Use progressive difficulty transform system
+              const finalTransform = isSpinning 
+                ? `${getLetterTransform(i, 0, 360/letters.length, radius, dynamicScale, rotation, difficulty, isSpinning)} translateZ(15px)`
+                : `${transformAlign} translateZ(5px)`;
+
               return (
                 <span 
                   key={i}
-                  className={`absolute font-sans font-semibold uppercase letter-glow transition-all duration-1000 ${fontSize} ${
-                    difficulty >= 4 && isSpinning ? 'animate-rotate-letter' : ''
-                  }`}
+                  className={`absolute font-sans font-semibold uppercase letter-glow transition-all duration-1000 ${fontSize}`}
                   style={{ 
                     letterSpacing: letters.length > 10 ? '-0.05em' : letters.length > 8 ? '-0.02em' : '0',
                     color: letterColors[i],
-                    transform: isSpinning 
-                      ? `${transformSpin} scale(${dynamicScale}) translateZ(15px)` 
-                      : `${transformAlign} translateZ(5px)`, 
+                    transform: finalTransform, 
                     filter: `blur(${blurAmount}px) drop-shadow(0 0 12px ${isSpinning ? 'currentColor' : 'rgba(255,255,255,0.8)'}) drop-shadow(0 5px 10px rgba(0,0,0,0.3))`,
                     transition: 'transform 1s, filter 0.5s, opacity 0.3s, color 0.5s',
                     textShadow: isSpinning 
