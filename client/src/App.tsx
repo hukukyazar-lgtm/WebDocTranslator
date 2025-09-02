@@ -12,6 +12,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/" component={LuminaApp} />
+      <Route path="/categories" component={LuminaApp} />
       <Route path="/dashboard" component={Home} />
       <Route path="/category" component={Home} />
       <Route path="/game" component={Home} />
