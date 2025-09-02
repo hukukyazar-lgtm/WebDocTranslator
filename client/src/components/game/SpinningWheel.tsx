@@ -265,9 +265,15 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 ? `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`
                 : `${transformAlign} translateZ(5px)`;
                 
+              // Debug difficulty value
+              if (i === 0) { // Only log once per render
+                console.log('SpinningWheel DEBUG:', { difficulty, isSpinning, category });
+              }
+              
               // Test: Always show red for medium difficulty
               const getLetterColor = () => {
                 if (difficulty === 2 && isSpinning) {
+                  console.log(`Letter ${i} should be RED: difficulty=${difficulty}, isSpinning=${isSpinning}`);
                   return '#ff0000'; // Always red to test
                 }
                 return letterColors[i];
