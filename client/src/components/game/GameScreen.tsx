@@ -294,6 +294,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   }));
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
   const [showDailyGoals, setShowDailyGoals] = useState(false);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -450,12 +451,15 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     setGuess('');
     
     if (trimmedGuess === secretWord.toUpperCase()) {
-      // Doğru tahmin - skor güncelle ve otomatik devam et
+      // Doğru tahmin - skor güncelle ve modal göster
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 2000);
+      setTimeout(() => setShowConfetti(false), 3000);
       
-      // Başarı mesajı göster
-      setMessage(`${t.congratulations} ${Math.floor(elapsedTime)} ${t.seconds}`);
+      // Timer'ı durdur
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
       
       // Game stats güncelle
       const updatedStats = updateGameStats(gameStats, true, category, Math.floor(elapsedTime));
@@ -482,53 +486,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         setCurrentAchievement(newAchievements[0]);
       }
       
-      // 2 saniye sonra otomatik devam et
-      setTimeout(() => {
-        // Inline continue logic
-        if (timerRef.current) {
-          clearInterval(timerRef.current);
-          timerRef.current = null;
-        }
-        
-        setGuess('');
-        setIsSpinning(true);
-        setMessage('');
-        setGameOver(false);
-        setElapsedTime(0);
-        setSlowdownApplied(false);
-        setGameSuccess(false);
-        setGuesses([]); // Reset guesses for new word
-        
-        // Get new word
-        const categoryWords = wordLists[category];
-        const wordPool = (categoryWords as any)?.[difficulty] || [];
-        const availableWords = wordPool.filter((word: string) => !usedWords.includes(word));
-        
-        let newWord: string;
-        if (availableWords.length === 0) {
-          setUsedWords([]);
-          newWord = wordPool[Math.floor(Math.random() * wordPool.length)];
-        } else {
-          newWord = availableWords[Math.floor(Math.random() * availableWords.length)];
-        }
-        
-        if (newWord) {
-          setSecretWord(newWord);
-          setUsedWords(prev => [...prev, newWord]);
-        }
-        
-        // Start new timer
-        const startTime = Date.now();
-        timerRef.current = setInterval(() => {
-          const now = Date.now();
-          const elapsed = (now - startTime) / 1000;
-          setElapsedTime(elapsed);
-
-          if (elapsed >= TOTAL_GAME_TIME) {
-            endGame(`${t.timeUp} Doğru kelime: ${newWord}`, false);
-          }
-        }, 100);
-      }, 2000);
+      // Modal'ı göster
+      setShowSuccessModal(true);
     } else if (newGuesses.length >= maxGuesses) {
       // Maksimum tahmin sayısına ulaşıldı - oyunu bitir
       endGame(`${t.gameOver} Doğru kelime: ${secretWord}`, false);
@@ -557,20 +516,17 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   }, []);
 
   const handleContinue = useCallback(() => {
-    // Clear existing timer first
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
+    // Modal'ı kapat
+    setShowSuccessModal(false);
     
     // Continue with new word without resetting score
     setGuess('');
+    setGuesses([]); // Reset guesses for new word
     setIsSpinning(true);
     setMessage('');
     setGameOver(false);
     setElapsedTime(0);
     setSlowdownApplied(false);
-
     setGameSuccess(false);
     
     // Get new word (different from used ones)
@@ -597,6 +553,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     const baseSpeed = getSpinDuration(difficulty, TOTAL_GAME_TIME);
     setSpinDuration(baseSpeed);
     
+    // Start new timer
     timerRef.current = setInterval(() => {
       setElapsedTime(prevTime => prevTime + 1);
     }, 1000);
@@ -902,6 +859,91 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 <span>👤</span>
                 <span>{t.guestMode}</span>
               </span>
+            </div>
+          </div>
+        )}
+        
+        {/* Başarı Modal'ı */}
+        {showSuccessModal && (
+          <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+            <div 
+              className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 backdrop-blur-xl rounded-2xl border border-green-400/30 p-6 max-w-md w-full mx-4 shadow-2xl transform animate-bounce-in"
+              style={{
+                boxShadow: `0 0 40px ${theme.primary}40`
+              }}
+            >
+              {/* Başlık */}
+              <div className="text-center mb-4">
+                <div className="text-4xl mb-2">🎉</div>
+                <h2 className="text-2xl font-black text-white mb-1">
+                  {t.congratulations}
+                </h2>
+                <p className="text-white/70 text-sm">
+                  {Math.floor(elapsedTime)} {t.seconds}
+                </p>
+              </div>
+
+              {/* İstatistikler */}
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                <div className="backdrop-blur-lg rounded-xl p-3 border border-white/20" style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+                }}>
+                  <div className="text-2xl mb-1">💎</div>
+                  <div 
+                    className="text-xl font-black mb-1"
+                    style={{
+                      background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
+                      backgroundClip: 'text',
+                      WebkitBackgroundClip: 'text',
+                      color: 'transparent'
+                    }}
+                  >
+                    +{score}
+                  </div>
+                  <div className="text-xs font-bold text-white/60">
+                    {t.score}
+                  </div>
+                </div>
+                
+                <div className="backdrop-blur-lg rounded-xl p-3 border border-white/20" style={{
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
+                }}>
+                  <div className="text-2xl mb-1">🔥</div>
+                  <div 
+                    className="text-xl font-black mb-1"
+                    style={{
+                      background: `linear-gradient(45deg, ${theme.secondary}, ${theme.primary})`,
+                      backgroundClip: 'text',
+                      WebkitBackgroundClip: 'text',
+                      color: 'transparent'
+                    }}
+                  >
+                    {streak}
+                  </div>
+                  <div className="text-xs font-bold text-white/60">{t.streak}</div>
+                </div>
+              </div>
+
+              {/* Butonlar */}
+              <div className="space-y-3">
+                <button
+                  onClick={handleContinue}
+                  className="w-full py-3 px-6 text-sm font-black rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border text-white shadow-2xl"
+                  style={{
+                    background: `linear-gradient(135deg, ${theme.primary}, ${theme.secondary})`,
+                    borderColor: `${theme.primary}80`,
+                    boxShadow: `0 0 20px ${theme.primary}40`
+                  }}
+                >
+                  ⚡ {t.continue}
+                </button>
+                <button
+                  onClick={onGameOver}
+                  className="w-full py-3 px-6 text-sm font-black rounded-xl transition-all duration-300 transform hover:scale-105 active:scale-95 backdrop-blur-lg border border-white/30 bg-white/10 text-white/90 hover:bg-white/20 shadow-lg"
+                >
+                  🏠 {t.mainMenu}
+                </button>
+              </div>
             </div>
           </div>
         )}
