@@ -77,7 +77,6 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
               <p className="text-xl text-white/90 font-semibold">
                 Hoş geldin, {user.firstName || user.email?.split('@')[0] || 'Oyuncu'}! 😊
               </p>
-              <p className="text-sm text-white/70">Replit hesabın ile giriş yaptın</p>
             </div>
           ) : (
             <p className="text-xl text-white/80 font-semibold mb-2">Kelime Oyunu</p>
@@ -208,11 +207,6 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
             </div>
           )}
           
-          {isAuthenticated && (
-            <div className="mt-4 text-white/60 text-sm">
-              ✅ İstatistikler kaydediliyor
-            </div>
-          )}
           
         </div>
       </div>
