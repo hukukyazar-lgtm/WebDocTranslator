@@ -47,7 +47,7 @@ export const wordLists: WordLists = {
     5: ["PSİKİYATRİST", "NEUROLOJİST", "DERMATOLOJİST", "KARDİYOLOJİST", "GASTROENTEROLOJİST"] // Çok zor - 10+ harf
   },
   Şehirler: {
-    1: ["İSTANBUL", "ANKARA", "İZMİR", "BURSA", "ADANA", "GAZİANTEP", "KONYA", "ANTALYA", "KAYSERİ", "MERSİN", "ESKİŞEHİR", "DİYARBAKIR", "SAMSUN", "DENİZLİ", "ŞANLIURFA", "ADAPAZARI", "MALATİYA", "ERZURUM", "VAN", "BATMAN", "ELAZİĞ", "İSKENDERUN", "SIVAS", "TRABZON", "KOCAELI", "MANISA", "KAHRAMANMARAŞ", "ERZINCAN", "AYDIN", "BALIKESIR", "TEKİRDAĞ", "SAKARYA", "MUĞ LA", "AFYON", "ISPARTA", "BOLU", "ÇANAKKALE", "KASTAMONU", "ZONGULDAK", "DÜZCE", "RIZE", "ORDU", "GİRESUN", "ARTVIN", "AMASYA", "TOKAT", "SİNOP", "KIRŞEHIR", "NEVŞEHİR", "NİĞDE"], // Kolay - 4+ harf
+    1: ["VAN", "BATMAN", "ELAZİĞ", "SIVAS", "TRABZON", "KOCAELI", "AFYON", "ISPARTA", "BOLU", "DÜZCE", "RIZE", "ORDU", "ARTVIN", "AMASYA", "TOKAT", "SİNOP", "NİĞDE"], // Kolay - 3-6 harf
     2: ["ANKARA", "İZMİR", "BURSA", "KONYA", "ADANA"], // Kolay - 4-6 harf
     3: ["GAZİANTEP", "MERSİN", "ANTALYA", "DİYARBAKIR", "SAMSUN"], // Orta - 6-10 harf
     4: ["İSTANBUL", "ESKİŞEHİR", "DENİZLİ", "MANİSA", "AYDIN"], // Zor - 5-9 harf
