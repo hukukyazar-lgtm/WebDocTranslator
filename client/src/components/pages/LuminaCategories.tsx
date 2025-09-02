@@ -84,7 +84,15 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           {categories.map((category) => (
             <Card 
               key={category.id} 
-              className="relative overflow-hidden border-0 shadow-lg rounded-2xl transition-all duration-200 transform cursor-pointer hover:scale-105 active:scale-95 bg-white/90 hover:bg-white text-gray-800"
+              className={`relative overflow-hidden border-0 shadow-lg rounded-2xl transition-all duration-300 transform cursor-pointer hover:scale-105 active:scale-95 ${
+                selectedCategory === category.name && selectedDifficulty
+                  ? selectedDifficulty === 'kolay' 
+                    ? 'bg-gradient-to-br from-green-100 to-green-200 text-green-800 border-2 border-green-400' 
+                    : selectedDifficulty === 'orta'
+                    ? 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-800 border-2 border-yellow-400'
+                    : 'bg-gradient-to-br from-red-100 to-red-200 text-red-800 border-2 border-red-400'
+                  : 'bg-white/90 hover:bg-white text-gray-800'
+              }`}
               onClick={() => handleCategorySelect(category.name)}
               data-testid={`category-${category.name}`}
             >
@@ -96,39 +104,39 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                 <div className="absolute top-2 right-2 flex flex-col gap-1">
                   <button
                     onClick={(e) => handleDifficultySelect("kolay", category.name, e)}
-                    className={`w-6 h-6 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
+                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
                       selectedCategory === category.name && selectedDifficulty === "kolay"
-                        ? 'bg-green-600 ring-green-400 scale-110'
-                        : 'bg-green-500 hover:bg-green-400 active:bg-green-600 ring-green-300/50 hover:ring-green-400/80'
-                    } text-white`}
+                        ? 'bg-green-200 ring-green-400 scale-110'
+                        : 'bg-white hover:bg-green-100 active:bg-green-200 ring-green-300/50 hover:ring-green-400/80'
+                    }`}
                     title="Kolay"
                     data-testid={`difficulty-${category.name}-easy`}
                   >
-                    K
+                    😊
                   </button>
                   <button
                     onClick={(e) => handleDifficultySelect("orta", category.name, e)}
-                    className={`w-6 h-6 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
+                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
                       selectedCategory === category.name && selectedDifficulty === "orta"
-                        ? 'bg-yellow-600 ring-yellow-400 scale-110'
-                        : 'bg-yellow-500 hover:bg-yellow-400 active:bg-yellow-600 ring-yellow-300/50 hover:ring-yellow-400/80'
-                    } text-white`}
+                        ? 'bg-yellow-200 ring-yellow-400 scale-110'
+                        : 'bg-white hover:bg-yellow-100 active:bg-yellow-200 ring-yellow-300/50 hover:ring-yellow-400/80'
+                    }`}
                     title="Orta"
                     data-testid={`difficulty-${category.name}-medium`}
                   >
-                    O
+                    😐
                   </button>
                   <button
                     onClick={(e) => handleDifficultySelect("zor", category.name, e)}
-                    className={`w-6 h-6 rounded-full text-xs font-bold transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
+                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 active:scale-90 shadow-lg hover:shadow-xl ring-2 ${
                       selectedCategory === category.name && selectedDifficulty === "zor"
-                        ? 'bg-red-600 ring-red-400 scale-110'
-                        : 'bg-red-500 hover:bg-red-400 active:bg-red-600 ring-red-300/50 hover:ring-red-400/80'
-                    } text-white`}
+                        ? 'bg-red-200 ring-red-400 scale-110'
+                        : 'bg-white hover:bg-red-100 active:bg-red-200 ring-red-300/50 hover:ring-red-400/80'
+                    }`}
                     title="Zor"
                     data-testid={`difficulty-${category.name}-hard`}
                   >
-                    Z
+                    😤
                   </button>
                 </div>
               </div>
