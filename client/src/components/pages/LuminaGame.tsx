@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, Heart, Zap, Timer, HelpCircle, RotateCcw } from 'lucide-react';
+import { ChevronLeft, Heart, Zap, Timer, HelpCircle, RotateCcw, Delete } from 'lucide-react';
 
 interface LuminaGameProps {
   gameState: {
@@ -238,6 +238,17 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
               })}
             </div>
           ))}
+          
+          {/* Backspace Button */}
+          <div className="flex justify-center mt-2">
+            <Button
+              onClick={() => onKeyPress('BACKSPACE')}
+              className="w-16 h-8 text-sm font-bold rounded-lg shadow-lg transition-all duration-200 transform active:scale-95 bg-gradient-to-br from-red-400 to-red-600 hover:from-red-500 hover:to-red-700 text-white border-0"
+              data-testid="backspace-button"
+            >
+              <Delete className="w-4 h-4" />
+            </Button>
+          </div>
         </div>
 
         {/* Action buttons */}
