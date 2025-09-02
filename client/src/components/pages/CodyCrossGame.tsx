@@ -208,17 +208,25 @@ export const CodyCrossGame = memo(({ gameState, onKeyPress, onGameOver, turkishK
 
         {/* Action buttons */}
         <div className="flex gap-3">
-          <Button className="flex-1 h-12 rounded-2xl font-bold bg-white/20 border border-white/30 text-white hover:bg-white/30">
+          <Button 
+            onClick={() => console.log('İpucu kullanıldı')}
+            className="flex-1 h-12 rounded-2xl font-bold bg-white/20 border border-white/30 text-white hover:bg-white/30"
+          >
             <HelpCircle className="w-4 h-4 mr-2" />
             İpucu
           </Button>
           
-          <Button className="flex-1 h-12 rounded-2xl font-bold bg-white/20 border border-white/30 text-white hover:bg-white/30">
+          <Button 
+            onClick={() => console.log('Çark çevrildi')}
+            className="flex-1 h-12 rounded-2xl font-bold bg-white/20 border border-white/30 text-white hover:bg-white/30"
+          >
             <RotateCcw className="w-4 h-4 mr-2" />
             Çevir
           </Button>
           
-          <Button className="flex-1 h-12 rounded-2xl text-lg font-black text-white shadow-xl" style={{
+          <Button 
+            onClick={() => console.log('Kelime tahmin edildi')}
+            className="flex-1 h-12 rounded-2xl text-lg font-black text-white shadow-xl" style={{
             background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
           }}>
             Tahmin Et

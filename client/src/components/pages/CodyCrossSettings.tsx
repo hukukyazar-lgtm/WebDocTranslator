@@ -197,17 +197,26 @@ export const CodyCrossSettings = memo(({ playerProfile, onBack, onProfileUpdate 
           {/* Other Settings */}
           <Card className="p-6 bg-white rounded-3xl shadow-xl border-0">
             <div className="space-y-4">
-              <Button className="w-full h-12 rounded-xl font-semibold bg-gray-100 text-gray-800 hover:bg-gray-200 justify-start">
+              <Button 
+                onClick={() => console.log('Yardım ve Destek açıldı')}
+                className="w-full h-12 rounded-xl font-semibold bg-gray-100 text-gray-800 hover:bg-gray-200 justify-start"
+              >
                 <HelpCircle className="w-5 h-5 mr-3" />
                 Yardım ve Destek
               </Button>
               
-              <Button className="w-full h-12 rounded-xl font-semibold bg-gray-100 text-gray-800 hover:bg-gray-200 justify-start">
+              <Button 
+                onClick={() => console.log('Uygulama değerlendirmesi açıldı')}
+                className="w-full h-12 rounded-xl font-semibold bg-gray-100 text-gray-800 hover:bg-gray-200 justify-start"
+              >
                 <Star className="w-5 h-5 mr-3" />
                 Uygulamayı Değerlendir
               </Button>
               
-              <Button className="w-full h-12 rounded-xl font-semibold bg-red-50 text-red-600 hover:bg-red-100 justify-start">
+              <Button 
+                onClick={() => console.log('Çıkış yapıldı')}
+                className="w-full h-12 rounded-xl font-semibold bg-red-50 text-red-600 hover:bg-red-100 justify-start"
+              >
                 <LogOut className="w-5 h-5 mr-3" />
                 Çıkış Yap
               </Button>

@@ -113,7 +113,7 @@ export const CodyCrossCategories = memo(({ onCategorySelect, onBack }: CodyCross
                     </div>
                     
                     <Button 
-                      onClick={() => onCategorySelect(category.name, "3")}
+                      onClick={() => onCategorySelect(category.name, "2")}
                       className="rounded-xl font-bold text-white shadow-lg border-0"
                       style={{
                         background: `linear-gradient(135deg, ${category.color.split(' ')[1]}, ${category.color.split(' ')[3]})`

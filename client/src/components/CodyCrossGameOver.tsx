@@ -205,6 +205,7 @@ export const CodyCrossGameOver = memo(({ gameSuccess, score, word, timeLeft, str
                   </Button>
                   
                   <Button 
+                    onClick={() => console.log('Skor paylaşıldı')}
                     className="h-14 rounded-xl font-bold border-0 shadow-lg text-white"
                     style={{
                       background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'

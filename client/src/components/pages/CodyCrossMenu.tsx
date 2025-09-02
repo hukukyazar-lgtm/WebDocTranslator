@@ -74,7 +74,9 @@ export const CodyCrossMenu = memo(({ playerStats, onStartGame, onSettings, onLog
           {/* Secondary menu options */}
           <div className="grid grid-cols-2 gap-4">
             <Card className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
-              <Button className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" style={{
+              <Button 
+                onClick={() => console.log('Başarımlar açıldı - Yakında gelecek!')}
+                className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" style={{
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
               }}>
                 <Trophy className="w-6 h-6 mb-1" />
@@ -83,8 +85,10 @@ export const CodyCrossMenu = memo(({ playerStats, onStartGame, onSettings, onLog
             </Card>
 
             <Card className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
-              <Button className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" style={{
-                background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)'
+              <Button 
+                onClick={onLogin}
+                className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" style={{
+                background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100())'
               }}>
                 <User className="w-6 h-6 mb-1" />
                 <div className="text-sm">Profil</div>
@@ -106,7 +110,9 @@ export const CodyCrossMenu = memo(({ playerStats, onStartGame, onSettings, onLog
             </Card>
 
             <Card className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
-              <Button className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" style={{
+              <Button 
+                onClick={() => console.log('Yardım sayfası açıldı - Yakında gelecek!')}
+                className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" style={{
                 background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
               }}>
                 <HelpCircle className="w-6 h-6 mb-1" />
