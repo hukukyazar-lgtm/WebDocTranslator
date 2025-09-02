@@ -79,21 +79,49 @@ export const CodyCrossGameOver = memo(() => {
                 </div>
               )}
 
-              {/* Logo and branding */}
+              {/* CodyCross-style colorful logo */}
               <div className="relative mb-6">
-                <div className="w-16 h-16 mx-auto mb-4 relative">
-                  <div className="absolute inset-0 bg-white/30 rounded-full animate-pulse"></div>
-                  <img 
-                    src={luminaLogo} 
-                    alt="LUMINA" 
-                    className="relative w-full h-full object-contain z-10"
-                    style={{
-                      filter: 'drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2))'
-                    }}
-                  />
+                <div className="w-20 h-20 mx-auto mb-4 relative">
+                  {/* Colorful background circles */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-300 to-orange-300 rounded-full animate-pulse opacity-80"></div>
+                  <div className="absolute inset-1 bg-gradient-to-r from-pink-300 to-purple-300 rounded-full animate-pulse opacity-70" style={{ animationDelay: '0.5s' }}></div>
+                  <div className="absolute inset-2 bg-white rounded-full shadow-lg"></div>
+                  
+                  {/* Modern eye design in CodyCross style */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="relative w-12 h-12">
+                      {/* Outer eye shape with gradient */}
+                      <div className="w-12 h-8 rounded-full border-4 border-gray-700 bg-gradient-to-b from-cyan-200 to-blue-400 relative overflow-hidden">
+                        {/* Animated iris */}
+                        <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-6 h-6 rounded-full bg-gradient-to-b from-purple-600 to-indigo-800 shadow-lg animate-pulse">
+                          {/* Pupil */}
+                          <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-3 h-3 rounded-full bg-black">
+                            {/* Light reflection */}
+                            <div className="absolute top-0.5 left-0.5 w-1 h-1 bg-white rounded-full animate-pulse"></div>
+                          </div>
+                        </div>
+                        
+                        {/* Sparkle effects */}
+                        <div className="absolute top-1 right-1 w-1 h-1 bg-white rounded-full animate-ping"></div>
+                        <div className="absolute bottom-1 left-1 w-0.5 h-0.5 bg-yellow-300 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+                      </div>
+                      
+                      {/* Floating mini sparkles around eye */}
+                      <div className="absolute -top-1 -right-1 w-2 h-2 text-yellow-400">⭐</div>
+                      <div className="absolute -bottom-1 -left-1 w-2 h-2 text-pink-400">✨</div>
+                    </div>
+                  </div>
                 </div>
-                <h1 className="text-2xl font-black text-white mb-2 tracking-wide">
-                  LUMINA
+                
+                {/* Colorful LUMINA text */}
+                <h1 className="text-3xl font-black text-white mb-2 tracking-wide relative">
+                  <span className="bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 bg-clip-text text-transparent">
+                    LUMINA
+                  </span>
+                  {/* Text shadow effect */}
+                  <span className="absolute inset-0 text-white/20 transform translate-x-0.5 translate-y-0.5 -z-10">
+                    LUMINA
+                  </span>
                 </h1>
               </div>
 
