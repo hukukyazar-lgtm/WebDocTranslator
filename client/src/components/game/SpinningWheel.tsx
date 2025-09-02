@@ -273,8 +273,8 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 
                 // Medium level (2): Add extra letter rotation
                 if (difficulty === 2) {
-                  const extraRotation = (animationFrame * 10) % 360;
-                  return `rotate(${baseAngle}deg) translate(${radius}px) rotate(${extraRotation - baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`;
+                  const extraRotation = (animationFrame * 5) % 360;
+                  return `rotate(${baseAngle}deg) translate(${radius}px) rotate(${extraRotation}deg) scale(${dynamicScale}) translateZ(15px)`;
                 }
                 
                 // Hard level (3): Chaotic movement
