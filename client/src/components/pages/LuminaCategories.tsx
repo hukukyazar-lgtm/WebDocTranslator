@@ -207,14 +207,34 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
             <div className="flex items-center justify-around text-white">
               <div>
                 {isAuthenticated && stats ? (
-                  <>
-                    <div className="text-lg font-black">Seviye {Math.floor((stats.totalScore || 0) / 500) + 1}</div>
-                    <div className="text-xs opacity-80">{(stats.totalScore || 0) % 500}/500 puan</div>
-                  </>
+                  (() => {
+                    const totalGames = stats.gamesPlayed || 0;
+                    let level = 1;
+                    let levelName = "Kolay";
+                    let gamesInLevel = totalGames;
+                    let maxGamesInLevel = 50;
+                    
+                    if (totalGames >= 100) {
+                      level = 3;
+                      levelName = "Zor";
+                      gamesInLevel = totalGames - 100;
+                    } else if (totalGames >= 50) {
+                      level = 2;
+                      levelName = "Orta";
+                      gamesInLevel = totalGames - 50;
+                    }
+                    
+                    return (
+                      <>
+                        <div className="text-lg font-black">Seviye {level} ({levelName})</div>
+                        <div className="text-xs opacity-80">{gamesInLevel}/{maxGamesInLevel} oyun</div>
+                      </>
+                    );
+                  })()
                 ) : (
                   <>
-                    <div className="text-lg font-black">Seviye 1</div>
-                    <div className="text-xs opacity-80">0/500 puan</div>
+                    <div className="text-lg font-black">Seviye 1 (Kolay)</div>
+                    <div className="text-xs opacity-80">0/50 oyun</div>
                   </>
                 )}
               </div>
@@ -222,13 +242,13 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
               <div>
                 {isAuthenticated && stats ? (
                   <>
-                    <div className="text-lg font-black">{stats.gamesPlayed || 0}/10</div>
-                    <div className="text-xs opacity-80">Tamamlanan</div>
+                    <div className="text-lg font-black">{(stats.totalScore || 0).toLocaleString()}</div>
+                    <div className="text-xs opacity-80">Toplam Puan</div>
                   </>
                 ) : (
                   <>
-                    <div className="text-lg font-black">0/10</div>
-                    <div className="text-xs opacity-80">Tamamlanan</div>
+                    <div className="text-lg font-black">0</div>
+                    <div className="text-xs opacity-80">Toplam Puan</div>
                   </>
                 )}
               </div>
