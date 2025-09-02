@@ -1,7 +1,9 @@
 import { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, LogIn } from 'lucide-react';
+import { Input } from '@/components/ui/input';
+import { Mail, Lock, Eye, EyeOff, LogIn, ArrowLeft } from 'lucide-react';
+import { useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 
 interface LuminaLoginProps {
@@ -11,6 +13,7 @@ interface LuminaLoginProps {
 }
 
 export const LuminaLogin = memo(({ onLogin, onBack, onGuestMode }: LuminaLoginProps) => {
+  const [showPassword, setShowPassword] = useState(false);
   const { user, isLoading, isAuthenticated } = useAuth();
 
   // Redirect if already authenticated
@@ -84,34 +87,122 @@ export const LuminaLogin = memo(({ onLogin, onBack, onGuestMode }: LuminaLoginPr
                 </div>
               ) : (
                 <>
-                  <div className="text-center mb-6">
-                    <h2 className="text-2xl font-bold text-gray-800 mb-2">Giriş Yap</h2>
-                    <p className="text-gray-600">Oyun istatistiklerini kaydetmek için giriş yap</p>
+                  {/* Email field */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      E-posta
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <Input 
+                        type="email"
+                        placeholder="ornek@email.com"
+                        className="pl-12 h-12 rounded-xl border-2 border-gray-200 focus:border-blue-500 text-base"
+                        disabled
+                      />
+                    </div>
                   </div>
 
-                  {/* Replit Login button */}
+                  {/* Password field */}
+                  <div>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Şifre
+                    </label>
+                    <div className="relative">
+                      <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                      <Input 
+                        type={showPassword ? "text" : "password"}
+                        placeholder="••••••••"
+                        className="pl-12 pr-12 h-12 rounded-xl border-2 border-gray-200 focus:border-blue-500 text-base"
+                        disabled
+                      />
+                      <button 
+                        type="button"
+                        onClick={() => setShowPassword(!showPassword)}
+                        className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                        disabled
+                      >
+                        {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Login button - disabled */}
                   <Button 
-                    onClick={handleReplitLogin}
-                    className="w-full h-14 rounded-2xl text-lg font-bold text-white shadow-xl transition-all duration-300 transform hover:scale-105" 
-                    style={{
+                    disabled
+                    className="w-full h-14 rounded-2xl text-lg font-bold text-white shadow-xl opacity-50 cursor-not-allowed" style={{
                       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
                     }}
-                    data-testid="replit-login-button"
                   >
                     <LogIn className="w-5 h-5 mr-3" />
-                    Replit ile Giriş Yap
+                    Giriş Yap
                   </Button>
 
-                  <div className="text-center text-sm text-gray-500">
-                    <p>Güvenli giriş için Replit hesabınızı kullanın</p>
+                  {/* Divider */}
+                  <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                      <div className="w-full border-t border-gray-200"></div>
+                    </div>
+                    <div className="relative flex justify-center text-sm">
+                      <span className="px-4 bg-white text-gray-500 font-medium">veya</span>
+                    </div>
+                  </div>
+
+                  {/* Social login */}
+                  <div className="space-y-3">
+                    {/* Replit Login - Active */}
+                    <Button 
+                      onClick={handleReplitLogin}
+                      className="w-full h-12 rounded-xl font-semibold bg-purple-600 hover:bg-purple-700 text-white transition-all duration-300 transform hover:scale-105"
+                      data-testid="replit-login-button"
+                    >
+                      <div className="w-5 h-5 mr-3 bg-white rounded-full flex items-center justify-center">
+                        <span className="text-purple-600 text-xs font-bold">R</span>
+                      </div>
+                      Replit ile devam et
+                    </Button>
+
+                    <Button 
+                      disabled
+                      className="w-full h-12 rounded-xl font-semibold bg-blue-600 hover:bg-blue-700 text-white opacity-50 cursor-not-allowed"
+                    >
+                      <div className="w-5 h-5 mr-3 bg-white rounded-full flex items-center justify-center">
+                        <span className="text-blue-600 text-xs font-bold">G</span>
+                      </div>
+                      Google ile devam et
+                    </Button>
+                    
+                    <Button 
+                      disabled
+                      className="w-full h-12 rounded-xl font-semibold bg-gray-800 hover:bg-gray-900 text-white opacity-50 cursor-not-allowed"
+                    >
+                      <div className="w-5 h-5 mr-3 bg-white rounded-full flex items-center justify-center">
+                        <span className="text-gray-800 text-xs font-bold">A</span>
+                      </div>
+                      Apple ile devam et
+                    </Button>
                   </div>
                 </>
               )}
             </div>
           </Card>
 
+          {/* Footer links */}
+          <div className="text-center space-y-4">
+            <button className="text-white/80 font-semibold hover:text-white transition-colors" disabled>
+              Şifremi Unuttum
+            </button>
+            
+            <div className="text-white/70">
+              <span>Hesabın yok mu? </span>
+              <button className="text-white font-semibold hover:text-yellow-300 transition-colors" disabled>
+                Kayıt Ol
+              </button>
+            </div>
+          </div>
+
           {/* Guest play option */}
-          <div className="mt-6">
+          <div className="mt-8">
             <Card className="p-4 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30">
               <Button 
                 onClick={onGuestMode}
@@ -120,9 +211,6 @@ export const LuminaLogin = memo(({ onLogin, onBack, onGuestMode }: LuminaLoginPr
               >
                 Misafir Olarak Oyna
               </Button>
-              <p className="text-white/70 text-xs text-center mt-2">
-                İstatistikler kaydedilmeyecek
-              </p>
             </Card>
           </div>
         </div>
