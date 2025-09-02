@@ -451,6 +451,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     setGuesses(newGuesses);
     setGuess('');
     
+    console.log('Guess:', trimmedGuess, 'Secret:', secretWord.toUpperCase(), 'Match:', trimmedGuess === secretWord.toUpperCase());
+    
     if (trimmedGuess === secretWord.toUpperCase()) {
       // Doğru tahmin - skor güncelle ve modal göster
       setShowConfetti(true);
@@ -866,7 +868,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         )}
         
         {/* Başarı Modal'ı */}
-        {(showSuccessModal && console.log('Rendering success modal')) && showSuccessModal && (
+        {showSuccessModal && (
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div 
               className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 backdrop-blur-xl rounded-2xl border border-green-400/30 p-6 max-w-md w-full mx-4 shadow-2xl transform animate-bounce-in"
