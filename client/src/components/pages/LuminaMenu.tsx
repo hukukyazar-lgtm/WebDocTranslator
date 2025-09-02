@@ -144,7 +144,10 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
                 ) : (
                   <>
                     <Gamepad2 className="w-6 h-6 mb-1" />
-                    <div className="text-sm">Oyuncu Girişi</div>
+                    <div className="text-center">
+                      <div className="text-sm font-bold">Oyuncu Girişi</div>
+                      <div className="text-xs opacity-80">Rekorlarını Sakla</div>
+                    </div>
                   </>
                 )}
               </Button>
