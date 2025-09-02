@@ -295,6 +295,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
   const [showDailyGoals, setShowDailyGoals] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
+  console.log('showSuccessModal state:', showSuccessModal);
   
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -487,6 +488,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       }
       
       // Modal'ı göster
+      console.log('Setting showSuccessModal to true');
       setShowSuccessModal(true);
     } else if (newGuesses.length >= maxGuesses) {
       // Maksimum tahmin sayısına ulaşıldı - oyunu bitir
@@ -864,7 +866,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         )}
         
         {/* Başarı Modal'ı */}
-        {showSuccessModal && (
+        {(showSuccessModal && console.log('Rendering success modal')) && showSuccessModal && (
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div 
               className="bg-gradient-to-br from-green-500/20 to-emerald-600/20 backdrop-blur-xl rounded-2xl border border-green-400/30 p-6 max-w-md w-full mx-4 shadow-2xl transform animate-bounce-in"
