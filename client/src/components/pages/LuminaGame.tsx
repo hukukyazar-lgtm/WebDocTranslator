@@ -36,14 +36,27 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
     return { x, y, angle };
   };
 
-  // Spinning animation class based on time pressure
+  // Spinning animation class based on difficulty and time pressure
   const spinClass = useMemo(() => {
     if (!isSpinning) return '';
+    
+    // Base speed based on difficulty
+    let baseSpeed = '';
+    if (difficulty === 'kolay') {
+      baseSpeed = 'animate-spin-slow'; // Slow for easy
+    } else if (difficulty === 'orta') {
+      baseSpeed = 'animate-spin'; // Medium for normal
+    } else {
+      baseSpeed = 'animate-spin-fast'; // Fast for hard
+    }
+    
+    // Adjust speed based on time left (gets slower as time decreases)
     if (timeLeft <= 5) return 'animate-spin-ultra-slow';
     if (timeLeft <= 10) return 'animate-spin-very-slow'; 
     if (timeLeft <= 15) return 'animate-spin-slow';
-    return 'animate-spin';
-  }, [isSpinning, timeLeft]);
+    
+    return baseSpeed;
+  }, [isSpinning, timeLeft, difficulty]);
 
   // Letter visibility based on time - more visible letters
   const getLetterOpacity = (index: number) => {
@@ -244,12 +257,19 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
+        @keyframes spin-fast {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
         @keyframes spin-ultra-slow {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
         .animate-spin {
           animation: spin 3s linear infinite;
+        }
+        .animate-spin-fast {
+          animation: spin-fast 1.5s linear infinite;
         }
         .animate-spin-slow {
           animation: spin-slow 5s linear infinite;
