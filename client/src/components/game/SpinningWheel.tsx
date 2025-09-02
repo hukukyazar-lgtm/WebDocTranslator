@@ -265,13 +265,14 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 ? `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`
                 : `${transformAlign} translateZ(5px)`;
                 
-              // Get difficulty-based CSS class
-              const difficultyClass = isSpinning && difficulty === 2 ? 'medium-letter-pulse' : 
-                                     isSpinning && difficulty === 3 ? 'hard-letter-glow' : '';
+              // Debug ALL values first
+              console.log(`LETTER ${i}: difficulty=${difficulty}, isSpinning=${isSpinning}`);
               
-              // Debug log
+              // Simple test for medium difficulty only
+              const difficultyClass = (isSpinning && difficulty === 2) ? 'medium-letter-pulse' : '';
+              
               if (difficultyClass) {
-                console.log(`Letter ${i}, difficulty ${difficulty}, class: ${difficultyClass}`);
+                console.log(`✓ APPLYING CLASS: ${difficultyClass} to letter ${i}`);
               }
 
               return (
