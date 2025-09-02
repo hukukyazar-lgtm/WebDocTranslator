@@ -8,6 +8,7 @@ import { LuminaSettings } from '@/components/pages/LuminaSettings';
 import { getWordByDifficulty } from '@/lib/wordLists';
 import { useAuth } from '@/hooks/useAuth';
 import { useGameStats } from '@/hooks/useGameStats';
+import { useQueryClient } from '@tanstack/react-query';
 
 type AppScreen = 'menu' | 'categories' | 'game' | 'gameover' | 'login' | 'settings';
 
@@ -52,6 +53,7 @@ const initialGameState: GameState = {
 export default function LuminaApp() {
   const { user, isLoading, isAuthenticated } = useAuth();
   const { saveGameSession, stats } = useGameStats();
+  const queryClient = useQueryClient();
   const [currentScreen, setCurrentScreen] = useState<AppScreen>('menu');
   const [gameState, setGameState] = useState<GameState>(initialGameState);
   
@@ -288,10 +290,18 @@ export default function LuminaApp() {
   };
 
   const handlePlayAgain = () => {
+    // Refresh stats when going to categories
+    if (isAuthenticated) {
+      queryClient.invalidateQueries({ queryKey: ['/api/stats'] });
+    }
     setCurrentScreen('categories');
   };
 
   const handleBackToMenu = () => {
+    // Refresh stats when going to menu
+    if (isAuthenticated) {
+      queryClient.invalidateQueries({ queryKey: ['/api/stats'] });
+    }
     setCurrentScreen('menu');
   };
 
