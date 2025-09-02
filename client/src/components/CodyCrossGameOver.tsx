@@ -79,84 +79,24 @@ export const CodyCrossGameOver = memo(() => {
                 </div>
               )}
 
-              {/* Monopoly GO style luxurious logo */}
+              {/* Simple, clean CodyCross-style logo */}
               <div className="relative mb-6">
-                <div className="w-28 h-28 mx-auto mb-4 relative">
-                  {/* Golden luxury background with shine effects */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-yellow-300 via-amber-400 to-orange-500 rounded-full animate-pulse shadow-2xl"></div>
-                  <div className="absolute inset-1 bg-gradient-to-br from-yellow-200 via-amber-300 to-yellow-400 rounded-full animate-pulse opacity-80" style={{ animationDelay: '0.3s' }}></div>
-                  <div className="absolute inset-3 bg-gradient-to-br from-white via-yellow-50 to-amber-50 rounded-full shadow-xl"></div>
+                <div className="w-16 h-16 mx-auto mb-4 relative">
+                  {/* Simple colorful background */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full shadow-lg"></div>
+                  <div className="absolute inset-2 bg-white rounded-full shadow-inner"></div>
                   
-                  {/* Shine overlay effect */}
-                  <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/30 to-transparent animate-spin-slow opacity-60"></div>
-                  
-                  {/* Luxurious philosophical eye symbol */}
+                  {/* Simple letter "L" for LUMINA */}
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="relative w-16 h-16">
-                      {/* Ornate frame around the eye */}
-                      <div className="absolute inset-0 border-4 border-gradient-to-r from-amber-600 to-yellow-600 rounded-full bg-gradient-to-br from-blue-100 to-purple-100 shadow-inner">
-                        
-                        {/* Central wisdom eye with luxury styling */}
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                          <div className="w-12 h-7 rounded-full bg-gradient-to-b from-emerald-300 to-teal-500 relative border-3 border-amber-500 shadow-lg">
-                            {/* Luxurious iris with gold accents */}
-                            <div className="absolute top-0.5 left-1/2 transform -translate-x-1/2 w-7 h-6 rounded-full bg-gradient-to-b from-purple-500 via-indigo-600 to-purple-700 shadow-inner border border-yellow-400">
-                              {/* Pupil with golden rim */}
-                              <div className="absolute top-1 left-1/2 transform -translate-x-1/2 w-4 h-4 rounded-full bg-black border border-yellow-500">
-                                {/* Luxurious light reflection */}
-                                <div className="absolute top-0.5 left-0.5 w-1.5 h-1.5 bg-white rounded-full animate-pulse"></div>
-                                <div className="absolute bottom-0.5 right-0.5 w-0.5 h-0.5 bg-yellow-300 rounded-full animate-ping"></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        
-                        {/* Golden decorative elements around eye */}
-                        <div className="absolute top-2 left-3 w-1 h-1 bg-yellow-500 rounded-full animate-ping shadow-lg"></div>
-                        <div className="absolute top-3 right-2 w-1 h-1 bg-amber-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
-                        <div className="absolute bottom-2 left-2 w-1 h-1 bg-orange-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
-                        <div className="absolute bottom-3 right-3 w-1 h-1 bg-yellow-600 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
-                      </div>
-                      
-                      {/* Monopoly GO style floating luxury symbols */}
-                      <div className="absolute -top-3 left-1/2 transform -translate-x-1/2 text-yellow-500 text-lg animate-bounce-gentle">💎</div>
-                      <div className="absolute top-1/2 -right-3 transform -translate-y-1/2 text-amber-500 text-lg animate-float-gentle" style={{ animationDelay: '1s' }}>🏆</div>
-                      <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 text-orange-500 text-lg animate-pulse" style={{ animationDelay: '0.5s' }}>⭐</div>
-                      <div className="absolute top-1/2 -left-3 transform -translate-y-1/2 text-yellow-600 text-lg animate-spin-slow" style={{ animationDelay: '1.5s' }}>🎯</div>
-                    </div>
+                    <div className="text-3xl font-black text-purple-600">L</div>
                   </div>
                 </div>
                 
-                {/* Monopoly GO style golden text with luxury effects */}
-                <div className="relative">
-                  <h1 className="text-4xl font-black text-white mb-2 tracking-wider relative">
-                    {/* Golden gradient text */}
-                    <span 
-                      className="bg-gradient-to-r from-yellow-200 via-amber-100 to-yellow-200 bg-clip-text text-transparent"
-                      style={{
-                        textShadow: '0 0 20px rgba(251, 191, 36, 0.5), 0 0 40px rgba(245, 158, 11, 0.3)'
-                      }}
-                    >
-                      LUMINA
-                    </span>
-                    {/* Multiple shadow layers for luxury depth */}
-                    <span className="absolute inset-0 text-amber-600/40 transform translate-x-1 translate-y-1 -z-10 blur-sm">
-                      LUMINA
-                    </span>
-                    <span className="absolute inset-0 text-yellow-500/20 transform translate-x-2 translate-y-2 -z-20 blur-md">
-                      LUMINA
-                    </span>
-                  </h1>
-                  
-                  {/* Luxury tagline with golden accent */}
-                  <div className="flex items-center justify-center gap-2">
-                    <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"></div>
-                    <p className="text-sm text-yellow-100 font-bold tracking-wider uppercase">
-                      Words of Fortune
-                    </p>
-                    <div className="w-8 h-0.5 bg-gradient-to-r from-transparent via-yellow-400 to-transparent"></div>
-                  </div>
-                </div>
+                {/* Clean LUMINA text */}
+                <h1 className="text-3xl font-black text-white mb-2 tracking-wide">
+                  LUMINA
+                </h1>
+                <p className="text-sm text-white/80 font-medium">Kelime Oyunu</p>
               </div>
 
               {/* Big result emoji and text */}
