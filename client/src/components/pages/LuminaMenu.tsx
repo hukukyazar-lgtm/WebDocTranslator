@@ -1,7 +1,8 @@
 import { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Play, Settings, Trophy, User, HelpCircle } from 'lucide-react';
+import { Play, Settings, Trophy, User, HelpCircle, LogOut } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 interface LuminaMenuProps {
   playerStats: {
@@ -15,6 +16,17 @@ interface LuminaMenuProps {
 }
 
 export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin }: LuminaMenuProps) => {
+  const { user, isLoading, isAuthenticated } = useAuth();
+
+  const handleProfileAction = () => {
+    if (isAuthenticated) {
+      // Kullanıcı giriş yapmışsa çıkış yap
+      window.location.href = '/api/logout';
+    } else {
+      // Kullanıcı giriş yapmamışsa login sayfasına yönlendir
+      onLogin();
+    }
+  };
   return (
     <div className="min-h-screen relative overflow-hidden" style={{
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
@@ -43,7 +55,7 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
       </div>
 
       <div className="relative z-10 min-h-screen flex flex-col items-center justify-center p-6">
-        {/* Header with logo */}
+        {/* Header with logo and user info */}
         <div className="text-center mb-12">
           <div className="w-24 h-24 mx-auto mb-6 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-300 via-purple-300 to-pink-300 rounded-full animate-pulse opacity-80"></div>
@@ -53,7 +65,22 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
             </div>
           </div>
           <h1 className="text-5xl font-black text-white mb-4 tracking-wide">LUMINA</h1>
-          <p className="text-xl text-white/80 font-semibold">Kelime Oyunu</p>
+          
+          {/* User greeting */}
+          {isAuthenticated && user ? (
+            <div className="mb-2">
+              <p className="text-xl text-white/90 font-semibold">
+                Hoş geldin, {user.firstName || user.email?.split('@')[0] || 'Oyuncu'}! 😊
+              </p>
+              <p className="text-sm text-white/70">Replit hesabın ile giriş yaptın</p>
+            </div>
+          ) : (
+            <p className="text-xl text-white/80 font-semibold mb-2">Kelime Oyunu</p>
+          )}
+          
+          {isLoading && (
+            <p className="text-sm text-white/60">Giriş kontrol ediliyor...</p>
+          )}
         </div>
 
         {/* Main menu cards */}
@@ -86,12 +113,25 @@ export const LuminaMenu = memo(({ playerStats, onStartGame, onSettings, onLogin 
 
             <Card className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
               <Button 
-                onClick={onLogin}
+                onClick={handleProfileAction}
                 className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" style={{
-                background: 'linear-gradient(135deg, #fa709a 0%, #fee140 100())'
-              }}>
-                <User className="w-6 h-6 mb-1" />
-                <div className="text-sm">Profil</div>
+                  background: isAuthenticated 
+                    ? 'linear-gradient(135deg, #ff6b6b 0%, #ffa500 100%)' 
+                    : 'linear-gradient(135deg, #fa709a 0%, #fee140 100())'
+                }}
+                data-testid={isAuthenticated ? 'logout-button' : 'login-button'}
+              >
+                {isAuthenticated ? (
+                  <>
+                    <LogOut className="w-6 h-6 mb-1" />
+                    <div className="text-sm">Çıkış</div>
+                  </>
+                ) : (
+                  <>
+                    <User className="w-6 h-6 mb-1" />
+                    <div className="text-sm">Giriş</div>
+                  </>
+                )}
               </Button>
             </Card>
           </div>

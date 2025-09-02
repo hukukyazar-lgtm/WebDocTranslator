@@ -1,9 +1,8 @@
 import { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Mail, Lock, Eye, EyeOff, LogIn } from 'lucide-react';
-import { useState } from 'react';
+import { ArrowLeft, LogIn } from 'lucide-react';
+import { useAuth } from '@/hooks/useAuth';
 
 interface LuminaLoginProps {
   onLogin: () => void;
@@ -12,7 +11,17 @@ interface LuminaLoginProps {
 }
 
 export const LuminaLogin = memo(({ onLogin, onBack, onGuestMode }: LuminaLoginProps) => {
-  const [showPassword, setShowPassword] = useState(false);
+  const { user, isLoading, isAuthenticated } = useAuth();
+
+  // Redirect if already authenticated
+  if (isAuthenticated && user) {
+    onLogin();
+    return null;
+  }
+
+  const handleReplitLogin = () => {
+    window.location.href = '/api/login';
+  };
 
   return (
     <div className="min-h-screen relative overflow-hidden" style={{
@@ -42,6 +51,15 @@ export const LuminaLogin = memo(({ onLogin, onBack, onGuestMode }: LuminaLoginPr
       </div>
 
       <div className="relative z-10 min-h-screen flex items-center justify-center p-6">
+        {/* Back button */}
+        <Button 
+          onClick={onBack}
+          className="absolute top-6 left-6 p-3 rounded-full bg-white/20 border border-white/30 text-white hover:bg-white/30"
+          data-testid="back-button"
+        >
+          <ArrowLeft className="w-6 h-6" />
+        </Button>
+
         <div className="w-full max-w-sm">
           {/* Logo header */}
           <div className="text-center mb-12">
@@ -59,106 +77,52 @@ export const LuminaLogin = memo(({ onLogin, onBack, onGuestMode }: LuminaLoginPr
           {/* Login card */}
           <Card className="p-8 bg-white rounded-3xl shadow-2xl border-0 mb-6">
             <div className="space-y-6">
-              {/* Email field */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  E-posta
-                </label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <Input 
-                    type="email"
-                    placeholder="ornek@email.com"
-                    className="pl-12 h-12 rounded-xl border-2 border-gray-200 focus:border-blue-500 text-base"
-                  />
+              {isLoading ? (
+                <div className="text-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
+                  <p className="text-gray-600 mt-4">Giriş kontrol ediliyor...</p>
                 </div>
-              </div>
+              ) : (
+                <>
+                  <div className="text-center mb-6">
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">Giriş Yap</h2>
+                    <p className="text-gray-600">Oyun istatistiklerini kaydetmek için giriş yap</p>
+                  </div>
 
-              {/* Password field */}
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  Şifre
-                </label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-                  <Input 
-                    type={showPassword ? "text" : "password"}
-                    placeholder="••••••••"
-                    className="pl-12 pr-12 h-12 rounded-xl border-2 border-gray-200 focus:border-blue-500 text-base"
-                  />
-                  <button 
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  {/* Replit Login button */}
+                  <Button 
+                    onClick={handleReplitLogin}
+                    className="w-full h-14 rounded-2xl text-lg font-bold text-white shadow-xl transition-all duration-300 transform hover:scale-105" 
+                    style={{
+                      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                    }}
+                    data-testid="replit-login-button"
                   >
-                    {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
-                  </button>
-                </div>
-              </div>
+                    <LogIn className="w-5 h-5 mr-3" />
+                    Replit ile Giriş Yap
+                  </Button>
 
-              {/* Login button */}
-              <Button 
-                onClick={onLogin}
-                className="w-full h-14 rounded-2xl text-lg font-bold text-white shadow-xl" style={{
-                  background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-                }}
-              >
-                <LogIn className="w-5 h-5 mr-3" />
-                Giriş Yap
-              </Button>
-
-              {/* Divider */}
-              <div className="relative">
-                <div className="absolute inset-0 flex items-center">
-                  <div className="w-full border-t border-gray-200"></div>
-                </div>
-                <div className="relative flex justify-center text-sm">
-                  <span className="px-4 bg-white text-gray-500 font-medium">veya</span>
-                </div>
-              </div>
-
-              {/* Social login */}
-              <div className="space-y-3">
-                <Button className="w-full h-12 rounded-xl font-semibold bg-blue-600 hover:bg-blue-700 text-white">
-                  <div className="w-5 h-5 mr-3 bg-white rounded-full flex items-center justify-center">
-                    <span className="text-blue-600 text-xs font-bold">G</span>
+                  <div className="text-center text-sm text-gray-500">
+                    <p>Güvenli giriş için Replit hesabınızı kullanın</p>
                   </div>
-                  Google ile devam et
-                </Button>
-                
-                <Button className="w-full h-12 rounded-xl font-semibold bg-gray-800 hover:bg-gray-900 text-white">
-                  <div className="w-5 h-5 mr-3 bg-white rounded-full flex items-center justify-center">
-                    <span className="text-gray-800 text-xs font-bold">A</span>
-                  </div>
-                  Apple ile devam et
-                </Button>
-              </div>
+                </>
+              )}
             </div>
           </Card>
 
-          {/* Footer links */}
-          <div className="text-center space-y-4">
-            <button className="text-white/80 font-semibold hover:text-white transition-colors">
-              Şifremi Unuttum
-            </button>
-            
-            <div className="text-white/70">
-              <span>Hesabın yok mu? </span>
-              <button className="text-white font-semibold hover:text-yellow-300 transition-colors">
-                Kayıt Ol
-              </button>
-            </div>
-          </div>
-
           {/* Guest play option */}
-          <div className="mt-8">
+          <div className="mt-6">
             <Card className="p-4 bg-white/20 backdrop-blur-sm rounded-2xl border border-white/30">
               <Button 
                 onClick={onGuestMode}
-                className="w-full h-12 rounded-xl font-bold bg-transparent border-2 border-white/50 text-white hover:bg-white/10"
+                className="w-full h-12 rounded-xl font-bold bg-transparent border-2 border-white/50 text-white hover:bg-white/10 transition-all duration-300"
+                data-testid="guest-mode-button"
               >
                 Misafir Olarak Oyna
               </Button>
+              <p className="text-white/70 text-xs text-center mt-2">
+                İstatistikler kaydedilmeyecek
+              </p>
             </Card>
           </div>
         </div>

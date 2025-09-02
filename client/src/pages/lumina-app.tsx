@@ -6,6 +6,7 @@ import { LuminaGameOver } from '@/components/LuminaGameOver';
 import { LuminaLogin } from '@/components/pages/LuminaLogin';
 import { LuminaSettings } from '@/components/pages/LuminaSettings';
 import { getWordByDifficulty } from '@/lib/wordLists';
+import { useAuth } from '@/hooks/useAuth';
 
 type AppScreen = 'menu' | 'categories' | 'game' | 'gameover' | 'login' | 'settings';
 
@@ -44,15 +45,26 @@ const initialGameState: GameState = {
 };
 
 export default function LuminaApp() {
+  const { user, isLoading, isAuthenticated } = useAuth();
   const [currentScreen, setCurrentScreen] = useState<AppScreen>('menu');
   const [gameState, setGameState] = useState<GameState>(initialGameState);
   const [playerProfile, setPlayerProfile] = useState({
-    name: 'Oyuncu',
+    name: user?.firstName || user?.email || 'Oyuncu',
     gamesPlayed: 247,
     successRate: 89,
     bestStreak: 15,
     totalScore: 1247
   });
+
+  // Update player profile when user data changes
+  useEffect(() => {
+    if (user) {
+      setPlayerProfile(prev => ({
+        ...prev,
+        name: user.firstName || user.email || 'Oyuncu'
+      }));
+    }
+  }, [user]);
 
   // Category progress tracking - track completed words per category/difficulty
   const [categoryProgress, setCategoryProgress] = useState<{[key: string]: {[difficulty: string]: number}}>({});
