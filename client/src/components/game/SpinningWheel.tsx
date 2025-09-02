@@ -265,19 +265,19 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                 ? `rotate(${baseAngle}deg) translate(${radius}px) rotate(-${baseAngle}deg) scale(${dynamicScale}) translateZ(15px)`
                 : `${transformAlign} translateZ(5px)`;
                 
-              // Get difficulty-based CSS class with debug
-              const getDifficultyClass = () => {
-                if (!isSpinning) return '';
-                const className = difficulty === 2 ? 'medium-letter-pulse' : 
-                                  difficulty === 3 ? 'hard-letter-glow' : '';
-                console.log(`Letter ${i}, difficulty ${difficulty}, spinning ${isSpinning}, class: ${className}`);
-                return className;
-              };
+              // Get difficulty-based CSS class
+              const difficultyClass = isSpinning && difficulty === 2 ? 'medium-letter-pulse' : 
+                                     isSpinning && difficulty === 3 ? 'hard-letter-glow' : '';
+              
+              // Debug log
+              if (difficultyClass) {
+                console.log(`Letter ${i}, difficulty ${difficulty}, class: ${difficultyClass}`);
+              }
 
               return (
                 <span 
                   key={i}
-                  className={`absolute font-sans font-semibold uppercase letter-glow ${fontSize} ${getDifficultyClass()}`}
+                  className={`absolute font-sans font-semibold uppercase letter-glow ${fontSize} ${difficultyClass}`}
                   style={{ 
                     letterSpacing: letters.length > 10 ? '-0.05em' : letters.length > 8 ? '-0.02em' : '0',
                     color: letterColors[i],
