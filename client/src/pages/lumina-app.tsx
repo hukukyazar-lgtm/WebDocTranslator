@@ -153,34 +153,11 @@ export default function LuminaApp() {
   const handleGameOver = async (success: boolean, finalScore: number, gameTime?: number) => {
     const timeSpent = gameTime || (30 - gameState.timeLeft);
     
-    setGameState(prev => ({
-      ...prev,
-      isGameOver: true,
-      gameSuccess: success,
-      score: finalScore,
-      isSpinning: false,
-      // Update streak based on success - for guest players
-      streak: success ? prev.streak + 1 : 0
-    }));
-    
-    // Save game session to database if user is authenticated
-    if (isAuthenticated) {
-      try {
-        await saveGameSession({
-          category: gameState.category,
-          difficulty: gameState.difficulty.toLowerCase(),
-          word: gameState.currentWord,
-          isCorrect: success,
-          score: finalScore,
-          guessTime: timeSpent,
-        });
-      } catch (error) {
-        console.error('Failed to save game session:', error);
-      }
-    }
-    
-    // Update category progress and used words if successful
     if (success) {
+      // Doğru tahmin: Seri artır, yeni kelime getir, oyun devam etsin
+      const newStreak = gameState.streak + 1;
+      
+      // Update category progress and used words
       const categoryKey = gameState.category;
       const difficultyKey = gameState.difficulty;
       const currentWord = gameState.currentWord;
@@ -201,6 +178,74 @@ export default function LuminaApp() {
           [difficultyKey]: [...(prev[categoryKey]?.[difficultyKey] || []), currentWord]
         }
       }));
+
+      // Get next word for continuous play
+      let difficultyLevel = 1;
+      switch(gameState.difficulty.toLowerCase()) {
+        case 'kolay':
+          difficultyLevel = 1;
+          break;
+        case 'orta':
+          difficultyLevel = 2;
+          break;
+        case 'zor':
+          difficultyLevel = 3;
+          break;
+        default:
+          difficultyLevel = parseInt(gameState.difficulty) || 2;
+      }
+      
+      const categoryUsedWords = usedWords[categoryKey]?.[difficultyKey] || [];
+      const nextWord = getWordByDifficulty(categoryKey, difficultyLevel, [...categoryUsedWords, currentWord]);
+      
+      if (nextWord) {
+        // Continue with next word
+        setGameState(prev => ({
+          ...prev,
+          currentWord: nextWord,
+          guessedWord: nextWord.replace(/./g, '_'),
+          timeLeft: 30,
+          usedLetters: [],
+          streak: newStreak,
+          score: prev.score + finalScore,
+          isSpinning: true
+        }));
+        return; // Don't go to game over screen
+      } else {
+        // No more words available, end game
+        setGameState(prev => ({
+          ...prev,
+          isGameOver: true,
+          gameSuccess: true,
+          streak: newStreak,
+          isSpinning: false
+        }));
+      }
+    } else {
+      // Yanlış tahmin: Oyun bitir, seri kaydet
+      setGameState(prev => ({
+        ...prev,
+        isGameOver: true,
+        gameSuccess: false,
+        score: finalScore,
+        isSpinning: false
+      }));
+      
+      // Save final game session to database if user is authenticated
+      if (isAuthenticated) {
+        try {
+          await saveGameSession({
+            category: gameState.category,
+            difficulty: gameState.difficulty.toLowerCase(),
+            word: gameState.currentWord,
+            isCorrect: false,
+            score: gameState.streak, // Save the achieved streak as score
+            guessTime: timeSpent,
+          });
+        } catch (error) {
+          console.error('Failed to save game session:', error);
+        }
+      }
     }
     
     setCurrentScreen('gameover');
