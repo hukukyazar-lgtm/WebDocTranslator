@@ -295,6 +295,9 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                   'linear-gradient(135deg, #fa709a, #fee140)',
                   'linear-gradient(135deg, #667eea, #764ba2)'
                 ];
+                if (index === 0) {
+                  console.log('Gradient kutular render ediliyor!', gradients[index % 4]);
+                }
                 return gradients[index % 4];
               };
 
@@ -314,7 +317,8 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
                     className="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl font-black text-white shadow-2xl border border-white/20"
                     style={{
                       background: getLetterGradient(i),
-                      transform: `scale(${1 + Math.sin(Date.now() * 0.002 + i) * 0.1})`
+                      transform: `scale(${1 + Math.sin(Date.now() * 0.002 + i) * 0.1})`,
+                      boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 20px rgba(255, 255, 255, 0.1)'
                     }}
                   >
                     {char || '?'}
