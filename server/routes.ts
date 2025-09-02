@@ -49,21 +49,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         userStats = await storage.createUserStats(userId);
       }
 
-      // Update user stats
-      const newTotalGames = (userStats.totalGamesPlayed || 0) + 1;
-      const newCorrectGuesses = (userStats.totalCorrectGuesses || 0) + (sessionData.isCorrect ? 1 : 0);
+      // Update user stats - only count games when streak ends (wrong answer)
+      const newTotalGames = (userStats.totalGamesPlayed || 0) + (sessionData.isCorrect ? 0 : 1);
+      const newCorrectGuesses = (userStats.totalCorrectGuesses || 0) + sessionData.score; // Score is the streak count
       const newTotalScore = (userStats.totalScore || 0) + sessionData.score;
       const newTotalTime = (userStats.totalGuessTime || 0) + sessionData.guessTime;
 
-      // Calculate new streak
-      let newCurrentStreak = userStats.currentStreak || 0;
-      if (sessionData.isCorrect) {
-        newCurrentStreak++;
-      } else {
-        newCurrentStreak = 0;
-      }
-
-      const newBestStreak = Math.max(userStats.bestStreak || 0, newCurrentStreak);
+      // Calculate new streak - score represents the achieved streak
+      let newCurrentStreak = 0; // Always reset after game ends
+      const achievedStreak = sessionData.score; // The streak they achieved before wrong answer
+      
+      const newBestStreak = Math.max(userStats.bestStreak || 0, achievedStreak);
 
       // Update stats
       await storage.updateUserStats(userId, {
