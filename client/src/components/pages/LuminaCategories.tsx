@@ -98,13 +98,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                     : selectedDifficulty === 'orta'
                     ? 'bg-gradient-to-br from-yellow-100 to-yellow-200 text-yellow-800 border-2 border-yellow-400'
                     : 'bg-gradient-to-br from-red-100 to-red-200 text-red-800 border-2 border-red-400'
-                  : selectedDifficulty === 'kolay'
-                  ? 'bg-gradient-to-br from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 text-green-700 border border-green-300'
-                  : selectedDifficulty === 'orta'
-                  ? 'bg-gradient-to-br from-yellow-50 to-yellow-100 hover:from-yellow-100 hover:to-yellow-200 text-yellow-700 border border-yellow-300'
-                  : selectedDifficulty === 'zor'
-                  ? 'bg-gradient-to-br from-red-50 to-red-100 hover:from-red-100 hover:to-red-200 text-red-700 border border-red-300'
-                  : 'bg-gradient-to-br from-green-50 to-green-100 hover:from-green-100 hover:to-green-200 text-green-700 border border-green-300'
+                  : 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200'
               }`}
               onClick={() => handleCategorySelect(category.name)}
               data-testid={`category-${category.name}`}
