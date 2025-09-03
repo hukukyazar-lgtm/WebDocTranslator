@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -22,6 +22,38 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
   // Yeni sistem: Önce zorluk, sonra kategori
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  
+  // LocalStorage progress takibi için state
+  const [localProgressMap, setLocalProgressMap] = useState<{[key: string]: {[difficulty: string]: number}}>({});
+
+  // LocalStorage'dan progress verilerini yükle
+  useEffect(() => {
+    const loadProgress = () => {
+      const isGuestMode = !isAuthenticated;
+      const progressKey = `category_progress_${isGuestMode ? 'guest' : 'user'}`;
+      const savedProgress = localStorage.getItem(progressKey);
+      if (savedProgress) {
+        setLocalProgressMap(JSON.parse(savedProgress));
+      }
+    };
+
+    loadProgress();
+    
+    // LocalStorage değişikliklerini dinle
+    const handleStorageChange = () => {
+      loadProgress();
+    };
+    
+    window.addEventListener('storage', handleStorageChange);
+    
+    // Component mount olduğunda da tekrar yükle
+    const interval = setInterval(loadProgress, 1000);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, [isAuthenticated]);
 
   const handleDifficultySelect = (difficulty: string) => {
     setSelectedDifficulty(difficulty);
@@ -47,35 +79,12 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
   const isDifficultyUnlocked = (difficulty: string) => {
     if (difficulty === 'kolay') return true; // Kolay her zaman açık
     
-    // Misafir oyuncular için de aynı kurallar geçerli
-    if (!isAuthenticated || !difficultyProgress) {
-      // Misafir oyuncular sadece kolay seviyeyi oynayabilir
-      return difficulty === 'kolay';
-    }
+    // LocalStorage'dan kilit durumunu kontrol et
+    const isGuestMode = !isAuthenticated;
+    const difficultyKey = `unlocked_difficulties_${isGuestMode ? 'guest' : 'user'}`;
+    const unlockedDifficulties = JSON.parse(localStorage.getItem(difficultyKey) || '["kolay"]');
     
-    // Tüm kategoriler için kontrol et
-    const categoryNames = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
-    const categoryTargets = [25, 25, 25, 25, 25, 25, 25, 25, 25, 25]; // Her zorluk seviyesinde 25 kelime var
-    
-    if (difficulty === 'orta') {
-      // Orta için: TÜM kategorilerde kolay seviyede %100 tamamlama
-      return categoryNames.every((category, index) => {
-        const easyCount = difficultyProgress[category]?.['kolay']?.correctCount || 0;
-        const target = categoryTargets[index];
-        return easyCount >= target; // %100 tamamlama
-      });
-    }
-    
-    if (difficulty === 'zor') {
-      // Zor için: TÜM kategorilerde orta seviyede %100 tamamlama
-      return categoryNames.every((category, index) => {
-        const mediumCount = difficultyProgress[category]?.['orta']?.correctCount || 0;
-        const target = categoryTargets[index];
-        return mediumCount >= target; // %100 tamamlama
-      });
-    }
-    
-    return false;
+    return unlockedDifficulties.includes(difficulty);
   };
 
   // İlerleme mesajı al
@@ -127,11 +136,17 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
     { id: 10, name: "Eşyalar", emoji: "📱", color: "#374151, #1f2937", total: 80 }
   ];
 
-  // Database verilerini kategorilerle birleştir
-  const categories = baseCategories.map(category => ({
-    ...category,
-    completed: isAuthenticated && progress ? (progress.categories[category.name] || 0) : 0
-  }));
+  // Progress verileri ile kategorileri birleştir
+  const categories = baseCategories.map(category => {
+    const categoryProgress = localProgressMap[category.name] || {};
+    const currentDifficultyProgress = categoryProgress[selectedDifficulty || 'kolay'] || 0;
+    
+    return {
+      ...category,
+      completed: currentDifficultyProgress,
+      total: 25 // Her kategori için 25 kelime var
+    };
+  });
 
 
   // Zorluk seviyeleri tanımı
