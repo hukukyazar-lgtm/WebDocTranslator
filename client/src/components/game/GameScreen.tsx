@@ -533,10 +533,31 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
       
       // 25 kelime tamamlandığında bildirim göster ve otomatik kategori geçişi
       if (newCategoryCount >= 25) {
+        // Bu kategoriyi tamamlanan kategoriler listesine ekle
+        const completedKey = `completed_${difficulty}_${isGuestMode ? 'guest' : 'user'}`;
+        const completedCategories = JSON.parse(localStorage.getItem(completedKey) || '[]');
+        if (!completedCategories.includes(category)) {
+          completedCategories.push(category);
+          localStorage.setItem(completedKey, JSON.stringify(completedCategories));
+        }
+
         setTimeout(() => {
           const allCategories = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
-          const currentIndex = allCategories.indexOf(category);
-          const nextCategory = allCategories[(currentIndex + 1) % allCategories.length];
+          
+          // Tamamlanmamış kategorileri bul ve alfabetik sırala
+          const uncompletedCategories = allCategories
+            .filter(cat => !completedCategories.includes(cat))
+            .sort();
+          
+          let nextCategory;
+          if (uncompletedCategories.length > 0) {
+            // Tamamlanmamış kategoriler varsa, alfabetik sırayla ilkini seç
+            nextCategory = uncompletedCategories[0];
+          } else {
+            // Tüm kategoriler tamamlandıysa, başarı mesajı göster ve döngü başlat
+            nextCategory = allCategories[0]; // Hayvanlar'dan başla
+            alert(`🏆 Harika! Tüm kategorileri "${difficulty}" seviyesinde tamamladınız!\n\n🔄 Yeniden başlangıç - Hayvanlar kategorisinden devam ediyorsunuz.`);
+          }
           
           alert(`🎉 Tebrikler! "${category}" kategorisini "${difficulty}" seviyesinde tamamladınız!\n\n🎯 Serin korunarak "${nextCategory}" kategorisine geçiyorsun!`);
           
