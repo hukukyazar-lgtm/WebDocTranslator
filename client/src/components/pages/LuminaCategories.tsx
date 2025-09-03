@@ -43,28 +43,31 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
     setSelectedCategory(null);
   };
 
-  // Zorluk seviyesinin kilitli olup olmadığını kontrol et (kategori bağımsız)
+  // Zorluk seviyesinin kilitli olup olmadığını kontrol et (%100 tamamlama şartı)
   const isDifficultyUnlocked = (difficulty: string) => {
     if (!isAuthenticated || !difficultyProgress) return true; // Giriş yapmamışlara her seviye açık
     
     if (difficulty === 'kolay') return true; // Kolay her zaman açık
     
-    // Her kategori için minimum gereksinimi kontrol et
+    // Tüm kategoriler için kontrol et
     const categoryNames = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
+    const categoryTargets = [100, 80, 75, 150, 60, 70, 60, 50, 90, 80]; // Her kategorinin toplam kelime sayısı
     
     if (difficulty === 'orta') {
-      // Orta için: En az bir kategoride 5 kolay doğru
-      return categoryNames.some(category => {
+      // Orta için: TÜM kategorilerde kolay seviyede %100 tamamlama
+      return categoryNames.every((category, index) => {
         const easyCount = difficultyProgress[category]?.['kolay']?.correctCount || 0;
-        return easyCount >= 5;
+        const target = categoryTargets[index];
+        return easyCount >= target; // %100 tamamlama
       });
     }
     
     if (difficulty === 'zor') {
-      // Zor için: En az bir kategoride 5 orta doğru
-      return categoryNames.some(category => {
+      // Zor için: TÜM kategorilerde orta seviyede %100 tamamlama
+      return categoryNames.every((category, index) => {
         const mediumCount = difficultyProgress[category]?.['orta']?.correctCount || 0;
-        return mediumCount >= 5;
+        const target = categoryTargets[index];
+        return mediumCount >= target; // %100 tamamlama
       });
     }
     

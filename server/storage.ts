@@ -234,7 +234,21 @@ export class DatabaseStorage implements IStorage {
     
     // Her kategori için zorluk seviyesi durumunu hesapla
     const categories = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
+    const categoryTargets = [100, 80, 75, 150, 60, 70, 60, 50, 90, 80]; // Her kategorinin hedef kelime sayısı
     const difficulties = ['kolay', 'orta', 'zor'];
+    
+    // Global kilit açma durumunu hesapla
+    const allEasyCompleted = categories.every((category, index) => {
+      const easySession = sessions.find(s => s.category === category && s.difficulty === 'kolay');
+      const easyCount = easySession ? Number(easySession.count) : 0;
+      return easyCount >= categoryTargets[index];
+    });
+    
+    const allMediumCompleted = categories.every((category, index) => {
+      const mediumSession = sessions.find(s => s.category === category && s.difficulty === 'orta');
+      const mediumCount = mediumSession ? Number(mediumSession.count) : 0;
+      return mediumCount >= categoryTargets[index];
+    });
     
     for (const category of categories) {
       progress[category] = {};
@@ -243,18 +257,14 @@ export class DatabaseStorage implements IStorage {
         const session = sessions.find(s => s.category === category && s.difficulty === difficulty);
         const correctCount = session ? Number(session.count) : 0;
         
-        // Kilit açma mantığı
+        // Yeni kilit açma mantığı: TÜM kategorilerde %100 tamamlama
         let isUnlocked = false;
         if (difficulty === 'kolay') {
           isUnlocked = true; // Kolay her zaman açık
         } else if (difficulty === 'orta') {
-          // Orta için: Kolay seviyede 5 doğru gerekli
-          const easyCount = sessions.find(s => s.category === category && s.difficulty === 'kolay');
-          isUnlocked = (easyCount ? Number(easyCount.count) : 0) >= 5;
+          isUnlocked = allEasyCompleted; // Tüm kategorilerde kolay %100
         } else if (difficulty === 'zor') {
-          // Zor için: Orta seviyede 5 doğru gerekli
-          const mediumCount = sessions.find(s => s.category === category && s.difficulty === 'orta');
-          isUnlocked = (mediumCount ? Number(mediumCount.count) : 0) >= 5;
+          isUnlocked = allMediumCompleted; // Tüm kategorilerde orta %100
         }
         
         progress[category][difficulty] = {
