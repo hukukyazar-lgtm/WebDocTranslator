@@ -130,9 +130,6 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
             <ChevronLeft className="w-3 h-3" />
           </Button>
           <div className="text-center">
-            <h1 className="text-xl font-black text-white">
-              {selectedDifficulty ? `${difficulties.find(d => d.id === selectedDifficulty)?.name} - Kategoriler` : ''}
-            </h1>
           </div>
           <div className="w-6"></div>
         </div>
