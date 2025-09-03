@@ -616,18 +616,15 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
               onCategoryComplete(nextCategory, difficulty);
             } else {
               // Fallback: Kelime listesini temizle ve yeni kategoriye geç
-              console.log('🚀 ESKİ SİSTEM - Yeni kategoriye geçiş:', nextCategory);
               setUsedWords([]); // Kelime listesini sıfırla
               
               // Yeni kategorinin ilk kelimesini seç
               const newCategoryWord = getWordByDifficulty(nextCategory, difficulty, []);
-              console.log('🔤 Yeni kategorinin ilk kelimesi:', newCategoryWord);
               setSecretWord(newCategoryWord);
               setUsedWords([newCategoryWord]);
               
-              // Oyun state'ini güncelle - BURADA SORUN VAR!
-              console.log('⚠️ Kategori state güncelleniyor:', category, '→', nextCategory);
-              setCategory(nextCategory); // settings.category yerine setCategory kullan
+              // Oyun state'ini güncelle
+              setCategory(nextCategory);
               
               // Oyunu yeniden başlat
               setGuess('');
@@ -689,14 +686,6 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
   }, []);
 
   const handleContinue = useCallback(() => {
-    console.log('🔄 HandleContinue çağrıldı, mevcut durum:', {
-      category,
-      difficulty,
-      usedWordsCount: usedWords.length,
-      progressMapKey: `${category}-${difficulty}`,
-      currentProgress: categoryProgressMap[category]?.[difficulty] || 0
-    });
-
     // Clear existing timer first
     if (timerRef.current) {
       clearInterval(timerRef.current);
@@ -705,12 +694,9 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
     
     // Get new word using getWordByDifficulty function BEFORE clearing state
     const newWord = getWordByDifficulty(category, difficulty, usedWords);
-    console.log('🎯 Yeni kelime:', newWord, 'usedWords.length:', usedWords.length);
     
     // Kategori tamamlama kontrolü - 25 kelimede tamamlandı mı?
     if (usedWords.length >= 25 || !newWord) {
-      console.log('🎉 KATEGORİ TAMAMLANDI! usedWords.length:', usedWords.length);
-      
       // Progress'i güncelle (25/25 = %100)
       const currentProgress = categoryProgressMap[category]?.[difficulty] || 0;
       const newCategoryCount = Math.max(currentProgress, 25); // 25'e sabitle
@@ -727,38 +713,32 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
         // LocalStorage'a kaydet
         const progressKey = `category_progress_${isGuestMode ? 'guest' : 'user'}`;
         localStorage.setItem(progressKey, JSON.stringify(updated));
-        console.log('💾 Progress güncellendi:', updated);
         
         return updated;
       });
 
       // Kategori atlatma: Sonraki kategoriye geç
       const nextCategory = getNextCategory(category, difficulty);
-      console.log('➡️ Sonraki kategori:', nextCategory);
       
       if (nextCategory) {
         // Yeni kategoriye geç ve usedWords'ü sıfırla
-        console.log('🚀 Yeni kategoriye geçiş:', nextCategory);
         setCategory(nextCategory);
         setUsedWords([]); // Yeni kategori için sıfırla
         
         // Yeni kategorinin ilk kelimesini al
         const firstWord = getWordByDifficulty(nextCategory, difficulty, []);
-        console.log('🔤 Yeni kategorinin ilk kelimesi:', firstWord);
         
         if (firstWord) {
           setSecretWord(firstWord);
           setUsedWords([firstWord]); // İlk kelimeyi ekle
         }
       } else {
-        console.log('🏆 TÜM KATEGORİLER TAMAMLANDI!');
         setMessage('🏆 Tebrikler! Tüm kategorileri tamamladınız!');
         setGameOver(true);
         return;
       }
     } else {
       // Normal kelime devam et
-      console.log('▶️ Normal kelime devam:', newWord);
       setSecretWord(newWord);
       setUsedWords(prev => [...prev, newWord]);
     }

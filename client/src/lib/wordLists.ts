@@ -70,12 +70,9 @@ export function getWordByDifficulty(category: string, difficulty: number, usedWo
   
   if (availableWords.length === 0) {
     // Tüm kelimeler kullanıldı - kategori tamamlandı, boş string döndür
-    console.log('🎉 getWordByDifficulty: Tüm kelimeler kullanıldı! Kategori:', category, 'Zorluk:', difficulty, 'UsedWords sayısı:', usedWords.length);
     return '';
   }
   
   // Return the first available word (they are already sorted by letter count)
-  const nextWord = availableWords[0] || '';
-  console.log('➡️ getWordByDifficulty: Sıradaki kelime:', nextWord, 'Kalan kelime:', availableWords.length);
-  return nextWord;
+  return availableWords[0] || '';
 }
