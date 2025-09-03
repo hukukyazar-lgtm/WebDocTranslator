@@ -686,13 +686,81 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
   }, []);
 
   const handleContinue = useCallback(() => {
+    console.log('🔄 HandleContinue çağrıldı, mevcut durum:', {
+      category,
+      difficulty,
+      usedWordsCount: usedWords.length,
+      progressMapKey: `${category}-${difficulty}`,
+      currentProgress: categoryProgressMap[category]?.[difficulty] || 0
+    });
+
     // Clear existing timer first
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
     
-    // Continue with new word without resetting score
+    // Get new word using getWordByDifficulty function BEFORE clearing state
+    const newWord = getWordByDifficulty(category, difficulty, usedWords);
+    console.log('🎯 Yeni kelime:', newWord, 'usedWords.length:', usedWords.length);
+    
+    // Kategori tamamlama kontrolü - 25 kelimede tamamlandı mı?
+    if (usedWords.length >= 25 || !newWord) {
+      console.log('🎉 KATEGORİ TAMAMLANDI! usedWords.length:', usedWords.length);
+      
+      // Progress'i güncelle (25/25 = %100)
+      const currentProgress = categoryProgressMap[category]?.[difficulty] || 0;
+      const newCategoryCount = Math.max(currentProgress, 25); // 25'e sabitle
+      
+      setCategoryProgressMap(prev => {
+        const updated = {
+          ...prev,
+          [category]: {
+            ...prev[category],
+            [difficulty]: newCategoryCount
+          }
+        };
+        
+        // LocalStorage'a kaydet
+        const progressKey = `category_progress_${isGuestMode ? 'guest' : 'user'}`;
+        localStorage.setItem(progressKey, JSON.stringify(updated));
+        console.log('💾 Progress güncellendi:', updated);
+        
+        return updated;
+      });
+
+      // Kategori atlatma: Sonraki kategoriye geç
+      const nextCategory = getNextCategory(category, difficulty);
+      console.log('➡️ Sonraki kategori:', nextCategory);
+      
+      if (nextCategory) {
+        // Yeni kategoriye geç ve usedWords'ü sıfırla
+        console.log('🚀 Yeni kategoriye geçiş:', nextCategory);
+        setCategory(nextCategory);
+        setUsedWords([]); // Yeni kategori için sıfırla
+        
+        // Yeni kategorinin ilk kelimesini al
+        const firstWord = getWordByDifficulty(nextCategory, difficulty, []);
+        console.log('🔤 Yeni kategorinin ilk kelimesi:', firstWord);
+        
+        if (firstWord) {
+          setSecretWord(firstWord);
+          setUsedWords([firstWord]); // İlk kelimeyi ekle
+        }
+      } else {
+        console.log('🏆 TÜM KATEGORİLER TAMAMLANDI!');
+        setMessage('🏆 Tebrikler! Tüm kategorileri tamamladınız!');
+        setGameOver(true);
+        return;
+      }
+    } else {
+      // Normal kelime devam et
+      console.log('▶️ Normal kelime devam:', newWord);
+      setSecretWord(newWord);
+      setUsedWords(prev => [...prev, newWord]);
+    }
+    
+    // Game state'i temizle
     setGuess('');
     setGuesses([]); // Reset guesses for new word - this will clear keyboard state
     setIsSpinning(true);
@@ -705,15 +773,8 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
     // Force keyboard clear by updating key
     setForceKeyboardRender(prev => prev + 1);
     
-    // Get new word using getWordByDifficulty function
-    const newWord = getWordByDifficulty(category, difficulty, usedWords);
-    
-    if (newWord) {
-      setSecretWord(newWord);
-      setUsedWords(prev => [...prev, newWord]);
-      // Play word complete sound for new word
-      simpleAudio.playSuccess();
-    }
+    // Play word complete sound for new word
+    simpleAudio.playSuccess();
     
     const baseSpeed = getSpinDuration(difficulty, TOTAL_GAME_TIME);
     setSpinDuration(baseSpeed);
@@ -722,7 +783,7 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
     timerRef.current = setInterval(() => {
       setElapsedTime(prevTime => prevTime + 1);
     }, 1000);
-  }, [category, difficulty, usedWords]);
+  }, [category, difficulty, usedWords, categoryProgressMap, isGuestMode, getNextCategory]);
 
   const handlePlayAgain = useCallback(() => {
     // Clear existing timer first
