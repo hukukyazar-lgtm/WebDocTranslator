@@ -41,16 +41,16 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
     setSelectedCategory(null);
   };
   const baseCategories = [
-    { id: 1, name: "Hayvanlar", emoji: "🐾", color: "from-green-400 to-blue-500", total: 100 },
-    { id: 2, name: "Yiyecek", emoji: "🍎", color: "from-red-400 to-pink-500", total: 80 },
-    { id: 3, name: "Bilim", emoji: "🔬", color: "from-purple-400 to-indigo-500", total: 75 },
-    { id: 4, name: "Ülkeler", emoji: "🌍", color: "from-blue-400 to-cyan-500", total: 150 },
-    { id: 5, name: "Meslekler", emoji: "👨‍💼", color: "from-indigo-400 to-blue-500", total: 60 },
-    { id: 6, name: "Şehirler", emoji: "🏙️", color: "from-teal-400 to-cyan-500", total: 70 },
-    { id: 7, name: "Spor Dalları", emoji: "⚽", color: "from-orange-400 to-red-500", total: 60 },
-    { id: 8, name: "Markalar", emoji: "🏷️", color: "from-purple-400 to-pink-500", total: 50 },
-    { id: 9, name: "Filmler", emoji: "🎬", color: "from-pink-400 to-purple-500", total: 90 },
-    { id: 10, name: "Eşyalar", emoji: "📱", color: "from-gray-400 to-blue-500", total: 80 }
+    { id: 1, name: "Hayvanlar", emoji: "🐾", color: "#059669, #047857", total: 100 },
+    { id: 2, name: "Yiyecek", emoji: "🍎", color: "#dc2626, #b91c1c", total: 80 },
+    { id: 3, name: "Bilim", emoji: "🔬", color: "#7c3aed, #6d28d9", total: 75 },
+    { id: 4, name: "Ülkeler", emoji: "🌍", color: "#2563eb, #1d4ed8", total: 150 },
+    { id: 5, name: "Meslekler", emoji: "👨‍💼", color: "#4338ca, #3730a3", total: 60 },
+    { id: 6, name: "Şehirler", emoji: "🏙️", color: "#0891b2, #0e7490", total: 70 },
+    { id: 7, name: "Spor Dalları", emoji: "⚽", color: "#ea580c, #c2410c", total: 60 },
+    { id: 8, name: "Markalar", emoji: "🏷️", color: "#c026d3, #a21caf", total: 50 },
+    { id: 9, name: "Filmler", emoji: "🎬", color: "#db2777, #be185d", total: 90 },
+    { id: 10, name: "Eşyalar", emoji: "📱", color: "#374151, #1f2937", total: 80 }
   ];
 
   // Database verilerini kategorilerle birleştir
@@ -153,55 +153,61 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
               <p className="text-xl text-white/80 font-semibold">Hangi seviyede yarışmak istiyorsun?</p>
             </div>
 
-            {/* Zorluk butonları - Ana sayfa tarzında (direkt butonlar) */}
+            {/* Zorluk butonları - Ana sayfa tarzı Card içinde Button */}
             <div className="space-y-4">
               {/* Kolay seviye */}
-              <Button 
-                onClick={() => handleDifficultySelect('kolay')}
-                className="w-full h-16 rounded-2xl font-bold text-white shadow-2xl transition-all duration-300 hover:scale-[1.02]" 
-                style={{
-                  background: 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)'
-                }}
-                data-testid="difficulty-kolay"
-              >
-                <div className="text-2xl mr-3">😊</div>
-                <div>
-                  <div className="text-lg font-black">KOLAY</div>
-                  <div className="text-sm opacity-90">Başlangıç Seviyesi</div>
-                </div>
-              </Button>
+              <Card className="p-6 bg-white rounded-3xl shadow-2xl border-0">
+                <Button 
+                  onClick={() => handleDifficultySelect('kolay')}
+                  className="w-full h-16 rounded-2xl font-bold text-white shadow-xl" 
+                  style={{
+                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)'
+                  }}
+                  data-testid="difficulty-kolay"
+                >
+                  <div className="text-2xl mr-3">😊</div>
+                  <div>
+                    <div className="text-lg font-black">KOLAY</div>
+                    <div className="text-sm opacity-90">Başlangıç Seviyesi</div>
+                  </div>
+                </Button>
+              </Card>
 
               {/* Orta seviye */}
-              <Button 
-                onClick={() => handleDifficultySelect('orta')}
-                className="w-full h-16 rounded-2xl font-bold text-white shadow-2xl transition-all duration-300 hover:scale-[1.02]" 
-                style={{
-                  background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)'
-                }}
-                data-testid="difficulty-orta"
-              >
-                <div className="text-2xl mr-3">😐</div>
-                <div>
-                  <div className="text-lg font-black">ORTA</div>
-                  <div className="text-sm opacity-90">Deneyimli Seviye</div>
-                </div>
-              </Button>
+              <Card className="p-6 bg-white rounded-3xl shadow-2xl border-0">
+                <Button 
+                  onClick={() => handleDifficultySelect('orta')}
+                  className="w-full h-16 rounded-2xl font-bold text-white shadow-xl" 
+                  style={{
+                    background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'
+                  }}
+                  data-testid="difficulty-orta"
+                >
+                  <div className="text-2xl mr-3">😐</div>
+                  <div>
+                    <div className="text-lg font-black">ORTA</div>
+                    <div className="text-sm opacity-90">Deneyimli Seviye</div>
+                  </div>
+                </Button>
+              </Card>
 
               {/* Zor seviye */}
-              <Button 
-                onClick={() => handleDifficultySelect('zor')}
-                className="w-full h-16 rounded-2xl font-bold text-white shadow-2xl transition-all duration-300 hover:scale-[1.02]" 
-                style={{
-                  background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
-                }}
-                data-testid="difficulty-zor"
-              >
-                <div className="text-2xl mr-3">😤</div>
-                <div>
-                  <div className="text-lg font-black">ZOR</div>
-                  <div className="text-sm opacity-90">Uzman Seviye</div>
-                </div>
-              </Button>
+              <Card className="p-6 bg-white rounded-3xl shadow-2xl border-0">
+                <Button 
+                  onClick={() => handleDifficultySelect('zor')}
+                  className="w-full h-16 rounded-2xl font-bold text-white shadow-xl" 
+                  style={{
+                    background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)'
+                  }}
+                  data-testid="difficulty-zor"
+                >
+                  <div className="text-2xl mr-3">😤</div>
+                  <div>
+                    <div className="text-lg font-black">ZOR</div>
+                    <div className="text-sm opacity-90">Uzman Seviye</div>
+                  </div>
+                </Button>
+              </Card>
             </div>
           </div>
         )}
@@ -226,35 +232,33 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
               </p>
             </div>
 
-            {/* Kategori grid - 2x5 kare butonlar */}
+            {/* Kategori grid - Ana sayfa tarzı 2x5 */}
             <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
               {categories.map((category, index) => (
-                <Button 
-                  key={category.id}
-                  onClick={() => handleCategorySelect(category.name)}
-                  className={`aspect-square rounded-2xl font-bold text-white shadow-2xl transition-all duration-300 p-4 ${
-                    selectedCategory === category.name 
-                      ? 'scale-110 shadow-3xl ring-4 ring-white/50 z-10' 
-                      : 'hover:scale-105'
-                  }`}
-                  style={{
-                    background: selectedCategory === category.name 
-                      ? 'linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)' 
-                      : `linear-gradient(135deg, ${category.color})`
-                  }}
-                  data-testid={`category-${category.name}`}
-                >
-                  <div className="flex flex-col items-center justify-center h-full">
-                    <div className="text-3xl mb-2">{category.emoji}</div>
-                    <div className="text-sm font-black text-center leading-tight">{category.name}</div>
-                    <div className="text-xs opacity-90 mt-1">
-                      {Math.round((category.completed / category.total) * 100)}%
+                <Card key={category.id} className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
+                  <Button 
+                    onClick={() => handleCategorySelect(category.name)}
+                    className={`w-full aspect-square rounded-xl font-bold text-white border-0 shadow-lg transition-all duration-300 ${
+                      selectedCategory === category.name 
+                        ? 'scale-110 shadow-2xl ring-2 ring-white/50' 
+                        : 'hover:scale-105'
+                    }`}
+                    style={{
+                      background: selectedCategory === category.name 
+                        ? 'linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)' 
+                        : `linear-gradient(135deg, ${category.color})`
+                    }}
+                    data-testid={`category-${category.name}`}
+                  >
+                    <div className="flex flex-col items-center justify-center h-full">
+                      <div className="text-2xl mb-1">{category.emoji}</div>
+                      <div className="text-xs font-black text-center leading-tight">{category.name}</div>
+                      <div className="text-xs opacity-90 mt-1">
+                        %{Math.round((category.completed / category.total) * 100)}
+                      </div>
                     </div>
-                    {selectedCategory === category.name && (
-                      <div className="text-xs opacity-90 mt-1">✓ Seçildi</div>
-                    )}
-                  </div>
-                </Button>
+                  </Button>
+                </Card>
               ))}
             </div>
           </div>
@@ -274,17 +278,19 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
             </div>
             
             {/* Ana Sayfa Buton Tarzında */}
-            <Button 
-              onClick={handleStartGame}
-              className="w-full h-20 rounded-2xl text-2xl font-black shadow-2xl text-white hover:scale-105 transition-all duration-300" 
-              style={{
-                background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)'
-              }}
-              data-testid="start-game-button"
-            >
-              <div className="text-3xl mr-4">🎮</div>
-              OYUNA BAŞLA
-            </Button>
+            <Card className="p-6 bg-white rounded-3xl shadow-2xl border-0">
+              <Button 
+                onClick={handleStartGame}
+                className="w-full h-20 rounded-2xl text-2xl font-black shadow-xl text-white" 
+                style={{
+                  background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+                }}
+                data-testid="start-game-button"
+              >
+                <div className="text-3xl mr-4">🎮</div>
+                OYUNA BAŞLA
+              </Button>
+            </Card>
           </div>
         )}
 
