@@ -110,6 +110,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Zorluk seviyesi bazlı kategori progress endpoint
+  app.get('/api/category-difficulty-progress', isAuthenticated, async (req: any, res) => {
+    try {
+      const userId = req.user.claims.sub;
+      const progress = await storage.getCategoryDifficultyProgress(userId);
+      res.json(progress);
+    } catch (error) {
+      console.error("Error fetching category difficulty progress:", error);
+      res.status(500).json({ message: "Failed to fetch category difficulty progress" });
+    }
+  });
+
   // Google OAuth routes (ready for activation)
   app.get('/api/auth/google', async (req, res) => {
     // TODO: Implement Google OAuth when credentials are provided

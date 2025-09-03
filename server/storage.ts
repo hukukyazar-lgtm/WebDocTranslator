@@ -10,7 +10,7 @@ import {
   type InsertGameSession,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, sql } from "drizzle-orm";
+import { eq, desc, sql, and } from "drizzle-orm";
 
 // Interface for storage operations
 export interface IStorage {
@@ -42,6 +42,16 @@ export interface IStorage {
   getCategoryProgress(userId: string): Promise<{
     categories: { [category: string]: number };
     lastGame?: { category: string; word: string; date: string };
+  }>;
+  
+  // Zorluk seviyesi bazlı kategori progress'i
+  getCategoryDifficultyProgress(userId: string): Promise<{
+    [category: string]: {
+      [difficulty: string]: {
+        correctCount: number;
+        isUnlocked: boolean;
+      };
+    };
   }>;
 }
 
@@ -195,6 +205,66 @@ export class DatabaseStorage implements IStorage {
         date: lastGame.createdAt?.toISOString() || ''
       } : undefined
     };
+  }
+
+  // Zorluk seviyesi bazlı kategori progress'i
+  async getCategoryDifficultyProgress(userId: string): Promise<{
+    [category: string]: {
+      [difficulty: string]: {
+        correctCount: number,
+        isUnlocked: boolean
+      }
+    }
+  }> {
+    // Sadece doğru cevapları al - zorluk seviyesi bazlı
+    const sessions = await db
+      .select({
+        category: gameSessions.category,
+        difficulty: gameSessions.difficulty,
+        count: sql<number>`count(*)`,
+      })
+      .from(gameSessions)
+      .where(and(
+        eq(gameSessions.userId, userId),
+        eq(gameSessions.isCorrect, true)
+      ))
+      .groupBy(gameSessions.category, gameSessions.difficulty);
+
+    const progress: { [category: string]: { [difficulty: string]: { correctCount: number, isUnlocked: boolean } } } = {};
+    
+    // Her kategori için zorluk seviyesi durumunu hesapla
+    const categories = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
+    const difficulties = ['kolay', 'orta', 'zor'];
+    
+    for (const category of categories) {
+      progress[category] = {};
+      
+      for (const difficulty of difficulties) {
+        const session = sessions.find(s => s.category === category && s.difficulty === difficulty);
+        const correctCount = session ? Number(session.count) : 0;
+        
+        // Kilit açma mantığı
+        let isUnlocked = false;
+        if (difficulty === 'kolay') {
+          isUnlocked = true; // Kolay her zaman açık
+        } else if (difficulty === 'orta') {
+          // Orta için: Kolay seviyede 5 doğru gerekli
+          const easyCount = sessions.find(s => s.category === category && s.difficulty === 'kolay');
+          isUnlocked = (easyCount ? Number(easyCount.count) : 0) >= 5;
+        } else if (difficulty === 'zor') {
+          // Zor için: Orta seviyede 5 doğru gerekli
+          const mediumCount = sessions.find(s => s.category === category && s.difficulty === 'orta');
+          isUnlocked = (mediumCount ? Number(mediumCount.count) : 0) >= 5;
+        }
+        
+        progress[category][difficulty] = {
+          correctCount,
+          isUnlocked
+        };
+      }
+    }
+    
+    return progress;
   }
 }
 

@@ -6,6 +6,7 @@ import { ChevronLeft, Star } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { useGameStats } from '@/hooks/useGameStats';
 import { useCategoryProgress } from '@/hooks/useCategoryProgress';
+import { useCategoryDifficultyProgress } from '@/hooks/useCategoryDifficultyProgress';
 
 interface LuminaCategoriesProps {
   onGameStart: (category: string, difficulty: string) => void;
@@ -16,6 +17,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
   const { isAuthenticated } = useAuth();
   const { stats } = useGameStats();
   const { progress } = useCategoryProgress();
+  const { progress: difficultyProgress } = useCategoryDifficultyProgress();
   
   // Yeni sistem: Önce zorluk, sonra kategori
   const [selectedDifficulty, setSelectedDifficulty] = useState<string | null>(null);
@@ -39,6 +41,71 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
   const handleBackToDifficulty = () => {
     setSelectedDifficulty(null);
     setSelectedCategory(null);
+  };
+
+  // Zorluk seviyesinin kilitli olup olmadığını kontrol et (kategori bağımsız)
+  const isDifficultyUnlocked = (difficulty: string) => {
+    if (!isAuthenticated || !difficultyProgress) return true; // Giriş yapmamışlara her seviye açık
+    
+    if (difficulty === 'kolay') return true; // Kolay her zaman açık
+    
+    // Her kategori için minimum gereksinimi kontrol et
+    const categoryNames = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
+    
+    if (difficulty === 'orta') {
+      // Orta için: En az bir kategoride 5 kolay doğru
+      return categoryNames.some(category => {
+        const easyCount = difficultyProgress[category]?.['kolay']?.correctCount || 0;
+        return easyCount >= 5;
+      });
+    }
+    
+    if (difficulty === 'zor') {
+      // Zor için: En az bir kategoride 5 orta doğru
+      return categoryNames.some(category => {
+        const mediumCount = difficultyProgress[category]?.['orta']?.correctCount || 0;
+        return mediumCount >= 5;
+      });
+    }
+    
+    return false;
+  };
+
+  // İlerleme mesajı al
+  const getProgressMessage = (difficulty: string) => {
+    if (!isAuthenticated || !difficultyProgress) return '';
+    
+    const categoryNames = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
+    
+    if (difficulty === 'orta') {
+      // En fazla kolay progress'e sahip kategoriyi bul
+      let maxEasyCount = 0;
+      let bestCategory = '';
+      categoryNames.forEach(category => {
+        const easyCount = difficultyProgress[category]?.['kolay']?.correctCount || 0;
+        if (easyCount > maxEasyCount) {
+          maxEasyCount = easyCount;
+          bestCategory = category;
+        }
+      });
+      return maxEasyCount < 5 ? `Kolay seviyede ${maxEasyCount}/5 (${bestCategory})` : '';
+    }
+    
+    if (difficulty === 'zor') {
+      // En fazla orta progress'e sahip kategoriyi bul
+      let maxMediumCount = 0;
+      let bestCategory = '';
+      categoryNames.forEach(category => {
+        const mediumCount = difficultyProgress[category]?.['orta']?.correctCount || 0;
+        if (mediumCount > maxMediumCount) {
+          maxMediumCount = mediumCount;
+          bestCategory = category;
+        }
+      });
+      return maxMediumCount < 5 ? `Orta seviyede ${maxMediumCount}/5 (${bestCategory})` : '';
+    }
+    
+    return '';
   };
   const baseCategories = [
     { id: 1, name: "Hayvanlar", emoji: "🐾", color: "#059669, #047857", total: 100 },
@@ -151,59 +218,39 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
 
             {/* Zorluk butonları - Ana sayfa tarzı Card içinde Button */}
             <div className="space-y-4">
-              {/* Kolay seviye */}
-              <Card className="p-6 bg-white rounded-3xl shadow-2xl border-0">
-                <Button 
-                  onClick={() => handleDifficultySelect('kolay')}
-                  className="w-full h-16 rounded-2xl font-bold text-white shadow-xl" 
-                  style={{
-                    background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)'
-                  }}
-                  data-testid="difficulty-kolay"
-                >
-                  <div className="text-2xl mr-3">😊</div>
-                  <div>
-                    <div className="text-lg font-black">KOLAY</div>
-                    <div className="text-sm opacity-90">Başlangıç Seviyesi</div>
-                  </div>
-                </Button>
-              </Card>
-
-              {/* Orta seviye */}
-              <Card className="p-6 bg-white rounded-3xl shadow-2xl border-0">
-                <Button 
-                  onClick={() => handleDifficultySelect('orta')}
-                  className="w-full h-16 rounded-2xl font-bold text-white shadow-xl" 
-                  style={{
-                    background: 'linear-gradient(135deg, #f59e0b 0%, #d97706 100%)'
-                  }}
-                  data-testid="difficulty-orta"
-                >
-                  <div className="text-2xl mr-3">😐</div>
-                  <div>
-                    <div className="text-lg font-black">ORTA</div>
-                    <div className="text-sm opacity-90">Deneyimli Seviye</div>
-                  </div>
-                </Button>
-              </Card>
-
-              {/* Zor seviye */}
-              <Card className="p-6 bg-white rounded-3xl shadow-2xl border-0">
-                <Button 
-                  onClick={() => handleDifficultySelect('zor')}
-                  className="w-full h-16 rounded-2xl font-bold text-white shadow-xl" 
-                  style={{
-                    background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)'
-                  }}
-                  data-testid="difficulty-zor"
-                >
-                  <div className="text-2xl mr-3">😤</div>
-                  <div>
-                    <div className="text-lg font-black">ZOR</div>
-                    <div className="text-sm opacity-90">Uzman Seviye</div>
-                  </div>
-                </Button>
-              </Card>
+              {difficulties.map((difficulty) => {
+                const isUnlocked = isDifficultyUnlocked(difficulty.id);
+                const progressMessage = getProgressMessage(difficulty.id);
+                
+                return (
+                  <Card key={difficulty.id} className="p-6 bg-white rounded-3xl shadow-2xl border-0">
+                    <Button 
+                      onClick={() => isUnlocked ? handleDifficultySelect(difficulty.id) : null}
+                      disabled={!isUnlocked}
+                      className={`w-full h-16 rounded-2xl font-bold text-white shadow-xl relative ${
+                        !isUnlocked ? 'opacity-50 cursor-not-allowed' : ''
+                      }`}
+                      style={{
+                        background: isUnlocked 
+                          ? `linear-gradient(135deg, ${difficulty.color})`
+                          : 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)'
+                      }}
+                      data-testid={`difficulty-${difficulty.id}`}
+                    >
+                      {!isUnlocked && (
+                        <div className="absolute top-2 right-2 text-xl">🔒</div>
+                      )}
+                      <div className="text-2xl mr-3">{isUnlocked ? difficulty.emoji : '🔒'}</div>
+                      <div>
+                        <div className="text-lg font-black">{difficulty.name}</div>
+                        <div className="text-sm opacity-90">
+                          {isUnlocked ? difficulty.description : progressMessage}
+                        </div>
+                      </div>
+                    </Button>
+                  </Card>
+                );
+              })}
             </div>
           </div>
         )}
