@@ -149,7 +149,6 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   <div className="text-3xl font-black text-purple-600">L</div>
                 </div>
               </div>
-              <h1 className="text-4xl font-black text-white mb-3 tracking-wide">ZORLUK SEVİYESİ</h1>
               <p className="text-xl text-white/80 font-semibold">Hangi seviyede yarışmak istiyorsun?</p>
             </div>
 
