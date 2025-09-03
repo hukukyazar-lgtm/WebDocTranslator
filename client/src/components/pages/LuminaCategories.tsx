@@ -131,7 +131,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           </Button>
           <div className="text-center">
             <h1 className="text-xl font-black text-white">
-              {selectedDifficulty ? `${difficulties.find(d => d.id === selectedDifficulty)?.name} - Kategoriler` : 'Zorluk Seviyesi'}
+              {selectedDifficulty ? `${difficulties.find(d => d.id === selectedDifficulty)?.name} - Kategoriler` : ''}
             </h1>
           </div>
           <div className="w-6"></div>
