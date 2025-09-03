@@ -55,7 +55,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
     
     // Tüm kategoriler için kontrol et
     const categoryNames = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
-    const categoryTargets = [100, 80, 75, 150, 60, 70, 60, 50, 90, 80]; // Her kategorinin toplam kelime sayısı
+    const categoryTargets = [25, 25, 25, 25, 25, 25, 25, 25, 25, 25]; // Her zorluk seviyesinde 25 kelime var
     
     if (difficulty === 'orta') {
       // Orta için: TÜM kategorilerde kolay seviyede %100 tamamlama

@@ -297,6 +297,9 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
   const [showDailyGoals, setShowDailyGoals] = useState(false);
   
+  // Kategori tamamlama takibi için basit sayaç
+  const [categoryCorrectCount, setCategoryCorrectCount] = useState(0);
+  
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const timeLeft = TOTAL_GAME_TIME - Math.floor(elapsedTime);
@@ -521,6 +524,17 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       
       if (newAchievements.length > 0) {
         setCurrentAchievement(newAchievements[0]);
+      }
+      
+      // Kategori tamamlama kontrolü - sayacı artır
+      const newCategoryCount = categoryCorrectCount + 1;
+      setCategoryCorrectCount(newCategoryCount);
+      
+      // 25 kelime tamamlandığında bildirim göster
+      if (newCategoryCount >= 25) {
+        setTimeout(() => {
+          alert(`🎉 Tebrikler! "${category}" kategorisini "${difficulty}" seviyesinde tamamladınız!\n\nYeni bir kategori seçerek devam edebilirsiniz.`);
+        }, 1000);
       }
       
       // Başarı durumunda game over ekranını göster

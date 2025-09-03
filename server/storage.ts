@@ -234,7 +234,7 @@ export class DatabaseStorage implements IStorage {
     
     // Her kategori için zorluk seviyesi durumunu hesapla
     const categories = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
-    const categoryTargets = [100, 80, 75, 150, 60, 70, 60, 50, 90, 80]; // Her kategorinin hedef kelime sayısı
+    const categoryTargets = [25, 25, 25, 25, 25, 25, 25, 25, 25, 25]; // Her zorluk seviyesinde 25 kelime var
     const difficulties = ['kolay', 'orta', 'zor'];
     
     // Global kilit açma durumunu hesapla
