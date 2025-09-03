@@ -212,140 +212,99 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           </div>
         )}
 
-        {/* Zorluk seçildiyse - LUMINA Gaming Style Kategori Seçim Ekranı */}
+        {/* Zorluk seçildiyse - Ana Sayfa Teması ile Kategori Seçim Ekranı */}
         {selectedDifficulty && (
-          <div className="space-y-6 max-w-lg mx-auto">
-            {/* Seçilen zorluk bilgisi */}
+          <div className="w-full max-w-md mx-auto space-y-4">
+            {/* Seçilen zorluk bilgisi - Ana sayfa tarzında */}
             <div className="text-center mb-6">
-              <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 shadow-xl">
-                <div className="text-3xl mr-3">{difficulties.find(d => d.id === selectedDifficulty)?.emoji}</div>
-                <div>
-                  <div className="font-black text-white text-lg">
-                    {difficulties.find(d => d.id === selectedDifficulty)?.name}
-                  </div>
-                  <div className="text-white/80 text-sm">
-                    {difficulties.find(d => d.id === selectedDifficulty)?.description} Seviye
-                  </div>
+              <div className="w-16 h-16 mx-auto mb-3 relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-300 via-purple-300 to-pink-300 rounded-full animate-pulse opacity-80"></div>
+                <div className="absolute inset-2 bg-white rounded-full shadow-lg"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-2xl">{difficulties.find(d => d.id === selectedDifficulty)?.emoji}</div>
                 </div>
               </div>
+              <h1 className="text-3xl font-black text-white mb-2 tracking-wide">
+                {difficulties.find(d => d.id === selectedDifficulty)?.name} KATEGORİLER
+              </h1>
+              <p className="text-lg text-white/80 font-semibold">
+                {difficulties.find(d => d.id === selectedDifficulty)?.description} seviyede hangi kategoride yarışacaksın?
+              </p>
             </div>
 
-            {/* Kategori grid'i - LUMINA tarzı */}
-            <div className="grid grid-cols-2 gap-3">
-              {categories.map((category, index) => {
-                const difficultyData = difficulties.find(d => d.id === selectedDifficulty);
-                return (
-                  <Card 
-                    key={category.id} 
-                    className={`group relative overflow-hidden border-0 rounded-2xl transition-all duration-500 transform cursor-pointer hover:scale-110 active:scale-95 ${
-                      selectedCategory === category.name
-                        ? 'shadow-3xl scale-110 z-20 ring-4 ring-white/50'
-                        : 'shadow-xl hover:shadow-2xl'
+            {/* Kategori listesi - Ana sayfa buton tarzında */}
+            <div className="space-y-3">
+              {categories.map((category, index) => (
+                <Card key={category.id} className="p-3 bg-white/95 rounded-2xl shadow-xl border-0">
+                  <Button 
+                    onClick={() => handleCategorySelect(category.name)}
+                    className={`w-full h-14 rounded-xl font-bold text-white border-0 shadow-lg transition-all duration-300 ${
+                      selectedCategory === category.name 
+                        ? 'scale-105 shadow-2xl' 
+                        : 'hover:scale-[1.02]'
                     }`}
                     style={{
                       background: selectedCategory === category.name 
-                        ? `linear-gradient(135deg, ${difficultyData?.color.replace('from-', '').replace('to-', ', ')})`
-                        : `linear-gradient(135deg, ${category.color})`,
-                      animationDelay: `${index * 50}ms`
+                        ? `linear-gradient(135deg, ${difficulties.find(d => d.id === selectedDifficulty)?.color.replace('from-', '').replace('to-', ', ')})`
+                        : `linear-gradient(135deg, ${category.color})`
                     }}
-                    onClick={() => handleCategorySelect(category.name)}
                     data-testid={`category-${category.name}`}
                   >
-                    {/* Spinning efekt arkaplan */}
-                    <div className="absolute inset-0 opacity-20">
-                      <div className="absolute inset-0 bg-gradient-conic from-white/30 via-transparent to-white/30 animate-spin" style={{animationDuration: '8s'}}></div>
-                    </div>
-                    
-                    {/* Parlama efekti */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
-                    
-                    <div className="relative z-10 p-4 text-center text-white">
-                      <div className="text-3xl mb-2 group-hover:animate-pulse">{category.emoji}</div>
-                      <div className="font-black text-sm mb-2 drop-shadow-md">{category.name}</div>
-                      
-                      {/* İlerleme çemberi - LUMINA tarzı */}
-                      <div className="relative w-12 h-12 mx-auto mb-2">
-                        <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
-                          <path
-                            d="M18 2.0845 a 15.915 15.915 0 0 1 0 31.83 a 15.915 15.915 0 0 1 0 -31.83"
-                            fill="none"
-                            stroke="rgba(255,255,255,0.3)"
-                            strokeWidth="2"
-                          />
-                          <path
-                            d="M18 2.0845 a 15.915 15.915 0 0 1 0 31.83 a 15.915 15.915 0 0 1 0 -31.83"
-                            fill="none"
-                            stroke="rgba(255,255,255,0.9)"
-                            strokeWidth="2"
-                            strokeDasharray={`${(category.completed / category.total) * 100}, 100`}
-                            className="transition-all duration-500"
-                          />
-                        </svg>
-                        <div className="absolute inset-0 flex items-center justify-center">
-                          <span className="text-xs font-bold text-white">
-                            {Math.round((category.completed / category.total) * 100)}%
-                          </span>
+                    <div className="flex items-center justify-between w-full">
+                      <div className="flex items-center">
+                        <div className="text-2xl mr-3">{category.emoji}</div>
+                        <div className="text-left">
+                          <div className="text-base font-black">{category.name}</div>
+                          <div className="text-xs opacity-90">
+                            {category.completed}/{category.total} tamamlandı
+                          </div>
                         </div>
                       </div>
                       
-                      <div className="text-xs font-medium text-white/90">
-                        {category.completed}/{category.total} tamamlandı
+                      {/* İlerleme yüzdesi */}
+                      <div className="text-right">
+                        <div className="text-sm font-bold">
+                          %{Math.round((category.completed / category.total) * 100)}
+                        </div>
+                        {selectedCategory === category.name && (
+                          <div className="text-xs opacity-90">Seçildi ✓</div>
+                        )}
                       </div>
                     </div>
-                  </Card>
-                );
-              })}
+                  </Button>
+                </Card>
+              ))}
             </div>
           </div>
         )}
 
 
 
-        {/* LUMINA Gaming Style - Oyun Başlatma */}
+        {/* Ana Sayfa Teması - Oyun Başlatma */}
         {selectedDifficulty && selectedCategory && (
-          <div className="max-w-md mx-auto space-y-6">
-            {/* Seçim özeti - Gaming Style */}
-            <div className="text-center">
-              <div className="inline-block relative">
-                <div className="absolute inset-0 bg-gradient-conic from-blue-400 via-purple-500 to-blue-400 rounded-3xl blur-md opacity-60 animate-spin" style={{animationDuration: '3s'}}></div>
-                <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-6 border border-white/30">
-                  <div className="text-4xl mb-3">
-                    {categories.find(c => c.name === selectedCategory)?.emoji}
-                  </div>
-                  <h3 className="text-xl font-black text-white mb-1">{selectedCategory}</h3>
-                  <div className="flex items-center justify-center gap-2 mb-2">
-                    <div className="text-lg">{difficulties.find(d => d.id === selectedDifficulty)?.emoji}</div>
-                    <p className="text-white/90 font-bold text-sm">
-                      {difficulties.find(d => d.id === selectedDifficulty)?.name}
-                    </p>
-                  </div>
-                  
-                  {/* Kelime sayısı bilgisi */}
-                  <div className="text-white/70 text-xs font-medium">
-                    {categories.find(c => c.name === selectedCategory)?.total} kelime hazır
-                  </div>
-                </div>
-              </div>
+          <div className="w-full max-w-md mx-auto space-y-4">
+            {/* Seçim özeti - Ana sayfa tarzında basit */}
+            <div className="text-center mb-4">
+              <h3 className="text-2xl font-black text-white mb-1">HAZIR MISIN?</h3>
+              <p className="text-white/80 font-semibold text-sm">
+                {selectedCategory} • {difficulties.find(d => d.id === selectedDifficulty)?.name}
+              </p>
             </div>
             
-            {/* Epic Gaming Button */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 rounded-2xl blur-lg opacity-70 animate-pulse"></div>
-              <button
+            {/* Ana Sayfa Buton Tarzında */}
+            <Card className="p-6 bg-white rounded-3xl shadow-2xl border-0">
+              <Button 
                 onClick={handleStartGame}
-                className="relative w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 rounded-2xl font-black text-white shadow-2xl border-4 border-white/30 py-4 text-lg transition-all duration-300 transform active:scale-95 hover:scale-105 hover:shadow-3xl group overflow-hidden"
+                className="w-full h-20 rounded-2xl text-2xl font-black shadow-xl text-white" 
+                style={{
+                  background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
+                }}
                 data-testid="start-game-button"
               >
-                {/* Button parlama efekti */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
-                
-                <div className="relative z-10 flex items-center justify-center gap-3">
-                  <span className="text-2xl animate-bounce">🎮</span>
-                  <span>OYUNA BAŞLA</span>
-                  <span className="text-2xl animate-bounce" style={{animationDelay: '0.2s'}}>⚡</span>
-                </div>
-              </button>
-            </div>
+                <div className="text-3xl mr-4">🎮</div>
+                OYUNA BAŞLA
+              </Button>
+            </Card>
           </div>
         )}
 
