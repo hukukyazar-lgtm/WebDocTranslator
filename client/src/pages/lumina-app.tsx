@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { LuminaMenu } from '@/components/pages/LuminaMenu';
 import { LuminaCategories } from '@/components/pages/LuminaCategories';
+// ESKİ SİSTEME DÖNMEK İÇİN: import { LuminaCategoriesOld as LuminaCategories } from '@/components/pages/LuminaCategoriesOld';
 import { LuminaGame } from '@/components/pages/LuminaGame';
 import { LuminaGameOver } from '@/components/LuminaGameOver';
 import { LuminaLogin } from '@/components/pages/LuminaLogin';
