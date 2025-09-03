@@ -7,6 +7,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { useGameStats } from '@/hooks/useGameStats';
 import { useCategoryProgress } from '@/hooks/useCategoryProgress';
 import { useCategoryDifficultyProgress } from '@/hooks/useCategoryDifficultyProgress';
+import { ProgressReset } from '@/components/ProgressReset';
 
 interface LuminaCategoriesProps {
   onGameStart: (category: string, difficulty: string) => void;
@@ -242,6 +243,9 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
               </div>
               <h1 className="text-4xl font-black text-white mb-3 tracking-wide">ZORLUK SEVİYESİ</h1>
             </div>
+
+            {/* Progress Reset - Development için */}
+            <ProgressReset />
 
             {/* Zorluk butonları - Ana sayfa tarzı Card içinde Button */}
             <div className="space-y-4">
