@@ -4,6 +4,7 @@ import { SpinningWheel } from './SpinningWheel';
 import { LuminaGrid } from './LuminaGrid';
 import { VirtualKeyboard } from './VirtualKeyboard';
 import { AchievementNotification } from './AchievementNotification';
+import { audioManager, initializeAudio } from '@/lib/audioManager';
 import { getWordByDifficulty, wordLists } from '@/lib/wordLists';
 import { 
   TOTAL_GAME_TIME, 
@@ -413,6 +414,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     if (timeLeft <= 10 && !gameOver && !slowdownApplied) {
       setSpinDuration(prevDuration => prevDuration + 1.5);
       setSlowdownApplied(true);
+      // Play warning sound when time is low
+      audioManager.playWarning();
     }
 
     if (timeLeft <= 0 && !gameOver) {
@@ -479,6 +482,9 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setShowConfetti(true);
       setTimeout(() => setShowConfetti(false), 3000);
       
+      // Play success sound
+      audioManager.playSuccess();
+      
       // Timer'ı durdur
       if (timerRef.current) {
         clearInterval(timerRef.current);
@@ -520,6 +526,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setGameOver(true);
     } else if (newGuesses.length >= maxGuesses) {
       // Maksimum tahmin sayısına ulaşıldı - oyunu bitir
+      audioManager.playTimeUp();
       endGame(`${t.gameOver} Doğru kelime: ${secretWord}`, false);
     } else {
       // Yanlış tahmin ama devam ediliyor
@@ -527,14 +534,20 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setTimeout(() => setShakeInput(false), 500);
       setMessage(`${t.wrongAnswer} ${maxGuesses - newGuesses.length} tahmin hakkınız kaldı!`);
       setTimeout(() => setMessage(''), 2000);
+      
+      // Play error sound
+      audioManager.playError();
     }
   }, [gameOver, guess, secretWord, elapsedTime, endGame, guesses, maxGuesses, t, gameStats, category, difficulty, usedWords, timerRef]);
 
-  const handleKeyPress = useCallback((key: string) => {
+  const handleKeyPress = useCallback(async (key: string) => {
     setGuess(prev => prev + key);
     // Trigger sparkle effect when typing
     setSparkleText(true);
     setTimeout(() => setSparkleText(false), 1000);
+    
+    // Play key press sound
+    await audioManager.playKeyPress();
   }, []);
 
   const handleBackspace = useCallback(() => {
@@ -581,6 +594,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     if (newWord) {
       setSecretWord(newWord);
       setUsedWords(prev => [...prev, newWord]);
+      // Play word complete sound for new word
+      audioManager.playWordComplete();
     }
     
     const baseSpeed = getSpinDuration(difficulty, TOTAL_GAME_TIME);
