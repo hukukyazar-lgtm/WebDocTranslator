@@ -215,10 +215,10 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
           </div>
         </div>
 
-        {/* Turkish Keyboard - Mobile Adaptive */}
-        <div className="space-y-1 sm:space-y-2 mb-4 px-2">
+        {/* Turkish Keyboard - Larger and Better Spaced */}
+        <div className="space-y-2 sm:space-y-3 mb-6 px-4">
           {turkishKeyboardLayout.map((row, rowIndex) => (
-            <div key={rowIndex} className="flex justify-center gap-0.5 sm:gap-1">
+            <div key={rowIndex} className="flex justify-center gap-1 sm:gap-2">
               {row.map((letter, letterIndex) => {
                 const isUsed = usedLetters.includes(letter);
                 const isCorrect = currentWord.includes(letter);
@@ -226,12 +226,12 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
                   <Button
                     key={letterIndex}
                     onClick={() => onKeyPress(letter)}
-                    className={`w-7 h-8 sm:w-8 sm:h-9 md:w-10 md:h-10 text-xs sm:text-sm font-bold rounded-lg shadow-lg transition-all duration-200 transform active:scale-95 touch-manipulation ${
+                    className={`w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 text-sm sm:text-base md:text-lg font-bold rounded-xl shadow-xl transition-all duration-200 transform active:scale-95 touch-manipulation hover:scale-105 ${
                       isUsed 
                         ? isCorrect 
-                          ? 'bg-gradient-to-br from-green-400 to-green-600 text-white border-0'
-                          : 'bg-gradient-to-br from-red-400 to-red-600 text-white border-0'
-                        : 'bg-gradient-to-br from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 text-white border-0'
+                          ? 'bg-gradient-to-br from-green-400 to-green-600 text-white border-0 shadow-green-500/50'
+                          : 'bg-gradient-to-br from-red-400 to-red-600 text-white border-0 shadow-red-500/50'
+                        : 'bg-gradient-to-br from-blue-400 to-purple-500 hover:from-blue-500 hover:to-purple-600 text-white border-0 shadow-purple-500/50'
                     }`}
                   >
                     {letter}
@@ -242,13 +242,13 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
           ))}
         </div>
 
-        {/* Action buttons */}
-        <div className="flex justify-center">
+        {/* Action buttons - Better positioned */}
+        <div className="flex justify-center mt-4">
           <Button 
             onClick={() => console.log('İpucu kullanıldı')}
-            className="px-6 h-12 rounded-2xl font-bold bg-white/20 border border-white/30 text-white hover:bg-white/30"
+            className="px-8 h-14 rounded-2xl font-bold bg-white/20 border border-white/30 text-white hover:bg-white/30 shadow-lg text-base"
           >
-            <HelpCircle className="w-4 h-4 mr-2" />
+            <HelpCircle className="w-5 h-5 mr-2" />
             İpucu
           </Button>
         </div>
