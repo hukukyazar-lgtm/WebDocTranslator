@@ -707,13 +707,13 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         )}
         
-        <main className="flex-1 flex flex-col px-2 sm:px-3 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 pt-16 overflow-y-auto">
-          <div className="w-full flex flex-col space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6 min-h-full">
-            {/* Dikey Layout: Çark → Grid → Tahmin Kutusu */}
-            <div className="flex flex-col items-center justify-start gap-2 sm:gap-4 md:gap-6 lg:gap-8 relative">
-              {/* Üst: Spinning Wheel - Daha küçük */}
-              <div className="flex-shrink-0">
-                <div className="transform scale-35 sm:scale-45 md:scale-60 lg:scale-75">
+        <main className="flex-1 flex flex-col px-1 sm:px-2 md:px-4 lg:px-6 py-1 sm:py-2 md:py-3 pt-12 sm:pt-14 md:pt-16 overflow-y-auto min-h-screen">
+          <div className="w-full flex flex-col space-y-1 sm:space-y-2 md:space-y-3 lg:space-y-4 min-h-full max-w-full">
+            {/* Dikey Layout: Çark → Grid → Tahmin Kutusu - Mobil Optimizasyonu */}
+            <div className="flex flex-col items-center justify-start gap-1 sm:gap-2 md:gap-4 lg:gap-6 relative w-full">
+              {/* Üst: Spinning Wheel - Mobil Responsive */}
+              <div className="flex-shrink-0 w-full flex justify-center">
+                <div className="transform scale-25 xs:scale-30 sm:scale-40 md:scale-50 lg:scale-60">
                   <SpinningWheel 
                     word={secretWord} 
                     isSpinning={isSpinning} 
@@ -727,7 +727,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               
               
               {/* Orta: Tek satır LUMINA Grid - Mobil Responsive */}
-              <div className="flex-shrink-0 transform scale-75 sm:scale-90 md:scale-100">
+              <div className="flex-shrink-0 transform scale-50 xs:scale-60 sm:scale-75 md:scale-85 lg:scale-100 w-full flex justify-center">
                 <LuminaGrid
                   word={secretWord}
                   guesses={guesses}
@@ -738,7 +738,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               </div>
               
               {/* Alt: Timer + Input + Keyboard - Mobil Uyumlu */}
-              <div className="flex-shrink-0 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg space-y-1 sm:space-y-2 md:space-y-3 px-2 sm:px-0">
+              <div className="flex-shrink-0 w-full max-w-[280px] xs:max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg space-y-1 sm:space-y-2 md:space-y-3 px-1 sm:px-2 md:px-0">
                 {/* Timer - Mobil Kompakt */}
                 <div className="flex justify-center">
                   <div className={`backdrop-blur-lg rounded-md sm:rounded-lg px-2 py-1 bg-white/10 flex items-center gap-1 sm:gap-2 shadow-lg text-xs sm:text-sm ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
@@ -777,27 +777,27 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
             </div>
             
             {message && (
-              <div className="flex justify-center animate-slide-up" style={{ animationDelay: '0.1s' }}>
-                <div className="text-center space-y-1 md:space-y-2">
-                  <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-accent animate-bounce-soft px-2 md:px-4" data-testid="game-message">
+              <div className="flex justify-center animate-slide-up px-2" style={{ animationDelay: '0.1s' }}>
+                <div className="text-center space-y-1 md:space-y-2 max-w-full">
+                  <p className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-accent animate-bounce-soft px-2 md:px-4 break-words" data-testid="game-message">
                     {message}
                   </p>
                 </div>
               </div>
             )}
 
-            {/* Game Over Modal */}
+            {/* Game Over Modal - Mobil Responsive */}
             {gameOver && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+              <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4">
                 {/* Backdrop */}
                 <div className="absolute inset-0 bg-black/80 backdrop-blur-sm animate-fade-in"></div>
                 
                 {/* Modal Content */}
-                <div className="relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl animate-scale-in">
-                  <div className="backdrop-blur-xl rounded-xl sm:rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8 lg:p-10 border border-white/20 shadow-2xl" style={{
+                <div className="relative w-full max-w-[280px] xs:max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl animate-scale-in">
+                  <div className="backdrop-blur-xl rounded-lg sm:rounded-xl md:rounded-2xl lg:rounded-3xl p-3 sm:p-4 md:p-6 lg:p-8 border border-white/20 shadow-2xl" style={{
                     background: 'linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.05))'
                   }}>
-                  <div className="text-center space-y-3 sm:space-y-4 md:space-y-6">
+                  <div className="text-center space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6">
                     {/* Success/Failure Icon */}
                     <div className="relative">
                       <div 
@@ -806,14 +806,14 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                           background: `radial-gradient(circle, ${theme.primary}40, transparent)`
                         }}
                       />
-                      <div className="relative text-4xl sm:text-5xl md:text-6xl lg:text-8xl animate-bounce-soft">
+                      <div className="relative text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl animate-bounce-soft">
                         {gameSuccess ? '🎉' : '💫'}
                       </div>
                     </div>
                     
                     {/* Title */}
                     <h2 
-                      className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black animate-pulse-glow"
+                      className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black animate-pulse-glow"
                       style={{
                         background: `linear-gradient(45deg, ${theme.primary}, #ffffff, ${theme.secondary})`,
                         backgroundClip: 'text',
@@ -827,13 +827,13 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                     </h2>
                     
                     {/* Score Cards */}
-                    <div className="grid grid-cols-2 gap-2 sm:gap-3 md:gap-4">
-                      <div className="backdrop-blur-lg rounded-lg sm:rounded-xl p-2 sm:p-3 md:p-4 border border-white/20" style={{
+                    <div className="grid grid-cols-2 gap-1 sm:gap-2 md:gap-3 lg:gap-4">
+                      <div className="backdrop-blur-lg rounded-md sm:rounded-lg md:rounded-xl p-2 sm:p-3 md:p-4 border border-white/20" style={{
                         background: 'linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))'
                       }}>
-                        <div className="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-1">{gameSuccess ? '💎' : '💔'}</div>
+                        <div className="text-base xs:text-lg sm:text-xl md:text-2xl lg:text-3xl mb-1">{gameSuccess ? '💎' : '💔'}</div>
                         <div 
-                          className="text-lg sm:text-xl md:text-2xl font-black mb-1"
+                          className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl font-black mb-1"
                           style={{
                             background: `linear-gradient(45deg, ${theme.primary}, ${theme.secondary})`,
                             backgroundClip: 'text',
