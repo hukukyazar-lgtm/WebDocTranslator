@@ -132,78 +132,203 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           <div className="w-6"></div>
         </div>
 
-        {/* Zorluk seçimi yoksa - Zorluk seçim ekranı */}
+        {/* Zorluk seçimi yoksa - LUMINA Gaming Style Zorluk Seçim Ekranı */}
         {!selectedDifficulty && (
-          <div className="grid grid-cols-1 gap-3 max-w-sm mx-auto mb-3">
-            {difficulties.map((difficulty) => (
-              <Card 
-                key={difficulty.id} 
-                className={`overflow-hidden border-0 rounded-2xl transition-all duration-300 transform cursor-pointer hover:scale-105 shadow-lg hover:shadow-xl ${difficulty.bgColor} ${difficulty.textColor} border-2 ${difficulty.borderColor}`}
-                onClick={() => handleDifficultySelect(difficulty.id)}
-                data-testid={`difficulty-${difficulty.id}`}
-              >
-                <div className="p-4 text-center">
-                  <div className="text-4xl mb-2">{difficulty.emoji}</div>
-                  <div className="font-black text-lg mb-1">{difficulty.name}</div>
-                  <div className="font-medium text-sm opacity-80">{difficulty.description}</div>
-                </div>
-              </Card>
-            ))}
-          </div>
-        )}
+          <div className="space-y-6 max-w-md mx-auto">
+            {/* Zorluk tanıtım metni */}
+            <div className="text-center mb-8">
+              <div className="text-6xl mb-4">🎯</div>
+              <h2 className="text-2xl font-black text-white mb-2">ZORLUK SEVİYEN?</h2>
+              <p className="text-white/80 text-sm">Hangi seviyede kendini test etmek istiyorsun?</p>
+            </div>
 
-        {/* Zorluk seçildiyse - Kategori seçim ekranı */}
-        {selectedDifficulty && (
-          <div className="grid grid-cols-2 gap-2 max-w-sm mx-auto mb-3">
-            {categories.map((category) => {
-              const difficultyData = difficulties.find(d => d.id === selectedDifficulty);
-              return (
+            {/* Zorluk kartları */}
+            <div className="space-y-4">
+              {difficulties.map((difficulty, index) => (
                 <Card 
-                  key={category.id} 
-                  className={`relative overflow-hidden border-0 rounded-2xl transition-all duration-300 transform cursor-pointer hover:scale-105 ${
-                    selectedCategory === category.name
-                      ? `shadow-2xl scale-105 z-10 ${difficultyData?.bgColor} ${difficultyData?.textColor} border-4 ${difficultyData?.borderColor}`
-                      : 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-200 shadow-lg'
-                  }`}
-                  onClick={() => handleCategorySelect(category.name)}
-                  data-testid={`category-${category.name}`}
+                  key={difficulty.id} 
+                  className="relative overflow-hidden border-0 rounded-3xl transition-all duration-500 transform cursor-pointer hover:scale-105 active:scale-95 shadow-2xl hover:shadow-3xl bg-white/95 backdrop-blur-sm"
+                  style={{
+                    background: `linear-gradient(135deg, ${difficulty.color.replace('from-', '').replace('to-', ', ')})`,
+                    animationDelay: `${index * 100}ms`
+                  }}
+                  onClick={() => handleDifficultySelect(difficulty.id)}
+                  data-testid={`difficulty-${difficulty.id}`}
                 >
-                  <div className="p-2 text-center">
-                    <div className="text-xl mb-1">{category.emoji}</div>
-                    <div className="font-black text-xs mb-1">{category.name}</div>
-                    {/* İlerleme göstergesi - küçük */}
-                    <div className="text-xs opacity-60">
-                      {category.completed}/{category.total}
+                  <div className="p-6 text-center relative">
+                    {/* Parlama efekti */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+                    
+                    <div className="relative z-10">
+                      <div className="text-5xl mb-3 animate-bounce" style={{animationDelay: `${index * 200}ms`}}>
+                        {difficulty.emoji}
+                      </div>
+                      <div className="font-black text-xl mb-2 text-white drop-shadow-lg">
+                        {difficulty.name}
+                      </div>
+                      <div className="font-bold text-white/90 text-sm mb-3">
+                        {difficulty.description}
+                      </div>
+                      
+                      {/* Zorluk göstergesi çubukları */}
+                      <div className="flex justify-center gap-1 mb-2">
+                        {Array.from({ length: 3 }).map((_, i) => (
+                          <div 
+                            key={i}
+                            className={`h-1 w-8 rounded-full ${
+                              i < (difficulty.id === 'kolay' ? 1 : difficulty.id === 'orta' ? 2 : 3)
+                                ? 'bg-white' 
+                                : 'bg-white/30'
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      
+                      <div className="text-white/80 text-xs font-medium">
+                        {difficulty.id === 'kolay' ? '10+ kategori' : difficulty.id === 'orta' ? '10+ kategori' : '10+ kategori'}
+                      </div>
                     </div>
                   </div>
                 </Card>
-              );
-            })}
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Zorluk seçildiyse - LUMINA Gaming Style Kategori Seçim Ekranı */}
+        {selectedDifficulty && (
+          <div className="space-y-6 max-w-lg mx-auto">
+            {/* Seçilen zorluk bilgisi */}
+            <div className="text-center mb-6">
+              <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 shadow-xl">
+                <div className="text-3xl mr-3">{difficulties.find(d => d.id === selectedDifficulty)?.emoji}</div>
+                <div>
+                  <div className="font-black text-white text-lg">
+                    {difficulties.find(d => d.id === selectedDifficulty)?.name}
+                  </div>
+                  <div className="text-white/80 text-sm">
+                    {difficulties.find(d => d.id === selectedDifficulty)?.description} Seviye
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Kategori grid'i - LUMINA tarzı */}
+            <div className="grid grid-cols-2 gap-3">
+              {categories.map((category, index) => {
+                const difficultyData = difficulties.find(d => d.id === selectedDifficulty);
+                return (
+                  <Card 
+                    key={category.id} 
+                    className={`group relative overflow-hidden border-0 rounded-2xl transition-all duration-500 transform cursor-pointer hover:scale-110 active:scale-95 ${
+                      selectedCategory === category.name
+                        ? 'shadow-3xl scale-110 z-20 ring-4 ring-white/50'
+                        : 'shadow-xl hover:shadow-2xl'
+                    }`}
+                    style={{
+                      background: selectedCategory === category.name 
+                        ? `linear-gradient(135deg, ${difficultyData?.color.replace('from-', '').replace('to-', ', ')})`
+                        : `linear-gradient(135deg, ${category.color})`,
+                      animationDelay: `${index * 50}ms`
+                    }}
+                    onClick={() => handleCategorySelect(category.name)}
+                    data-testid={`category-${category.name}`}
+                  >
+                    {/* Spinning efekt arkaplan */}
+                    <div className="absolute inset-0 opacity-20">
+                      <div className="absolute inset-0 bg-gradient-conic from-white/30 via-transparent to-white/30 animate-spin" style={{animationDuration: '8s'}}></div>
+                    </div>
+                    
+                    {/* Parlama efekti */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                    
+                    <div className="relative z-10 p-4 text-center text-white">
+                      <div className="text-3xl mb-2 group-hover:animate-pulse">{category.emoji}</div>
+                      <div className="font-black text-sm mb-2 drop-shadow-md">{category.name}</div>
+                      
+                      {/* İlerleme çemberi - LUMINA tarzı */}
+                      <div className="relative w-12 h-12 mx-auto mb-2">
+                        <svg className="w-12 h-12 transform -rotate-90" viewBox="0 0 36 36">
+                          <path
+                            d="M18 2.0845 a 15.915 15.915 0 0 1 0 31.83 a 15.915 15.915 0 0 1 0 -31.83"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.3)"
+                            strokeWidth="2"
+                          />
+                          <path
+                            d="M18 2.0845 a 15.915 15.915 0 0 1 0 31.83 a 15.915 15.915 0 0 1 0 -31.83"
+                            fill="none"
+                            stroke="rgba(255,255,255,0.9)"
+                            strokeWidth="2"
+                            strokeDasharray={`${(category.completed / category.total) * 100}, 100`}
+                            className="transition-all duration-500"
+                          />
+                        </svg>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <span className="text-xs font-bold text-white">
+                            {Math.round((category.completed / category.total) * 100)}%
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <div className="text-xs font-medium text-white/90">
+                        {category.completed}/{category.total} tamamlandı
+                      </div>
+                    </div>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
         )}
 
 
 
-        {/* Oyna Butonu - sadece zorluk ve kategori seçildiğinde göster */}
+        {/* LUMINA Gaming Style - Oyun Başlatma */}
         {selectedDifficulty && selectedCategory && (
-          <div className="max-w-xs mx-auto mb-3">
-            <div className="text-center mb-2">
-              <h3 className="text-lg font-black text-white">{selectedCategory}</h3>
-              <p className="text-white/80 font-medium text-sm">
-                Zorluk: {difficulties.find(d => d.id === selectedDifficulty)?.name}
-              </p>
+          <div className="max-w-md mx-auto space-y-6">
+            {/* Seçim özeti - Gaming Style */}
+            <div className="text-center">
+              <div className="inline-block relative">
+                <div className="absolute inset-0 bg-gradient-conic from-blue-400 via-purple-500 to-blue-400 rounded-3xl blur-md opacity-60 animate-spin" style={{animationDuration: '3s'}}></div>
+                <div className="relative bg-white/10 backdrop-blur-sm rounded-3xl p-6 border border-white/30">
+                  <div className="text-4xl mb-3">
+                    {categories.find(c => c.name === selectedCategory)?.emoji}
+                  </div>
+                  <h3 className="text-xl font-black text-white mb-1">{selectedCategory}</h3>
+                  <div className="flex items-center justify-center gap-2 mb-2">
+                    <div className="text-lg">{difficulties.find(d => d.id === selectedDifficulty)?.emoji}</div>
+                    <p className="text-white/90 font-bold text-sm">
+                      {difficulties.find(d => d.id === selectedDifficulty)?.name}
+                    </p>
+                  </div>
+                  
+                  {/* Kelime sayısı bilgisi */}
+                  <div className="text-white/70 text-xs font-medium">
+                    {categories.find(c => c.name === selectedCategory)?.total} kelime hazır
+                  </div>
+                </div>
+              </div>
             </div>
             
-            <button
-              onClick={handleStartGame}
-              className="w-full rounded-xl font-black text-white shadow-lg border-0 py-2 text-base transition-all duration-300 transform active:scale-95 hover:scale-105 animate-pulse hover:animate-none"
-              style={{
-                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
-              }}
-              data-testid="start-game-button"
-            >
-              🚀 Oyunu Başlat
-            </button>
+            {/* Epic Gaming Button */}
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-yellow-400 via-red-500 to-pink-500 rounded-2xl blur-lg opacity-70 animate-pulse"></div>
+              <button
+                onClick={handleStartGame}
+                className="relative w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 rounded-2xl font-black text-white shadow-2xl border-4 border-white/30 py-4 text-lg transition-all duration-300 transform active:scale-95 hover:scale-105 hover:shadow-3xl group overflow-hidden"
+                data-testid="start-game-button"
+              >
+                {/* Button parlama efekti */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-500"></div>
+                
+                <div className="relative z-10 flex items-center justify-center gap-3">
+                  <span className="text-2xl animate-bounce">🎮</span>
+                  <span>OYUNA BAŞLA</span>
+                  <span className="text-2xl animate-bounce" style={{animationDelay: '0.2s'}}>⚡</span>
+                </div>
+              </button>
+            </div>
           </div>
         )}
 
@@ -212,8 +337,21 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
 
       <style>{`
         @keyframes float-gentle {
-          0%, 100% { transform: translateY(0px); opacity: 0.6; }
-          50% { transform: translateY(-12px); opacity: 1; }
+          0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
+          50% { transform: translateY(-12px) rotate(180deg); opacity: 1; }
+        }
+        
+        @keyframes glow-pulse {
+          0%, 100% { box-shadow: 0 0 20px rgba(255,255,255,0.3); }
+          50% { box-shadow: 0 0 40px rgba(255,255,255,0.6); }
+        }
+        
+        .shadow-3xl {
+          box-shadow: 0 35px 60px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255,255,255,0.1);
+        }
+        
+        .bg-gradient-conic {
+          background: conic-gradient(from 0deg, var(--tw-gradient-stops));
         }
       `}</style>
     </div>
