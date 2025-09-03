@@ -45,9 +45,13 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
 
   // Zorluk seviyesinin kilitli olup olmadığını kontrol et (%100 tamamlama şartı)
   const isDifficultyUnlocked = (difficulty: string) => {
-    if (!isAuthenticated || !difficultyProgress) return true; // Giriş yapmamışlara her seviye açık
-    
     if (difficulty === 'kolay') return true; // Kolay her zaman açık
+    
+    // Misafir oyuncular için de aynı kurallar geçerli
+    if (!isAuthenticated || !difficultyProgress) {
+      // Misafir oyuncular sadece kolay seviyeyi oynayabilir
+      return difficulty === 'kolay';
+    }
     
     // Tüm kategoriler için kontrol et
     const categoryNames = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
