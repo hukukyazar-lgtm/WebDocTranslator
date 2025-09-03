@@ -707,13 +707,13 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
           </div>
         )}
         
-        <main className="flex-1 flex flex-col px-1 sm:px-2 md:px-4 lg:px-6 py-1 sm:py-2 md:py-3 pt-12 sm:pt-14 md:pt-16 overflow-y-auto min-h-screen">
-          <div className="w-full flex flex-col space-y-1 sm:space-y-2 md:space-y-3 lg:space-y-4 min-h-full max-w-full">
-            {/* Dikey Layout: Çark → Grid → Tahmin Kutusu - Mobil Optimizasyonu */}
-            <div className="flex flex-col items-center justify-start gap-1 sm:gap-2 md:gap-4 lg:gap-6 relative w-full">
-              {/* Üst: Spinning Wheel - Mobil Responsive */}
-              <div className="flex-shrink-0 w-full flex justify-center">
-                <div className="transform scale-25 xs:scale-30 sm:scale-40 md:scale-50 lg:scale-60">
+        <main className="flex-1 flex flex-col px-1 py-1 pt-10 overflow-hidden min-h-screen max-h-screen">
+          <div className="w-full h-full flex flex-col justify-between max-w-full overflow-hidden">
+            {/* Kompakt Dikey Layout - Mobil First */}
+            <div className="flex flex-col items-center gap-1 w-full overflow-hidden">
+              {/* Üst: Spinning Wheel - Ultra Küçük */}
+              <div className="flex-shrink-0 w-full flex justify-center -mt-2">
+                <div className="transform scale-20 sm:scale-25 md:scale-35 lg:scale-45">
                   <SpinningWheel 
                     word={secretWord} 
                     isSpinning={isSpinning} 
@@ -726,8 +726,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               </div>
               
               
-              {/* Orta: Tek satır LUMINA Grid - Mobil Responsive */}
-              <div className="flex-shrink-0 transform scale-50 xs:scale-60 sm:scale-75 md:scale-85 lg:scale-100 w-full flex justify-center">
+              {/* Orta: LUMINA Grid - Ultra Kompakt */}
+              <div className="flex-shrink-0 transform scale-40 sm:scale-50 md:scale-65 lg:scale-80 w-full flex justify-center -mt-2">
                 <LuminaGrid
                   word={secretWord}
                   guesses={guesses}
@@ -737,16 +737,16 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 />
               </div>
               
-              {/* Alt: Timer + Input + Keyboard - Mobil Uyumlu */}
-              <div className="flex-shrink-0 w-full max-w-[280px] xs:max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg space-y-1 sm:space-y-2 md:space-y-3 px-1 sm:px-2 md:px-0">
-                {/* Timer - Mobil Kompakt */}
+              {/* Alt: Kompakt Timer + Keyboard */}
+              <div className="flex-shrink-0 w-full max-w-[260px] space-y-1 px-1 -mt-2">
+                {/* Timer - Mini */}
                 <div className="flex justify-center">
-                  <div className={`backdrop-blur-lg rounded-md sm:rounded-lg px-2 py-1 bg-white/10 flex items-center gap-1 sm:gap-2 shadow-lg text-xs sm:text-sm ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
-                    <div className="text-sm sm:text-base animate-pulse">⏱️</div>
-                    <div className="text-sm sm:text-base font-black text-white whitespace-nowrap" data-testid="text-time-left">
+                  <div className={`backdrop-blur-lg rounded px-2 py-0.5 bg-white/10 flex items-center gap-1 shadow-lg text-xs ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
+                    <div className="text-xs animate-pulse">⏱️</div>
+                    <div className="text-xs font-black text-white whitespace-nowrap" data-testid="text-time-left">
                       {timeLeft <= 0 ? 'Süre bitti' : formatTime(timeLeft)}
                     </div>
-                    <div className="w-6 sm:w-8 h-1 backdrop-blur-lg rounded-full bg-white/10 overflow-hidden">
+                    <div className="w-4 h-0.5 backdrop-blur-lg rounded-full bg-white/10 overflow-hidden">
                       <div 
                         className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
                         style={{ 
@@ -761,18 +761,20 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                   </div>
                 </div>
                 
-                {/* Virtual Keyboard - Tablet Scale */}
-                <VirtualKeyboard
-                  key={`keyboard-${secretWord}-${gameOver}-${gameSuccess}-${guesses.length}-${forceKeyboardRender}`}
-                  onKeyPress={handleKeyPress}
-                  onBackspace={handleBackspace}
-                  onSpace={handleSpace}
-                  onSubmit={handleGuessSubmit}
-                  language={language as Language}
-                  correctKeys={getKeyboardLetterStates.correctKeys}
-                  presentKeys={getKeyboardLetterStates.presentKeys}
-                  absentKeys={getKeyboardLetterStates.absentKeys}
-                />
+                {/* Virtual Keyboard - Mobil Mini */}
+                <div className="transform scale-75 sm:scale-85 md:scale-95 origin-center">
+                  <VirtualKeyboard
+                    key={`keyboard-${secretWord}-${gameOver}-${gameSuccess}-${guesses.length}-${forceKeyboardRender}`}
+                    onKeyPress={handleKeyPress}
+                    onBackspace={handleBackspace}
+                    onSpace={handleSpace}
+                    onSubmit={handleGuessSubmit}
+                    language={language as Language}
+                    correctKeys={getKeyboardLetterStates.correctKeys}
+                    presentKeys={getKeyboardLetterStates.presentKeys}
+                    absentKeys={getKeyboardLetterStates.absentKeys}
+                  />
+                </div>
               </div>
             </div>
             

@@ -684,4 +684,13 @@
 .hard-letter-glow {
   animation: hard-letter-glow 1.2s ease-in-out infinite;
 }
+
+/* Mobil responsive custom scales */
+.scale-20 {
+  transform: scale(0.2);
+}
+
+.scale-15 {
+  transform: scale(0.15);
+}
 }
