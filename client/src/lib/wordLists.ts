@@ -10,22 +10,22 @@ export interface WordLists {
 
 export const wordLists: WordLists = {
   Hayvanlar: {
-    1: ["KEDİ", "KUŞ", "ARI", "KAZ", "FARE", "EŞEK", "KEÇİ", "İNEK", "KÖPEK", "KOYUN", "TAVUK", "ÖRDEK", "HOROZ", "DOMUZ", "SİNEK", "TAVŞAN", "SİNCAP", "CİVCİV", "HİNDİ", "KELEBEK", "KARINCA", "KURBAĞA", "ÖRÜMCEK", "BALIK", "KOYUN"], // Kolay - 3-8 harf  
+    1: ["ARI", "KUŞ", "KAZ", "KEDİ", "FARE", "EŞEK", "KEÇİ", "İNEK", "KOYUN", "TAVUK", "ÖRDEK", "KÖPEK", "HOROZ", "DOMUZ", "SİNEK", "BALIK", "HİNDİ", "TAVŞAN", "SİNCAP", "CİVCİV", "KELEBEK", "KARINCA", "KURBAĞA", "ÖRÜMCEK"], // Kolay - 3-8 harf  
     2: ["AYI", "FİL", "FOK", "ASLAN", "ÇITA", "KURT", "DEVE", "YILAN", "ZEBRA", "TİLKİ", "GEYİK", "GORİL", "YUNUS", "KİRPİ", "KAPLAN", "MAYMUN", "KARTAL", "CEYLAN", "BAYKUŞ", "YARASA", "KUNDUZ", "PANTER", "BALİNA", "PAPAĞAN", "KÖSTEBEK"], // Orta - 3-8 harf
     3: ["KOALA", "PANDA", "TAPİR", "OKAPİ", "VATOZ", "VAŞAK", "ZÜRAFA", "TİMSAH", "LEOPAR", "AKBABA", "İGUANA", "PENGUEN", "ANTİLOP", "KANGURU", "PELİKAN", "DENİZATI", "FLAMİNGO", "GERGEDAN", "SU AYGIRI", "BUKELEMUN", "HIPOPOTAM", "ORANGUTAN", "KARINCANCI", "KOMODO EJDERİ", "MÜREKKEP BALIĞI"]  // Zor - 5-16 harf
   },
   Yiyecek: {
-    1: ["BAL", "TUZ", "ÇAY", "MUZ", "ELMA", "ARMUT", "EKMEK", "SOĞAN", "SÜT", "KİRAZ", "ÜZÜM", "LİMON", "ÇİLEK", "HAVUÇ", "KAHVE", "ŞEKER", "PEYNİR", "ZEYTİN", "DOMATES", "PATATES", "YUMURTA", "MAKARNA", "PORTAKAL", "SALATALIK", "YAG"], // Kolay - 3-10 harf
+    1: ["BAL", "TUZ", "ÇAY", "MUZ", "SÜT", "ELMA", "ARMUT", "ÜZÜM", "EKMEK", "SOĞAN", "KİRAZ", "LİMON", "ÇİLEK", "HAVUÇ", "KAHVE", "ŞEKER", "PEYNİR", "ZEYTİN", "DOMATES", "PATATES", "YUMURTA", "MAKARNA", "PORTAKAL", "SALATALIK"], // Kolay - 3-10 harf
     2: ["NAR", "KAVUN", "KİVİ", "ERİK", "NOHUT", "MISIR", "KABAK", "TAVUK", "BİBER", "BADEM", "CEVİZ", "FINDIK", "MANGO", "KAYISI", "İNCİR", "KARPUZ", "ANANAS", "MANTAR", "PİRİNÇ", "ISPANAK", "FASULYE", "AVOKADO", "ŞEFTALİ", "PATLICAN", "MERCİMEK"], // Orta - 3-9 harf
     3: ["ROKA", "TURP", "NANE", "LİÇİ", "BAMYA", "SUSAM", "KİNOA", "SOMON", "GUAVA", "PANCAR", "PAPAYA", "TARÇIN", "KEKİK", "AHUDUDU", "HAŞHAŞ", "ENGİNAR", "BROKOLİ", "KEREVİZ", "ZENCEFİL", "SARIMSAK", "KUŞKONMAZ", "BÖĞÜRTLEN", "KARNABAHAR", "YABAN MERSİNİ", "HİNDİSTAN CEVİZİ"]  // Zor - 4-16 harf
   },
   Bilim: {
-    1: ["GEN", "DNA", "BAZ", "ATOM", "HAVA", "YASA", "SAYI", "UZAY", "ATEŞ", "IŞIK", "CANLI", "DENEY", "DOĞA", "KRAL", "RAKAM", "TEORİ", "BİLİM", "DALGA", "FOSİL", "GÜNEŞ", "HÜCRE", "ASİT", "IYON", "OKSIT", "PLAZMA"], // Kolay - 3-6 harf
+    1: ["GEN", "DNA", "BAZ", "ATOM", "HAVA", "YASA", "SAYI", "UZAY", "ATEŞ", "IŞIK", "CANLI", "DENEY", "DOĞA", "KRAL", "RAKAM", "ASİT", "BİLİM", "DALGA", "FOSİL", "GÜNEŞ", "HÜCRE", "TEORİ", "PLAZMA"], // Kolay - 3-6 harf
     2: ["ISI", "YASA", "METAL", "ENZİM", "MİTOS", "MADDE", "KUVVET", "DÜNYA", "YILDIZ", "ENERJİ", "ELEMENT", "GÖZLEM", "FREKANS", "GALAKSİ", "VİRÜS", "GEZEGEN", "EVRİM", "SOLUNUM", "HİPOTEZ", "MOLEKÜL", "BAKTERİ", "MIKNATIS", "BİLEŞİK", "ELEKTRİK", "FOTOSENTEZ"], // Orta - 3-11 harf
     3: ["FİZİK", "KİMYA", "NEBULA", "PLAZMA", "KOZMOS", "KUANTUM", "GENETİK", "JEOLOJİ", "EKOLOJİ", "SİMBİYOZ", "TELESKOP", "ASTRONOMİ", "BİYOLOJİ", "MİKROSKOP", "SÜPERNOVA", "EKOSİSTEM", "NÖROBİLİM", "PSİKOLOJİ", "KARA DELİK", "GÖRELİLİK", "ARKEOLOJİ", "MANYETİZMA", "METEOROLOJİ", "ANTROPOLOJİ", "PERİYODİK TABLO"]  // Zor - 5-15 harf
   },
   Ülkeler: {
-    1: ["ÇİN", "İRAN", "IRAK", "MISIR", "RUSYA", "FRANSA", "İTALYA", "KANADA", "JAPONYA", "İSVEÇ", "ALMANYA", "İSPANYA", "AMERİKA", "SURİYE", "NORVEÇ", "TÜRKİYE", "İSVİÇRE", "HOLLANDA", "MEKSİKA", "PORTEKİZ", "BREZİLYA", "AVUSTRALYA", "HİNDİSTAN", "YUNANİSTAN", "İNGİLTERE"], // Kolay - 3-10 harf
+    1: ["ÇİN", "İRAN", "IRAK", "MISIR", "RUSYA", "FRANSA", "İTALYA", "KANADA", "İSVEÇ", "SURİYE", "NORVEÇ", "JAPONYA", "ALMANYA", "İSPANYA", "AMERİKA", "TÜRKİYE", "İSVİÇRE", "MEKSİKA", "HOLLANDA", "BREZİLYA", "PORTEKİZ", "İNGİLTERE", "AVUSTRALYA", "HİNDİSTAN", "YUNANİSTAN"], // Kolay - 3-10 harf
     2: ["PERU", "LAOS", "GANA", "KATAR", "NEPAL", "KÜBA", "ŞİLİ", "ROMANYA", "TAYLAND", "POLONYA", "VİETNAM", "BELÇİKA", "İRLANDA", "UKRAYNA", "MALEZYA", "EKVADOR", "KUVEYT", "ENDONEZYA", "FİLİPİNLER", "AVUSTURYA", "ARJANTİN", "KOLOMBİYA", "PAKİSTAN", "AFGANİSTAN", "DANİMARKA"], // Orta - 4-11 harf
     3: ["KENYA", "FAS", "FİJİ", "MYANMAR", "JAMAİKA", "LÜBNAN", "ÜRDÜN", "VENEZUELA", "NİJERYA", "TANZANYA", "ETİYOPYA", "CEZAYİR", "NEPAL", "MOĞOLİSTAN", "KAMBOÇYA", "BANGLADEŞ", "VENEZUELA", "GÜNEY AFRİKA", "LÜKSEMBURG", "GÜRCİSTAN", "AZERBAYCAN", "KAZAKİSTAN", "ÖZBEKİSTAN", "MACARİSTAN", "FİNLANDİYA"]  // Zor - 5-11 harf
   },
@@ -40,7 +40,7 @@ export const wordLists: WordLists = {
     3: ["KARTACA", "SEVİLLA", "TİMBKTU", "KATMANDU", "FLORANSA", "VENEDİK", "STOKHOLM", "VARŞOVA", "ERZURUM", "BUDAPEŞTE", "İSKENDERİYE", "HELSİNKİ", "KOPENHAG", "AMSTERDAM", "EDİNBURG", "BARSELONA", "REYKJAVİK", "SİNGAPUR", "BUENOS AİRES", "LOS ANGELES", "RİO DE JANEİRO", "MACHU PICCHU", "ST. PETERSBURG", "BRÜKSEL", "NEW YORK"]  // Zor - 7-15 harf
   },
   Markalar: {
-    1: ["BMW", "NIKE", "PUMA", "FORD", "SONY", "JEEP", "IKEA", "ZARA", "LEGO", "LAYS", "GUCCI", "PRADA", "TESLA", "INTEL", "NESTLE", "PHILIPS", "MİGROS", "APPLE", "BOSE", "BEKO", "ROLEX", "CHANEL", "AMAZON", "TOYOTA", "CANON"], // Kolay - 3-7 harf
+    1: ["BMW", "NIKE", "PUMA", "FORD", "SONY", "JEEP", "IKEA", "ZARA", "LEGO", "LAYS", "BOSE", "BEKO", "APPLE", "GUCCI", "PRADA", "TESLA", "INTEL", "ROLEX", "CANON", "CHANEL", "AMAZON", "TOYOTA", "NESTLE", "MİGROS", "PHILIPS"], // Kolay - 3-7 harf
     2: ["DELL", "BOSE", "BEKO", "APPLE", "CHANEL", "ROLEX", "AMAZON", "TOYOTA", "CANON", "NIKON", "ADIDAS", "SPACEX", "BOEING", "HERMES", "ORACLE", "PEPSI", "CISCO", "VESTEL", "AIRBUS", "DANONE", "GOOGLE", "LOREAL", "COLGATE", "PORSCHE", "FERRARI"], // Orta - 4-8 harf
     3: ["CARTIER", "SAMSUNG", "GILLETTE", "NESCAFE", "NVIDIA", "QUALCOMM", "RED BULL", "TAG HEUER", "MERCEDES", "STARBUCKS", "LULULEMON", "BURBERRY", "ARÇELİK", "COCA-COLA", "PATAGONIA", "BREITLING", "MICROSOFT", "JOHN DEERE", "LAND ROVER", "ROLLS-ROYCE", "FABER-CASTELL", "UNDER ARMOUR", "MCDONALD'S", "LAMBORGHINI", "HARLEY-DAVIDSON"]  // Zor - 6-16 harf
   },
