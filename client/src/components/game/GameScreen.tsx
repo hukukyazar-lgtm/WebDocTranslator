@@ -298,12 +298,21 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
   const [currentAchievement, setCurrentAchievement] = useState<Achievement | null>(null);
   const [showDailyGoals, setShowDailyGoals] = useState(false);
   
-  // Kategori tamamlama takibi için basit sayaç
-  const [categoryCorrectCount, setCategoryCorrectCount] = useState(0);
+  // Her kategori için ayrı progress takibi
+  const [categoryProgressMap, setCategoryProgressMap] = useState<{[key: string]: {[difficulty: string]: number}}>({});
   
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const timeLeft = TOTAL_GAME_TIME - Math.floor(elapsedTime);
+
+  // LocalStorage'dan progress verilerini yükle
+  useEffect(() => {
+    const progressKey = `category_progress_${isGuestMode ? 'guest' : 'user'}`;
+    const savedProgress = localStorage.getItem(progressKey);
+    if (savedProgress) {
+      setCategoryProgressMap(JSON.parse(savedProgress));
+    }
+  }, [isGuestMode]);
 
   // Enhanced keyboard feedback system with Turkish character support
   const getKeyboardLetterStates = useMemo(() => {
@@ -527,9 +536,26 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
         setCurrentAchievement(newAchievements[0]);
       }
       
-      // Kategori tamamlama kontrolü - sayacı artır
-      const newCategoryCount = categoryCorrectCount + 1;
-      setCategoryCorrectCount(newCategoryCount);
+      // Kategori tamamlama kontrolü - progress map'i güncelle
+      const currentProgress = categoryProgressMap[category]?.[difficulty] || 0;
+      const newCategoryCount = currentProgress + 1;
+      
+      // Progress map'i güncelle
+      setCategoryProgressMap(prev => {
+        const updated = {
+          ...prev,
+          [category]: {
+            ...prev[category],
+            [difficulty]: newCategoryCount
+          }
+        };
+        
+        // LocalStorage'a kaydet
+        const progressKey = `category_progress_${isGuestMode ? 'guest' : 'user'}`;
+        localStorage.setItem(progressKey, JSON.stringify(updated));
+        
+        return updated;
+      });
       
       // 25 kelime tamamlandığında bildirim göster ve otomatik kategori geçişi
       if (newCategoryCount >= 25) {
@@ -554,9 +580,33 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
             // Tamamlanmamış kategoriler varsa, alfabetik sırayla ilkini seç
             nextCategory = uncompletedCategories[0];
           } else {
-            // Tüm kategoriler tamamlandıysa, başarı mesajı göster ve döngü başlat
+            // Tüm kategoriler tamamlandıysa, zorluk seviyesi kontrolü yap
+            const allEasyCompleted = allCategories.every(cat => 
+              (categoryProgressMap[cat]?.['kolay'] || 0) >= 25
+            );
+            const allMediumCompleted = allCategories.every(cat => 
+              (categoryProgressMap[cat]?.['orta'] || 0) >= 25
+            );
+            
+            // Sonraki zorluk seviyesinin kilidini aç ve kaydet
+            let nextDifficultyMessage = '';
+            const difficultyKey = `unlocked_difficulties_${isGuestMode ? 'guest' : 'user'}`;
+            const unlockedDifficulties = JSON.parse(localStorage.getItem(difficultyKey) || '["kolay"]');
+            
+            if (difficulty === 'kolay' && allEasyCompleted && !unlockedDifficulties.includes('orta')) {
+              unlockedDifficulties.push('orta');
+              localStorage.setItem(difficultyKey, JSON.stringify(unlockedDifficulties));
+              nextDifficultyMessage = '🔓 Orta zorluk seviyesinin kilidi açıldı!';
+            } else if (difficulty === 'orta' && allMediumCompleted && !unlockedDifficulties.includes('zor')) {
+              unlockedDifficulties.push('zor');
+              localStorage.setItem(difficultyKey, JSON.stringify(unlockedDifficulties));
+              nextDifficultyMessage = '🔓 Zor zorluk seviyesinin kilidi açıldı!';
+            } else if (difficulty === 'zor') {
+              nextDifficultyMessage = '🏆 Tebrikler! Tüm zorluk seviyelerini tamamladınız!';
+            }
+            
             nextCategory = allCategories[0]; // Hayvanlar'dan başla
-            alert(`🏆 Harika! Tüm kategorileri "${difficulty}" seviyesinde tamamladınız!\n\n🔄 Yeniden başlangıç - Hayvanlar kategorisinden devam ediyorsunuz.`);
+            alert(`🏆 Harika! Tüm kategorileri "${difficulty}" seviyesinde tamamladınız!\n\n${nextDifficultyMessage}\n\n🔄 Yeniden başlangıç - Hayvanlar kategorisinden devam ediyorsunuz.`);
           }
           
           alert(`🎉 Tebrikler! "${category}" kategorisini "${difficulty}" seviyesinde tamamladınız!\n\n🎯 Serin korunarak "${nextCategory}" kategorisine geçiyorsun!`);
