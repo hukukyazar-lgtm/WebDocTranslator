@@ -248,10 +248,11 @@ const categoryTranslations = {
 interface GameScreenProps {
   settings: GameSettings;
   onGameOver: () => void;
+  onCategoryComplete?: (nextCategory: string, difficulty: string) => void;
   isGuestMode?: boolean;
 }
 
-export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: GameScreenProps) => {
+export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGuestMode = false }: GameScreenProps) => {
   const { category, difficulty, language } = settings;
   const theme = getThemeForCategory(category);
   const t = gameTranslations[language as Language];
@@ -530,10 +531,26 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       const newCategoryCount = categoryCorrectCount + 1;
       setCategoryCorrectCount(newCategoryCount);
       
-      // 25 kelime tamamlandığında bildirim göster
+      // 25 kelime tamamlandığında bildirim göster ve otomatik kategori geçişi
       if (newCategoryCount >= 25) {
         setTimeout(() => {
-          alert(`🎉 Tebrikler! "${category}" kategorisini "${difficulty}" seviyesinde tamamladınız!\n\nYeni bir kategori seçerek devam edebilirsiniz.`);
+          const allCategories = ['Hayvanlar', 'Yiyecek', 'Bilim', 'Ülkeler', 'Meslekler', 'Şehirler', 'Spor Dalları', 'Markalar', 'Filmler', 'Eşyalar'];
+          const currentIndex = allCategories.indexOf(category);
+          const nextCategory = allCategories[(currentIndex + 1) % allCategories.length];
+          
+          alert(`🎉 Tebrikler! "${category}" kategorisini "${difficulty}" seviyesinde tamamladınız!\n\n🎯 Serin korunarak "${nextCategory}" kategorisine geçiyorsun!`);
+          
+          // Otomatik kategori geçişi - seriyi koruyarak
+          setTimeout(() => {
+            if (onCategoryComplete) {
+              onCategoryComplete(nextCategory, difficulty);
+            } else {
+              // Fallback: LocalStorage ile kategori değiştir ve reload
+              localStorage.setItem('nextCategory', nextCategory);
+              localStorage.setItem('nextDifficulty', difficulty);
+              window.location.reload();
+            }
+          }, 2000);
         }, 1000);
       }
       
