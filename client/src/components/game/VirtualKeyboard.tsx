@@ -1,5 +1,6 @@
 import { memo, useCallback } from 'react';
 import { turkishKeyboardLayout } from '@/lib/gameUtils';
+import { audioManager } from '@/lib/audioManager';
 import type { Language } from './LanguageScreen';
 
 // Keyboard translations
@@ -62,7 +63,15 @@ export const VirtualKeyboard = memo(({
 }: VirtualKeyboardProps) => {
   const t = keyboardTranslations[language];
   
-  const handleKeyPress = useCallback((key: string, event?: React.MouseEvent<HTMLButtonElement>) => {
+  const handleKeyPress = useCallback(async (key: string, event?: React.MouseEvent<HTMLButtonElement>) => {
+    // İlk tıklamada sesi başlat
+    try {
+      await audioManager.initialize();
+      audioManager.playKeyPress();
+    } catch (error) {
+      console.warn('Audio play failed:', error);
+    }
+    
     onKeyPress(key);
     // Focus'u temizle ki tuş highlight kalmasın
     if (event?.currentTarget) {
@@ -141,7 +150,16 @@ export const VirtualKeyboard = memo(({
               </button>
             ))}
             <button
-              onClick={(e) => { onBackspace(); e.currentTarget.blur(); }}
+              onClick={async (e) => { 
+                try {
+                  await audioManager.initialize();
+                  audioManager.playKeyPress();
+                } catch (error) {
+                  console.warn('Audio play failed:', error);
+                }
+                onBackspace(); 
+                e.currentTarget.blur(); 
+              }}
               className="keyboard-key px-2 sm:px-3 md:px-4 lg:px-5 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-red-500/50 bg-red-500/20 text-white hover:bg-red-500/40 shadow-lg touch-manipulation"
               data-testid="key-backspace"
             >
@@ -153,7 +171,16 @@ export const VirtualKeyboard = memo(({
           {/* Fourth Row - Space and Submit */}
           <div className="flex justify-center gap-1 sm:gap-2">
             <button
-              onClick={(e) => { onSpace(); e.currentTarget.blur(); }}
+              onClick={async (e) => { 
+                try {
+                  await audioManager.initialize();
+                  audioManager.playKeyPress();
+                } catch (error) {
+                  console.warn('Audio play failed:', error);
+                }
+                onSpace(); 
+                e.currentTarget.blur(); 
+              }}
               className="keyboard-key flex-1 max-w-[120px] sm:max-w-xs py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-white/30 bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 shadow-lg"
               data-testid="key-space"
             >
@@ -161,7 +188,16 @@ export const VirtualKeyboard = memo(({
               <span className="hidden sm:inline">⌨️ {t.space}</span>
             </button>
             <button
-              onClick={(e) => { onSubmit(); e.currentTarget.blur(); }}
+              onClick={async (e) => { 
+                try {
+                  await audioManager.initialize();
+                  audioManager.playKeyPress();
+                } catch (error) {
+                  console.warn('Audio play failed:', error);
+                }
+                onSubmit(); 
+                e.currentTarget.blur(); 
+              }}
               className="keyboard-key px-3 sm:px-4 lg:px-8 py-2 sm:py-3 text-xs sm:text-sm lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-green-500/50 text-white hover:bg-green-500/40 shadow-xl"
               style={{
                 background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.3))',

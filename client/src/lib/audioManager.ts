@@ -4,6 +4,7 @@ class AudioManager {
   private sounds: Map<string, AudioBuffer> = new Map();
   private isEnabled: boolean = true;
   private volume: number = 0.7;
+  public isInitialized: boolean = false;
 
   constructor() {
     this.initAudioContext();
@@ -121,6 +122,8 @@ class AudioManager {
 
       // Ses efektlerini oluştur
       await this.createGameSounds();
+      this.isInitialized = true;
+      console.log('Audio system initialized successfully');
     } catch (error) {
       console.warn('Audio initialization failed:', error);
     }
