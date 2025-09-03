@@ -241,11 +241,6 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                       <div className="text-2xl mr-3">{isUnlocked ? difficulty.emoji : '🔒'}</div>
                       <div>
                         <div className="text-lg font-black">{difficulty.name}</div>
-                        {!isUnlocked && progressMessage && (
-                          <div className="text-sm opacity-90">
-                            {progressMessage}
-                          </div>
-                        )}
                       </div>
                     </Button>
                   </Card>
