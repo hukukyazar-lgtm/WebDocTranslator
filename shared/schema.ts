@@ -46,6 +46,7 @@ export const gameStats = pgTable("game_stats", {
   totalCorrectGuesses: integer("total_correct_guesses").default(0),
   totalScore: integer("total_score").default(0),
   bestStreak: integer("best_streak").default(0),
+  bestSequentialStreak: integer("best_sequential_streak").default(0),
   currentStreak: integer("current_streak").default(0),
   totalGuessTime: real("total_guess_time").default(0), // in seconds
   createdAt: timestamp("created_at").defaultNow(),

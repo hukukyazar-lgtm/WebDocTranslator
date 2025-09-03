@@ -60,6 +60,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const achievedStreak = sessionData.score; // The streak they achieved before wrong answer
       
       const newBestStreak = Math.max(userStats.bestStreak || 0, achievedStreak);
+      
+      // Update best sequential streak if provided
+      const newBestSequentialStreak = req.body.bestSequentialStreak 
+        ? Math.max(userStats.bestSequentialStreak || 0, req.body.bestSequentialStreak)
+        : userStats.bestSequentialStreak || 0;
 
       // Update stats
       await storage.updateUserStats(userId, {
@@ -68,6 +73,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         totalScore: newTotalScore,
         currentStreak: newCurrentStreak,
         bestStreak: newBestStreak,
+        bestSequentialStreak: newBestSequentialStreak,
         totalGuessTime: newTotalTime,
       });
 

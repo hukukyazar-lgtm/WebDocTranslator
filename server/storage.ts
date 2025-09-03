@@ -33,6 +33,7 @@ export interface IStorage {
     gamesPlayed: number;
     successRate: number;
     bestStreak: number;
+    bestSequentialStreak: number;
     totalScore: number;
     averageGuessTime: number;
   }>;
@@ -125,6 +126,7 @@ export class DatabaseStorage implements IStorage {
         gamesPlayed: 0,
         successRate: 0,
         bestStreak: 0,
+        bestSequentialStreak: 0,
         totalScore: 0,
         averageGuessTime: 0,
       };
@@ -148,6 +150,7 @@ export class DatabaseStorage implements IStorage {
       gamesPlayed: stats.totalGamesPlayed || 0,
       successRate,
       bestStreak: stats.bestStreak || 0,
+      bestSequentialStreak: stats.bestSequentialStreak || 0,
       totalScore: stats.totalScore || 0,
       averageGuessTime,
     };

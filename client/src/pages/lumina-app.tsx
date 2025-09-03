@@ -69,6 +69,7 @@ export default function LuminaApp() {
     gamesPlayed: (isAuthenticated && stats) ? stats.gamesPlayed : 0,
     successRate: (isAuthenticated && stats) ? stats.successRate : 0,
     bestStreak: (isAuthenticated && stats) ? stats.bestStreak : 0,
+    bestSequentialStreak: (isAuthenticated && stats) ? stats.bestSequentialStreak : 0,
     totalScore: (isAuthenticated && stats) ? stats.totalScore : 0
   }), [user?.firstName, user?.email, isAuthenticated, stats]);
 
@@ -273,6 +274,7 @@ export default function LuminaApp() {
             isCorrect: false,
             score: gameState.streak, // Save the achieved streak as final score
             guessTime: timeSpent,
+            bestSequentialStreak: gameState.bestSequential,
           });
         } catch (error) {
           console.error('Failed to save game session:', error);
@@ -439,7 +441,7 @@ export default function LuminaApp() {
           category={gameState.category}
           sequentialCount={gameState.sequentialCount}
           totalCorrect={gameState.totalCorrect}
-          bestSequential={gameState.bestSequential}
+          bestSequential={playerProfile.bestSequentialStreak || gameState.bestSequential}
           onContinue={canContinue ? handleContinue : undefined}
           onPlayAgain={handlePlayAgain}
           onMainMenu={handleBackToMenu}

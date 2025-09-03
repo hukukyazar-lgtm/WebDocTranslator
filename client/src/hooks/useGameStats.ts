@@ -6,6 +6,7 @@ export interface UserStats {
   gamesPlayed: number;
   successRate: number;
   bestStreak: number;
+  bestSequentialStreak: number;
   totalScore: number;
   averageGuessTime: number;
 }
@@ -17,6 +18,7 @@ export interface GameSessionData {
   isCorrect: boolean;
   score: number;
   guessTime: number;
+  bestSequentialStreak?: number;
 }
 
 export function useGameStats() {
@@ -51,6 +53,7 @@ export function useGameStats() {
     gamesPlayed: 0,
     successRate: 0,
     bestStreak: 0,
+    bestSequentialStreak: 0,
     totalScore: 0,
     averageGuessTime: 0,
   });
