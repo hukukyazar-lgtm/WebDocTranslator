@@ -86,16 +86,33 @@ export default function LuminaApp() {
         setGameState(prev => {
           const newTimeLeft = prev.timeLeft - 1;
           
-          // Game over if time runs out
+          // Time runs out - decrease lives
           if (newTimeLeft <= 0) {
-            setTimeout(() => setCurrentScreen('gameover'), 1500);
-            return {
-              ...prev,
-              timeLeft: 0,
-              isGameOver: true,
-              gameSuccess: false,
-              isSpinning: false
-            };
+            const newLives = prev.lives - 1;
+            if (newLives <= 0) {
+              // No more lives - game over
+              setTimeout(() => handleGameOver(false, 0), 1500);
+              return {
+                ...prev,
+                timeLeft: 0,
+                lives: 0,
+                isGameOver: true,
+                gameSuccess: false,
+                isSpinning: false
+              };
+            } else {
+              // Still have lives - reset for new word attempt  
+              return {
+                ...prev,
+                timeLeft: 30, // Reset timer
+                lives: newLives,
+                guessedWord: prev.currentWord.replace(/./g, '_'), // Reset guessed word
+                usedLetters: [], // Reset used letters
+                isSpinning: true,
+                isSequentialGuess: true,
+                nextExpectedLetterIndex: 0
+              };
+            }
           }
           
           // Adjust spinning based on time
@@ -354,7 +371,8 @@ export default function LuminaApp() {
         newIsSequentialGuess = false;
       }
       
-      const newLives = correctGuess ? prev.lives : prev.lives - 1;
+      // Lives don't decrease on wrong letters anymore - only on wrong word or timeout
+      const newLives = prev.lives;
       const wordComplete = !newGuessedWord.includes('_');
       
       // Check win condition
@@ -365,10 +383,7 @@ export default function LuminaApp() {
         
         setTimeout(() => handleGameOver(true, finalScore), 500);
       }
-      // Check lose condition
-      else if (newLives <= 0) {
-        setTimeout(() => handleGameOver(false, 0), 500);
-      }
+      // Lives will decrease only when time runs out or wrong word guess
       
       return {
         ...prev,
