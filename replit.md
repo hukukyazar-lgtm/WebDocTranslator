@@ -39,6 +39,15 @@ Preferred communication style: Simple, everyday language.
 - Added responsive animations with proper event handling
 - Improved mobile touch interactions with optimized button sizes
 
+## To-Do List (Upcoming Features)
+
+### Progress Tracking System
+- **Vertical Progress Bar**: Implement a visual progress indicator showing completed words (0-25) for each category-difficulty combination
+  - Position: Between LUMINA grid and virtual keyboard for optimal visibility
+  - Color progression: Purple (0-9) → Green (10-14) → Blue (15-19) → Gold (20-25) 
+  - Features: Gradient backgrounds, glow effects, pulse animation for near completion
+  - Purpose: Help players track category completion progress and understand advancement requirements
+
 ## System Architecture
 
 ### Frontend Architecture

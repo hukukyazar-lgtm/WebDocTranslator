@@ -737,53 +737,6 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 />
               </div>
               
-              {/* İlerleme Çubuğu - Grid ile Klavye arasında */}
-              <div className="flex justify-center">
-                <div className="flex items-center space-x-3 backdrop-blur-lg bg-white/10 rounded-lg px-4 py-2 border border-white/20 shadow-lg">
-                  {/* Bilinen kelime sayısı */}
-                  <div className={`text-lg font-bold ${
-                    correctGuesses >= 20 
-                      ? 'text-yellow-400 animate-pulse' 
-                      : correctGuesses >= 15 
-                        ? 'text-blue-400' 
-                        : correctGuesses >= 10 
-                          ? 'text-green-400'
-                          : 'text-purple-400'
-                  }`}>
-                    {correctGuesses}
-                  </div>
-                  
-                  {/* Yatay çubuk */}
-                  <div className="w-32 sm:w-40 md:w-48 h-4 bg-white/20 rounded-full border border-white/30 overflow-hidden">
-                    <div 
-                      className="h-full rounded-full transition-all duration-500 ease-out"
-                      style={{
-                        width: `${Math.max(8, (correctGuesses / 25) * 100)}%`,
-                        background: correctGuesses >= 20 
-                          ? 'linear-gradient(to right, #f59e0b, #fbbf24)' // Altın sarısı
-                          : correctGuesses >= 15 
-                            ? 'linear-gradient(to right, #3b82f6, #60a5fa)' // Mavi
-                            : correctGuesses >= 10 
-                              ? 'linear-gradient(to right, #10b981, #34d399)' // Yeşil
-                              : 'linear-gradient(to right, #8b5cf6, #a78bfa)', // Mor
-                        boxShadow: correctGuesses >= 20 
-                          ? '0 0 8px rgba(245, 158, 11, 0.6)' 
-                          : correctGuesses >= 15 
-                            ? '0 0 6px rgba(59, 130, 246, 0.5)' 
-                            : correctGuesses >= 10 
-                              ? '0 0 4px rgba(16, 185, 129, 0.4)' 
-                              : '0 0 3px rgba(139, 92, 246, 0.3)'
-                      }}
-                    />
-                  </div>
-                  
-                  {/* Hedef */}
-                  <div className="text-lg text-white/80 font-bold">
-                    /25
-                  </div>
-                </div>
-              </div>
-              
               {/* Alt: Timer + Input + Keyboard - Tablet Uyumlu */}
               <div className="flex-shrink-0 w-full max-w-sm md:max-w-md lg:max-w-lg space-y-2 md:space-y-3">
                 {/* Timer - Kompakt */}
