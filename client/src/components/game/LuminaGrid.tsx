@@ -17,7 +17,7 @@ export const LuminaGrid = memo<LuminaGridProps>(({ word, guesses, currentGuess, 
   const wordLength = word.length;
   const gridWidth = wordLength; // Kelime uzunluğuna eşit kutu sayısı
   
-  // Lingo renk kodlaması ve animasyonlar
+  // LUMINA renk kodlaması ve animasyonlar
   const getLetterStateClass = (state: LetterState['state'], hasLetter: boolean) => {
     const baseClasses = hasLetter 
       ? 'transform scale-110 shadow-lg' 

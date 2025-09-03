@@ -44,7 +44,7 @@ interface VirtualKeyboardProps {
   onSubmit: () => void;
   usedKeys?: string[];
   language?: Language;
-  // Lingo için ekstra prop'lar
+  // LUMINA için ekstra prop'lar
   correctKeys?: string[]; // Doğru pozisyondaki harfler (yeşil)
   presentKeys?: string[]; // Yanlış pozisyondaki ama var olan harfler (sarı)
   absentKeys?: string[]; // Olmayan harfler (gri)

@@ -263,7 +263,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   
   const [secretWord, setSecretWord] = useState('');
   const [guess, setGuess] = useState('');
-  const [guesses, setGuesses] = useState<string[]>([]); // Lingo tahmin geçmişi
+  const [guesses, setGuesses] = useState<string[]>([]); // LUMINA tahmin geçmişi
   const maxGuesses = 4; // Daha az tahmin hakkı, daha kompakt grid
   const [isSpinning, setIsSpinning] = useState(true);
   const [spinDuration, setSpinDuration] = useState(3.0);
@@ -725,7 +725,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 </div>
               </div>
               
-              {/* Orta: Tek satır Lingo Grid */}
+              {/* Orta: Tek satır LUMINA Grid */}
               <div className="flex-shrink-0">
                 <LuminaGrid
                   word={secretWord}

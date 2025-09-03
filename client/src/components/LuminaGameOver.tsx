@@ -5,7 +5,7 @@ import { Badge } from '@/components/ui/badge';
 import { RotateCcw, Home, Share2, Star, Zap, Clock, Trophy } from 'lucide-react';
 import luminaLogo from '@/assets/lumina-logo.png';
 
-// CodyCross style - modern, colorful, friendly, with soft shapes and vibrant colors
+// LUMINA style - modern, colorful, friendly, with soft shapes and vibrant colors
 interface LuminaGameOverProps {
   gameSuccess: boolean;
   score: number;
@@ -40,7 +40,7 @@ export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak
     <div className="min-h-screen relative overflow-hidden" style={{
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
     }}>
-      {/* Floating geometric shapes like CodyCross */}
+      {/* Floating geometric shapes like LUMINA */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Large soft circles */}
         <div className="absolute -top-20 -left-20 w-40 h-40 rounded-full bg-white/10 animate-float-slow"></div>
@@ -67,7 +67,7 @@ export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak
 
       <div className="relative z-10 min-h-screen flex items-center justify-center p-6">
         <div className="w-full max-w-md">
-          {/* Main CodyCross-style card */}
+          {/* Main LUMINA-style card */}
           <Card className="relative overflow-hidden border-0 shadow-2xl rounded-3xl bg-white">
             
             {/* Colorful header section */}
@@ -96,7 +96,7 @@ export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak
                 </div>
               )}
 
-              {/* Simple, clean CodyCross-style logo */}
+              {/* Simple, clean LUMINA-style logo */}
               <div className="relative mb-6">
                 <div className="w-16 h-16 mx-auto mb-4 relative">
                   {/* Simple colorful background */}
@@ -181,7 +181,7 @@ export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak
               </div>
 
 
-              {/* CodyCross-style action buttons */}
+              {/* LUMINA-style action buttons */}
               <div className="space-y-4">
                 {/* Continue button - only show if successful and under 50 words */}
                 {onContinue && (
@@ -237,7 +237,7 @@ export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak
                 </div>
               </div>
 
-              {/* Achievement badge like CodyCross */}
+              {/* Achievement badge like LUMINA */}
               {gameResult.isWin && gameResult.streak >= 5 && (
                 <div className="mt-6 p-4 rounded-2xl relative overflow-hidden shadow-lg" style={{
                   background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)'
