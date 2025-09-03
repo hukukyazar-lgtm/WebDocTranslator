@@ -712,7 +712,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
             {/* Dikey Layout: Çark → Grid → Tahmin Kutusu */}
             <div className="flex flex-col items-center justify-start gap-2 sm:gap-4 md:gap-6 lg:gap-8 relative">
               {/* Üst: Spinning Wheel - Daha küçük */}
-              <div className="flex-shrink-0 relative">
+              <div className="flex-shrink-0">
                 <div className="transform scale-35 sm:scale-45 md:scale-60 lg:scale-75">
                   <SpinningWheel 
                     word={secretWord} 
@@ -723,51 +723,51 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                     timeLeft={timeLeft}
                   />
                 </div>
-                
-                {/* Dikey İlerleme Çubuğu - Çarkın sağ tarafında */}
-                <div className="absolute top-0 -right-6 sm:-right-8 md:-right-12 lg:-right-16 z-10">
-                  <div className="flex flex-col items-center space-y-1">
-                    {/* Bilinen kelime sayısı */}
-                    <div className={`text-sm sm:text-base md:text-lg font-bold backdrop-blur-lg rounded px-2 py-1 ${
-                      correctGuesses >= 20 
-                        ? 'text-yellow-400 bg-yellow-500/20 animate-pulse' 
-                        : correctGuesses >= 15 
-                          ? 'text-blue-400 bg-blue-500/20' 
-                          : correctGuesses >= 10 
-                            ? 'text-green-400 bg-green-500/20'
-                            : 'text-purple-400 bg-purple-500/20'
-                    }`}>
-                      {correctGuesses}
-                    </div>
-                    
-                    {/* Dikey çubuk */}
-                    <div className="w-3 sm:w-4 md:w-5 h-40 sm:h-48 md:h-56 lg:h-64 bg-white/20 rounded-full border-2 border-white/40 overflow-hidden backdrop-blur-lg shadow-lg">
-                      <div 
-                        className="w-full rounded-full transition-all duration-500 ease-out origin-bottom"
-                        style={{
-                          height: `${Math.max(4, (correctGuesses / 25) * 100)}%`,
-                          background: correctGuesses >= 20 
-                            ? 'linear-gradient(to top, #f59e0b, #fbbf24)' // Altın sarısı (yakın tamamlanma)
-                            : correctGuesses >= 15 
-                              ? 'linear-gradient(to top, #3b82f6, #60a5fa)' // Mavi (iyi ilerleme)
-                              : correctGuesses >= 10 
-                                ? 'linear-gradient(to top, #10b981, #34d399)' // Yeşil (orta ilerleme)
-                                : 'linear-gradient(to top, #8b5cf6, #a78bfa)', // Mor (başlangıç)
-                          boxShadow: correctGuesses >= 20 
-                            ? '0 0 12px rgba(245, 158, 11, 0.6)' // Altın glow
-                            : correctGuesses >= 15 
-                              ? '0 0 10px rgba(59, 130, 246, 0.5)' // Mavi glow
-                              : correctGuesses >= 10 
-                                ? '0 0 8px rgba(16, 185, 129, 0.4)' // Yeşil glow
-                                : '0 0 6px rgba(139, 92, 246, 0.3)' // Mor glow
-                        }}
-                      />
-                    </div>
-                    
-                    {/* Alt etiket */}
-                    <div className="text-xs text-white/60 backdrop-blur-lg rounded px-1">
-                      /25
-                    </div>
+              </div>
+              
+              {/* İlerleme Çubuğu - Çarkın hemen altında */}
+              <div className="flex justify-center">
+                <div className="flex items-center space-x-3 backdrop-blur-lg bg-white/10 rounded-lg px-4 py-2 border border-white/20">
+                  {/* Bilinen kelime sayısı */}
+                  <div className={`text-lg font-bold ${
+                    correctGuesses >= 20 
+                      ? 'text-yellow-400 animate-pulse' 
+                      : correctGuesses >= 15 
+                        ? 'text-blue-400' 
+                        : correctGuesses >= 10 
+                          ? 'text-green-400'
+                          : 'text-purple-400'
+                  }`}>
+                    {correctGuesses}
+                  </div>
+                  
+                  {/* Yatay çubuk */}
+                  <div className="w-32 sm:w-40 md:w-48 h-3 bg-white/20 rounded-full border border-white/30 overflow-hidden">
+                    <div 
+                      className="h-full rounded-full transition-all duration-500 ease-out"
+                      style={{
+                        width: `${Math.max(8, (correctGuesses / 25) * 100)}%`,
+                        background: correctGuesses >= 20 
+                          ? 'linear-gradient(to right, #f59e0b, #fbbf24)' // Altın sarısı
+                          : correctGuesses >= 15 
+                            ? 'linear-gradient(to right, #3b82f6, #60a5fa)' // Mavi
+                            : correctGuesses >= 10 
+                              ? 'linear-gradient(to right, #10b981, #34d399)' // Yeşil
+                              : 'linear-gradient(to right, #8b5cf6, #a78bfa)', // Mor
+                        boxShadow: correctGuesses >= 20 
+                          ? '0 0 8px rgba(245, 158, 11, 0.6)' 
+                          : correctGuesses >= 15 
+                            ? '0 0 6px rgba(59, 130, 246, 0.5)' 
+                            : correctGuesses >= 10 
+                              ? '0 0 4px rgba(16, 185, 129, 0.4)' 
+                              : '0 0 3px rgba(139, 92, 246, 0.3)'
+                      }}
+                    />
+                  </div>
+                  
+                  {/* Hedef */}
+                  <div className="text-sm text-white/60 font-medium">
+                    /25
                   </div>
                 </div>
               </div>
