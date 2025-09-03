@@ -402,9 +402,8 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
 
   // Initialize game
   useEffect(() => {
-    const categoryWords = wordLists[category];
-    const wordPool = (categoryWords as any)?.[difficulty] || [];
-    const randomWord = wordPool[Math.floor(Math.random() * wordPool.length)];
+    // İlk kelimeyi getWordByDifficulty ile seç
+    const randomWord = getWordByDifficulty(category, difficulty, []);
     
     setSecretWord(randomWord);
     setUsedWords([randomWord]);
@@ -616,10 +615,35 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
             if (onCategoryComplete) {
               onCategoryComplete(nextCategory, difficulty);
             } else {
-              // Fallback: LocalStorage ile kategori değiştir ve reload
-              localStorage.setItem('nextCategory', nextCategory);
-              localStorage.setItem('nextDifficulty', difficulty);
-              window.location.reload();
+              // Fallback: Kelime listesini temizle ve yeni kategoriye geç
+              setUsedWords([]); // Kelime listesini sıfırla
+              
+              // Yeni kategorinin ilk kelimesini seç
+              const newCategoryWord = getWordByDifficulty(nextCategory, difficulty, []);
+              setSecretWord(newCategoryWord);
+              setUsedWords([newCategoryWord]);
+              
+              // Oyun state'ini güncelle
+              settings.category = nextCategory;
+              
+              // Oyunu yeniden başlat
+              setGuess('');
+              setGuesses([]);
+              setIsSpinning(true);
+              setMessage('');
+              setGameOver(false);
+              setElapsedTime(0);
+              setSlowdownApplied(false);
+              setGameSuccess(false);
+              setForceKeyboardRender(prev => prev + 1);
+              
+              // Timer'ı yeniden başlat
+              if (timerRef.current) {
+                clearInterval(timerRef.current);
+              }
+              timerRef.current = setInterval(() => {
+                setElapsedTime(prevTime => prevTime + 1);
+              }, 1000);
             }
           }, 2000);
         }, 1000);
@@ -681,21 +705,8 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
     // Force keyboard clear by updating key
     setForceKeyboardRender(prev => prev + 1);
     
-    // Get new word (different from used ones)
-    const categoryWords = wordLists[category];
-    const wordPool = (categoryWords as any)?.[difficulty] || [];
-    
-    // Filter out already used words
-    const availableWords = wordPool.filter((word: string) => !usedWords.includes(word));
-    
-    let newWord: string;
-    if (availableWords.length === 0) {
-      // If all words are used, reset and use all words again
-      setUsedWords([]);
-      newWord = wordPool[Math.floor(Math.random() * wordPool.length)];
-    } else {
-      newWord = availableWords[Math.floor(Math.random() * availableWords.length)];
-    }
+    // Get new word using getWordByDifficulty function
+    const newWord = getWordByDifficulty(category, difficulty, usedWords);
     
     if (newWord) {
       setSecretWord(newWord);
@@ -734,8 +745,8 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
     setForceKeyboardRender(prev => prev + 1);
     setScore(0);
     
-    // Get new word and reset timer
-    const randomWord = getWordByDifficulty(category, difficulty);
+    // Get new word and reset timer - usedWords listesi ile
+    const randomWord = getWordByDifficulty(category, difficulty, usedWords);
     setSecretWord(randomWord);
     
     const baseSpeed = getSpinDuration(difficulty, TOTAL_GAME_TIME);
