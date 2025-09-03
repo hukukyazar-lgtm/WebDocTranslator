@@ -301,6 +301,11 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
 
   // Enhanced keyboard feedback system with Turkish character support
   const getKeyboardLetterStates = useMemo(() => {
+    // If no guesses or game is over, return empty states to clear keyboard
+    if (guesses.length === 0 || gameOver) {
+      return { correctKeys: [], presentKeys: [], absentKeys: [] };
+    }
+
     const correctKeys: string[] = [];
     const presentKeys: string[] = [];
     const absentKeys: string[] = [];
@@ -355,7 +360,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     }
 
     return { correctKeys, presentKeys, absentKeys };
-  }, [secretWord, guesses]);
+  }, [secretWord, guesses, gameOver]);
 
   // Dynamic background based on time left with dramatic color transitions
   const dynamicBackground = useMemo(() => {
@@ -544,7 +549,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     
     // Continue with new word without resetting score
     setGuess('');
-    setGuesses([]); // Reset guesses for new word
+    setGuesses([]); // Reset guesses for new word - this will clear keyboard state
     setIsSpinning(true);
     setMessage('');
     setGameOver(false);
@@ -591,13 +596,12 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     
     // Reset all game state
     setGuess('');
-    setGuesses([]); // Lingo tahmin geçmişini sıfırla
+    setGuesses([]); // Reset guesses - this will clear keyboard state
     setIsSpinning(true);
     setMessage('');
     setGameOver(false);
     setElapsedTime(0);
     setSlowdownApplied(false);
-
     setGameSuccess(false);
     setScore(0);
     
