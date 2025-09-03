@@ -226,43 +226,33 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
               </p>
             </div>
 
-            {/* Kategori listesi - Ana sayfa buton tarzında (beyaz kart yok) */}
-            <div className="space-y-4">
+            {/* Kategori grid - 2x5 kare butonlar */}
+            <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
               {categories.map((category, index) => (
                 <Button 
                   key={category.id}
                   onClick={() => handleCategorySelect(category.name)}
-                  className={`w-full h-16 rounded-2xl font-bold text-white shadow-xl transition-all duration-300 ${
+                  className={`aspect-square rounded-2xl font-bold text-white shadow-2xl transition-all duration-300 p-4 ${
                     selectedCategory === category.name 
-                      ? 'scale-105 shadow-2xl ring-4 ring-white/50' 
-                      : 'hover:scale-[1.02]'
+                      ? 'scale-110 shadow-3xl ring-4 ring-white/50 z-10' 
+                      : 'hover:scale-105'
                   }`}
                   style={{
                     background: selectedCategory === category.name 
-                      ? `linear-gradient(135deg, ${difficulties.find(d => d.id === selectedDifficulty)?.color.replace('from-', '').replace('to-', ', ')})`
+                      ? 'linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)' 
                       : `linear-gradient(135deg, ${category.color})`
                   }}
                   data-testid={`category-${category.name}`}
                 >
-                  <div className="flex items-center justify-between w-full">
-                    <div className="flex items-center">
-                      <div className="text-2xl mr-3">{category.emoji}</div>
-                      <div className="text-left">
-                        <div className="text-base font-black">{category.name}</div>
-                        <div className="text-sm opacity-90">
-                          {category.completed}/{category.total} kelime
-                        </div>
-                      </div>
+                  <div className="flex flex-col items-center justify-center h-full">
+                    <div className="text-3xl mb-2">{category.emoji}</div>
+                    <div className="text-sm font-black text-center leading-tight">{category.name}</div>
+                    <div className="text-xs opacity-90 mt-1">
+                      {Math.round((category.completed / category.total) * 100)}%
                     </div>
-                    
-                    <div className="text-right">
-                      <div className="text-sm font-bold">
-                        %{Math.round((category.completed / category.total) * 100)}
-                      </div>
-                      {selectedCategory === category.name && (
-                        <div className="text-xs opacity-90">✓</div>
-                      )}
-                    </div>
+                    {selectedCategory === category.name && (
+                      <div className="text-xs opacity-90 mt-1">✓ Seçildi</div>
+                    )}
                   </div>
                 </Button>
               ))}
@@ -286,9 +276,9 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
             {/* Ana Sayfa Buton Tarzında */}
             <Button 
               onClick={handleStartGame}
-              className="w-full h-20 rounded-2xl text-2xl font-black shadow-2xl text-white" 
+              className="w-full h-20 rounded-2xl text-2xl font-black shadow-2xl text-white hover:scale-105 transition-all duration-300" 
               style={{
-                background: 'linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%)'
+                background: 'linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%)'
               }}
               data-testid="start-game-button"
             >
