@@ -281,6 +281,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
   const [showConfetti, setShowConfetti] = useState(false);
   const [shakeInput, setShakeInput] = useState(false);
   const [sparkleText, setSparkleText] = useState(false);
+  const [forceKeyboardRender, setForceKeyboardRender] = useState(0);
   const [gameStats, setGameStats] = useState<GameStatsType>(() => ({
     totalGamesPlayed: 0,
     totalCorrectGuesses: 0,
@@ -575,6 +576,9 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     setSlowdownApplied(false);
     setGameSuccess(false);
     
+    // Force keyboard clear by updating key
+    setForceKeyboardRender(prev => prev + 1);
+    
     // Get new word (different from used ones)
     const categoryWords = wordLists[category];
     const wordPool = (categoryWords as any)?.[difficulty] || [];
@@ -623,6 +627,9 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
     setElapsedTime(0);
     setSlowdownApplied(false);
     setGameSuccess(false);
+    
+    // Force keyboard clear by updating key
+    setForceKeyboardRender(prev => prev + 1);
     setScore(0);
     
     // Get new word and reset timer
@@ -755,7 +762,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 
                 {/* Virtual Keyboard - Tablet Scale */}
                 <VirtualKeyboard
-                  key={`keyboard-${secretWord}-${gameOver}-${gameSuccess}-${guesses.length}`}
+                  key={`keyboard-${secretWord}-${gameOver}-${gameSuccess}-${guesses.length}-${forceKeyboardRender}`}
                   onKeyPress={handleKeyPress}
                   onBackspace={handleBackspace}
                   onSpace={handleSpace}
