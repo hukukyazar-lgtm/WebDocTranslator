@@ -441,7 +441,7 @@ export default function LuminaApp() {
           category={gameState.category}
           sequentialCount={gameState.sequentialCount}
           totalCorrect={gameState.totalCorrect}
-          bestSequential={playerProfile.bestSequentialStreak || gameState.bestSequential}
+          bestSequential={Math.max(stats?.bestSequentialStreak || 0, gameState.bestSequential)}
           onContinue={canContinue ? handleContinue : undefined}
           onPlayAgain={handlePlayAgain}
           onMainMenu={handleBackToMenu}
