@@ -75,8 +75,8 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
             key={i}
             className="absolute rounded-full bg-white/10"
             style={{
-              width: `${Math.random() * 16 + 12}px`,
-              height: `${Math.random() * 16 + 12}px`,
+              width: `${Math.random() * 8 + 6}px`,
+              height: `${Math.random() * 8 + 6}px`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animation: `float-gentle ${4 + Math.random() * 6}s ease-in-out infinite`,
@@ -86,22 +86,22 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
         ))}
       </div>
 
-      <div className="relative z-10 min-h-screen p-6">
+      <div className="relative z-10 min-h-screen p-3">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center justify-between mb-4">
           <Button 
             onClick={onBack}
-            variant="outline" className="p-3 rounded-full bg-white/20 border-white/30 text-white hover:bg-white/30">
-            <ChevronLeft className="w-6 h-6" />
+            variant="outline" className="p-2 rounded-full bg-white/20 border-white/30 text-white hover:bg-white/30">
+            <ChevronLeft className="w-3 h-3" />
           </Button>
           <div className="text-center">
-            <h1 className="text-3xl font-black text-white">Kategoriler</h1>
+            <h1 className="text-xl font-black text-white">Kategoriler</h1>
           </div>
-          <div className="w-12"></div>
+          <div className="w-6"></div>
         </div>
 
         {/* Categories grid - with embedded difficulty */}
-        <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto mb-6">
+        <div className="grid grid-cols-2 gap-2 max-w-sm mx-auto mb-3">
           {categories.map((category) => (
             <Card 
               key={category.id} 
@@ -129,15 +129,15 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
               onClick={() => handleCategorySelect(category.name)}
               data-testid={`category-${category.name}`}
             >
-              <div className="p-4 text-center relative">
-                <div className="text-3xl mb-2">{category.emoji}</div>
-                <div className="font-black text-sm mb-3">{category.name}</div>
+              <div className="p-2 text-center relative">
+                <div className="text-xl mb-1">{category.emoji}</div>
+                <div className="font-black text-xs mb-2">{category.name}</div>
                 
                 {/* Zorluk butonları - sağ üstten alta dikey */}
-                <div className="absolute top-2 right-2 flex flex-col gap-1">
+                <div className="absolute top-1 right-1 flex flex-col gap-0.5">
                   <button
                     onClick={(e) => handleDifficultySelect("kolay", category.name, e)}
-                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 shadow-lg hover:shadow-xl ring-2 ${
+                    className={`w-4 h-4 rounded-full text-xs transition-all duration-200 transform hover:scale-110 shadow-md hover:shadow-lg ring-1 ${
                       categoryDifficulties[category.name] === "kolay"
                         ? 'bg-green-200 ring-green-400 scale-110 active:scale-100'
                         : 'bg-white hover:bg-green-100 ring-green-300/50 hover:ring-green-400/80 active:scale-90'
@@ -149,7 +149,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   </button>
                   <button
                     onClick={(e) => handleDifficultySelect("orta", category.name, e)}
-                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 shadow-lg hover:shadow-xl ring-2 ${
+                    className={`w-4 h-4 rounded-full text-xs transition-all duration-200 transform hover:scale-110 shadow-md hover:shadow-lg ring-1 ${
                       categoryDifficulties[category.name] === "orta"
                         ? 'bg-yellow-200 ring-yellow-400 scale-110 active:scale-100'
                         : 'bg-white hover:bg-yellow-100 ring-yellow-300/50 hover:ring-yellow-400/80 active:scale-90'
@@ -161,7 +161,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   </button>
                   <button
                     onClick={(e) => handleDifficultySelect("zor", category.name, e)}
-                    className={`w-7 h-7 rounded-full text-sm transition-all duration-200 transform hover:scale-110 shadow-lg hover:shadow-xl ring-2 ${
+                    className={`w-4 h-4 rounded-full text-xs transition-all duration-200 transform hover:scale-110 shadow-md hover:shadow-lg ring-1 ${
                       categoryDifficulties[category.name] === "zor"
                         ? 'bg-red-200 ring-red-400 scale-110 active:scale-100'
                         : 'bg-white hover:bg-red-100 ring-red-300/50 hover:ring-red-400/80 active:scale-90'
@@ -181,15 +181,15 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
 
         {/* Oyna Butonu - sadece kategori ve zorluk seçildiğinde göster */}
         {selectedCategory && categoryDifficulties[selectedCategory] && (
-          <div className="max-w-md mx-auto mb-6">
-            <div className="text-center mb-4">
-              <h3 className="text-xl font-black text-white">{selectedCategory}</h3>
-              <p className="text-white/80 font-medium">Zorluk: {categoryDifficulties[selectedCategory] === 'kolay' ? 'Kolay' : categoryDifficulties[selectedCategory] === 'orta' ? 'Orta' : 'Zor'}</p>
+          <div className="max-w-xs mx-auto mb-3">
+            <div className="text-center mb-2">
+              <h3 className="text-lg font-black text-white">{selectedCategory}</h3>
+              <p className="text-white/80 font-medium text-sm">Zorluk: {categoryDifficulties[selectedCategory] === 'kolay' ? 'Kolay' : categoryDifficulties[selectedCategory] === 'orta' ? 'Orta' : 'Zor'}</p>
             </div>
             
             <button
               onClick={handleStartGame}
-              className="w-full rounded-2xl font-black text-white shadow-xl border-0 py-4 text-lg transition-all duration-300 transform active:scale-95 hover:scale-105 animate-pulse hover:animate-none"
+              className="w-full rounded-xl font-black text-white shadow-lg border-0 py-2 text-base transition-all duration-300 transform active:scale-95 hover:scale-105 animate-pulse hover:animate-none"
               style={{
                 background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
               }}
