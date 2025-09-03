@@ -616,15 +616,18 @@ export const GameScreen = memo(({ settings, onGameOver, onCategoryComplete, isGu
               onCategoryComplete(nextCategory, difficulty);
             } else {
               // Fallback: Kelime listesini temizle ve yeni kategoriye geç
+              console.log('🚀 ESKİ SİSTEM - Yeni kategoriye geçiş:', nextCategory);
               setUsedWords([]); // Kelime listesini sıfırla
               
               // Yeni kategorinin ilk kelimesini seç
               const newCategoryWord = getWordByDifficulty(nextCategory, difficulty, []);
+              console.log('🔤 Yeni kategorinin ilk kelimesi:', newCategoryWord);
               setSecretWord(newCategoryWord);
               setUsedWords([newCategoryWord]);
               
-              // Oyun state'ini güncelle
-              settings.category = nextCategory;
+              // Oyun state'ini güncelle - BURADA SORUN VAR!
+              console.log('⚠️ Kategori state güncelleniyor:', category, '→', nextCategory);
+              setCategory(nextCategory); // settings.category yerine setCategory kullan
               
               // Oyunu yeniden başlat
               setGuess('');
