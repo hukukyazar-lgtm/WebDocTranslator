@@ -238,7 +238,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                       {!isUnlocked && (
                         <div className="absolute top-2 right-2 text-xl">🔒</div>
                       )}
-                      <div className="text-2xl mr-3">{isUnlocked ? difficulty.emoji : '🔒'}</div>
+                      <div className="text-2xl mr-3">{difficulty.emoji}</div>
                       <div>
                         <div className="text-lg font-black">{difficulty.name}</div>
                       </div>
