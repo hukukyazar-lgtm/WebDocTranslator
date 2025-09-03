@@ -228,12 +228,10 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                       onClick={() => isUnlocked ? handleDifficultySelect(difficulty.id) : null}
                       disabled={!isUnlocked}
                       className={`w-full h-16 rounded-2xl font-bold text-white shadow-xl relative ${
-                        !isUnlocked ? 'opacity-50 cursor-not-allowed' : ''
+                        !isUnlocked ? 'opacity-60 cursor-not-allowed' : ''
                       }`}
                       style={{
-                        background: isUnlocked 
-                          ? `linear-gradient(135deg, ${difficulty.color})`
-                          : 'linear-gradient(135deg, #6b7280 0%, #4b5563 100%)'
+                        background: `linear-gradient(135deg, ${difficulty.color})`
                       }}
                       data-testid={`difficulty-${difficulty.id}`}
                     >
