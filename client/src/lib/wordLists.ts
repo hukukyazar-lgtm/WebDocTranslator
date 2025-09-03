@@ -61,8 +61,17 @@ export const wordLists: WordLists = {
   }
 };
 
-export function getWordByDifficulty(category: string, difficulty: number): string[] {
+export function getWordByDifficulty(category: string, difficulty: number, usedWords: string[] = []): string {
   const categoryWords = wordLists[category];
-  if (!categoryWords) return [];
-  return categoryWords[difficulty as keyof WordList] || [];
+  if (!categoryWords) return '';
+  
+  const words = categoryWords[difficulty as keyof WordList] || [];
+  const availableWords = words.filter(word => !usedWords.includes(word));
+  
+  if (availableWords.length === 0) {
+    // If no unused words, return a random word from the category
+    return words[Math.floor(Math.random() * words.length)] || '';
+  }
+  
+  return availableWords[Math.floor(Math.random() * availableWords.length)] || '';
 }
