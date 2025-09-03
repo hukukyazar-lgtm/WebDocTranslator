@@ -740,6 +740,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 
                 {/* Virtual Keyboard - Tablet Scale */}
                 <VirtualKeyboard
+                  key={`keyboard-${secretWord}-${gameOver}-${gameSuccess}-${guesses.length}`}
                   onKeyPress={handleKeyPress}
                   onBackspace={handleBackspace}
                   onSpace={handleSpace}
