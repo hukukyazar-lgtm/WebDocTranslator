@@ -134,7 +134,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
       name: 'KOLAY', 
       emoji: '😊', 
       description: 'Başlangıç',
-      color: 'from-green-400 to-green-600',
+      color: '#22c55e 0%, #16a34a 100%',
       bgColor: 'bg-gradient-to-br from-green-100 to-green-200',
       textColor: 'text-green-900',
       borderColor: 'border-green-500'
@@ -144,7 +144,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
       name: 'ORTA', 
       emoji: '😐', 
       description: 'Deneyimli',
-      color: 'from-yellow-400 to-yellow-600',
+      color: '#f59e0b 0%, #d97706 100%',
       bgColor: 'bg-gradient-to-br from-yellow-100 to-yellow-200',
       textColor: 'text-yellow-900',
       borderColor: 'border-yellow-500'
@@ -154,7 +154,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
       name: 'ZOR', 
       emoji: '😤', 
       description: 'Uzman',
-      color: 'from-red-400 to-red-600',
+      color: '#dc2626 0%, #b91c1c 100%',
       bgColor: 'bg-gradient-to-br from-red-100 to-red-200',
       textColor: 'text-red-900',
       borderColor: 'border-red-500'
