@@ -227,9 +227,6 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
               <h1 className="text-3xl font-black text-white mb-2 tracking-wide">
                 {difficulties.find(d => d.id === selectedDifficulty)?.name} KATEGORİLER
               </h1>
-              <p className="text-lg text-white/80 font-semibold">
-                {difficulties.find(d => d.id === selectedDifficulty)?.description} seviyede hangi kategoride yarışacaksın?
-              </p>
             </div>
 
             {/* Kategori grid - Ana sayfa tarzı 2x5 */}
