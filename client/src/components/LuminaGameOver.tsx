@@ -157,27 +157,6 @@ export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak
                 })}
               </div>
 
-              {/* Game details with colorful badges */}
-              <div className="space-y-4 mb-8">
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600 font-semibold">Kategori</span>
-                  <Badge 
-                    className="rounded-full px-4 py-2 text-white font-bold shadow-lg border-0"
-                    style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}
-                  >
-                    🐾 {gameResult.category}
-                  </Badge>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-600 font-semibold">Zorluk</span>
-                  <Badge 
-                    className="rounded-full px-4 py-2 text-white font-bold shadow-lg border-0"
-                    style={{ background: 'linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%)', color: '#8B4513' }}
-                  >
-                    ⚡ {gameResult.difficulty}
-                  </Badge>
-                </div>
-              </div>
 
               {/* CodyCross-style action buttons */}
               <div className="space-y-4">
