@@ -10,9 +10,9 @@ export interface WordLists {
 
 export const wordLists: WordLists = {
   Hayvanlar: {
-    1: [], // Kolay - 3-4 harf  
-    2: [], // Orta - 4-5 harf
-    3: []  // Zor - 5+ harf
+    1: ["KEDİ", "KÖPEK", "AT", "KUŞ", "BALIK", "İNEK", "KOYUN", "TAVUK", "FARE", "ARI", "HOROZ", "ÖRDEK", "KEÇİ", "EŞEK", "DOMUZ", "TAVŞAN", "SİNCAP", "KELEBEK", "KARINCA", "SİNEK", "KURBAĞA", "ÖRÜMCEK", "CİVCİV", "HİNDİ", "KAZ"], // Kolay - 3-4 harf  
+    2: ["ASLAN", "KAPLAN", "FİL", "AYI", "KURT", "YILAN", "MAYMUN", "KARTAL", "ZEBRA", "TİLKİ", "GEYİK", "CEYLAN", "FOK", "YUNUS", "BALİNA", "KİRPİ", "DEVE", "BAYKUŞ", "PAPAĞAN", "YARASA", "ÇITA", "GORİL", "PANTER", "KUNDUZ", "KÖSTEBEK"], // Orta - 4-5 harf
+    3: ["ZÜRAFA", "TİMSAH", "KANGURU", "GERGEDAN", "PENGUEN", "BUKELEMUN", "LEOPAR", "SU AYGIRI", "AKBABA", "ORANGUTAN", "İGUANA", "KOALA", "PANDA", "FLAMİNGO", "PELİKAN", "VAŞAK", "ANTİLOP", "HIPOPOTAM", "TAPİR", "OKAPİ", "VATOZ", "MÜREKKEP BALIĞI", "KOMODO EJDERİ", "KARINCANCI", "DENİZATI"]  // Zor - 5+ harf
   },
   Yiyecek: {
     1: [], // Kolay - 3-4 harf
