@@ -132,7 +132,7 @@ export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak
               {/* Colorful stats row */}
               <div className="grid grid-cols-4 gap-3 mb-8">
                 {[
-                  { icon: Trophy, value: gameResult.streak, label: "Toplam Puan", color: "#FF6B6B", bgColor: "#FFE5E5" },
+                  { icon: Trophy, value: gameResult.score, label: "Toplam Puan", color: "#FF6B6B", bgColor: "#FFE5E5" },
                   { icon: Zap, value: gameResult.streak, label: "Seri", color: "#4ECDC4", bgColor: "#E5F9F7" },
                   { icon: Clock, value: `${gameResult.timeRemaining}s`, label: "Süre", color: "#45B7D1", bgColor: "#E5F4FD" },
                   { icon: Star, value: gameResult.attempts, label: "Deneme", color: "#FFA726", bgColor: "#FFF3E0" }
