@@ -67,11 +67,15 @@ export const VirtualKeyboard = memo(({
     // Focus'u temizle ki tuş highlight kalmasın
     if (event?.currentTarget) {
       event.currentTarget.blur();
+      // Force remove any CSS states
+      event.currentTarget.style.backgroundColor = '';
+      event.currentTarget.style.transform = '';
+      event.currentTarget.style.boxShadow = '';
     }
   }, [onKeyPress]);
 
   const getKeyStyle = useCallback((key: string) => {
-    const baseClasses = "keyboard-key px-1 sm:px-2 md:px-3 lg:px-4 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 focus:outline-none backdrop-blur-lg border min-w-[28px] sm:min-w-[36px] md:min-w-[44px] lg:min-w-[52px] touch-manipulation";
+    const baseClasses = "keyboard-key px-1 sm:px-2 md:px-3 lg:px-4 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-200 transform hover:scale-105 focus:outline-none focus:ring-0 focus:shadow-none focus-visible:outline-none backdrop-blur-lg border min-w-[28px] sm:min-w-[36px] md:min-w-[44px] lg:min-w-[52px] touch-manipulation";
     
     const upperKey = key.toUpperCase();
     
@@ -90,8 +94,8 @@ export const VirtualKeyboard = memo(({
       return `${baseClasses} bg-red-500/40 text-white/60 border-red-400 shadow-lg animate-shake-red active:scale-90`;
     }
     
-    // Default state
-    return `${baseClasses} bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 border-white/30 shadow-lg active:scale-95`;
+    // Default state - force reset all states
+    return `${baseClasses} !bg-white/10 !text-white/90 hover:!bg-white/20 hover:!text-white hover:!border-white/50 !border-white/30 !shadow-lg active:!scale-95`;
   }, [correctKeys, presentKeys, absentKeys]);
 
   return (
