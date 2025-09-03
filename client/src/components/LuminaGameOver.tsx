@@ -15,6 +15,7 @@ interface LuminaGameOverProps {
   category: string;
   sequentialCount?: number;
   totalCorrect?: number;
+  bestStreak?: number;
   onContinue?: () => void;
   onPlayAgain: () => void;
   onMainMenu: () => void;
@@ -22,7 +23,7 @@ interface LuminaGameOverProps {
   totalWords?: number;
 }
 
-export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak, category, sequentialCount = 0, totalCorrect = 0, onContinue, onPlayAgain, onMainMenu, completedWords = 0, totalWords = 50 }: LuminaGameOverProps) => {
+export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak, category, sequentialCount = 0, totalCorrect = 0, bestStreak = 0, onContinue, onPlayAgain, onMainMenu, completedWords = 0, totalWords = 50 }: LuminaGameOverProps) => {
   const gameResult = {
     isWin: gameSuccess,
     score: score,
@@ -135,7 +136,7 @@ export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak
               <div className="grid grid-cols-2 gap-3 mb-6">
                 {[
                   { icon: Trophy, value: gameResult.score, label: "Toplam Puan", color: "#FF6B6B", bgColor: "#FFE5E5" },
-                  { icon: Zap, value: gameResult.streak, label: "Seri", color: "#4ECDC4", bgColor: "#E5F9F7" }
+                  { icon: Zap, value: bestStreak, label: "En Yüksek Seri", color: "#4ECDC4", bgColor: "#E5F9F7" }
                 ].map((stat, index) => {
                   const IconComponent = stat.icon;
                   return (

@@ -31,6 +31,7 @@ interface GameState {
   nextExpectedLetterIndex: number;
   sequentialCount: number;
   totalCorrect: number;
+  bestStreak: number;
 }
 
 const initialGameState: GameState = {
@@ -51,7 +52,8 @@ const initialGameState: GameState = {
   isSequentialGuess: true,
   nextExpectedLetterIndex: 0,
   sequentialCount: 0,
-  totalCorrect: 0
+  totalCorrect: 0,
+  bestStreak: 0
 };
 
 export default function LuminaApp() {
@@ -236,7 +238,8 @@ export default function LuminaApp() {
           isSequentialGuess: true,
           nextExpectedLetterIndex: 0,
           sequentialCount: prev.sequentialCount + (prev.isSequentialGuess ? 1 : 0),
-          totalCorrect: prev.totalCorrect + 1
+          totalCorrect: prev.totalCorrect + 1,
+          bestStreak: Math.max(prev.bestStreak, newStreak)
         }));
         return; // Don't go to game over screen
       } else {
@@ -436,6 +439,7 @@ export default function LuminaApp() {
           category={gameState.category}
           sequentialCount={gameState.sequentialCount}
           totalCorrect={gameState.totalCorrect}
+          bestStreak={gameState.bestStreak}
           onContinue={canContinue ? handleContinue : undefined}
           onPlayAgain={handlePlayAgain}
           onMainMenu={handleBackToMenu}
