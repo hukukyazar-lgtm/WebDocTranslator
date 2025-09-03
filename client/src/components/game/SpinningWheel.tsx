@@ -37,7 +37,6 @@ export const SpinningWheel = memo(({ word, isSpinning, spinDuration, difficulty,
       {/* Simple gradient wheel */}
       <div className={`absolute inset-0 ${isSpinning ? 'animate-spin' : ''}`} 
            style={{ 
-             filter: isSpinning ? `blur(${timeLeft <= 5 ? 0.5 : timeLeft <= 10 ? 1 : 2}px)` : 'none',
              animationDuration: isSpinning ? '3s' : '0s'
            }}>
         {letters.map((letter, index) => {
