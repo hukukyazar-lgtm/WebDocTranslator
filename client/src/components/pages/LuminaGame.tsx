@@ -2,7 +2,7 @@ import { memo, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { ChevronLeft, Heart, Zap, Timer, HelpCircle, RotateCcw, Delete, Star } from 'lucide-react';
+import { ChevronLeft, Heart, Zap, Timer, RotateCcw, Delete, Star } from 'lucide-react';
 import { useGameStats } from '@/hooks/useGameStats';
 import { useAuth } from '@/hooks/useAuth';
 import { SpinningWheel } from '../game/SpinningWheel';
@@ -242,16 +242,6 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
           ))}
         </div>
 
-        {/* Action buttons - Better positioned */}
-        <div className="flex justify-center mt-4">
-          <Button 
-            onClick={() => console.log('İpucu kullanıldı')}
-            className="px-8 h-14 rounded-2xl font-bold bg-white/20 border border-white/30 text-white hover:bg-white/30 shadow-lg text-base"
-          >
-            <HelpCircle className="w-5 h-5 mr-2" />
-            İpucu
-          </Button>
-        </div>
 
       </div>
 
