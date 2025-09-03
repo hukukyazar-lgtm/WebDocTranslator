@@ -724,43 +724,49 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                   />
                 </div>
                 
-                {/* Dikey Süre Çubuğu - Çarkın sağ tarafında */}
+                {/* Dikey İlerleme Çubuğu - Çarkın sağ tarafında */}
                 <div className="absolute top-4 -right-8 sm:-right-12 md:-right-16 lg:-right-20">
                   <div className="flex flex-col items-center space-y-1">
-                    {/* Süre sayısı */}
+                    {/* Bilinen kelime sayısı */}
                     <div className={`text-sm sm:text-base md:text-lg font-bold backdrop-blur-lg rounded px-2 py-1 ${
-                      timeLeft <= 10 
-                        ? 'text-red-400 bg-red-500/20 animate-pulse' 
-                        : timeLeft <= 20 
-                          ? 'text-yellow-400 bg-yellow-500/20' 
-                          : 'text-green-400 bg-green-500/20'
+                      correctGuesses >= 20 
+                        ? 'text-yellow-400 bg-yellow-500/20 animate-pulse' 
+                        : correctGuesses >= 15 
+                          ? 'text-blue-400 bg-blue-500/20' 
+                          : correctGuesses >= 10 
+                            ? 'text-green-400 bg-green-500/20'
+                            : 'text-purple-400 bg-purple-500/20'
                     }`}>
-                      {timeLeft}
+                      {correctGuesses}
                     </div>
                     
                     {/* Dikey çubuk */}
                     <div className="w-2 sm:w-3 md:w-4 h-32 sm:h-40 md:h-48 lg:h-56 bg-white/10 rounded-full border border-white/20 overflow-hidden backdrop-blur-lg">
                       <div 
-                        className="w-full rounded-full transition-all duration-1000 ease-out origin-bottom"
+                        className="w-full rounded-full transition-all duration-500 ease-out origin-bottom"
                         style={{
-                          height: `${(timeLeft / 30) * 100}%`,
-                          background: timeLeft <= 10 
-                            ? 'linear-gradient(to top, #ef4444, #f97316)' // Kırmızı-turuncu
-                            : timeLeft <= 20 
-                              ? 'linear-gradient(to top, #f59e0b, #eab308)' // Sarı gradient
-                              : 'linear-gradient(to top, #10b981, #3b82f6)', // Yeşil-mavi
-                          boxShadow: timeLeft <= 10 
-                            ? '0 0 10px rgba(239, 68, 68, 0.5)' // Kırmızı glow
-                            : timeLeft <= 20 
-                              ? '0 0 8px rgba(245, 158, 11, 0.4)' // Sarı glow
-                              : '0 0 6px rgba(16, 185, 129, 0.3)' // Yeşil glow
+                          height: `${(correctGuesses / 25) * 100}%`,
+                          background: correctGuesses >= 20 
+                            ? 'linear-gradient(to top, #f59e0b, #fbbf24)' // Altın sarısı (yakın tamamlanma)
+                            : correctGuesses >= 15 
+                              ? 'linear-gradient(to top, #3b82f6, #60a5fa)' // Mavi (iyi ilerleme)
+                              : correctGuesses >= 10 
+                                ? 'linear-gradient(to top, #10b981, #34d399)' // Yeşil (orta ilerleme)
+                                : 'linear-gradient(to top, #8b5cf6, #a78bfa)', // Mor (başlangıç)
+                          boxShadow: correctGuesses >= 20 
+                            ? '0 0 12px rgba(245, 158, 11, 0.6)' // Altın glow
+                            : correctGuesses >= 15 
+                              ? '0 0 10px rgba(59, 130, 246, 0.5)' // Mavi glow
+                              : correctGuesses >= 10 
+                                ? '0 0 8px rgba(16, 185, 129, 0.4)' // Yeşil glow
+                                : '0 0 6px rgba(139, 92, 246, 0.3)' // Mor glow
                         }}
                       />
                     </div>
                     
                     {/* Alt etiket */}
                     <div className="text-xs text-white/60 backdrop-blur-lg rounded px-1">
-                      süre
+                      /25
                     </div>
                   </div>
                 </div>
