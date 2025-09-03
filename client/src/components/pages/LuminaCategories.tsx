@@ -212,26 +212,26 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
         {selectedDifficulty && (
           <div className="w-full max-w-md mx-auto space-y-4">
             {/* LUMINA Logo - Zorluk sayfasındaki gibi */}
-            <div className="text-center mb-8">
-              <div className="w-20 h-20 mx-auto mb-4 relative">
+            <div className="text-center mb-6">
+              <div className="w-16 h-16 mx-auto mb-3 relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-300 via-purple-300 to-pink-300 rounded-full animate-pulse opacity-80"></div>
                 <div className="absolute inset-2 bg-white rounded-full shadow-lg"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-3xl font-black text-purple-600">L</div>
+                  <div className="text-2xl font-black text-purple-600">L</div>
                 </div>
               </div>
-              <h1 className="text-4xl font-black text-white mb-3 tracking-wide">KATEGORİLER</h1>
+              <h1 className="text-3xl font-black text-white mb-2 tracking-wide">KATEGORİLER</h1>
             </div>
 
             {/* Kategori grid - Ana sayfa tarzı 2x5 */}
-            <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
+            <div className="grid grid-cols-2 gap-3 max-w-md mx-auto">
               {categories.map((category, index) => (
-                <Card key={category.id} className="p-3 bg-white/95 rounded-2xl shadow-xl border-0 h-32">
+                <Card key={category.id} className="p-2 bg-white/95 rounded-xl shadow-lg border-0 h-26">
                   <Button 
                     onClick={() => handleCategorySelect(category.name)}
-                    className={`w-full h-full rounded-xl font-bold text-white border-0 shadow-lg transition-all duration-300 ${
+                    className={`w-full h-full rounded-lg font-bold text-white border-0 shadow-md transition-all duration-300 ${
                       selectedCategory === category.name 
-                        ? 'scale-105 shadow-2xl ring-2 ring-blue-400' 
+                        ? 'scale-105 shadow-xl ring-2 ring-blue-400' 
                         : 'hover:scale-[1.02]'
                     }`}
                     style={{
@@ -241,8 +241,8 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                     }}
                     data-testid={`category-${category.name}`}
                   >
-                    <div className="flex flex-col items-center justify-center h-full p-2">
-                      <div className="text-2xl mb-1">{category.emoji}</div>
+                    <div className="flex flex-col items-center justify-center h-full p-1">
+                      <div className="text-lg mb-1">{category.emoji}</div>
                       <div className="text-xs font-black text-center leading-tight mb-1">{category.name}</div>
                       <div className="text-xs opacity-90">
                         %{Math.round((category.completed / category.total) * 100)}
@@ -264,24 +264,24 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
         {selectedDifficulty && selectedCategory && (
           <div className="w-full max-w-md mx-auto space-y-4">
             {/* Seçim özeti - Ana sayfa tarzında basit */}
-            <div className="text-center mb-4">
-              <h3 className="text-2xl font-black text-white mb-1">HAZIR MISIN?</h3>
-              <p className="text-white/80 font-semibold text-sm">
+            <div className="text-center mb-3">
+              <h3 className="text-xl font-black text-white mb-1">HAZIR MISIN?</h3>
+              <p className="text-white/80 font-semibold text-xs">
                 {selectedCategory} • {difficulties.find(d => d.id === selectedDifficulty)?.name}
               </p>
             </div>
             
             {/* Ana Sayfa Buton Tarzında */}
-            <Card className="p-6 bg-white rounded-3xl shadow-2xl border-0">
+            <Card className="p-4 bg-white rounded-2xl shadow-xl border-0">
               <Button 
                 onClick={handleStartGame}
-                className="w-full h-20 rounded-2xl text-2xl font-black shadow-xl text-white" 
+                className="w-full h-16 rounded-xl text-xl font-black shadow-lg text-white" 
                 style={{
                   background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)'
                 }}
                 data-testid="start-game-button"
               >
-                <div className="text-3xl mr-4">🎮</div>
+                <div className="text-2xl mr-3">🎮</div>
                 OYUNA BAŞLA
               </Button>
             </Card>
