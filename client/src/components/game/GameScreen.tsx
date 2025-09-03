@@ -4,7 +4,7 @@ import { SpinningWheel } from './SpinningWheel';
 import { LuminaGrid } from './LuminaGrid';
 import { VirtualKeyboard } from './VirtualKeyboard';
 import { AchievementNotification } from './AchievementNotification';
-import { audioManager, initializeAudio } from '@/lib/audioManager';
+import { simpleAudio } from '@/lib/simpleAudio';
 import { getWordByDifficulty, wordLists } from '@/lib/wordLists';
 import { 
   TOTAL_GAME_TIME, 
@@ -415,7 +415,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setSpinDuration(prevDuration => prevDuration + 1.5);
       setSlowdownApplied(true);
       // Play warning sound when time is low
-      audioManager.playWarning();
+      simpleAudio.playWarning();
     }
 
     if (timeLeft <= 0 && !gameOver) {
@@ -483,7 +483,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setTimeout(() => setShowConfetti(false), 3000);
       
       // Play success sound
-      audioManager.playSuccess();
+      simpleAudio.playSuccess();
       
       // Timer'ı durdur
       if (timerRef.current) {
@@ -526,7 +526,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setGameOver(true);
     } else if (newGuesses.length >= maxGuesses) {
       // Maksimum tahmin sayısına ulaşıldı - oyunu bitir
-      audioManager.playTimeUp();
+      simpleAudio.playError();
       endGame(`${t.gameOver} Doğru kelime: ${secretWord}`, false);
     } else {
       // Yanlış tahmin ama devam ediliyor
@@ -536,7 +536,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setTimeout(() => setMessage(''), 2000);
       
       // Play error sound
-      audioManager.playError();
+      simpleAudio.playError();
     }
   }, [gameOver, guess, secretWord, elapsedTime, endGame, guesses, maxGuesses, t, gameStats, category, difficulty, usedWords, timerRef]);
 
@@ -595,7 +595,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
       setSecretWord(newWord);
       setUsedWords(prev => [...prev, newWord]);
       // Play word complete sound for new word
-      audioManager.playWordComplete();
+      simpleAudio.playSuccess();
     }
     
     const baseSpeed = getSpinDuration(difficulty, TOTAL_GAME_TIME);

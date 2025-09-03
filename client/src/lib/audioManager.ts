@@ -115,15 +115,27 @@ class AudioManager {
     if (!this.audioContext) return;
 
     try {
-      // Kullanıcı etkileşimi sonrası audio context'i resume et
+      // Sessizce context'i başlat
       if (this.audioContext.state === 'suspended') {
         await this.audioContext.resume();
+        console.log('Audio context resumed');
       }
+
+      // Test sesi çal - eğer çalışırsa başarılı
+      const testOsc = this.audioContext.createOscillator();
+      const testGain = this.audioContext.createGain();
+      
+      testOsc.connect(testGain);
+      testGain.connect(this.audioContext.destination);
+      testGain.gain.setValueAtTime(0.001, this.audioContext.currentTime); // Çok düşük ses
+      testOsc.frequency.setValueAtTime(440, this.audioContext.currentTime);
+      testOsc.start();
+      testOsc.stop(this.audioContext.currentTime + 0.01); // 10ms test
 
       // Ses efektlerini oluştur
       await this.createGameSounds();
       this.isInitialized = true;
-      console.log('Audio system initialized successfully');
+      console.log('🎵 Audio system initialized and ready!');
     } catch (error) {
       console.warn('Audio initialization failed:', error);
     }
@@ -210,7 +222,9 @@ class AudioManager {
 
   // Sesli geri bildirim
   async playKeyPress() {
-    await this.playSound('keyPress', 0.3);
+    if (this.isInitialized) {
+      await this.playSound('keyPress', 0.3);
+    }
   }
 
   async playSuccess() {

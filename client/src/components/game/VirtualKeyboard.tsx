@@ -1,6 +1,6 @@
 import { memo, useCallback } from 'react';
 import { turkishKeyboardLayout } from '@/lib/gameUtils';
-import { audioManager } from '@/lib/audioManager';
+import { simpleAudio } from '@/lib/simpleAudio';
 import type { Language } from './LanguageScreen';
 
 // Keyboard translations
@@ -63,14 +63,9 @@ export const VirtualKeyboard = memo(({
 }: VirtualKeyboardProps) => {
   const t = keyboardTranslations[language];
   
-  const handleKeyPress = useCallback(async (key: string, event?: React.MouseEvent<HTMLButtonElement>) => {
-    // İlk tıklamada sesi başlat
-    try {
-      await audioManager.initialize();
-      audioManager.playKeyPress();
-    } catch (error) {
-      console.warn('Audio play failed:', error);
-    }
+  const handleKeyPress = useCallback((key: string, event?: React.MouseEvent<HTMLButtonElement>) => {
+    // Basit tıklama sesi
+    simpleAudio.playClick();
     
     onKeyPress(key);
     // Focus'u temizle ki tuş highlight kalmasın
@@ -150,13 +145,8 @@ export const VirtualKeyboard = memo(({
               </button>
             ))}
             <button
-              onClick={async (e) => { 
-                try {
-                  await audioManager.initialize();
-                  audioManager.playKeyPress();
-                } catch (error) {
-                  console.warn('Audio play failed:', error);
-                }
+              onClick={(e) => { 
+                simpleAudio.playClick();
                 onBackspace(); 
                 e.currentTarget.blur(); 
               }}
@@ -171,13 +161,8 @@ export const VirtualKeyboard = memo(({
           {/* Fourth Row - Space and Submit */}
           <div className="flex justify-center gap-1 sm:gap-2">
             <button
-              onClick={async (e) => { 
-                try {
-                  await audioManager.initialize();
-                  audioManager.playKeyPress();
-                } catch (error) {
-                  console.warn('Audio play failed:', error);
-                }
+              onClick={(e) => { 
+                simpleAudio.playClick();
                 onSpace(); 
                 e.currentTarget.blur(); 
               }}
@@ -188,13 +173,8 @@ export const VirtualKeyboard = memo(({
               <span className="hidden sm:inline">⌨️ {t.space}</span>
             </button>
             <button
-              onClick={async (e) => { 
-                try {
-                  await audioManager.initialize();
-                  audioManager.playKeyPress();
-                } catch (error) {
-                  console.warn('Audio play failed:', error);
-                }
+              onClick={(e) => { 
+                simpleAudio.playClick();
                 onSubmit(); 
                 e.currentTarget.blur(); 
               }}
