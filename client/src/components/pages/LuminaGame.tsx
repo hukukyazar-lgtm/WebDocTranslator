@@ -158,7 +158,7 @@ export const LuminaGame = memo(({ gameState, onKeyPress, onGameOver, onBack, tur
             }`}>
               <Star className="w-4 h-4 text-white fill-white" />
               <div className="text-sm font-black text-white">
-                {isAuthenticated && stats ? (stats.totalScore + (score || 0)).toLocaleString() : (score || 0).toLocaleString()}
+                {(score || 0).toLocaleString()}
               </div>
               {isSequentialGuess && (
                 <div className="text-xs text-white/90 font-bold">2x</div>
