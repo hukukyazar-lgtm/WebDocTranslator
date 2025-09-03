@@ -725,9 +725,21 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 </div>
               </div>
               
-              {/* İlerleme Çubuğu - Çarkın hemen altında */}
+              
+              {/* Orta: Tek satır LUMINA Grid */}
+              <div className="flex-shrink-0">
+                <LuminaGrid
+                  word={secretWord}
+                  guesses={guesses}
+                  currentGuess={guess}
+                  maxGuesses={maxGuesses}
+                  isGameOver={gameOver}
+                />
+              </div>
+              
+              {/* İlerleme Çubuğu - Grid ile Klavye arasında */}
               <div className="flex justify-center">
-                <div className="flex items-center space-x-3 backdrop-blur-lg bg-white/10 rounded-lg px-4 py-2 border border-white/20">
+                <div className="flex items-center space-x-3 backdrop-blur-lg bg-white/10 rounded-lg px-4 py-2 border border-white/20 shadow-lg">
                   {/* Bilinen kelime sayısı */}
                   <div className={`text-lg font-bold ${
                     correctGuesses >= 20 
@@ -742,7 +754,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                   </div>
                   
                   {/* Yatay çubuk */}
-                  <div className="w-32 sm:w-40 md:w-48 h-3 bg-white/20 rounded-full border border-white/30 overflow-hidden">
+                  <div className="w-32 sm:w-40 md:w-48 h-4 bg-white/20 rounded-full border border-white/30 overflow-hidden">
                     <div 
                       className="h-full rounded-full transition-all duration-500 ease-out"
                       style={{
@@ -766,21 +778,10 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                   </div>
                   
                   {/* Hedef */}
-                  <div className="text-sm text-white/60 font-medium">
+                  <div className="text-lg text-white/80 font-bold">
                     /25
                   </div>
                 </div>
-              </div>
-              
-              {/* Orta: Tek satır LUMINA Grid */}
-              <div className="flex-shrink-0">
-                <LuminaGrid
-                  word={secretWord}
-                  guesses={guesses}
-                  currentGuess={guess}
-                  maxGuesses={maxGuesses}
-                  isGameOver={gameOver}
-                />
               </div>
               
               {/* Alt: Timer + Input + Keyboard - Tablet Uyumlu */}
