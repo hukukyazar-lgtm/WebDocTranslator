@@ -726,8 +726,8 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
               </div>
               
               
-              {/* Orta: Tek satır LUMINA Grid */}
-              <div className="flex-shrink-0">
+              {/* Orta: Tek satır LUMINA Grid - Mobil Responsive */}
+              <div className="flex-shrink-0 transform scale-75 sm:scale-90 md:scale-100">
                 <LuminaGrid
                   word={secretWord}
                   guesses={guesses}
@@ -737,16 +737,16 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 />
               </div>
               
-              {/* Alt: Timer + Input + Keyboard - Tablet Uyumlu */}
-              <div className="flex-shrink-0 w-full max-w-sm md:max-w-md lg:max-w-lg space-y-2 md:space-y-3">
-                {/* Timer - Kompakt */}
-                <div className="flex justify-center mb-2">
-                  <div className={`backdrop-blur-lg rounded-lg px-2 py-1 bg-white/10 flex items-center gap-2 shadow-lg text-sm ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
-                    <div className="text-base animate-pulse">⏱️</div>
-                    <div className="text-base font-black text-white" data-testid="text-time-left">
+              {/* Alt: Timer + Input + Keyboard - Mobil Uyumlu */}
+              <div className="flex-shrink-0 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg space-y-1 sm:space-y-2 md:space-y-3 px-2 sm:px-0">
+                {/* Timer - Mobil Kompakt */}
+                <div className="flex justify-center">
+                  <div className={`backdrop-blur-lg rounded-md sm:rounded-lg px-2 py-1 bg-white/10 flex items-center gap-1 sm:gap-2 shadow-lg text-xs sm:text-sm ${timeLeft <= 10 ? 'animate-heartbeat' : ''}`}>
+                    <div className="text-sm sm:text-base animate-pulse">⏱️</div>
+                    <div className="text-sm sm:text-base font-black text-white whitespace-nowrap" data-testid="text-time-left">
                       {timeLeft <= 0 ? 'Süre bitti' : formatTime(timeLeft)}
                     </div>
-                    <div className="w-8 h-1 backdrop-blur-lg rounded-full bg-white/10 overflow-hidden">
+                    <div className="w-6 sm:w-8 h-1 backdrop-blur-lg rounded-full bg-white/10 overflow-hidden">
                       <div 
                         className="progress-bar h-full rounded-full transition-all duration-1000 shadow-lg" 
                         style={{ 
