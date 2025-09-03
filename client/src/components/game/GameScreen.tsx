@@ -710,9 +710,9 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
         <main className="flex-1 flex flex-col px-2 sm:px-3 md:px-6 lg:px-8 py-2 sm:py-3 md:py-4 pt-16 overflow-y-auto">
           <div className="w-full flex flex-col space-y-2 sm:space-y-3 md:space-y-4 lg:space-y-6 min-h-full">
             {/* Dikey Layout: Çark → Grid → Tahmin Kutusu */}
-            <div className="flex flex-col items-center justify-start gap-2 sm:gap-4 md:gap-6 lg:gap-8">
+            <div className="flex flex-col items-center justify-start gap-2 sm:gap-4 md:gap-6 lg:gap-8 relative">
               {/* Üst: Spinning Wheel - Daha küçük */}
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 relative">
                 <div className="transform scale-35 sm:scale-45 md:scale-60 lg:scale-75">
                   <SpinningWheel 
                     word={secretWord} 
@@ -722,6 +722,47 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                     category={category}
                     timeLeft={timeLeft}
                   />
+                </div>
+                
+                {/* Dikey Süre Çubuğu - Çarkın sağ tarafında */}
+                <div className="absolute top-4 -right-8 sm:-right-12 md:-right-16 lg:-right-20">
+                  <div className="flex flex-col items-center space-y-1">
+                    {/* Süre sayısı */}
+                    <div className={`text-sm sm:text-base md:text-lg font-bold backdrop-blur-lg rounded px-2 py-1 ${
+                      timeLeft <= 10 
+                        ? 'text-red-400 bg-red-500/20 animate-pulse' 
+                        : timeLeft <= 20 
+                          ? 'text-yellow-400 bg-yellow-500/20' 
+                          : 'text-green-400 bg-green-500/20'
+                    }`}>
+                      {timeLeft}
+                    </div>
+                    
+                    {/* Dikey çubuk */}
+                    <div className="w-2 sm:w-3 md:w-4 h-32 sm:h-40 md:h-48 lg:h-56 bg-white/10 rounded-full border border-white/20 overflow-hidden backdrop-blur-lg">
+                      <div 
+                        className="w-full rounded-full transition-all duration-1000 ease-out origin-bottom"
+                        style={{
+                          height: `${(timeLeft / 30) * 100}%`,
+                          background: timeLeft <= 10 
+                            ? 'linear-gradient(to top, #ef4444, #f97316)' // Kırmızı-turuncu
+                            : timeLeft <= 20 
+                              ? 'linear-gradient(to top, #f59e0b, #eab308)' // Sarı gradient
+                              : 'linear-gradient(to top, #10b981, #3b82f6)', // Yeşil-mavi
+                          boxShadow: timeLeft <= 10 
+                            ? '0 0 10px rgba(239, 68, 68, 0.5)' // Kırmızı glow
+                            : timeLeft <= 20 
+                              ? '0 0 8px rgba(245, 158, 11, 0.4)' // Sarı glow
+                              : '0 0 6px rgba(16, 185, 129, 0.3)' // Yeşil glow
+                        }}
+                      />
+                    </div>
+                    
+                    {/* Alt etiket */}
+                    <div className="text-xs text-white/60 backdrop-blur-lg rounded px-1">
+                      süre
+                    </div>
+                  </div>
                 </div>
               </div>
               
