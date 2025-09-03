@@ -1,17 +1,17 @@
-# WordSpin Pro - Final Version (September 2025)
+# LUMINA - Final Production Version (September 2025)
 
 ## Overview
 
-WordSpin Pro is a comprehensive Turkish word guessing game featuring LUMINA branding, Replit authentication, and a complete statistics system. Players guess spinning words within 30 seconds across multiple categories and difficulty levels, with all progress tracked for authenticated users.
+LUMINA is a comprehensive Turkish word guessing game featuring original LUMINA branding, Replit authentication, and a complete statistics system. Players guess spinning words within 30 seconds across multiple categories and difficulty levels, with all progress tracked for authenticated users.
 
-**Final Version Features (September 2025):**
+**Final Production Version Features (September 2025):**
 - **Complete Authentication System**: Replit OAuth integration with user profiles and session management
 - **Real-time Statistics Tracking**: Database-driven stats (games played, success rate, streaks, total score) with guest vs authenticated user distinction
 - **Advanced Category System**: 10 categories with independent difficulty selection per category (easy/medium/hard with emoji indicators)
 - **Enhanced UI/UX**: Gaming-themed login button ("Oyuncu Girişi - Rekorlarını Sakla") with visual feedback and click effects
 - **Smart Visual Hierarchy**: Selected categories highlighted with enhanced shadows, borders, and scaling effects
 - **Precision Interactions**: Independent difficulty button animations without affecting parent category cards
-- **LUMINA Spinning Wheel**: CodyCross-style gradient letters with dynamic spinning and blur effects
+- **LUMINA Spinning Wheel**: Original LUMINA-style gradient letters with dynamic spinning and blur effects
 - **Turkish Keyboard Integration**: 3-row layout (Q-Ğ-Ü / A-Ş-İ / Z-Ö-Ç) with gradient styling and visual feedback
 - **Mobile-Optimized Design**: Touch-friendly interface with responsive gradient elements and animations
 
@@ -19,7 +19,7 @@ WordSpin Pro is a comprehensive Turkish word guessing game featuring LUMINA bran
 
 Preferred communication style: Simple, everyday language.
 
-## Recent Changes (Final Version)
+## Recent Changes (Final Production Version - September 2025)
 
 ### Authentication & Statistics Integration
 - Implemented comprehensive Replit OAuth authentication system
@@ -67,24 +67,24 @@ Preferred communication style: Simple, everyday language.
 
 **Word Management**: Static word lists organized by categories (Animals, Food, Science, Countries, etc.) with three difficulty levels (easy, medium, hard) per category.
 
-**CodyCross Game Mechanics**: 
-- 30-second timer with CodyCross-style circular progress and color transitions (white to red)
-- LUMINA spinning wheel with CodyCross gradient letters arranged in circular formation
+**LUMINA Game Mechanics**: 
+- 30-second timer with LUMINA-style circular progress and color transitions (white to red)
+- LUMINA spinning wheel with original gradient letters arranged in circular formation
 - Dynamic wheel physics: fast spin → gradual slowdown → dramatic pause (final 5 seconds)
 - Blur effects: letters blur during spinning, sharpen as wheel slows down for visibility
-- Turkish keyboard with 3-row layout and CodyCross gradient button styling
+- Turkish keyboard with 3-row layout and LUMINA gradient button styling
 - Visual feedback system: used letters change colors (green for correct, red for wrong)
 - Time-based scoring system: points equal to remaining seconds (faster guesses = higher scores)
 - Statistical tracking for streaks, averages, and performance metrics
 - Category-based theming with emoji indicators and gradient backgrounds
 
-**CodyCross Animation System**: Comprehensive animation suite featuring:
+**LUMINA Animation System**: Comprehensive animation suite featuring:
 - Spinning wheel with 4 speed levels (normal → slow → very-slow → ultra-slow)
 - Dynamic blur filters that adjust based on wheel speed and time remaining  
 - Letter scaling effects with sine-wave animations for organic movement
 - Floating particle backgrounds with staggered animation delays
 - Gradient color transitions on interactive elements (keyboards, buttons)
-- CodyCross-style card animations with shadows, scaling, and hover effects
+- LUMINA-style card animations with shadows, scaling, and hover effects
 - Responsive mobile-optimized transitions using Tailwind classes and CSS variables
 
 ### Backend Architecture
