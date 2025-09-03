@@ -142,14 +142,13 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           <div className="w-full max-w-md mx-auto space-y-4">
             {/* LUMINA Logo ve başlık - Ana sayfadan */}
             <div className="text-center mb-8">
-              <div className="w-20 h-20 mx-auto mb-4 relative">
+              <div className="w-20 h-20 mx-auto mb-6 relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-blue-300 via-purple-300 to-pink-300 rounded-full animate-pulse opacity-80"></div>
                 <div className="absolute inset-2 bg-white rounded-full shadow-lg"></div>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-3xl font-black text-purple-600">L</div>
                 </div>
               </div>
-              <h1 className="text-4xl font-black text-white mb-3 tracking-wide">ZORLUK SEVİYESİ</h1>
             </div>
 
             {/* Zorluk butonları - Ana sayfa tarzı Card içinde Button */}
