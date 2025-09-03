@@ -29,6 +29,7 @@ interface GameState {
   usedLetters: string[];
   isSequentialGuess: boolean;
   nextExpectedLetterIndex: number;
+  sequentialCount: number;
 }
 
 const initialGameState: GameState = {
@@ -47,7 +48,8 @@ const initialGameState: GameState = {
   lives: 3,
   usedLetters: [],
   isSequentialGuess: true,
-  nextExpectedLetterIndex: 0
+  nextExpectedLetterIndex: 0,
+  sequentialCount: 0
 };
 
 export default function LuminaApp() {
@@ -230,7 +232,8 @@ export default function LuminaApp() {
           isSpinning: true,
           // Reset sequential tracking for new word
           isSequentialGuess: true,
-          nextExpectedLetterIndex: 0
+          nextExpectedLetterIndex: 0,
+          sequentialCount: prev.sequentialCount + (prev.isSequentialGuess ? 1 : 0)
         }));
         return; // Don't go to game over screen
       } else {
@@ -428,6 +431,7 @@ export default function LuminaApp() {
           timeLeft={gameState.timeLeft}
           streak={gameState.streak}
           category={gameState.category}
+          sequentialCount={gameState.sequentialCount}
           onContinue={canContinue ? handleContinue : undefined}
           onPlayAgain={handlePlayAgain}
           onMainMenu={handleBackToMenu}
