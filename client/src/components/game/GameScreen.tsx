@@ -725,7 +725,7 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                 </div>
                 
                 {/* Dikey İlerleme Çubuğu - Çarkın sağ tarafında */}
-                <div className="absolute top-4 -right-8 sm:-right-12 md:-right-16 lg:-right-20">
+                <div className="absolute top-0 -right-6 sm:-right-8 md:-right-12 lg:-right-16 z-10">
                   <div className="flex flex-col items-center space-y-1">
                     {/* Bilinen kelime sayısı */}
                     <div className={`text-sm sm:text-base md:text-lg font-bold backdrop-blur-lg rounded px-2 py-1 ${
@@ -741,11 +741,11 @@ export const GameScreen = memo(({ settings, onGameOver, isGuestMode = false }: G
                     </div>
                     
                     {/* Dikey çubuk */}
-                    <div className="w-2 sm:w-3 md:w-4 h-32 sm:h-40 md:h-48 lg:h-56 bg-white/10 rounded-full border border-white/20 overflow-hidden backdrop-blur-lg">
+                    <div className="w-3 sm:w-4 md:w-5 h-40 sm:h-48 md:h-56 lg:h-64 bg-white/20 rounded-full border-2 border-white/40 overflow-hidden backdrop-blur-lg shadow-lg">
                       <div 
                         className="w-full rounded-full transition-all duration-500 ease-out origin-bottom"
                         style={{
-                          height: `${(correctGuesses / 25) * 100}%`,
+                          height: `${Math.max(4, (correctGuesses / 25) * 100)}%`,
                           background: correctGuesses >= 20 
                             ? 'linear-gradient(to top, #f59e0b, #fbbf24)' // Altın sarısı (yakın tamamlanma)
                             : correctGuesses >= 15 
