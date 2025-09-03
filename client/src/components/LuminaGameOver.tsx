@@ -14,6 +14,7 @@ interface LuminaGameOverProps {
   streak: number;
   category: string;
   sequentialCount?: number;
+  totalCorrect?: number;
   onContinue?: () => void;
   onPlayAgain: () => void;
   onMainMenu: () => void;
@@ -21,7 +22,7 @@ interface LuminaGameOverProps {
   totalWords?: number;
 }
 
-export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak, category, sequentialCount = 0, onContinue, onPlayAgain, onMainMenu, completedWords = 0, totalWords = 50 }: LuminaGameOverProps) => {
+export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak, category, sequentialCount = 0, totalCorrect = 0, onContinue, onPlayAgain, onMainMenu, completedWords = 0, totalWords = 50 }: LuminaGameOverProps) => {
   const gameResult = {
     isWin: gameSuccess,
     score: score,
@@ -131,11 +132,32 @@ export const LuminaGameOver = memo(({ gameSuccess, score, word, timeLeft, streak
             {/* White content section */}
             <div className="p-8">
               {/* Colorful stats row */}
-              <div className="grid grid-cols-3 gap-3 mb-8">
+              <div className="grid grid-cols-2 gap-3 mb-6">
                 {[
                   { icon: Trophy, value: gameResult.score, label: "Toplam Puan", color: "#FF6B6B", bgColor: "#FFE5E5" },
-                  { icon: Star, value: sequentialCount, label: "Sıralı", color: "#FFA726", bgColor: "#FFF3E0" },
                   { icon: Zap, value: gameResult.streak, label: "Seri", color: "#4ECDC4", bgColor: "#E5F9F7" }
+                ].map((stat, index) => {
+                  const IconComponent = stat.icon;
+                  return (
+                    <div key={index} className="text-center">
+                      <div 
+                        className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3 transition-all duration-300 hover:scale-105"
+                        style={{ backgroundColor: stat.bgColor }}
+                      >
+                        <IconComponent size={28} style={{ color: stat.color }} />
+                      </div>
+                      <div className="text-2xl font-bold text-gray-800 mb-1">{stat.value}</div>
+                      <div className="text-sm text-gray-500 font-medium">{stat.label}</div>
+                    </div>
+                  );
+                })}
+              </div>
+              
+              {/* Secondary stats row */}
+              <div className="grid grid-cols-2 gap-3 mb-8">
+                {[
+                  { icon: Star, value: sequentialCount, label: "Sıralı", color: "#FFA726", bgColor: "#FFF3E0" },
+                  { icon: Clock, value: totalCorrect, label: "Toplam Doğru", color: "#45B7D1", bgColor: "#E5F4FD" }
                 ].map((stat, index) => {
                   const IconComponent = stat.icon;
                   return (

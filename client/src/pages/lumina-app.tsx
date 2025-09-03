@@ -30,6 +30,7 @@ interface GameState {
   isSequentialGuess: boolean;
   nextExpectedLetterIndex: number;
   sequentialCount: number;
+  totalCorrect: number;
 }
 
 const initialGameState: GameState = {
@@ -49,7 +50,8 @@ const initialGameState: GameState = {
   usedLetters: [],
   isSequentialGuess: true,
   nextExpectedLetterIndex: 0,
-  sequentialCount: 0
+  sequentialCount: 0,
+  totalCorrect: 0
 };
 
 export default function LuminaApp() {
@@ -233,7 +235,8 @@ export default function LuminaApp() {
           // Reset sequential tracking for new word
           isSequentialGuess: true,
           nextExpectedLetterIndex: 0,
-          sequentialCount: prev.sequentialCount + (prev.isSequentialGuess ? 1 : 0)
+          sequentialCount: prev.sequentialCount + (prev.isSequentialGuess ? 1 : 0),
+          totalCorrect: prev.totalCorrect + 1
         }));
         return; // Don't go to game over screen
       } else {
@@ -432,6 +435,7 @@ export default function LuminaApp() {
           streak={gameState.streak}
           category={gameState.category}
           sequentialCount={gameState.sequentialCount}
+          totalCorrect={gameState.totalCorrect}
           onContinue={canContinue ? handleContinue : undefined}
           onPlayAgain={handlePlayAgain}
           onMainMenu={handleBackToMenu}
