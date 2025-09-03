@@ -235,13 +235,13 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
             {/* Kategori grid - Ana sayfa tarzı 2x5 */}
             <div className="grid grid-cols-2 gap-4 max-w-lg mx-auto">
               {categories.map((category, index) => (
-                <Card key={category.id} className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
+                <Card key={category.id} className="p-3 bg-white/95 rounded-2xl shadow-xl border-0 h-32">
                   <Button 
                     onClick={() => handleCategorySelect(category.name)}
-                    className={`w-full aspect-square rounded-xl font-bold text-white border-0 shadow-lg transition-all duration-300 ${
+                    className={`w-full h-full rounded-xl font-bold text-white border-0 shadow-lg transition-all duration-300 ${
                       selectedCategory === category.name 
-                        ? 'scale-110 shadow-2xl ring-2 ring-white/50' 
-                        : 'hover:scale-105'
+                        ? 'scale-105 shadow-2xl ring-2 ring-blue-400' 
+                        : 'hover:scale-[1.02]'
                     }`}
                     style={{
                       background: selectedCategory === category.name 
@@ -250,12 +250,15 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                     }}
                     data-testid={`category-${category.name}`}
                   >
-                    <div className="flex flex-col items-center justify-center h-full">
+                    <div className="flex flex-col items-center justify-center h-full p-2">
                       <div className="text-2xl mb-1">{category.emoji}</div>
-                      <div className="text-xs font-black text-center leading-tight">{category.name}</div>
-                      <div className="text-xs opacity-90 mt-1">
+                      <div className="text-xs font-black text-center leading-tight mb-1">{category.name}</div>
+                      <div className="text-xs opacity-90">
                         %{Math.round((category.completed / category.total) * 100)}
                       </div>
+                      {selectedCategory === category.name && (
+                        <div className="text-xs opacity-90 mt-1">✓</div>
+                      )}
                     </div>
                   </Button>
                 </Card>
