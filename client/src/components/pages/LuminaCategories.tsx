@@ -149,6 +149,7 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
                   <div className="text-3xl font-black text-purple-600">L</div>
                 </div>
               </div>
+              <h1 className="text-4xl font-black text-white mb-3 tracking-wide">ZORLUK SEVİYESİ</h1>
             </div>
 
             {/* Zorluk butonları - Ana sayfa tarzı Card içinde Button */}
