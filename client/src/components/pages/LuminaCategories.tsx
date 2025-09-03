@@ -98,15 +98,20 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
     <div className="min-h-screen relative overflow-hidden" style={{
       background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
     }}>
-      {/* Floating background elements */}
+      {/* Floating background elements - Ana sayfadan birebir */}
       <div className="absolute inset-0 overflow-hidden">
-        {Array.from({ length: 20 }).map((_, i) => (
+        <div className="absolute -top-20 -left-20 w-40 h-40 rounded-full bg-white/10 animate-float-slow"></div>
+        <div className="absolute top-1/4 -right-16 w-32 h-32 rounded-full bg-yellow-300/20 animate-float-medium"></div>
+        <div className="absolute bottom-1/4 -left-16 w-36 h-36 rounded-full bg-pink-300/15 animate-float-slow" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute -bottom-16 right-1/4 w-28 h-28 rounded-full bg-cyan-300/20 animate-float-medium" style={{ animationDelay: '2s' }}></div>
+        
+        {Array.from({ length: 15 }).map((_, i) => (
           <div
             key={i}
             className="absolute rounded-full bg-white/10"
             style={{
-              width: `${Math.random() * 8 + 6}px`,
-              height: `${Math.random() * 8 + 6}px`,
+              width: `${Math.random() * 12 + 8}px`,
+              height: `${Math.random() * 12 + 8}px`,
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
               animation: `float-gentle ${4 + Math.random() * 6}s ease-in-out infinite`,
@@ -132,65 +137,77 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
           <div className="w-6"></div>
         </div>
 
-        {/* Zorluk seçimi yoksa - LUMINA Gaming Style Zorluk Seçim Ekranı */}
+        {/* Zorluk seçimi yoksa - Ana Sayfa Teması ile Zorluk Seçim Ekranı */}
         {!selectedDifficulty && (
-          <div className="space-y-6 max-w-md mx-auto">
-            {/* Zorluk tanıtım metni */}
+          <div className="w-full max-w-md mx-auto space-y-4">
+            {/* LUMINA Logo ve başlık - Ana sayfadan */}
             <div className="text-center mb-8">
-              <div className="text-6xl mb-4">🎯</div>
-              <h2 className="text-2xl font-black text-white mb-2">ZORLUK SEVİYEN?</h2>
-              <p className="text-white/80 text-sm">Hangi seviyede kendini test etmek istiyorsun?</p>
+              <div className="w-20 h-20 mx-auto mb-4 relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-300 via-purple-300 to-pink-300 rounded-full animate-pulse opacity-80"></div>
+                <div className="absolute inset-2 bg-white rounded-full shadow-lg"></div>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="text-3xl font-black text-purple-600">L</div>
+                </div>
+              </div>
+              <h1 className="text-4xl font-black text-white mb-3 tracking-wide">ZORLUK SEVİYESİ</h1>
+              <p className="text-xl text-white/80 font-semibold">Hangi seviyede yarışmak istiyorsun?</p>
             </div>
 
-            {/* Zorluk kartları */}
+            {/* Zorluk kartları - Ana sayfa buton tarzında */}
             <div className="space-y-4">
-              {difficulties.map((difficulty, index) => (
-                <Card 
-                  key={difficulty.id} 
-                  className="relative overflow-hidden border-0 rounded-3xl transition-all duration-500 transform cursor-pointer hover:scale-105 active:scale-95 shadow-2xl hover:shadow-3xl bg-white/95 backdrop-blur-sm"
+              {/* Kolay seviye */}
+              <Card className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
+                <Button 
+                  onClick={() => handleDifficultySelect('kolay')}
+                  className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" 
                   style={{
-                    background: `linear-gradient(135deg, ${difficulty.color.replace('from-', '').replace('to-', ', ')})`,
-                    animationDelay: `${index * 100}ms`
+                    background: 'linear-gradient(135deg, #4ade80 0%, #22c55e 100%)'
                   }}
-                  onClick={() => handleDifficultySelect(difficulty.id)}
-                  data-testid={`difficulty-${difficulty.id}`}
+                  data-testid="difficulty-kolay"
                 >
-                  <div className="p-6 text-center relative">
-                    {/* Parlama efekti */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
-                    
-                    <div className="relative z-10">
-                      <div className="text-5xl mb-3 animate-bounce" style={{animationDelay: `${index * 200}ms`}}>
-                        {difficulty.emoji}
-                      </div>
-                      <div className="font-black text-xl mb-2 text-white drop-shadow-lg">
-                        {difficulty.name}
-                      </div>
-                      <div className="font-bold text-white/90 text-sm mb-3">
-                        {difficulty.description}
-                      </div>
-                      
-                      {/* Zorluk göstergesi çubukları */}
-                      <div className="flex justify-center gap-1 mb-2">
-                        {Array.from({ length: 3 }).map((_, i) => (
-                          <div 
-                            key={i}
-                            className={`h-1 w-8 rounded-full ${
-                              i < (difficulty.id === 'kolay' ? 1 : difficulty.id === 'orta' ? 2 : 3)
-                                ? 'bg-white' 
-                                : 'bg-white/30'
-                            }`}
-                          />
-                        ))}
-                      </div>
-                      
-                      <div className="text-white/80 text-xs font-medium">
-                        {difficulty.id === 'kolay' ? '10+ kategori' : difficulty.id === 'orta' ? '10+ kategori' : '10+ kategori'}
-                      </div>
-                    </div>
+                  <div className="text-2xl mr-3">😊</div>
+                  <div>
+                    <div className="text-lg font-black">KOLAY</div>
+                    <div className="text-sm opacity-90">Başlangıç Seviyesi</div>
                   </div>
-                </Card>
-              ))}
+                </Button>
+              </Card>
+
+              {/* Orta seviye */}
+              <Card className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
+                <Button 
+                  onClick={() => handleDifficultySelect('orta')}
+                  className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" 
+                  style={{
+                    background: 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%)'
+                  }}
+                  data-testid="difficulty-orta"
+                >
+                  <div className="text-2xl mr-3">😐</div>
+                  <div>
+                    <div className="text-lg font-black">ORTA</div>
+                    <div className="text-sm opacity-90">Deneyimli Seviye</div>
+                  </div>
+                </Button>
+              </Card>
+
+              {/* Zor seviye */}
+              <Card className="p-4 bg-white/95 rounded-2xl shadow-xl border-0">
+                <Button 
+                  onClick={() => handleDifficultySelect('zor')}
+                  className="w-full h-16 rounded-xl font-bold text-white border-0 shadow-lg" 
+                  style={{
+                    background: 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)'
+                  }}
+                  data-testid="difficulty-zor"
+                >
+                  <div className="text-2xl mr-3">😤</div>
+                  <div>
+                    <div className="text-lg font-black">ZOR</div>
+                    <div className="text-sm opacity-90">Uzman Seviye</div>
+                  </div>
+                </Button>
+              </Card>
             </div>
           </div>
         )}
@@ -337,8 +354,27 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
 
       <style>{`
         @keyframes float-gentle {
-          0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.6; }
-          50% { transform: translateY(-12px) rotate(180deg); opacity: 1; }
+          0%, 100% { transform: translateY(0px); opacity: 0.6; }
+          50% { transform: translateY(-12px); opacity: 1; }
+        }
+        
+        @keyframes float-slow {
+          0%, 100% { transform: translateY(0px) scale(1); }
+          50% { transform: translateY(-20px) scale(1.05); }
+        }
+        
+        .animate-float-slow {
+          animation: float-slow 6s ease-in-out infinite;
+        }
+        
+        @keyframes float-medium {
+          0%, 100% { transform: translateY(0px) translateX(0px); }
+          25% { transform: translateY(-10px) translateX(5px); }
+          75% { transform: translateY(-5px) translateX(-3px); }
+        }
+        
+        .animate-float-medium {
+          animation: float-medium 4s ease-in-out infinite;
         }
         
         @keyframes glow-pulse {
