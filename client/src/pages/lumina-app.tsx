@@ -6,6 +6,7 @@ import { LuminaGame } from '@/components/pages/LuminaGame';
 import { LuminaGameOver } from '@/components/LuminaGameOver';
 import { LuminaLogin } from '@/components/pages/LuminaLogin';
 import { LuminaSettings } from '@/components/pages/LuminaSettings';
+import { DemoSetup } from '@/components/DemoSetup';
 import { getWordByDifficulty } from '@/lib/wordLists';
 import { useAuth } from '@/hooks/useAuth';
 import { useGameStats } from '@/hooks/useGameStats';
