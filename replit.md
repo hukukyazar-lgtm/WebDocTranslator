@@ -1,8 +1,8 @@
-# LUMINA - Final Production Version (September 2025)
+# Lumina Word Game - Final Production Version (September 2025)
 
 ## Overview
 
-LUMINA is a comprehensive Turkish word guessing game featuring original LUMINA branding, Replit authentication, and a complete statistics system. Players guess spinning words within 30 seconds across multiple categories and difficulty levels, with all progress tracked for authenticated users.
+Lumina Word Game is a comprehensive Turkish word guessing game featuring original Lumina branding, Replit authentication, and a complete statistics system. Players guess spinning words within 30 seconds across multiple categories and difficulty levels, with all progress tracked for authenticated users.
 
 **Final Production Version Features (September 2025):**
 - **Complete Authentication System**: Replit OAuth integration with user profiles and session management
