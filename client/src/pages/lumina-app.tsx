@@ -250,7 +250,7 @@ export default function LuminaApp() {
         ...prev,
         isGameOver: true,
         gameSuccess: false,
-        score: finalScore,
+        score: prev.score + finalScore, // Add final word score to total
         isSpinning: false
       }));
       
