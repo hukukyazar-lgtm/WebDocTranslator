@@ -62,8 +62,12 @@ export const VirtualKeyboard = memo(({
 }: VirtualKeyboardProps) => {
   const t = keyboardTranslations[language];
   
-  const handleKeyPress = useCallback((key: string) => {
+  const handleKeyPress = useCallback((key: string, event?: React.MouseEvent<HTMLButtonElement>) => {
     onKeyPress(key);
+    // Focus'u temizle ki tuş highlight kalmasın
+    if (event?.currentTarget) {
+      event.currentTarget.blur();
+    }
   }, [onKeyPress]);
 
   const getKeyStyle = useCallback((key: string) => {
@@ -97,7 +101,7 @@ export const VirtualKeyboard = memo(({
             {turkishKeyboardLayout[0].map(key => (
               <button
                 key={key}
-                onClick={() => handleKeyPress(key)}
+                onClick={(e) => handleKeyPress(key, e)}
                 className={getKeyStyle(key)}
                 data-testid={`key-${key.toLowerCase()}`}
               >
@@ -111,7 +115,7 @@ export const VirtualKeyboard = memo(({
             {turkishKeyboardLayout[1].map(key => (
               <button
                 key={key}
-                onClick={() => handleKeyPress(key)}
+                onClick={(e) => handleKeyPress(key, e)}
                 className={getKeyStyle(key)}
                 data-testid={`key-${key.toLowerCase()}`}
               >
@@ -125,7 +129,7 @@ export const VirtualKeyboard = memo(({
             {turkishKeyboardLayout[2].map(key => (
               <button
                 key={key}
-                onClick={() => handleKeyPress(key)}
+                onClick={(e) => handleKeyPress(key, e)}
                 className={getKeyStyle(key)}
                 data-testid={`key-${key.toLowerCase()}`}
               >
@@ -133,7 +137,7 @@ export const VirtualKeyboard = memo(({
               </button>
             ))}
             <button
-              onClick={onBackspace}
+              onClick={(e) => { onBackspace(); e.currentTarget.blur(); }}
               className="keyboard-key px-2 sm:px-3 md:px-4 lg:px-5 py-2 sm:py-3 md:py-4 text-xs sm:text-sm md:text-base lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-red-500/50 bg-red-500/20 text-white hover:bg-red-500/40 shadow-lg touch-manipulation"
               data-testid="key-backspace"
             >
@@ -145,7 +149,7 @@ export const VirtualKeyboard = memo(({
           {/* Fourth Row - Space and Submit */}
           <div className="flex justify-center gap-1 sm:gap-2">
             <button
-              onClick={onSpace}
+              onClick={(e) => { onSpace(); e.currentTarget.blur(); }}
               className="keyboard-key flex-1 max-w-[120px] sm:max-w-xs py-2 sm:py-3 text-xs sm:text-sm lg:text-base font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-white/30 bg-white/10 text-white/90 hover:bg-white/20 hover:text-white hover:border-white/50 shadow-lg"
               data-testid="key-space"
             >
@@ -153,7 +157,7 @@ export const VirtualKeyboard = memo(({
               <span className="hidden sm:inline">⌨️ {t.space}</span>
             </button>
             <button
-              onClick={onSubmit}
+              onClick={(e) => { onSubmit(); e.currentTarget.blur(); }}
               className="keyboard-key px-3 sm:px-4 lg:px-8 py-2 sm:py-3 text-xs sm:text-sm lg:text-lg font-bold rounded-md sm:rounded-lg transition-all duration-300 transform hover:scale-105 active:scale-95 focus:outline-none backdrop-blur-lg border border-green-500/50 text-white hover:bg-green-500/40 shadow-xl"
               style={{
                 background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.3), rgba(22, 163, 74, 0.3))',
