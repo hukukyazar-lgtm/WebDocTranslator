@@ -34,9 +34,14 @@ export const LuminaCategories = memo(({ onGameStart, onBack }: LuminaCategoriesP
       const savedProgress = localStorage.getItem(progressKey);
       if (savedProgress) {
         setLocalProgressMap(JSON.parse(savedProgress));
+      } else {
+        // Progress verisi yoksa boş map
+        setLocalProgressMap({});
       }
     };
 
+    // Kimlik değiştiğinde state'i temizle ve yeniden yükle
+    setLocalProgressMap({});
     loadProgress();
     
     // LocalStorage değişikliklerini dinle
