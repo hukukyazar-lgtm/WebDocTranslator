@@ -10,53 +10,59 @@ export interface WordLists {
 
 export const wordLists: WordLists = {
   Hayvanlar: {
-    1: ["KEDİ", "KUŞ", "FİL", "ASLAN", "ZEBRA", "ÇİTA", "LEMUR", "TAPIR", "PENGUEN", "KÖPEK", "TAVŞAN", "SINCAP", "HAMSTER", "FARE", "PAPAĞAN", "KARTAL", "ŞAHİN", "BAYKUŞ", "KARGA", "DOĞAN", "GEYIK", "PANDA", "ÇAKAL", "AYAK", "KUZU", "BUZAĞI", "TAVUK", "HOROZ", "HİNDİ", "LEYLEK", "SERÇ", "MAYMUN", "BALINA", "YUNUS", "EJDER", "KAPLAN", "LEOPAR", "TİLKİ", "KOYUN", "KEÇİ", "İNEK", "GÜVERCİN", "YILAN", "KEDI", "ÖRDEK", "BALIK", "DOMUZ"], // Kolay - 3+ harf  
-    2: ["ASLAN", "KAPLAN", "ZEBRA", "PANDA", "ÇAKAL", "KÖPEK", "KOYUN", "KEÇI", "İNEK", "DOMUZKUŞU", "KARTAL", "BALINA", "YUNUS", "FARE", "TAVUK", "ÖRDEK", "TAVŞAN", "PAPAĞAN", "ŞAHIN", "BALIK", "GÜVERCIN", "KUŞ", "YILAN", "KEDI", "KÖPEK", "HAMSTER", "ÇAKAL", "TILKI", "AYAK", "KUZU", "BUZAĞI", "TAVUK", "HOROZ", "HINDI", "LEYLEK", "KARTAL", "ŞAHIN", "BAYKUŞ", "KARGA", "SERÇ", "DOĞAN", "GEYIK", "KAPLAN", "PANDA", "AYAKLI", "BALINA", "YUNUS"], // Orta - 4-5 harf
-    3: ["MAYMUN", "KARTAL", "TAVUK", "BALINA", "YUNUS", "EJDER", "ASLAN", "KAPLAN", "ZEBRA", "ÇİTA", "LEOPAR", "JAGUAR", "KÖPEK", "KEDİ", "TAVŞAN", "SINCAP", "HAMSTER", "FARE", "TİLKİ", "ÇAKAL", "KOYUN", "KEÇİ", "İNEK", "DOMUZ", "HOROZ", "HİNDİ", "LEYLEK", "ÖRDEK", "GÜVERCİN", "BAYKUŞ", "KARGA", "ŞAHİN", "SERÇ", "DOĞAN", "AKBAŞ", "KANGAL", "ÇOBAN", "LEMUR", "TAPIR", "FLAMINGO", "KAMELEON", "SALAMANDER", "KERTENKELE", "PENGUEN", "ORANGUTAN", "ŞEMPANZE", "GEYIK", "PANDA", "FLAMINGOLAR", "TIMSAHLAR", "KAMELEONLAR", "GERGEDAN", "HIPOPOTAM", "ORANGUTANLAR", "ŞEMPANZELER", "MAYMUNLAR", "BALINALAR", "YUNUSLAR", "EJDERLER", "ASLANLAR", "KAPLANLAR", "ZEBRALAR", "LEOPARLAR", "ÇAKALLAR", "TİLKİLER", "KOYUNLAR", "KEÇİLER", "İNEKLER", "TAVUKLAR", "ÖRDEKLER", "GÜVERCİNLER", "YILANLAR", "BALIKLAR", "KARTALLAR", "ŞAHİNLER", "BAYKUŞLAR", "KARGALAR", "DOĞANLAR", "GEYİKLER", "PANDALAR", "HAMSTERLAR", "SINCAPLAR", "KEDİLER", "KÖPEKLER", "TAVŞANLAR", "PAPAĞANLAR", "FARELER", "LEYLEKLER", "SERÇLER", "DOMUZLAR"] // Zor - 5+ harf
+    1: [], // Kolay - 3-4 harf  
+    2: [], // Orta - 4-5 harf
+    3: []  // Zor - 5+ harf
   },
   Yiyecek: {
-    1: ["SÜT", "BAL", "TUZ", "YAĞ", "KEK", "ÇAY", "ÇORBA", "PEYNİR", "KAŞAR", "BEYAZ", "TAZE", "YOĞURT", "KEFİR", "AYRAN", "CACIK", "SALÇA", "REÇEL", "PEKMEZ", "MAKARNA", "PİZZA", "PİDE", "DÖNER", "KEBAP", "KÖFTE", "BÖREK", "MANTİ", "DOLMA", "PASTA", "EKMEK", "ÇORBA", "SALATA", "PILAV", "PATATES", "SOĞAN", "DOMATES", "BİBER", "MARUL", "HAVUÇ", "LAHANA", "ISPANAK", "KARNABAHAR", "KABAK", "TURP", "PANCAR", "NOHUT", "FASÜLYE", "MERCIMEK", "BULGUR", "ARPA"], // Kolay - 3+ harf
-    2: ["EKMEK", "ÇORBA", "SALATA", "KÖFTE", "KEBAP", "PILAV", "MAKARNA", "PATATES", "SOĞAN", "DOMATES", "BİBER", "MARUL", "HAVUÇ", "LAHANA", "ISPANAK", "BROKOLI", "KARNABAHAR", "PATLICAN", "KABAK", "SALATALIK", "TURP", "PANCAR", "KEREVIZ", "MAYDANOZ", "DEREOTU", "FESLEĞEN", "ROKA", "SEMIZOTU", "NOHUT", "FASÜLYE", "MERCIMEK", "BULGUR", "ARPA", "MISIR", "PİRİNÇ", "BUĞDAY", "YAPI", "ŞEKER", "TERE", "ELMA", "ARMUT", "MEYVE", "MANDI", "ERIK", "VIŞNE", "ÇİLE", "ÇİMEN"], // Orta - 4-5 harf
-    3: ["BÖREK", "MANTİ", "DOLMA", "PASTA", "PİZZA", "LAHMACUN", "PİDE", "DÖNER", "ŞİŞ", "ADANA", "URFA", "ANTEP", "MARAŞ", "İSKENDER", "TAVUK", "ETLİ", "SEBZE", "KARIŞIK", "PEYNİR", "KAŞAR", "BEYAZ", "TAZE", "YOĞURT", "KEFİR", "AYRAN", "CACIK", "HAYDARİ", "ACUKA", "SALÇA", "REÇEL", "BAL", "PEKMEZ", "LAZANYA", "MAKARNA", "TOST", "BAKLAVA", "KÜNEFE", "GAZİANTEP", "ANTEPLİ", "MARAŞLİ", "URFALİ", "ADANALİ", "TRABZON", "RİZELİ", "ARTVİN", "GÜRCÜ", "ÇERKEZ", "KARADENİZ", "AKDENİZ", "KAHRAMANMARAŞ", "ŞANLIURFA", "OSMANİYE", "AFYONKARAHISAR", "TAHİNHELVA", "TÜRKKAHVE", "MERCİMEKÇORBA", "DOMATESÇORBA", "TARHANAÇORBA", "İŞKEMBEÇORBA", "PAÇAÇORBA", "BAMYAYEMEK", "FASÜLYEYEMEK", "NOHUTTUTMACI"] // Zor - 5+ harf
+    1: [], // Kolay - 3-4 harf
+    2: [], // Orta - 4-5 harf
+    3: []  // Zor - 5+ harf
   },
   Bilim: {
-    1: ["ATOM", "GÜNEŞ", "YILDIZ", "HÜCRE", "KARBON", "OKSİJEN", "HİDROJEN", "AZOT", "METAL", "ASİT", "BAZ", "TUZ", "ENZİM", "HORMON", "VİTAMİN", "MİNERAL", "PROTEİN", "BİYOLOJİ", "COĞRAFYA", "TARİH", "MATEMATİK", "FİZİK", "KİMYA", "JEOLOJİ", "BOTANİK", "ZOOLOJİ", "ANATOMİ", "PSİKOLOJİ", "SOSYOLOJİ", "DNA", "RNA", "ÇEKİRDEK", "ORGAN", "SİSTEM", "GENETİK", "EVRİM", "POPULASYON", "SU", "TOPRAK", "HAVA", "ATES", "BUZUL", "VOLKAN", "DEPREM", "FIRTINA", "SAĞANAK", "KAR", "DOLU"], // Kolay - 3+ harf
-    2: ["ATOM", "GÜNEŞ", "YILDIZ", "HÜCRE", "KARBON", "OKSİJEN", "HİDROJEN", "AZOT", "METAL", "ASİT", "BAZ", "TUZ", "ENZİM", "VİTAMİN", "MİNERAL", "PROTEİN", "BİYOLOJİ", "COĞRAFYA", "TARİH", "MATEMATİK", "FİZİK", "KİMYA", "JEOLOJİ", "BOTANİK", "ZOOLOJİ", "ANATOMİ", "PSİKOLOJİ", "SOSYOLOJİ", "DNA", "RNA", "ÇEKİRDEK", "ORGAN", "SİSTEM", "GENETİK", "EVRİM", "POPULASYON", "EKOSİSTEM", "BİYOSFER", "DOĞAL", "DENEY", "GOZLEM", "HİPOTEZ", "TEORİ", "MODEL", "FORMULA", "HESAP", "OLCUM", "VERİ", "SONUC"], // Kolay - 4-8 harf
-    3: ["ÇEKİM", "ENERJİ", "DALGA", "FOTON", "GAMMA", "KUANTUM", "PARÇACIK", "NÖTRON", "ELEKTRON", "PROTON", "MOLEKÜL", "KROMOZOM", "MİTOZ", "MEİOZ", "OSMOZ", "ENZİM", "HORMON", "VİTAMİN", "MİNERAL", "PROTEİN", "AMİNO", "GLİKOZ", "FRUKTOZ", "MALTOZ", "LAKTOZ", "SELÜLOZ", "NİŞASTA", "GLİKOJEN", "LİPİT", "STEROL", "FOSFO", "MEMBRAN", "NÜKLEİK", "MİKROSKOP", "TELESKOP", "SPEKTRUM", "RADYASYON", "FOTOĞRAF", "YANSIMA", "KIRILMA", "İNTERFERANS", "DİFRAKSİYON", "POLARİZASYON", "MANYETİK", "ELEKTRİK", "MEKANİK", "TERMİK", "AKUSTİK", "OPTİK", "LAZER", "BİYOTEKNOLOJİ", "ASTROFİZİK", "GENETİKMÜHENDİSLİK", "BİYOENFORMATİK", "FARMAKOLOJİ", "İMMÜNOLOJİ", "MİKROBİYOLOJİ", "EPİDEMİYOLOJİ", "BİYOFİZİK", "BİYOKİMYA", "PSİKOLOJİ", "BİLİŞSELBİLİM", "TEKNOLOJİ", "MÜHENDİSLİK", "BİLİM", "ARAŞTIRMA", "GELİŞTİRME", "YENİLİK", "BULUŞ", "DENEY", "GOZLEM", "ANALİZ", "HİPOTEZ", "TEORİ", "YONTEM", "SONUC", "RAPOR", "MAKALE", "KONGRE", "EĞİTİM", "ÖĞRETİM", "DERS", "KURS", "SERTİFİKA", "DİPLOMA", "LİSANS", "YÜKSEKLİSANS", "DOKTORA", "PROFESÖR", "ÜNİVERSİTE", "OKUL", "FAKÜLTE", "BÖLÜM", "ENSTİTÜ", "LABORATUVAR", "KÜTÜPHANE", "DERSANE", "SINIF"] // Zor - 5+ harf
+    1: [], // Kolay - 3-4 harf
+    2: [], // Orta - 4-5 harf
+    3: []  // Zor - 5+ harf
   },
   Ülkeler: {
-    1: ["TÜRKİYE", "İTALYA", "FRANSA", "JAPONYA", "ÇİN", "ALMANYA", "İNGİLTERE", "RUSYA", "HİNDİSTAN", "YUNANİSTAN", "BREZİLYA", "AVUSTRALYA", "ARJANTİN", "ENDONEZYA", "GÜNEY", "LÜKSEMBURG", "LİHTEN", "MARKO", "VATİKAN", "MONTE", "NORVEÇ", "İSVEÇ", "FİNLANDİYA", "DANİMARKA", "POLONYA", "ÇEKYA", "SLOVAKYA", "MACARİSTAN", "ROMANYA", "BULGARİSTAN", "HİRVATİSTAN", "SLOVENİYA", "ESTONYA", "LETONYA", "LİTVANYA", "İRLANDA", "MALTA", "KIBRIS", "ANDORA", "MONAKO", "İZLANDA", "UKRAYNA", "BELARUS", "MOLDOVA", "GÜRCİSTAN", "ERMENİSTAN", "AZERBAYCAN", "KAZAKİSTAN", "KIRGIZİSTAN"], // Kolay - 3+ harf
-    2: ["TÜRKİYE", "İTALYA", "FRANSA", "JAPONYA", "ÇİN", "ALMANYA", "İNGİLTERE", "RUSYA", "HİNDİSTAN", "YUNANİSTAN", "BREZİLYA", "AVUSTRALYA", "ARJANTİN", "ENDONEZYA", "GÜNEY AFRİKA", "LÜKSEMBURG", "LİHTENŞTAYN", "SAN MARİNO", "VATİKAN", "MONTENEGRO", "NORVEÇ", "İSVEÇ", "FİNLANDİYA", "DANİMARKA", "POLONYA", "ÇEKYA", "SLOVAKYA", "MACARİSTAN", "ROMANYA", "BULGARİSTAN", "HİRVATİSTAN", "SLOVENİYA", "ESTONYA", "LETONYA", "LİTVANYA", "İRLANDA", "MALTA", "KIBRIS", "ANDORA", "MONAKO", "İZLANDA", "UKRAYNA", "BELARUS", "MOLDOVA", "GÜRCİSTAN", "ERMENİSTAN", "AZERBAYCAN", "KAZAKİSTAN", "KIRGIZİSTAN", "TACİKİSTAN"], // Kolay - 4-10 harf
-    3: ["ALMANYA", "İNGİLTERE", "RUSYA", "HİNDİSTAN", "YUNANİSTAN", "BREZİLYA", "AVUSTRALYA", "ARJANTİN", "ENDONEZYA", "GÜNEY AFRİKA", "LÜKSEMBURG", "LİHTENŞTAYN", "SAN MARİNO", "VATİKAN", "MONTENEGRO", "NORVEÇ", "İSVEÇ", "FİNLANDİYA", "DANİMARKA", "POLONYA", "ÇEKYA", "SLOVAKYA", "MACARİSTAN", "ROMANYA", "BULGARİSTAN", "HİRVATİSTAN", "SLOVENİYA", "ESTONYA", "LETONYA", "LİTVANYA", "İRLANDA", "MALTA", "KIBRIS", "ANDORA", "MONAKO", "İZLANDA", "UKRAYNA", "BELARUS", "MOLDOVA", "GÜRCİSTAN", "ERMENİSTAN", "AZERBAYCAN", "KAZAKİSTAN", "KIRGIZİSTAN", "TACİKİSTAN", "ÖZBEKİSTAN", "TÜRKMENİSTAN", "AFGANİSTAN", "PAKİSTAN", "BANGLADEŞ"] // Orta - 5-12 harf
+    1: [], // Kolay - 3-4 harf
+    2: [], // Orta - 4-5 harf
+    3: []  // Zor - 5+ harf
   },
   Meslekler: {
-    1: ["DOKTOR", "HEMŞİRE", "POLİS", "AŞÇI", "ÇİFTÇİ", "AVUKAT", "HAKİM", "PİLOT", "ASKER", "İTFAİYECİ", "MİMAR", "MÜHENDİS", "ECZACI", "DİŞÇİ", "VETERİNER", "PSİKİYATRİST", "NÖROLOJİ", "DERMATOLOJİ", "KARDİYOLOJİ", "GASTROENTEROLOJİ", "JİNEKOLOJİ", "EBE", "DİYETİSYEN", "FİZYOTERAPİST", "ODYOLOJİ", "GÖZDOKTORU", "KULAKBURUN", "ÜROLOJİ", "ORTOPEDİ", "PLASTİK", "ANESTEZİYOLOJİ", "RADYOLOJİ", "PATOLOJİ", "NÜKLEER", "JERİATRİ", "ONKOLOJİ", "NEFROLOJİ", "ENDOKRİN", "METABOLİZMA", "İMMÜNOLOJİ", "ALERJİ", "RÖMATOLOJİ", "ENFEKSİYON", "GERİATRİ", "PEDİATRİ", "ÇOCUK", "YAŞLI", "HASTA", "SAĞLIK"], // Kolay - 3+ harf
-    2: ["DOKTOR", "HEMŞİRE", "POLİS", "AŞÇI", "ÇİFTÇİ"], // Kolay - 4-7 harf
-    3: ["AVUKAT", "HAKİM", "PİLOT", "ASKER", "İTFAİYECİ"] // Orta - 5-9 harf
+    1: [], // Kolay - 3-4 harf
+    2: [], // Orta - 4-5 harf
+    3: []  // Zor - 5+ harf
   },
   Şehirler: {
-    1: ["VAN", "BATMAN", "ELAZIĞ", "SIVAS", "TRABZON", "KOCAELI", "AFYON", "ISPARTA", "BOLU", "DÜZCE", "RİZE", "ORDU", "ARTVIN", "AMASYA", "TOKAT", "SİNOP", "NİĞDE"], // Kolay - 3-6 harf
-    2: ["ANKARA", "İZMİR", "BURSA", "KONYA", "ADANA"], // Kolay - 4-6 harf
-    3: ["GAZİANTEP", "MERSİN", "ANTALYA", "DİYARBAKIR", "SAMSUN"] // Orta - 6-10 harf
+    1: [], // Kolay - 3-4 harf
+    2: [], // Orta - 4-5 harf
+    3: []  // Zor - 5+ harf
   },
   Markalar: {
-    1: ["BMW", "FORD", "SONY", "SAMSUNG", "TESLA", "ADIDAS", "PUMA", "ZARA", "ROLEX", "OMEGA", "GUCCI", "PRADA", "DIOR", "BEKO", "ARÇELİK", "VESTEL", "ÜLKER", "ETİ", "KOTON", "LCW", "MAVİ", "DEFACTO", "KARACA", "KORKMAZ", "TEFAL", "PHILIPS", "BOSCH", "SIEMENS", "GRUNDIG", "PROFILO", "ALTUS", "REGAL", "LG", "SAMSUNG", "XİAOMİ", "HUAWEI", "OPPO", "VİVO", "ONEPLUS", "REALME", "HONOR", "REDMİ", "POCO", "SHARP", "PANASONIC"], // Kolay - 3+ harf
-    2: ["FORD", "SONY", "SAMSUNG", "TESLA", "ADIDAS", "PUMA", "ZARA", "ROLEX", "OMEGA", "GUCCI", "PRADA", "DIOR", "BEKO", "ARÇELİK", "VESTEL", "ÜLKER", "ETİ", "KOTON", "MAVİ", "DEFACTO", "KARACA", "KORKMAZ", "TEFAL", "PHILIPS", "BOSCH", "SIEMENS", "GRUNDIG", "PROFILO", "ALTUS", "REGAL", "LG", "XİAOMİ", "HUAWEI", "OPPO", "VİVO", "ONEPLUS", "REALME", "HONOR", "REDMİ", "POCO", "SHARP", "PANASONIC", "ASUS", "ACER", "LENOVO", "DELL"], // Orta - 4-7 harf
-    3: ["MERCEDES", "ADIDAS", "PUMA", "ZARA", "VERSACE", "ARMANİ", "GUCCI", "PRADA", "DIOR", "ROLEX", "OMEGA", "BULGARİ", "CARTIER", "TIFFANY", "BEKO", "ARÇELİK", "VESTEL", "ÜLKER", "KOTON", "MAVİ", "DEFACTO", "KARACA", "KORKMAZ", "TEFAL", "PHILIPS", "BOSCH", "SIEMENS", "GRUNDIG", "PROFILO", "ALTUS", "REGAL", "HOTPOINT", "INDESIT", "CANDY", "HOOVER", "ELECTROLUX", "ZANUSSI", "GORENJE", "AMICA", "SHARP", "PANASONIC", "XİAOMİ", "HUAWEI", "OPPO", "VİVO", "ONEPLUS", "REALME", "HONOR", "REDMİ", "POCO"] // Zor - 5-8 harf
+    1: [], // Kolay - 3-4 harf
+    2: [], // Orta - 4-5 harf
+    3: []  // Zor - 5+ harf
   },
   "Spor Dalları": {
-    1: ["FUTBOL", "TENİS", "VOLEYBOL", "BASKETBOL", "HENTBOL", "YÜZME", "KOŞU", "ATLETİZM", "JİMNASTİK", "BOKS", "GÜREŞ", "HALTER", "ESKİRİM", "OKÇULUK", "ATIŞÇILİK", "JUDO", "KARATE", "TAEKWONDO", "AİKİDO", "GOLF", "BADMİNTON", "KAYAK", "PATEN", "MOTOR", "OTOMOBİL", "BİLARDO", "SATRANÇ", "SPORCU", "HAKEM", "TAKIM", "OYUNCU", "KALECİ", "DEFANS", "ORTA", "FORVET", "STOPER", "ANTRENÖR", "GOL", "ASİST", "SKOR", "DERECE", "MADALYA", "REKOR", "TURNUVA", "ŞAMPİYON", "LİG", "MAÇ", "SET", "OYUN"], // Kolay - 4+ harf  
-    2: ["FUTBOL", "TENİS", "YÜZME", "KOŞU", "BOKS", "GOLF", "VOLEY", "BASKET", "RUGBY", "HOKEY", "KAYAK", "PATEN", "GÜREŞ", "HALTER", "ESKİRİM", "JUDO", "KARATE", "AİKİDO", "SPORCU", "HAKEM", "TAKIM", "OYUNCU", "KALECİ", "DEFANS", "ORTA", "FORVET", "STOPER", "ANTRENÖR", "BAŞLA", "BİTİR", "ATLA", "KOŞAR", "YÜZER", "DÖNER", "ÇEKER", "İTER", "KALDIR", "İNDİR", "YUKARI", "AŞAĞI", "İLERİ", "GERİ", "SAĞLA", "SOLLA", "HIZLA", "YAVAŞ", "GÜÇLÜ", "ZAYIF", "BAŞARI"], // Orta - 4-6 harf
-    3: ["JİMNASTİK", "VOLEYBOL", "BASKETBOL", "HENTBOL", "BADMİNTON", "MASATENİSİ", "PENTATLON", "TRİATLON", "BİATLON", "DUATLON", "AQUATLON", "MARATON", "ESKİRİM", "OKÇULUK", "ATIŞÇILİK", "KARATE", "TAEKWONDO", "KİCKBOKS", "MUAYTHAI", "JİUJİTSU", "AİKİDO", "HAPKIDO", "BOKSÖR", "PEHLİVAN", "KALECİ", "DEFANS", "ORTASAHA", "FORVET", "SOLBEK", "SAĞBEK", "STOPER", "LİBERO", "OYUNKURUCU", "SANTRAFOR", "KANAT", "İÇSAHA", "DIŞSAHA", "PENALTİ", "KORNER", "OFSAYT", "SERBESTVURUŞ", "FAUL", "KART", "GOL", "ASİST", "MÜDAHALE", "SKOR", "DERECE"] // Zor - 7-10 harf
+    1: [], // Kolay - 3-4 harf
+    2: [], // Orta - 4-5 harf
+    3: []  // Zor - 5+ harf
   },
   Eşyalar: {
-    1: ["MASA", "SAAT", "ÇANTA", "ŞAPKA", "ELDİVEN", "GÖZLÜK", "AYAKKABI", "GÖMLEK", "PANTOLON", "CEKET", "SANDALET", "BİLGİSAYAR", "TELEFON", "RADYO", "LAPTOP", "YAZICI", "OYUN", "FOTOĞRAF", "KULAKLIK", "KİTAP", "KALEM", "ÇİZGİ", "RENK", "BOYAMA", "KAĞIT", "DOLAR", "LAMBA", "AMPUL", "VANTİLATÖR", "KLİMA", "PRİZ", "BATARYA", "PİL", "ŞARJ", "KABLO", "FİŞ", "ANTEN", "SİNYAL", "FREKANS", "DÜĞME", "TUŞLAR", "EKRAN", "MOUSE", "MİKROFON", "SPEAKER", "KAMERA", "LENS", "FLASH", "ZOOMLAMA"], // Kolay - 3+ harf
-    2: ["MASA", "SAAT", "ÇANTA", "ŞAPKA", "ELDİVEN"], // Kolay - 4-7 harf
-    3: ["AYAKKABI", "GÖMLEK", "PANTOLON", "CEKET", "SANDALET", "BİLGİSAYAR", "TELEFON", "RADYO", "LAPTOP", "YAZICI", "OYUN", "FOTOĞRAF", "KULAKLIK", "KİTAP", "KALEM", "ÇİZGİ", "RENK", "BOYAMA", "KAĞIT", "LAMBA", "AMPUL", "VANTİLATÖR", "KLİMA", "PRİZ", "BATARYA", "PİL", "ŞARJ", "KABLO", "FİŞ", "ANTEN", "SİNYAL", "FREKANS", "DÜĞME", "TUŞLAR", "EKRAN", "MOUSE", "MİKROFON", "SPEAKER", "KAMERA", "LENS", "FLASH", "ZOOMLAMA"] // Orta - 5-9 harf
+    1: [], // Kolay - 3-4 harf
+    2: [], // Orta - 4-5 harf
+    3: []  // Zor - 5+ harf
   },
   "Film ve Dizi": {
-    1: ["FİLM", "DİZİ", "SİNEMA", "OYUNCU", "YÖNET", "SENAR", "KARAKT", "HIKAYE", "AKSIYON", "KOMEDI", "DRAMA", "KORKU", "SCI", "ROMAN", "FANTAST", "MÜZIK", "DANS", "ANİM", "BELGES", "KISA", "UZUN", "SAHNE", "DIYALOG", "MONOLOG", "KOSTÜM", "MAKYAJ", "EFEKT", "SES", "MÜZİK", "KAMERA", "IŞIK", "KURGU", "POSTER", "FRAGMAN", "PRÖMY", "GALAI", "ÖDÜL", "FESTIV", "YARIŞM", "OSCAR", "ALTPAM", "BAFTA", "GÖLDEN", "SAG", "DGA", "WGA", "AFI", "CANNES"], // Kolay - 3+ harf
-    2: ["FİLM", "DİZİ", "SİNEMA", "OYUNCU", "YÖNETMEN", "SENARYO", "KARAKTER", "HİKAYE", "AKSIYON", "KOMEDİ", "DRAMA", "KORKU", "FANTASTIK", "MÜZİK", "DANS", "ANİMASYON", "BELGESEL", "KISA", "UZUN", "SAHNE", "DİYALOG", "MONOLOG", "KOSTÜM", "MAKYAJ", "EFEKT", "SES", "MÜZİK", "KAMERA", "IŞIK", "KURGU", "POSTER", "FRAGMAN", "GALAI", "ÖDÜL", "FESTİVAL", "YARIŞMA", "OSCAR", "BAĞ", "İSTANBUL", "ANTALYA", "SİNE", "YEŞIL", "KÖ", "ALTUN", "LÜM"], // Orta - 4-7 harf
-    3: ["OYUNCU", "YÖNETMEN", "SENARYO", "KARAKTER", "HİKAYE", "AKSIYON", "KOMEDİ", "DRAMA", "KORKU", "FANTASTIK", "MÜZİK", "DANS", "ANİMASYON", "BELGESEL", "SAHNE", "DİYALOG", "MONOLOG", "KOSTÜM", "MAKYAJ", "EFEKT", "KAMERA", "IŞIK", "KURGU", "POSTER", "FRAGMAN", "PRÖMIYER", "GALAI", "ÖDÜL", "FESTİVAL", "YARIŞMA", "OSCAR", "CANNES", "VENEDIK", "BERLIN", "TORONTO", "SUNDANCE", "TRIBECA", "SLAMDANCE", "TELLURIDE", "FİLM", "DİZİ", "SİNEMA", "OYUNCULUK", "YÖNETMENLİK", "SENARYOCULUK", "YAPIMCILIK", "SİNEMATOGRAFİ", "SES", "MÜZİK", "KURGU", "SANAT", "YÖNET", "SINEMA", "KÜLTÜR", "SANATİ"] // Zor - 5-12 harf
+    1: [], // Kolay - 3-4 harf
+    2: [], // Orta - 4-5 harf
+    3: []  // Zor - 5+ harf
   }
 };
+
+export function getWordByDifficulty(category: string, difficulty: number): string[] {
+  const categoryWords = wordLists[category];
+  if (!categoryWords) return [];
+  return categoryWords[difficulty as keyof WordList] || [];
+}
